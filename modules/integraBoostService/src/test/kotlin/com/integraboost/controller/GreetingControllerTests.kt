@@ -1,5 +1,6 @@
 package com.integraboost.controller
 
+import com.integraboost.IntegrationTest
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -11,7 +12,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GreetingControllerTests {
+class GreetingControllerTests: IntegrationTest() {
     @Autowired
     private val mockMvc: MockMvc? = null
     @Test
