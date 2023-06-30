@@ -1,11 +1,16 @@
 plugins {
-    id("org.springframework.boot") version "2.5.4"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+
+    val springBootVersion = "2.5.4"
+    val springDepManagementVersion = "1.0.11.RELEASE"
+
+    id("org.springframework.boot") version springBootVersion
+    id("io.spring.dependency-management") version springDepManagementVersion
     kotlin("jvm")
 }
 
 dependencies {
     implementation(project(":modules:integraBoostLibrary"))
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.h2database:h2")
