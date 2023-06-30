@@ -1,3 +1,6 @@
+package com.integraboost
+
+import com.integraboost.Calculator
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
