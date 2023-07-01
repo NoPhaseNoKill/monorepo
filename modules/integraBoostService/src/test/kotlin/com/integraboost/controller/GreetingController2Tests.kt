@@ -12,31 +12,25 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GreetingControllerTests: IntegrationTest() {
+class GreetingController2Tests: IntegrationTest() {
 
     @Autowired
     private val mockMvc: MockMvc? = null
     @Test
     @Throws(Exception::class)
     fun noParamGreetingShouldReturnDefaultMessage() {
-        Thread.sleep(5000)
-        println("sleeping thread 5000");
-        println("FirstParallelUnitTest first() start => " + Thread.currentThread().name);
+        Thread.sleep(10000)
+        println("sleeping thread 10000");
         mockMvc!!.perform(MockMvcRequestBuilders.get("/greeting")).andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("Hello, World!"))
-        println("FirstParallelUnitTest first() end => " + Thread.currentThread().name);
     }
 
     @Test
     @Throws(Exception::class)
     fun paramGreetingShouldReturnTailoredMessage() {
-        println("FirstParallelUnitTest second() start => " + Thread.currentThread().name);
-
         mockMvc!!.perform(MockMvcRequestBuilders.get("/greeting").param("name", "Spring Community"))
             .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("Hello, Spring Community!"))
-
-        println("FirstParallelUnitTest second() end => " + Thread.currentThread().name);
     }
 }

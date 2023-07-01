@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-open class App
+open class IntegraBoostServiceApp
 
 fun main(args: Array<String>) {
-    runApplication<App>(*args)
+    runApplication<IntegraBoostServiceApp>(*args)
 }

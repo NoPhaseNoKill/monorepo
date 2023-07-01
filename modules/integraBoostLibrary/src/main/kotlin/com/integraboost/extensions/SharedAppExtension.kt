@@ -6,7 +6,13 @@ import org.junit.jupiter.api.extension.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-class SharedAppExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, ParameterResolver, ExtensionContext.Store.CloseableResource {
+class SharedAppExtension:
+    BeforeAllCallback,
+    BeforeEachCallback,
+    AfterAllCallback,
+    AfterEachCallback,
+    ParameterResolver,
+    ExtensionContext.Store.CloseableResource {
 
     override fun beforeAll(context: ExtensionContext) {
         val value = SharedAppStore
