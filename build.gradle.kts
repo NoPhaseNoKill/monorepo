@@ -12,7 +12,9 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "kotlin")
+    apply {
+        plugin("kotlin")
+    }
 
     dependencies {
         implementation(kotlin("stdlib-jdk8"))
@@ -30,7 +32,6 @@ subprojects {
 
         testLogging {
             events("passed", "skipped", "failed")
-            showStandardStreams = true
         }
     }
 }
