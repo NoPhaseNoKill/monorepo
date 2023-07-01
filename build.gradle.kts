@@ -18,19 +18,19 @@ subprojects {
         implementation(kotlin("stdlib-jdk8"))
     }
 
-    tasks.test {
-        useJUnitPlatform()
+    tasks.withType<Test> {
 
-        /**
-         * Run junit tests in parallel
+        /*
+            system properties should be set before jvm starts
+            this dampens the log level for unnecessary junit logs
          */
-        systemProperties["junit.jupiter.execution.parallel.enabled"] = true
-        systemProperties["junit.jupiter.execution.parallel.mode.default"] = "concurrent"
-        systemProperties["junit.jupiter.execution.parallel.mode.classes.default"] = "concurrent"
-        maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
+        systemProperties["java.util.logging.config.file"] = "${project.buildDir}/resources/test/logging.properties"
+
+        useJUnitPlatform()
 
         testLogging {
             events("passed", "skipped", "failed")
+            showStandardStreams = true
         }
     }
 }

@@ -19,18 +19,28 @@ class GreetingController2Tests: IntegrationTest() {
     @Test
     @Throws(Exception::class)
     fun noParamGreetingShouldReturnDefaultMessage() {
-        Thread.sleep(10000)
-        println("sleeping thread 10000");
-        mockMvc!!.perform(MockMvcRequestBuilders.get("/greeting")).andDo(MockMvcResultHandlers.print())
+        println("GreetingController2Tests first() start => " + Thread.currentThread().name)
+        Thread.sleep(500)
+        mockMvc!!
+            .perform(MockMvcRequestBuilders.get("/greeting"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("Hello, World!"))
+        println("GreetingController2Tests first() end => " + Thread.currentThread().name)
     }
 
     @Test
     @Throws(Exception::class)
     fun paramGreetingShouldReturnTailoredMessage() {
-        mockMvc!!.perform(MockMvcRequestBuilders.get("/greeting").param("name", "Spring Community"))
-            .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk())
+        println("GreetingController2Tests second() start => " + Thread.currentThread().name)
+
+        Thread.sleep(500)
+
+        mockMvc!!
+            .perform(MockMvcRequestBuilders.get("/greeting")
+                .param("name", "Spring Community"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("Hello, Spring Community!"))
+
+        println("GreetingController2Tests second() end => " + Thread.currentThread().name)
     }
 }
