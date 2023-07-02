@@ -44,52 +44,13 @@ fun Project.configureTestLogging() {
 
             afterSuite(KotlinClosure2({ desc: TestDescriptor, result: TestResult ->
                 if (desc.parent == null) { // will match the outermost suite
-                    val pass = "${Color.GREEN}Passed: ${result.successfulTestCount} ${Color.NONE}"
-                    val fail = "${Color.RED}Failed: ${result.failedTestCount} ${Color.NONE}"
-                    val skip = "${Color.YELLOW}Skipped: ${result.skippedTestCount}${Color.NONE}"
-                    val typeColour = when(result.resultType) {
-                        TestResult.ResultType.SUCCESS -> Color.GREEN
-                        TestResult.ResultType.FAILURE -> Color.RED
-                        TestResult.ResultType.SKIPPED -> Color.YELLOW
-                        else -> throw Exception("Unknown result type colour for test outputs")
-                    }
-                    val resultType = result.resultType
-
-                    val type = "${typeColour}$resultType${Color.NONE}"
-                    val total = result.successfulTestCount + result.failedTestCount + result.skippedTestCount
+                    val summary = TestSummary(result)
+                    val output = summary.summarise()
 
                     println("")
-                    println("""
-                        ${Color.CYAN}Test result summary: ${type}${Color.NONE}
-                            $skip
-                            $fail
-                            $pass
-                            ${Color.PURPLE}Total:  $total${Color.NONE}
-                    """.trimIndent())
+                    println("${output}")
                 }
             }))
         }
-    }
-}
-
-operator fun String.times(x: Int): String {
-    return List(x) { this }.joinToString("")
-}
-
-internal enum class Color(ansiCode: Int) {
-    NONE(0),
-    BLACK(30),
-    RED(31),
-    GREEN(32),
-    YELLOW(33),
-    BLUE(34),
-    PURPLE(35),
-    CYAN(36),
-    WHITE(37);
-
-    private val ansiString: String = "\u001B[${ansiCode}m"
-
-    override fun toString(): String {
-        return ansiString
     }
 }

@@ -2,6 +2,14 @@ import com.integraboost.configureTestLogging
 
 plugins {
     kotlin("jvm") version "1.8.21"
+    id("idea")
+}
+
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
 }
 
 allprojects {
