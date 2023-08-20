@@ -197,17 +197,9 @@ interface ValidationStrategy {
 class ValidationResultAggregator(private vararg val strategies: ValidationStrategy) {
     suspend fun aggregate(requestContext: RequestContext): List<ValidationResult> {
 
-        val results = mutableListOf<ValidationResult>()
-
-        for (strategy in strategies) {
-            val validationResult = strategy.validate(requestContext)
-
-            if (validationResult is ValidationResult.Failure) {
-                results.add(validationResult)
-            }
-        }
-
-        return results
+        return strategies
+            .map { it.validate(requestContext) }
+            .filterIsInstance<ValidationResult.Failure>()
     }
 }
 
