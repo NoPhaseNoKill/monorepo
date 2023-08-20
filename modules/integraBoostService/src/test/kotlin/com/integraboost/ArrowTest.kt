@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test
 import arrow.core.Either
 import arrow.core.raise.either
 import arrow.core.raise.ensure
+import arrow.core.raise.result
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
@@ -179,6 +180,26 @@ data class RequestContext(
 
 interface ValidationStrategy {
     suspend fun validate(requestContext: RequestContext): ValidationResult
+
+    suspend fun validateCondition(
+        condition: Boolean,
+        failureResult: ValidationResult.Failure
+    ): ValidationResult {
+        
+        val validation = either {
+            ensure (condition) { failureResult }
+            ValidationResult.Success
+        }
+
+        return when(validation) {
+            is Either.Left -> {
+                failureResult
+            }
+            is Either.Right -> {
+                ValidationResult.Success
+            }
+        }
+    }
 }
 
 class ValidationResultAggregator(private vararg val strategies: ValidationStrategy) {
@@ -203,21 +224,9 @@ class AccountTypeOneOnlyValidation: ValidationStrategy {
         requestContext: RequestContext,
     ): ValidationResult {
         val isAccountTypeSupported = requestContext.account.type == AccountType.AccountTypeOne
-        val validationError = ValidationResult.Failure.AccountState.AccountTypeTwoInvalid
+        val failureResult = ValidationResult.Failure.AccountState.AccountTypeTwoInvalid
 
-        val validation = either {
-            ensure (isAccountTypeSupported) { validationError }
-            ValidationResult.Success
-        }
-
-        return when(validation) {
-            is Either.Left -> {
-                ValidationResult.Failure.AccountState.AccountTypeTwoInvalid
-            }
-            is Either.Right -> {
-                ValidationResult.Success
-            }
-        }
+        return validateCondition(isAccountTypeSupported, failureResult)
     }
 }
 
@@ -226,22 +235,10 @@ class DeveloperOnlyValidation: ValidationStrategy {
         requestContext: RequestContext,
     ): ValidationResult {
         val isDeveloper = requestContext.account.occupation == Occupation.Developer
-        val message = "You are not a developer"
-        val validationError = ValidationResult.Failure.FeatureUnsupported.NonDeveloper(message)
+        val failureMessage = "You are not a developer"
+        val failureResult = ValidationResult.Failure.FeatureUnsupported.NonDeveloper(failureMessage)
 
-        val validation = either {
-            ensure (isDeveloper) { validationError }
-            ValidationResult.Success
-        }
-
-        return when(validation) {
-            is Either.Left -> {
-                ValidationResult.Failure.FeatureUnsupported.NonDeveloper(message)
-            }
-            is Either.Right -> {
-                ValidationResult.Success
-            }
-        }
+        return validateCondition(isDeveloper, failureResult)
     }
 }
 
