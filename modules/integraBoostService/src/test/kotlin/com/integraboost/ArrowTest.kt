@@ -1,13 +1,12 @@
 package com.integraboost
 
-import org.junit.jupiter.api.Test
-import arrow.core.Either
+import arrow.core.merge
 import arrow.core.raise.either
 import arrow.core.raise.ensure
-import arrow.core.raise.result
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class ArrowTest {
 
@@ -185,20 +184,13 @@ interface ValidationStrategy {
         condition: Boolean,
         failureResult: ValidationResult.Failure
     ): ValidationResult {
-        
+
         val validation = either {
             ensure (condition) { failureResult }
             ValidationResult.Success
         }
 
-        return when(validation) {
-            is Either.Left -> {
-                failureResult
-            }
-            is Either.Right -> {
-                ValidationResult.Success
-            }
-        }
+        return validation.merge()
     }
 }
 
