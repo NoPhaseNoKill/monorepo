@@ -27,6 +27,8 @@ subprojects {
     }
 
     dependencies {
+        implementation("io.arrow-kt:arrow-core:1.2.0")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
         implementation(kotlin("stdlib-jdk8"))
     }
 
