@@ -9,4 +9,11 @@ dependencies {
 
     implementation("com.github.tomakehurst:wiremock-jre8:${wiremockVersion}")
     implementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
+    implementation(kotlin("stdlib-jdk8"))
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(11)
 }

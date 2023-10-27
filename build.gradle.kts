@@ -1,7 +1,7 @@
 import com.integraboost.configureTestLogging
 
 plugins {
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "1.9.10"
     id("idea")
 }
 
@@ -30,6 +30,8 @@ subprojects {
         implementation("io.arrow-kt:arrow-core:1.2.0")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
         implementation(kotlin("stdlib-jdk8"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
+
     }
 
     configureTestLogging()

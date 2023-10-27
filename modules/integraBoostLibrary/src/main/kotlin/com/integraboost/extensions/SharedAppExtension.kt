@@ -22,12 +22,19 @@ class SharedAppExtension:
         if (value == null) {
             /*
                 Adds the first invocation of the test container to the global store
-                so that setupSharedContext and close are only applied once for the whole test run
+                so that close is guaranteed to run, and is only run/applied for the whole test run
                 of the project
              */
             LOGGER.debug("Starting integration tests")
             SharedAppStore.putObjectIntoGlobalStore(context, SharedAppContextKey.TESTS_STARTED, this)
         }
+    }
+
+    /**
+     * This should only be called at the end of all the project tests
+     */
+    override fun close() {
+        LOGGER.debug("Finishing integration tests")
     }
 
     override fun beforeEach(context: ExtensionContext) {
@@ -42,12 +49,6 @@ class SharedAppExtension:
         LOGGER.debug("afterAll SharedAppExtension (integration tests) test: ${context.displayName}")
     }
 
-    /**
-     * This should only be called at the end of all the project tests
-     */
-    override fun close() {
-        LOGGER.debug("Finishing integration tests")
-    }
 
     override fun supportsParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Boolean {
         return parameterContext.parameter.type == ExtensionContext::class.java
