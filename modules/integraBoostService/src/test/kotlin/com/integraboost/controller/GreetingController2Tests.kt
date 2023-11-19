@@ -1,6 +1,7 @@
 package com.integraboost.controller
 
 import com.integraboost.IntegrationTest
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -18,7 +19,7 @@ class GreetingController2Tests: IntegrationTest() {
     private val mockMvc: MockMvc? = null
     @Test
     @Throws(Exception::class)
-    fun noParamGreetingShouldReturnDefaultMessage() {
+    fun noParamGreetingShouldReturnDefaultMessage() = runBlocking {
         LOGGER.info("GreetingController2Tests first() start => " + Thread.currentThread().name)
         Thread.sleep(500)
 
@@ -32,7 +33,7 @@ class GreetingController2Tests: IntegrationTest() {
 
     @Test
     @Throws(Exception::class)
-    fun paramGreetingShouldReturnTailoredMessage() {
+    fun paramGreetingShouldReturnTailoredMessage() = runBlocking {
         LOGGER.info("GreetingController2Tests second() start => " + Thread.currentThread().name)
         Thread.sleep(500)
 
