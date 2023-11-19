@@ -1,5 +1,4 @@
-
-import org.gradle.api.tasks.testing.logging.TestLogEvent
+import com.integraboost.configureTestLogging
 
 plugins {
     kotlin("jvm") version "1.9.10"
@@ -20,15 +19,8 @@ allprojects {
     repositories {
         mavenCentral()
     }
-}
 
-val copyConf by tasks.creating(Copy::class) {
-    from("${project.rootDir}/conf")
-    into("${buildDir}/conf")
-}
 
-tasks.named("build") {
-    dependsOn(copyConf)
 }
 
 subprojects {
@@ -46,13 +38,7 @@ subprojects {
     buildDir = File("${rootProject.buildDir}/${project.name}")
 
     tasks.withType<Test> {
-        dependsOn(":build")
         useJUnitPlatform()
-
-        testLogging {
-            events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.STANDARD_OUT, TestLogEvent.STANDARD_ERROR)
-            systemProperties["java.util.logging.config.file"] = "${rootProject.buildDir}/conf/logging.properties"
-
-        }
+        configureTestLogging()
     }
 }
