@@ -8,13 +8,11 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.kotlin.dsl.KotlinClosure2
 import org.gradle.kotlin.dsl.withType
+import java.io.File
 
 fun Project.configureTestLogging() {
-
     tasks.withType<Test> {
-        systemProperties["java.util.logging.config.file"] = "${project.buildDir}/resources/test/logging.properties"
-
-        useJUnitPlatform()
+        systemProperties["java.util.logging.config.file"] = "${rootProject.buildDir}/resources/test/logging.properties"
 
         testLogging {
             // set options for log level LIFECYCLE

@@ -19,6 +19,8 @@ allprojects {
     repositories {
         mavenCentral()
     }
+
+
 }
 
 subprojects {
@@ -31,8 +33,12 @@ subprojects {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
         implementation(kotlin("stdlib-jdk8"))
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
-
     }
 
-    configureTestLogging()
+    buildDir = File("${rootProject.buildDir}/${project.name}")
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+        configureTestLogging()
+    }
 }
