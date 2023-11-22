@@ -1,4 +1,4 @@
-package com.integraboost
+package com.integraboost.controller
 
 import com.integraboost.extensions.SharedAppExtension
 import com.integraboost.extensions.TestInvocationListener
