@@ -1,6 +1,8 @@
 plugins {
-    `java-library`
+    id("com.integraboost.java-library")
 }
+
+group = "${group}.modules"
 
 dependencies {
     val wiremockVersion = "2.35.0"
