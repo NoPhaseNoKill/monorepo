@@ -4,6 +4,21 @@ plugins {
     id("idea")
 }
 
+
+
+val obfuscatedValue = "obfuscated"
+
+buildScan {
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
+
+    obfuscation {
+        username { obfuscatedValue }
+        ipAddresses { addresses -> addresses.map { _ -> "${obfuscatedValue}.${obfuscatedValue}.${obfuscatedValue}.${obfuscatedValue}" } }
+        hostname { obfuscatedValue }
+    }
+}
+
 idea {
     module {
         isDownloadJavadoc = true
