@@ -1,56 +1,9 @@
 
-plugins {
-    kotlin("jvm") version "1.8.20"
-    id("idea")
-}
-
-
-
-val obfuscatedValue = "obfuscated"
-
-buildScan {
-    termsOfServiceUrl = "https://gradle.com/terms-of-service"
-    termsOfServiceAgree = "yes"
-
-    obfuscation {
-        username { obfuscatedValue }
-        ipAddresses { addresses -> addresses.map { _ -> "${obfuscatedValue}.${obfuscatedValue}.${obfuscatedValue}.${obfuscatedValue}" } }
-        hostname { obfuscatedValue }
-    }
-}
-
-idea {
-    module {
-        isDownloadJavadoc = true
-        isDownloadSources = true
-    }
-}
-
-allprojects {
-    repositories {
-        mavenCentral()
-    }
-}
-
-subprojects {
-    apply {
-        plugin("kotlin")
-    }
-
-    dependencies {
-        val junitVersion = "5.10.1"
-        // TODO try and fix issue with 1.7.3, which relates to classpath -  potentially being caused by build process
-        val kotlinCoroutinesVersion = "1.6.4"
-
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinCoroutinesVersion}")
-        implementation("org.junit.jupiter:junit-jupiter:${junitVersion}")
-
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${kotlinCoroutinesVersion}")
-    }
-
-    buildDir = File("${rootProject.buildDir}/${project.name}")
-
-    tasks.withType<Test> {
-        useJUnitPlatform()
-    }
+tasks.register("testAll") {
+    group = "verification"
+    description = "Run all tests after clearing the cache"
+    dependsOn(gradle.includedBuild("modules").task(":integraBoostLibrary:clean"))
+    dependsOn(gradle.includedBuild("modules").task(":integraBoostService:clean"))
+    dependsOn(gradle.includedBuild("modules").task(":integraBoostLibrary:test"))
+    dependsOn(gradle.includedBuild("modules").task(":integraBoostService:test"))
 }

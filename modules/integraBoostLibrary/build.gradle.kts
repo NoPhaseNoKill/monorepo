@@ -1,9 +1,9 @@
 plugins {
-    `java-library`
+    id("com.integraboost.kotlin-library")
+    id("org.jetbrains.kotlin.jvm")
 }
 
-dependencies {
-    val wiremockVersion = "2.35.0"
 
-    implementation("com.github.tomakehurst:wiremock-jre8:${wiremockVersion}")
+dependencies {
+    implementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
 }
