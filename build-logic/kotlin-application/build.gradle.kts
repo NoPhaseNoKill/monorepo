@@ -8,3 +8,4 @@ dependencies {
 
     implementation("org.springframework.boot:org.springframework.boot.gradle.plugin")
 }
+
