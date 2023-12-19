@@ -169,3 +169,56 @@ r: 2023/12/19 04:57:05 am UTC, build process finished
 
 
 
+r: 2023/12/19 13:27:47 pm UTC, build process started
+r: 2023/12/19 13:27:47 pm UTC, plugin version: 1.0.1
+r: 2023/12/19 13:27:47 pm UTC, jvm: 17
+r: 2023/12/19 13:27:47 pm UTC, gradle version: 8.5
+r: 2023/12/19 13:27:47 pm UTC, requested tasks: testAll
+r: 2023/12/19 13:27:47 pm UTC, modules count: 0
+r: 2023/12/19 13:27:47 pm UTC, ci: false
+r: 2023/12/19 13:27:47 pm UTC, tracking tasks count: 3
+r: 2023/12/19 13:27:47 pm UTC, tracking branches count: 1
+r: 2023/12/19 13:27:47 pm UTC, maximum worker count: 12
+i: 2023/12/19 13:27:47 pm UTC, BuildExecutionService, printConfigurationNotices()
+i: 2023/12/19 13:27:47 pm UTC, Database, connect()
+i: 2023/12/19 13:27:47 pm UTC, Database, connectSqliteDatabase()
+i: 2023/12/19 13:27:47 pm UTC, Database, createTables() with 3 tables
+i: 2023/12/19 13:27:47 pm UTC, BuildExecutionLogicImp.init { }, initialize start timestamp, initialization process timestamp andconfiguration process timestamp
+i: 2023/12/19 13:27:47 pm UTC, BuildExecutionLogicImp.onExecutionFinished(), 24 tasks executed
+i: 2023/12/19 13:27:47 pm UTC, BuildExecutionLogicImp.onExecutionFinished(), all tasks build succeed
+w: 2023/12/19 13:27:47 pm UTC, BuildExecutionLogicImp.onExecutionFinished(), 0 tasks failed
+i: 2023/12/19 13:27:47 pm UTC, BuildExecutionLogicImp, resetDependentServices()
+i: 2023/12/19 13:27:47 pm UTC, CreateInitializationProcessMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateConfigurationProcessMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateExecutionProcessMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateOverallBuildProcessMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateModulesSourceCountMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateModulesMethodCountMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateCacheHitMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateSuccessBuildRateMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateDependencyResolveProcessMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateParallelExecutionRateMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateModulesExecutionProcessMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateModulesDependencyGraphMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateModulesTimelineMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateModulesBuildHeatmapMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateNonCacheableTasksMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateModulesSourceSizeMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, CreateModulesCrashCountMetricUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, SaveTemporaryMetricUseCase, execute() metric.hashCode=897288837
+i: 2023/12/19 13:27:47 pm UTC, DatabaseRepositoryImp.saveTemporaryMetric(), initializationProcessMetric = true, configurationProcessMetric = true, executionProcessMetric = true, overallBuildProcessMetric = true, modulesSourceCountMetric = true, modulesMethodCountMetric = true, cacheHitMetric = true, successBuildRateMetric = true, dependencyResolveProcessMetric = true, parallelExecutionRateMetric = true, modulesExecutionProcessMetric = true, modulesDependencyGraphMetric = true, modulesBuildHeatmap = true, nonCacheableTasksMetric = true, modulesSourceSizeMetric = true, modulesCrashCountMetric = true
+i: 2023/12/19 13:27:47 pm UTC, SaveMetricUseCase, execute() metric.hashCode=897288837
+i: 2023/12/19 13:27:47 pm UTC, DatabaseRepositoryImp, isDayMetricExists()
+i: 2023/12/19 13:27:47 pm UTC, DatabaseRepositoryImp, isDayMetricExists() return false
+i: 2023/12/19 13:27:47 pm UTC, DatabaseRepositoryImp.saveNewMetric(), initializationProcessMetric = true, configurationProcessMetric = true, executionProcessMetric = true, overallBuildProcessMetric = true, modulesSourceCountMetric = true, modulesMethodCountMetric = true, cacheHitMetric = true, successBuildRateMetric = true, dependencyResolveProcessMetric = true, parallelExecutionRateMetric = true, modulesExecutionProcessMetric = true, modulesDependencyGraphMetric = true, modulesBuildHeatmap = true, nonCacheableTasksMetric = true, modulesSourceSizeMetric = true, modulesCrashCountMetric = true
+i: 2023/12/19 13:27:47 pm UTC, DatabaseRepositoryImp, dropOutdatedMetrics()
+i: 2023/12/19 13:27:47 pm UTC, BuildExecutionLogicImp.onExecutionFinished(), upsert modules timeline metric
+i: 2023/12/19 13:27:47 pm UTC, UpsertModulesTimelineUseCase, execute()
+i: 2023/12/19 13:27:47 pm UTC, DatabaseRepositoryImp, getSingleMetric() key=modulesExecTimeline
+i: 2023/12/19 13:27:47 pm UTC, DatabaseRepositoryImp, updateSingleMetric() key=modulesExecTimeline value.hashCode=1325673868
+i: 2023/12/19 13:27:47 pm UTC, BuildExecutionLogicImp, printBuildInfo()
+r: 2023/12/19 13:27:47 pm UTC, build process finished
+
+
+
+
