@@ -1,0 +1,2187 @@
+
+* Started at 2023-12-30T02:35:06.698613307Z
+
+* Settings
+Project dir: /home/tomga/projects/IntegraBoost/new/toolset/jvm
+Output dir: /home/tomga/projects/IntegraBoost/new/toolset/jvm/./gradle-profiler/1703903706
+Profiler: none
+Benchmark: true
+Versions: []
+Gradle User Home: /home/tomga/projects/IntegraBoost/new/toolset/jvm/./gradle-profiler/gradle-user-home
+Targets: [performance_both]
+
+* Inspecting the build using its default Gradle version
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+
+> Task :help
+
+Welcome to Gradle 8.4.
+
+To run a build, run gradle <task> ...
+
+To see a list of available tasks, run gradle tasks
+
+To see more detail about a task, run gradle help --task <task>
+
+To see a list of command-line options, run gradle --help
+
+For more detail on using Gradle, see https://docs.gradle.org/8.4/userguide/command_line_interface.html
+
+For troubleshooting, visit https://help.gradle.org
+
+BUILD SUCCESSFUL in 18s
+10 actionable tasks: 10 executed
+
+* Stopping daemons
+Running command /home/tomga/projects/IntegraBoost/new/toolset/jvm/gradle-profiler/gradle-user-home/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim/gradle-8.4/bin/gradle --stop --gradle-user-home /home/tomga/projects/IntegraBoost/new/toolset/jvm/./gradle-profiler/gradle-user-home
+Stopping Daemon(s)
+1 Daemon stopped
+
+* Scenarios
+Scenario: Performance regression test using Gradle 8.4
+  Gradle 8.4 (/home/tomga/projects/IntegraBoost/new/toolset/jvm/gradle-profiler/gradle-user-home/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim/gradle-8.4)
+  Run using: Tooling API
+  Run: run tasks buildAll cleanAll
+  Cleanup: do nothing
+  Gradle args: []
+  Measured build operations: SnapshotTaskInputsBuildOperationType
+  Build changes: []
+  Warm-ups: 10
+  Builds: 10
+
+* Running scenario Performance regression test using Gradle 8.4 (scenario 1/1)
+
+* Stopping daemons
+Running command /home/tomga/projects/IntegraBoost/new/toolset/jvm/gradle-profiler/gradle-user-home/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim/gradle-8.4/bin/gradle --stop --gradle-user-home /home/tomga/projects/IntegraBoost/new/toolset/jvm/./gradle-profiler/gradle-user-home
+No Gradle daemons are running.
+
+* Build details
+Gradle version: Gradle 8.4
+Java home: /home/tomga/.sdkman/candidates/java/17.0.9-jbr
+OS: linux amd64 5.15.0-91-generic
+JVM args:
+  --add-opens=java.base/java.util=ALL-UNNAMED
+  --add-opens=java.base/java.lang=ALL-UNNAMED
+  --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+  --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED
+  --add-opens=java.base/java.nio.charset=ALL-UNNAMED
+  --add-opens=java.base/java.net=ALL-UNNAMED
+  --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED
+  -XX:MaxMetaspaceSize=384m
+  -XX:+HeapDumpOnOutOfMemoryError
+  -Xms256m
+  -Xmx512m
+  -Dfile.encoding=UTF-8
+  -Duser.country=AU
+  -Duser.language=en
+  -Duser.variant
+  -Dorg.gradle.profiler.scenario=performance_both
+Gradle args:
+  --gradle-user-home
+  /home/tomga/projects/IntegraBoost/new/toolset/jvm/./gradle-profiler/gradle-user-home
+  -I
+  /tmp/gradleProfiler2532975508486036664.gradle
+  -I
+  /tmp/gradleProfiler8913314296543645229.gradle
+
+* Running warm-up build #1
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders UP-TO-DATE
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins UP-TO-DATE
+> Task :build-logic:plugins:compilePluginsBlocks UP-TO-DATE
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors UP-TO-DATE
+> Task :build-logic:plugins:generateScriptPluginAdapters UP-TO-DATE
+> Task :build-logic:plugins:compileKotlin UP-TO-DATE
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:pluginDescriptors UP-TO-DATE
+> Task :build-logic:plugins:processResources UP-TO-DATE
+> Task :build-logic:plugins:classes UP-TO-DATE
+> Task :build-logic:plugins:jar UP-TO-DATE
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:libraries:lib2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib1:clean
+> Task :build-logic:plugins:assemble UP-TO-DATE
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 7s
+24 actionable tasks: 15 executed, 9 up-to-date
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 7749 ms
+
+* Running warm-up build #2
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib2:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 14s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 14187 ms
+
+* Running warm-up build #3
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:applications:app2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib1:clean
+> Task :build-logic:plugins:assemble
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:jar
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 5s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 5726 ms
+
+* Running warm-up build #4
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib2:clean
+> Task :build-logic:plugins:assemble
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 4s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 4579 ms
+
+* Running warm-up build #5
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:libraries:lib1:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:libraries:lib2:clean
+> Task :build-logic:plugins:assemble
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 4s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 4231 ms
+
+* Running warm-up build #6
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:libraries:lib2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app1:clean
+> Task :build-logic:plugins:assemble
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 3989 ms
+
+* Running warm-up build #7
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:libraries:lib1:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib2:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:jar
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 3657 ms
+
+* Running warm-up build #8
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app1:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:applications:app1:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:jar
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 3703 ms
+
+* Running warm-up build #9
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:applications:app2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib2:clean
+> Task :build-logic:plugins:assemble
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 3498 ms
+
+* Running warm-up build #10
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:libraries:lib2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:libraries:lib1:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 3220 ms
+
+* Using args for instrumented builds:
+
+* Running measured build #1
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:libraries:lib2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:applications:app2:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:jar
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 3222 ms
+
+* Running measured build #2
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:applications:app1:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib1:clean
+> Task :build-logic:plugins:assemble
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 3178 ms
+
+* Running measured build #3
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:applications:app2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:applications:app1:clean
+> Task :build-logic:plugins:assemble
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 3045 ms
+
+* Running measured build #4
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:libraries:lib1:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app1:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 2967 ms
+
+* Running measured build #5
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:libraries:lib2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib2:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 2977 ms
+
+* Running measured build #6
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:applications:app2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib1:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:jar
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 2870 ms
+
+* Running measured build #7
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app1:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:libraries:lib1:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 2882 ms
+
+* Running measured build #8
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:libraries:lib2:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:applications:app1:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app2:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 2904 ms
+
+* Running measured build #9
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:applications:app1:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:libraries:lib1:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:applications:app1:clean
+> Task :build-logic:plugins:assemble
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:libraries:lib1:jar
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 2867 ms
+
+* Running measured build #10
+> Task :build-logic:plugins:generateExternalPluginSpecBuilders
+> Task :build-logic:plugins:extractPrecompiledScriptPluginPlugins
+> Task :build-logic:plugins:compilePluginsBlocks
+> Task :build-logic:plugins:generatePrecompiledScriptPluginAccessors
+> Task :build-logic:plugins:generateScriptPluginAdapters
+> Task :build-logic:plugins:pluginDescriptors
+> Task :build-logic:plugins:processResources
+> Task :build-logic:plugins:compileKotlin
+> Task :build-logic:plugins:compileJava NO-SOURCE
+> Task :build-logic:plugins:classes
+> Task :build-logic:plugins:jar
+COMING INTO BUILD
+Included composite build task:  :build-logic:plugins:build
+Included subproject build task: :modules:libraries:lib1:build
+Included subproject build task: :modules:libraries:lib2:build
+Included subproject build task: :modules:applications:app2:build
+Included subproject build task: :modules:applications:app1:build
+COMING INTO CLEAN
+Included composite build task:  :build-logic:plugins:clean
+Included subproject build task: :modules:applications:app2:clean
+Included subproject build task: :modules:libraries:lib1:clean
+Included subproject build task: :modules:libraries:lib2:clean
+Included subproject build task: :modules:applications:app1:clean
+> Task :build-logic:plugins:assemble
+> Task :modules:applications:app1:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:plugins:compileTestKotlin NO-SOURCE
+> Task :build-logic:plugins:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:compileJava NO-SOURCE
+> Task :modules:libraries:lib1:processResources NO-SOURCE
+> Task :modules:libraries:lib1:classes UP-TO-DATE
+> Task :build-logic:plugins:pluginUnderTestMetadata
+> Task :build-logic:plugins:processTestResources NO-SOURCE
+> Task :build-logic:plugins:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:jar
+> Task :build-logic:plugins:test NO-SOURCE
+> Task :modules:applications:app1:compileKotlin NO-SOURCE
+> Task :modules:applications:app1:compileJava NO-SOURCE
+> Task :modules:applications:app1:processResources NO-SOURCE
+> Task :modules:applications:app1:classes UP-TO-DATE
+> Task :modules:applications:app1:jar
+> Task :modules:applications:app1:startScripts
+> Task :modules:applications:app1:distTar
+> Task :modules:applications:app1:distZip
+> Task :modules:applications:app1:assemble
+> Task :modules:applications:app1:compileTestKotlin NO-SOURCE
+> Task :modules:applications:app1:compileTestJava NO-SOURCE
+> Task :modules:applications:app1:processTestResources NO-SOURCE
+> Task :modules:applications:app1:testClasses UP-TO-DATE
+> Task :modules:applications:app1:test NO-SOURCE
+> Task :modules:applications:app1:check UP-TO-DATE
+> Task :modules:applications:app1:build
+> Task :modules:applications:app2:compileJava NO-SOURCE
+> Task :modules:applications:app2:processResources NO-SOURCE
+> Task :modules:applications:app2:classes UP-TO-DATE
+> Task :modules:applications:app2:jar
+> Task :modules:applications:app2:assemble
+> Task :modules:applications:app2:compileTestJava NO-SOURCE
+> Task :modules:applications:app2:processTestResources NO-SOURCE
+> Task :modules:applications:app2:testClasses UP-TO-DATE
+> Task :modules:applications:app2:test NO-SOURCE
+> Task :modules:applications:app2:check UP-TO-DATE
+> Task :modules:applications:app2:build
+> Task :modules:libraries:lib1:assemble
+> Task :modules:libraries:lib1:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib1:processTestResources NO-SOURCE
+> Task :modules:libraries:lib1:testClasses UP-TO-DATE
+> Task :modules:libraries:lib1:test NO-SOURCE
+> Task :modules:libraries:lib1:check UP-TO-DATE
+> Task :modules:libraries:lib1:build
+> Task :modules:libraries:lib2:compileJava NO-SOURCE
+> Task :modules:libraries:lib2:processResources NO-SOURCE
+> Task :modules:libraries:lib2:classes UP-TO-DATE
+> Task :modules:libraries:lib2:jar
+> Task :modules:libraries:lib2:assemble
+> Task :modules:libraries:lib2:compileTestJava NO-SOURCE
+> Task :modules:libraries:lib2:processTestResources NO-SOURCE
+> Task :modules:libraries:lib2:testClasses UP-TO-DATE
+> Task :modules:libraries:lib2:test NO-SOURCE
+> Task :modules:libraries:lib2:check UP-TO-DATE
+> Task :modules:libraries:lib2:build
+> Task :modules:applications:app1:clean
+> Task :modules:applications:app2:clean
+> Task :modules:libraries:lib1:clean
+> Task :modules:libraries:lib2:clean
+> Task :build-logic:plugins:validatePlugins
+> Task :build-logic:plugins:check
+> Task :build-logic:plugins:build
+> Task :buildAll
+> Task :build-logic:plugins:clean
+> Task :cleanAll
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.4/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2s
+24 actionable tasks: 24 executed
+Used daemon with pid 144103
+Total build operation time 0 ms (0 occurrences) for org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType
+Execution time 2789 ms
+
+* Stopping daemons
+Running command /home/tomga/projects/IntegraBoost/new/toolset/jvm/gradle-profiler/gradle-user-home/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim/gradle-8.4/bin/gradle --stop --gradle-user-home /home/tomga/projects/IntegraBoost/new/toolset/jvm/./gradle-profiler/gradle-user-home
+Stopping Daemon(s)
+1 Daemon stopped
+
+* Results written to /home/tomga/projects/IntegraBoost/new/toolset/jvm/./gradle-profiler/1703903706
+  /home/tomga/projects/IntegraBoost/new/toolset/jvm/./gradle-profiler/1703903706/benchmark.csv
+  /home/tomga/projects/IntegraBoost/new/toolset/jvm/./gradle-profiler/1703903706/benchmark.html
+

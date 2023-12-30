@@ -1,7 +1,11 @@
 import java.util.*
 
-registerAllTask("build")
-registerAllTask("clean")
+registerAllTask("build") {
+    println("COMING INTO BUILD")
+}
+registerAllTask("clean") {
+    println("COMING INTO CLEAN")
+}
 
 val localTaskGroup = "Local"
 
