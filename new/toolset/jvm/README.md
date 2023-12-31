@@ -1,12 +1,43 @@
+# IntegraBoost - Enhance your ability to write integration or e2e tests easily
+
 ## Work in progress
 
 ### Migrate from old to new structure
-   1. copy gradle.properties file
-   2. update readme
-   3. cleanup settings.gradle.kts file
-   4. bring in dependency conflict/duplicate identifier package
-   5. create plugins for both kotlin application and kotlin library (maybe also combine things to commons etc)
-   6. create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
+   1. bring in dependency conflict/duplicate identifier package
+      ```
+      // taken from previous branch
+      
+      build.gradle.kts
+      
+      plugins {
+      id("com.autonomousapps.dependency-analysis") version "1.26.0"
+      /*
+      Do not use `kotlin-dsl`. Under the covers it adds
+      the equivalent of id("java-library") which introduces
+      unnecessary dependencies. See: https://dev.to/autonomousapps/the-proper-care-and-feeding-of-your-gradle-build-d8g#redundant-plugins
+      */
+      //TODO Move to build-platforms/build-logic
+      `kotlin-dsl-base`
+      }
+      
+      logger.lifecycle("Kotlin build version is: $embeddedKotlinVersion")
+      
+      repositories {
+      mavenCentral()
+      }
+      
+      dependencyAnalysis {
+      issues {
+      all {
+      onAny {
+      severity("fail")
+      }
+      }
+      }
+      }
+      ```
+   2. create plugins for both kotlin application and kotlin library (maybe also combine things to commons etc)
+   3. create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
 
 ### Create script to make a new module (under modules/applications or modules/libraries)
    1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)
@@ -28,8 +59,7 @@
 
 ## Park bench ideas
 
-1. Placeholder here
-2. Placeholder 2 here
+1. Way of figuring out whether you have inadvertently regressed the top level settings.gradle.kts/build files (ie broken buildAll etc)
 
 ## Useful commands
 

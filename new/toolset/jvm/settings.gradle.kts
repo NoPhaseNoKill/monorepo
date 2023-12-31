@@ -10,14 +10,53 @@ dependencyResolutionManagement {
     repositories.mavenCentral()
 }
 
-include(":modules:applications:app1")
-project(":modules:applications:app1").projectDir = file("modules/applications/app1")
+/**
+ * This offers an alternative way of including and setting project directories.
+ *
+ * Previously you would need to do:
+ *     // library example
+ *     include(":modules:libraries:lib2")
+ *     project(":modules:libraries:lib2").projectDir = file("modules/libraries/lib2")
+ *
+ *     // application example
+ *     include(":modules:applications:app2")
+ *     project(":modules:applications:app2").projectDir = file("modules/applications/app2")
+ */
+modules {
+    libraries {
+        subproject("lib1")
+        subproject("lib2")
+    }
+    applications {
+        subproject("app1")
+        subproject("app2")
+    }
+}
 
-include(":modules:applications:app2")
-project(":modules:applications:app2").projectDir = file("modules/applications/app2")
+fun modules(configuration: Modules.() -> Unit) {
+    Modules().configuration()
+}
 
-include(":modules:libraries:lib1")
-project(":modules:libraries:lib1").projectDir = file("modules/libraries/lib1")
+class Modules {
+    fun libraries(configuration: Libraries.() -> Unit) {
+        Libraries().configuration()
+    }
 
-include(":modules:libraries:lib2")
-project(":modules:libraries:lib2").projectDir = file("modules/libraries/lib2")
+    fun applications(configuration: Applications.() -> Unit) {
+        Applications().configuration()
+    }
+
+    inner class Libraries {
+        fun subproject(projectName: String) = includeProject("libraries", projectName)
+    }
+
+    inner class Applications {
+        fun subproject(projectName: String) = includeProject("applications", projectName)
+    }
+
+    private fun includeProject(type: String, projectName: String) {
+        val fullProjectPath = ":modules:$type:$projectName"
+        include(fullProjectPath)
+        project(fullProjectPath).projectDir = file("modules/$type/$projectName")
+    }
+}
