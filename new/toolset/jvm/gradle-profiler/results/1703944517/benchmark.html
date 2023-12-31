@@ -330,7 +330,7 @@ div.controls .btn {
 <script>
 const benchmarkResult =
 {
-  "date": "2023-12-30T02:33:45.535063399Z",
+  "date": "2023-12-30T13:55:38.772426239Z",
   "environment": {
     "profilerVersion": "0.20.0",
     "operatingSystem": "linux amd64 5.15.0-91-generic"
@@ -367,10 +367,18 @@ const benchmarkResult =
           "-Dfile.encoding\u003dUTF-8",
           "-Duser.country\u003dAU",
           "-Duser.language\u003den",
-          "-Duser.variant"
+          "-Duser.variant",
+          "-Xms256m",
+          "-XX:MaxMetaspaceSize\u003d512m",
+          "-Xmx2g",
+          "-XX:+UseStringCache",
+          "-XX:+UseCompressedStrings",
+          "-XX:+OptimizeStringConcat",
+          "XX:+UseStringDeduplication",
+          "-XX:+UseLWPSynchronization",
+          "-server"
         ],
-        "systemProperties": {},
-        "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95"
+        "systemProperties": {}
       },
       "samples": [
         {
@@ -382,208 +390,7 @@ const benchmarkResult =
           "unit": "ms"
         }
       ],
-      "iterations": [
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_1",
-          "phase": "WARM_UP",
-          "iteration": 1,
-          "title": "warm-up build #1",
-          "values": {
-            "total execution time": 7463.635179,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_2",
-          "phase": "WARM_UP",
-          "iteration": 2,
-          "title": "warm-up build #2",
-          "values": {
-            "total execution time": 13608.393339,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_3",
-          "phase": "WARM_UP",
-          "iteration": 3,
-          "title": "warm-up build #3",
-          "values": {
-            "total execution time": 5284.014721,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_4",
-          "phase": "WARM_UP",
-          "iteration": 4,
-          "title": "warm-up build #4",
-          "values": {
-            "total execution time": 4607.656283,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_5",
-          "phase": "WARM_UP",
-          "iteration": 5,
-          "title": "warm-up build #5",
-          "values": {
-            "total execution time": 4347.184839,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_6",
-          "phase": "WARM_UP",
-          "iteration": 6,
-          "title": "warm-up build #6",
-          "values": {
-            "total execution time": 4090.254267,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_7",
-          "phase": "WARM_UP",
-          "iteration": 7,
-          "title": "warm-up build #7",
-          "values": {
-            "total execution time": 3842.707317,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_8",
-          "phase": "WARM_UP",
-          "iteration": 8,
-          "title": "warm-up build #8",
-          "values": {
-            "total execution time": 3682.865645,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_9",
-          "phase": "WARM_UP",
-          "iteration": 9,
-          "title": "warm-up build #9",
-          "values": {
-            "total execution time": 3749.372718,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_WARM_UP_10",
-          "phase": "WARM_UP",
-          "iteration": 10,
-          "title": "warm-up build #10",
-          "values": {
-            "total execution time": 3307.84435,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_1",
-          "phase": "MEASURE",
-          "iteration": 1,
-          "title": "measured build #1",
-          "values": {
-            "total execution time": 3199.346488,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_2",
-          "phase": "MEASURE",
-          "iteration": 2,
-          "title": "measured build #2",
-          "values": {
-            "total execution time": 3182.234522,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_3",
-          "phase": "MEASURE",
-          "iteration": 3,
-          "title": "measured build #3",
-          "values": {
-            "total execution time": 3252.230292,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_4",
-          "phase": "MEASURE",
-          "iteration": 4,
-          "title": "measured build #4",
-          "values": {
-            "total execution time": 3079.378197,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_5",
-          "phase": "MEASURE",
-          "iteration": 5,
-          "title": "measured build #5",
-          "values": {
-            "total execution time": 3036.06697,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_6",
-          "phase": "MEASURE",
-          "iteration": 6,
-          "title": "measured build #6",
-          "values": {
-            "total execution time": 3112.19213,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_7",
-          "phase": "MEASURE",
-          "iteration": 7,
-          "title": "measured build #7",
-          "values": {
-            "total execution time": 2932.017435,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_8",
-          "phase": "MEASURE",
-          "iteration": 8,
-          "title": "measured build #8",
-          "values": {
-            "total execution time": 2970.111774,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_9",
-          "phase": "MEASURE",
-          "iteration": 9,
-          "title": "measured build #9",
-          "values": {
-            "total execution time": 3015.790324,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        },
-        {
-          "id": "_dc279568_4b3e_48b2_9aa3_139c2c906fdc_performance_both_66b88b95_MEASURE_10",
-          "phase": "MEASURE",
-          "iteration": 10,
-          "title": "measured build #10",
-          "values": {
-            "total execution time": 2921.025723,
-            "SnapshotTaskInputsBuildOperationType": 0.0
-          }
-        }
-      ]
+      "iterations": []
     }
   ]
 }

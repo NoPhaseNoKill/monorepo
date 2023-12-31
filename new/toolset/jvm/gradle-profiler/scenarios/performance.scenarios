@@ -4,6 +4,7 @@ performance_both {
     daemon = warm
     measured-build-ops = ["org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType"]
     warm-ups = 10
+    jvm-args = ["-Xms256m", "-XX:MaxMetaspaceSize=512m", "-Xmx4096m"]
 }
 
 #    TODO -  ADD
