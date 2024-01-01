@@ -3,9 +3,9 @@
 ## Work in progress
 
 ### Migrate from old to new structure
-   1. Fix version conflicts now being caused by com.autonomousapps.dependency-analysis plugin
+   1. Move java plugins to kotlin plugins
    2. Create platforms equivalent and move versioning of dependency analyser into that
-   3. Move java plugins to kotlin plugins
+   3. Investigate why dependency analysis plugin can't be done as a plugin
    4. Create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
    5. Add check into tasks at root level to see whether dependency issues were introduced (update below useful command when implementing this)
    6. Ensure that cleanAll task removes top level build folder (related to projectHealth command)
@@ -39,18 +39,7 @@
 
 ## Useful commands
 
-### Iterate over the list of directories in the project root folder and include them automatically:
-
-```
-// taken from https://docs.gradle.org/current/userguide/writing_settings_files.html#settings_file_scripting
-
-rootDir.listFiles().filter { it.isDirectory && (new File(it, "build.gradle.kts").exists()) }.forEach {
-    include(it.name)
-}
-
-```
-
-### Checking project dependency health
+## Checking project dependency health
 
 ```
 ./gradlew buildHealth

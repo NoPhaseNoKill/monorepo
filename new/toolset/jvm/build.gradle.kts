@@ -1,7 +1,17 @@
 import java.util.*
 
 plugins {
-    id("integraboost.plugin.root.dependency-analysis-plugin")
+    id("com.autonomousapps.dependency-analysis") version "1.28.0"
+}
+
+dependencyAnalysis {
+    issues {
+        all {
+            onAny {
+                severity("fail")
+            }
+        }
+    }
 }
 
 registerAllTask("build") {
