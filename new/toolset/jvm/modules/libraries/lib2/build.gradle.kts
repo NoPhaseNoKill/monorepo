@@ -1,4 +1,4 @@
 plugins {
-    id("my-plugin")
+    id("integraboost-java-base-plugin")
     id("java-library")
 }

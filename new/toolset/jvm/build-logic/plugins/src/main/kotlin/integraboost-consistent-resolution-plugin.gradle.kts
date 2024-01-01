@@ -1,13 +1,8 @@
 plugins {
-    id("java")
-    id("idea")
+    id("integraboost-base-plugin")
 }
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
-
     // Enforces consistent resolution so that we don't end up with tests running against a different version than our app
     // See: https://docs.gradle.org/current/userguide/resolution_strategy_tuning.html#sec:java_consistency
     consistentResolution {
@@ -19,12 +14,5 @@ java {
 configurations.all {
     resolutionStrategy {
         failOnNonReproducibleResolution()
-    }
-}
-
-idea {
-    module {
-        isDownloadJavadoc = true
-        isDownloadSources = true
     }
 }
