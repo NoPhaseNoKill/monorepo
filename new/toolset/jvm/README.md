@@ -37,7 +37,18 @@
 
 ## Useful commands
 
-## Checking project dependency health
+### Iterate over the list of directories in the project root folder and include them automatically:
+
+```
+// taken from https://docs.gradle.org/current/userguide/writing_settings_files.html#settings_file_scripting
+
+rootDir.listFiles().filter { it.isDirectory && (new File(it, "build.gradle.kts").exists()) }.forEach {
+    include(it.name)
+}
+
+```
+
+### Checking project dependency health
 
 ```
 ./gradlew buildHealth
