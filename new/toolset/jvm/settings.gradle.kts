@@ -1,3 +1,5 @@
+import java.util.*
+
 rootProject.name = "integraboost"
 
 pluginManagement {
@@ -37,6 +39,16 @@ fun modules(configuration: Modules.() -> Unit) {
     Modules().configuration()
 }
 
+enum class ModuleType {
+    Libraries,
+    Applications;
+
+    @Override
+    override fun toString(): String {
+        return this.name.lowercase(Locale.getDefault())
+    }
+}
+
 class Modules {
     fun libraries(configuration: Libraries.() -> Unit) {
         Libraries().configuration()
@@ -47,11 +59,11 @@ class Modules {
     }
 
     inner class Libraries {
-        fun subproject(projectName: String) = includeProject("libraries", projectName)
+        fun subproject(projectName: String) = includeProject(ModuleType.Libraries.toString(), projectName)
     }
 
     inner class Applications {
-        fun subproject(projectName: String) = includeProject("applications", projectName)
+        fun subproject(projectName: String) = includeProject(ModuleType.Applications.toString(), projectName)
     }
 
     private fun includeProject(type: String, projectName: String) {

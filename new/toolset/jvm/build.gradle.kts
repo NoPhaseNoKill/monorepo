@@ -1,5 +1,9 @@
 import java.util.*
 
+plugins {
+    id("com.autonomousapps.dependency-analysis") version "1.28.0"
+}
+
 registerAllTask("build") {
     println("COMING INTO BUILD")
 }
