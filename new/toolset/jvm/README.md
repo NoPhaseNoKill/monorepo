@@ -30,6 +30,10 @@
 ## Park bench ideas
 
 1. Way of figuring out whether you have inadvertently regressed the top level settings.gradle.kts/build files (ie broken buildAll etc)
+2. Compilation improvements: https://kotlinlang.org/docs/gradle-compilation-and-caches.html
+   1. Build reports: https://kotlinlang.org/docs/gradle-compilation-and-caches.html#build-reports
+   2. Incremental compilation (precise backup): https://kotlinlang.org/docs/gradle-compilation-and-caches.html#incremental-compilation
+   3. The Kotlin daemon and how to use it with Gradle: https://kotlinlang.org/docs/gradle-compilation-and-caches.html#the-kotlin-daemon-and-how-to-use-it-with-gradle
 
 ## Useful commands
 
