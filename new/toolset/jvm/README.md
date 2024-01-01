@@ -5,6 +5,7 @@
 ### Migrate from old to new structure
    1. create plugins for both kotlin application and kotlin library (maybe also combine things to commons etc)
    2. create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
+   3. Add check into tasks at root level to see whether dependency issues were introduced (update below useful command when implementing this)
 
 ### Create script to make a new module (under modules/applications or modules/libraries)
    1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)
@@ -30,6 +31,12 @@
 1. Way of figuring out whether you have inadvertently regressed the top level settings.gradle.kts/build files (ie broken buildAll etc)
 
 ## Useful commands
+
+## Checking project dependency health
+
+```
+./gradlew buildHealth
+```
 
 ### Running the gradle profiler
 
