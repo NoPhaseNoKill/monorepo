@@ -1,5 +1,7 @@
+package integraboost.plugin.segment
+
 plugins {
-    id("integraboost-base-plugin")
+    id("integraboost.plugin.segment.base-plugin")
 }
 
 java {

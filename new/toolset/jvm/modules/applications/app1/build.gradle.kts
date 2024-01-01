@@ -1,7 +1,6 @@
 plugins {
-    id("integraboost-java-base-plugin")
+    id("integraboost.plugin.module.java-project-plugin")
     id("application")
-
 }
 
 dependencies {

@@ -2,11 +2,7 @@ plugins {
     `kotlin-dsl`
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    // TODO should this be here? Or is there a better way of doing this
+    // TODO Move this to platforms and put them in constraints
     api("com.autonomousapps.dependency-analysis:com.autonomousapps.dependency-analysis.gradle.plugin:1.28.0")
 }

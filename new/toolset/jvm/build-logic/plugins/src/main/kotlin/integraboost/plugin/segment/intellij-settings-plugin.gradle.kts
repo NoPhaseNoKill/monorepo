@@ -1,3 +1,5 @@
+package integraboost.plugin.segment
+
 plugins {
     id("idea")
 }

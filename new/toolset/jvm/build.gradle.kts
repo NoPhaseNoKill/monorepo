@@ -1,7 +1,7 @@
 import java.util.*
 
 plugins {
-    id("integraboost-dependency-analysis-plugin")
+    id("integraboost.plugin.root.dependency-analysis-plugin")
 }
 
 registerAllTask("build") {
@@ -37,8 +37,7 @@ fun registerAllTask(
 fun registerTaskEquivalents(task: Task, taskName: String) {
     // Composite builds are not a part of the tasks like subprojects and need to be 'manually' handled
     task
-        .dependsOn(
-            gradle
+        .dependsOn(gradle
                 .includedBuild("build-logic")
                 .task(":plugins:${taskName}")
                 .also {
