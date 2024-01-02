@@ -35,6 +35,11 @@
    1. Build reports: https://kotlinlang.org/docs/gradle-compilation-and-caches.html#build-reports
    2. Incremental compilation (precise backup): https://kotlinlang.org/docs/gradle-compilation-and-caches.html#incremental-compilation
    3. The Kotlin daemon and how to use it with Gradle: https://kotlinlang.org/docs/gradle-compilation-and-caches.html#the-kotlin-daemon-and-how-to-use-it-with-gradle
+3. Does grouping logic in build-logic ACTUALLY improve performance? Consider the following example:
+   1. You have some plugin which gets updated
+   2. Does this plugin then invalidate caches concurrently of each of the projects using it?
+   3. If no, how could we then have some shared logic still, but invalidate/revalidate the affected projects concurrently?
+   4. Could we make our own using coroutines instead? Or with java 21, using virtual threads?
 
 ## Useful commands
 
