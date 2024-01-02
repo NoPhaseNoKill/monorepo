@@ -3,12 +3,11 @@
 ## Work in progress
 
 ### Migrate from old to new structure
-   1. Move java plugins to kotlin plugins
-   2. Create platforms equivalent and move versioning of dependency analyser into that
-   3. Investigate why dependency analysis plugin can't be done as a plugin
-   4. Create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
-   5. Add check into tasks at root level to see whether dependency issues were introduced (update below useful command when implementing this)
-   6. Ensure that cleanAll task removes top level build folder (related to projectHealth command)
+   1. Create platforms equivalent and move versioning of dependency analyser into that
+   2. Move java plugins to kotlin plugins
+   3. Create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
+   4. Add check into tasks at root level to see whether dependency issues were introduced (update below useful command when implementing this)
+   5. Ensure that cleanAll task removes top level build folder (related to projectHealth command)
 
 ### Create script to make a new module (under modules/applications or modules/libraries)
    1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)
