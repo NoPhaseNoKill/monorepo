@@ -1,7 +1,7 @@
 package integraboost.plugin.root
 
 tasks.register("buildAll") {
-    group = "custom"
+    group = "local"
     description = "Build all subprojects"
     subprojects.forEach { subproject ->
         if (subproject.tasks.findByName("build") != null) {
@@ -11,7 +11,7 @@ tasks.register("buildAll") {
 }
 
 tasks.register("cleanAll") {
-    group = "custom"
+    group = "local"
     description = "Clean all subprojects"
     subprojects.forEach { subproject ->
         if (subproject.tasks.findByName("clean") != null) {
