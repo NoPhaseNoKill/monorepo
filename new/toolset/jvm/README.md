@@ -3,10 +3,9 @@
 ## Work in progress
 
 ### Migrate from old to new structure
-   1. Move java plugins to kotlin plugins
-   2. Create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
-   3. Add check into tasks at root level to see whether dependency issues were introduced (update below useful command when implementing this)
-   4. Ensure that cleanAll task removes top level build folder (related to projectHealth command)
+   1. Create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
+   2. Add check into tasks at root level to see whether dependency issues were introduced (update below useful command when implementing this)
+   3. Ensure that cleanAll task removes top level build folder (related to projectHealth command)
 
 ### Create script to make a new module (under modules/applications or modules/libraries)
    1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)

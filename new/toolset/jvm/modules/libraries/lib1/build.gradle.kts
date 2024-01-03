@@ -1,4 +1,3 @@
 plugins {
-    id("integraboost.plugin.module.java-project-plugin")
-    id("java-library")
+    id("integraboost.plugin.module.kotlin-project-plugin")
 }

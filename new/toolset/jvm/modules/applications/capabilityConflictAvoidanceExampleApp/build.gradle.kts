@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClass.set("integraboost.App")
+    mainClass.set("integraboost.CapabilityConflictAvoidanceExampleApp")
 }
 
 dependencies {

@@ -3,6 +3,10 @@ plugins {
     id("application")
 }
 
+application {
+    mainClass.set("integraboost.App1")
+}
+
 dependencies {
     implementation(project(":modules:libraries:lib1"))
 }
