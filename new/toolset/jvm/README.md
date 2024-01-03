@@ -3,11 +3,10 @@
 ## Work in progress
 
 ### Migrate from old to new structure
-   1. Separate platforms to logical folders/better names
-   2. Move java plugins to kotlin plugins
-   3. Create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
-   4. Add check into tasks at root level to see whether dependency issues were introduced (update below useful command when implementing this)
-   5. Ensure that cleanAll task removes top level build folder (related to projectHealth command)
+   1. Move java plugins to kotlin plugins
+   2. Create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
+   3. Add check into tasks at root level to see whether dependency issues were introduced (update below useful command when implementing this)
+   4. Ensure that cleanAll task removes top level build folder (related to projectHealth command)
 
 ### Create script to make a new module (under modules/applications or modules/libraries)
    1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)
@@ -40,6 +39,19 @@
    2. Does this plugin then invalidate caches concurrently of each of the projects using it?
    3. If no, how could we then have some shared logic still, but invalidate/revalidate the affected projects concurrently?
    4. Could we make our own using coroutines instead? Or with java 21, using virtual threads?
+4. Make a proper DSL similar to the original modules applications/libraries one, but for plugins and platforms
+   1. This will need to be an external plugin (separately managed/directory) so that the settings file can use a basic
+    setup similar to what we're doing for root
+   2. This gives you granularity between responsibilities for plugins, but also allows you dynamically configure them
+    and not have to manually include them each time
+5. Why does it feel completely wasteful having to declare constraints for dependencies in a build file, only to have
+    to declare the dependencies again AND THEN declare dependencies on the plugin level?
+   1. Duplication seems outrageous
+   2. Is the folder structure actually wrong here? Maybe plugins needs to be similar to platforms (standalone)
+    which sub-projects that define each of their own?
+   3. Is it better to actually declare the specific versions and constraints in one file and throw errors
+    when a user/person tries to manually add a dependency which does not declare both at the plugin level?
+6. Templates feel like a much better name rather than plugins
 
 ## Useful commands
 

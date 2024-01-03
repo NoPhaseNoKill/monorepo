@@ -7,5 +7,6 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("integraboost.platform:my-custom-platform"))
+    implementation(platform("integraboost.platform:base-platform"))
+    implementation(platform("integraboost.platform:capability-conflict-avoidance-example-platform"))
 }

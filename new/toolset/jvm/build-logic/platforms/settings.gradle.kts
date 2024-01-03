@@ -1,3 +1,4 @@
 rootProject.name = "platforms"
 
-include("my-custom-platform")
+include("base-platform")
+include("capability-conflict-avoidance-example-platform")
