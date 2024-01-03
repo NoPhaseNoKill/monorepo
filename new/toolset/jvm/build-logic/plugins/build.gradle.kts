@@ -3,7 +3,9 @@ plugins {
 }
 
 dependencies {
-    implementation("com.autonomousapps:dependency-analysis-gradle-plugin:1.28.0")
-    implementation("io.fuchs.gradle.classpath-collision-detector:classpath-collision-detector:0.3")
-    implementation("org.gradlex:java-ecosystem-capabilities:1.3.1")
+    implementation(platform("integraboost.platform:my-custom-platform"))
+
+    implementation("com.autonomousapps:dependency-analysis-gradle-plugin")
+    implementation("io.fuchs.gradle.classpath-collision-detector:classpath-collision-detector")
+    implementation("org.gradlex:java-ecosystem-capabilities")
 }

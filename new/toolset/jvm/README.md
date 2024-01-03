@@ -3,7 +3,7 @@
 ## Work in progress
 
 ### Migrate from old to new structure
-   1. Create platforms equivalent and move versioning of dependency analyser into that
+   1. Separate platforms to logical folders/better names
    2. Move java plugins to kotlin plugins
    3. Create some test plugin (maybe this is a platform?), which might copy across junit properties from the base plugin (ensuring parallel is set by default for example)
    4. Add check into tasks at root level to see whether dependency issues were introduced (update below useful command when implementing this)
