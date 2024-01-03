@@ -6,4 +6,5 @@ pluginManagement {
 
 plugins {
     id("integraboost.plugin.root.monorepo-modules-structure")
+    id("integraboost.plugin.root.build-scan-plugin")
 }

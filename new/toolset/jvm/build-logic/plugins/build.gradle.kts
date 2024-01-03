@@ -13,4 +13,5 @@ dependencies {
 
 
     implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin")
+    implementation("com.gradle.enterprise:com.gradle.enterprise.gradle.plugin")
 }
