@@ -15,42 +15,43 @@
       where you might want to build/compile something for re-use at the top level?
 
 ### Investigate creating profiler for build times
-   1. Remove gradle profiler
-   2. Start dirty, work way up to better. Run ./gradlew someGradleTaskHere 10 times for instance
-   3. Needs to be historically storable. 
+   1. Start dirty, work way up to better. Run ./gradlew someGradleTaskHere 10 times for instance
+   2. Needs to be historically storable. 
       1. git sha
       2. time (whatever metric that is)
       3. which specific command was run (buildAll versus compileAll versus X)
-   4. Needs to run each time gradle task is done + when committing.
-   5. Maybe docker image to isolate runs?
-   6. Needs to be run in parallel, so that you could run 20 isolated tasks, and if the longest task take took 7 seconds, 
+   3. Needs to run each time gradle task is done + when committing.
+   4. Maybe docker image to isolate runs?
+   5. Needs to be run in parallel, so that you could run 20 isolated tasks, and if the longest task take took 7 seconds, 
       7 seconds would be total amount to run this 'full process'
 
 ## Park bench ideas
 
-1. Way of figuring out whether you have inadvertently regressed the top level settings.gradle.kts/build files (ie broken buildAll etc)
-2. Compilation improvements: https://kotlinlang.org/docs/gradle-compilation-and-caches.html
+1. Fix deprecation warnings for creation of task dependency trees
+2. Way of figuring out whether you have inadvertently regressed the top level settings.gradle.kts/build files (ie broken buildAll etc)
+3. Compilation improvements: https://kotlinlang.org/docs/gradle-compilation-and-caches.html
    1. Build reports: https://kotlinlang.org/docs/gradle-compilation-and-caches.html#build-reports
    2. Incremental compilation (precise backup): https://kotlinlang.org/docs/gradle-compilation-and-caches.html#incremental-compilation
    3. The Kotlin daemon and how to use it with Gradle: https://kotlinlang.org/docs/gradle-compilation-and-caches.html#the-kotlin-daemon-and-how-to-use-it-with-gradle
-3. Does grouping logic in build-logic ACTUALLY improve performance? Consider the following example:
+4. Does grouping logic in build-logic ACTUALLY improve performance? Consider the following example:
    1. You have some plugin which gets updated
    2. Does this plugin then invalidate caches concurrently of each of the projects using it?
    3. If no, how could we then have some shared logic still, but invalidate/revalidate the affected projects concurrently?
    4. Could we make our own using coroutines instead? Or with java 21, using virtual threads?
-4. Make a proper DSL similar to the original modules applications/libraries one, but for plugins and platforms
+5. Make a proper DSL similar to the original modules applications/libraries one, but for plugins and platforms
    1. This will need to be an external plugin (separately managed/directory) so that the settings file can use a basic
     setup similar to what we're doing for root
    2. This gives you granularity between responsibilities for plugins, but also allows you dynamically configure them
     and not have to manually include them each time
-5. Why does it feel completely wasteful having to declare constraints for dependencies in a build file, only to have
+6. Why does it feel completely wasteful having to declare constraints for dependencies in a build file, only to have
     to declare the dependencies again AND THEN declare dependencies on the plugin level?
    1. Duplication seems outrageous
    2. Is the folder structure actually wrong here? Maybe plugins needs to be similar to platforms (standalone)
     which sub-projects that define each of their own?
    3. Is it better to actually declare the specific versions and constraints in one file and throw errors
     when a user/person tries to manually add a dependency which does not declare both at the plugin level?
-6. Templates feel like a much better name rather than plugins
+7. Templates feel like a much better name rather than plugins
+
 
 ## Useful commands
 
