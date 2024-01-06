@@ -3,13 +3,13 @@
 ## Purpose
 
 - A showcase of the work I do in my spare time for any future employers
-- 
+
 - A place which can house multi-language setups. The right tool for the job, rather than attempting
 to use a sledgehammer when a screwdriver would have been better
-- 
+
 - Each language or 'toolset' will then be have a structure
 which allows high throughput, but maximum accountability for the terrible code I wrote
-- 
+
 - This means I'm forced to learn from mistakes over long periods of time, as there's nothing
 more valuable than working amongst code you wrote, and having to deal with the trade-offs or short
 term decisions you may or may not have kept putting off
