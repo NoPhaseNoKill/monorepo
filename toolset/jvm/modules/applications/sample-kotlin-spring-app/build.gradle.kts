@@ -9,8 +9,8 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":sample-java-lib"))
-  implementation(project(":sample-kotlin-spring-lib"))
+  implementation(project(":modules:libraries:sample-java-lib"))
+  implementation(project(":modules:libraries:sample-kotlin-spring-lib"))
 }
 
 application {

@@ -1,3 +1,4 @@
+
 pluginManagement {
   repositories {
     gradlePluginPortal()
@@ -32,20 +33,10 @@ gradleEnterprise {
 
 rootProject.name = "integraboost"
 
-val libraries = mapOf(
-  "sample-java-lib" to "libraries",
-  "sample-kotlin-spring-lib" to "libraries",
-)
+include(":modules:libraries:sample-java-lib")
+include(":modules:libraries:sample-kotlin-spring-lib")
+include(":modules:applications:sample-kotlin-app")
+include(":modules:applications:sample-kotlin-spring-app")
 
-val applications = mapOf(
-  "sample-kotlin-app" to "applications",
-  "sample-kotlin-spring-app" to "applications",
-)
 
-val projects = libraries + applications
 
-// Allows custom declaration of paths while keeping the naming for task purposes nice and clean
-projects.forEach { (name, type) ->
-  include(":$name")
-  project(":$name").projectDir = file("modules/$type/$name")
-}

@@ -96,6 +96,29 @@ gradle-profiler --benchmark --iterations 100 --scenario-file ./gradle-profiler/s
 unset EPOCH_TIME
 ```
 
+## Walking file tree
+
+```
+   @OptIn(ExperimentalPathApi::class)
+   rootDir.toPath().visitFileTree {
+          onPreVisitDirectory { directory, _ ->
+              if (directory.name == "build") {
+                  directory.toFile().deleteRecursively()
+                  FileVisitResult.SKIP_SUBTREE
+              } else {
+                  FileVisitResult.CONTINUE
+              }
+          }
+     
+          onVisitFile { file, _ ->
+              if (file.extension == "class") {
+                  file.deleteExisting()
+              }
+              FileVisitResult.CONTINUE
+          }
+      }
+```
+
 ### Influence repositories I found along the way
 https://github.com/blundell/monorepo
 https://github.com/CXwudi/modern-gradle-template
