@@ -9,4 +9,16 @@ import lombok.Value;
 @Value
 public class OldMessageModel {
   String message;
+
+  public OldMessageModel(String message) {
+    this.message = message;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public OldMessageModel() {
+    this.message = null;
+  }
 }
