@@ -6,3 +6,13 @@ plugins {
   id("com.gradle.enterprise")
   id("org.gradle.toolchains.foojay-resolver-convention")
 }
+
+buildCache {
+  local {
+    isEnabled = true
+    isPush = true
+    removeUnusedEntriesAfterDays = 1
+
+    directory = File(rootDir, "build-cache")
+  }
+}

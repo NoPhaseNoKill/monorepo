@@ -1,0 +1,37 @@
+/*
+    This is used for the sole purpose of setting the build-cache directory so that we can have a
+    shared location across each settings.gradle.kts file. Without this, due to the ordering that
+    things are run, we get warnings in our build scan.
+
+    Note: To access closures which are required when accessing particular properties here, this file needs
+    to be groovy.
+
+    BUILD SCAN WARNING
+        The build cache configuration of the root build differs from the build cache configuration of
+        the early evaluated ':plugins', ':settings' included builds. It is recommended to keep them
+        consistent, see here https://docs.gradle.org/8.5/userguide/build_cache.html#sec:build_cache_composite
+
+    CURRENT ORDERING
+        1. gradle/settings
+        2. gradle/plugins
+        3. rootDir
+        4. gradle/platform
+
+    TO CHECK ORDERING IN FUTURE
+         allprojects {
+             val buildCachePath = file("build-cache").path
+             println("Build cache dir: $buildCachePath")
+        }
+
+    ERRORS WHEN WRITTEN IN KOTLIN
+        ^ Type mismatch: inferred type is ([Error type: Cannot infer a lambda parameter type])
+ */
+gradle.projectsLoaded {
+    extensions.extraProperties.set("buildCachePath", file("build-cache").path)
+}
+
+
+
+
+
+

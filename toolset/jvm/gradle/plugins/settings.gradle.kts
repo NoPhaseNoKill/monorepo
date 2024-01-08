@@ -31,12 +31,16 @@ toResolvedDirectories.forEach { dir ->
 }
 
 
-buildCache {
-  local {
-    isEnabled = true
-    isPush = true
-    removeUnusedEntriesAfterDays = 1
+gradle.projectsEvaluated {
+  val buildCachePath = extra.get("buildCachePath") as String
 
-    directory = File(rootDir, "../../build-cache")
+  buildCache {
+    local {
+      isEnabled = true
+      isPush = true
+      removeUnusedEntriesAfterDays = 1
+
+      directory = File(buildCachePath)
+    }
   }
 }
