@@ -24,13 +24,6 @@ plugins {
   id("my.root-settings-plugins")
 }
 
-gradleEnterprise {
-  buildScan {
-    termsOfServiceUrl = "https://gradle.com/terms-of-service"
-    termsOfServiceAgree = "yes"
-  }
-}
-
 rootProject.name = "integraboost"
 
 include(":modules:libraries:sample-java-lib")
@@ -38,5 +31,19 @@ include(":modules:libraries:sample-kotlin-spring-lib")
 include(":modules:applications:sample-kotlin-app")
 include(":modules:applications:sample-kotlin-spring-app")
 
+gradleEnterprise {
+  buildScan {
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
+  }
+}
 
+buildCache {
+  local {
+    isEnabled = true
+    isPush = true
+    removeUnusedEntriesAfterDays = 1
 
+    directory = File(rootDir, "build-cache")
+  }
+}

@@ -10,3 +10,14 @@ dependencyResolutionManagement {
 }
 
 include("root-settings-plugins")
+
+
+buildCache {
+  local {
+    isEnabled = true
+    isPush = true
+    removeUnusedEntriesAfterDays = 1
+
+    directory = File(rootDir, "../../build-cache")
+  }
+}

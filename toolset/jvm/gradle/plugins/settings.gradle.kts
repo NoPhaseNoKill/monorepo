@@ -29,3 +29,14 @@ toResolvedDirectories.forEach { dir ->
     include("$dir:${it.name}")
   }
 }
+
+
+buildCache {
+  local {
+    isEnabled = true
+    isPush = true
+    removeUnusedEntriesAfterDays = 1
+
+    directory = File(rootDir, "../../build-cache")
+  }
+}
