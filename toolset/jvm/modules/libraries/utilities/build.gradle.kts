@@ -3,7 +3,7 @@
  */
 
 plugins {
-    id("gradle.monorepo.test.kotlin-library-conventions")
+    id("kotlin-library-conventions")
 }
 
 dependencies {

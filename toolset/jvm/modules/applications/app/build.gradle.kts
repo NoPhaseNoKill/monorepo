@@ -3,7 +3,7 @@
  */
 
 plugins {
-    id("gradle.monorepo.test.kotlin-application-conventions")
+    id("kotlin-application-conventions")
 }
 
 dependencies {
@@ -13,5 +13,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("gradle.monorepo.test.app.AppKt")
+    mainClass.set("app.AppKt")
 }

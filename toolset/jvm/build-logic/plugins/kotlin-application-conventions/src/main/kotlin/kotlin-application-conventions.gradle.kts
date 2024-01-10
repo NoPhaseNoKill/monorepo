@@ -4,7 +4,7 @@
 
 plugins {
     // Apply the common convention plugin for shared build configuration between library and application projects.
-    id("gradle.monorepo.test.kotlin-common-conventions")
+    id("kotlin-common-conventions")
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application

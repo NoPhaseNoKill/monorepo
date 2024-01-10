@@ -14,7 +14,7 @@ pluginManagement {
 }
 
 plugins {
-    id("gradle.monorepo.test.kotlin-project-root-settings")
+    id("kotlin-project-root-settings")
 }
 
 rootProject.name = "jvm"
