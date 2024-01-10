@@ -52,14 +52,6 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
 5. Needs to be run in parallel, so that you could run 20 isolated tasks, and if the longest task take took 7 seconds,
    7 seconds would be total amount to run this 'full process'
 
-### Investigate concurrent locks on init.gradle
-
-Investigate whether concurrently doing this with something like a lock is beneficial so we only set it once.
-
-There may or may not be strange issues if someone chooses to set/override properties (during parallelism), where
-we end up in a position where the value it ends up with for the root is incorrect
-
-
 ## Park bench ideas
 
 1. Fix deprecation warnings for creation of task dependency trees
@@ -104,16 +96,6 @@ gradle-profiler --benchmark --iterations 100 --scenario-file ./gradle-profiler/s
 unset EPOCH_TIME
 ```
 
-## Get order of loaded settings/build files
-```
-
-    // $rootDir/init.gradle.kts
-    allprojects {
-        val buildCachePath = file("build-cache").path
-        println("Build cache dir: ${buildCachePath}")
-    }
-```
-
 ## Walking file tree
 
 ```
@@ -140,4 +122,3 @@ unset EPOCH_TIME
 ### Influence repositories I found along the way
 https://github.com/blundell/monorepo
 https://github.com/CXwudi/modern-gradle-template
-

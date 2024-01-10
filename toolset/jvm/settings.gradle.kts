@@ -38,17 +38,12 @@ gradleEnterprise {
   }
 }
 
+buildCache {
+  local {
+    isEnabled = true
+    isPush = true
+    removeUnusedEntriesAfterDays = 1
 
-gradle.projectsEvaluated {
-  val buildCachePath = extra.get("buildCachePath") as String
-
-  buildCache {
-    local {
-      isEnabled = true
-      isPush = true
-      removeUnusedEntriesAfterDays = 1
-
-      directory = File(buildCachePath)
-    }
+    directory = File(rootDir, "build-cache")
   }
 }
