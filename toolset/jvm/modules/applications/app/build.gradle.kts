@@ -1,12 +1,7 @@
 plugins {
-    id("kotlin-application-conventions")
+    id("kotlin-application-plugin")
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-text")
-    implementation(project(":modules:libraries:utilities"))
-    implementation(project(":modules:libraries:list"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    api(project(":modules:libraries:utilities"))
 }
-
-

@@ -1,12 +1,15 @@
 dependencyResolutionManagement {
     repositories {
         gradlePluginPortal()
+        google()
     }
     includeBuild("../platforms")
 }
 
+
 rootProject.name = "plugins"
 
-include("kotlin-base-conventions")
-include("kotlin-application-conventions")
-include("kotlin-library-conventions")
+include("commons-plugin")
+include("java-library-plugin")
+include("kotlin-library-plugin")
+include("kotlin-application-plugin")
