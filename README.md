@@ -119,6 +119,80 @@ unset EPOCH_TIME
       }
 ```
 
+### Rename package structure
+
+```
+        val path = "/home/tomga/projects/gradle-project-setup-howto"
+        val renameFrom = "com.example"
+        val renameTo = "com.nophasenokill"
+
+
+        fun rescursive() {
+            val rootDir = File(path)
+
+            fun getPart(value: String): Pair<String, String> {
+                val left = value.split(".").first()
+                val right = value.split(".").last()
+                return left to right
+            }
+
+            val fromPart = getPart(renameFrom)
+            try {
+                rootDir.toPath().visitFileTree {
+                    onPreVisitDirectory { directory, _ ->
+                        if(directory.isDirectory()) {
+                            if(directory.fileName.toString() == fromPart.second) {
+                                val newPathName = renameTo.replace(".", "/").replace(fromPart.first + "/", "")
+                                val newPath = directory.parent.resolve(newPathName)
+                                println("Renaming: ${directory.toFile()}")
+                                directory.toFile().renameTo(newPath.toFile())
+                                println("Renamed to: ${newPath.toFile()}")
+                                FileVisitResult.TERMINATE
+                            }
+                        }
+
+                        FileVisitResult.CONTINUE
+                    }
+                }
+            } catch (e: Exception) {
+                rescursive()
+            }
+        }
+
+        val rootDir = File(path)
+
+
+        fun getPart(value: String): Pair<String, String> {
+            val left = value.split(".").first()
+            val right = value.split(".").last()
+            return left to right
+        }
+
+        val fromPart = getPart(renameFrom)
+        
+        try {
+            @OptIn(ExperimentalPathApi::class)
+            rootDir.toPath().visitFileTree {
+                onPreVisitDirectory { directory, _ ->
+                    if(directory.isDirectory()) {
+                        if(directory.fileName.toString() == fromPart.second) {
+                            val newPathName = renameTo.replace(".", "/").replace(fromPart.first + "/", "")
+                            val newPath = directory.parent.resolve(newPathName)
+                            println("Renaming: ${directory.toFile()}")
+                            directory.toFile().renameTo(newPath.toFile())
+                            println("Renamed to: ${newPath.toFile()}")
+                        }
+                    }
+
+                    FileVisitResult.CONTINUE
+                }
+            }
+        } catch (e: Exception) {
+            rescursive()
+        }
+    }
+```
+
 ### Influence repositories I found along the way
 https://github.com/blundell/monorepo
 https://github.com/CXwudi/modern-gradle-template
