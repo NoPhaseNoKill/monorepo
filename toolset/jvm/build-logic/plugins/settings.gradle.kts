@@ -5,12 +5,6 @@ dependencyResolutionManagement {
     includeBuild("../platforms")
 }
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-    }
-}
-
 rootProject.name = "plugins"
 
 include("kotlin-base-conventions")
