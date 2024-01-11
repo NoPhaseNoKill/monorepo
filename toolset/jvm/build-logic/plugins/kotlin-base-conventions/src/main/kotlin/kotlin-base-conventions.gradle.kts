@@ -42,6 +42,8 @@ kotlin {
 }
 
 dependencies {
+    implementation(platform("com.nophasenokill.platform:base-platform"))
+
     constraints {
         implementation("org.apache.commons:commons-text:1.10.0")
     }
