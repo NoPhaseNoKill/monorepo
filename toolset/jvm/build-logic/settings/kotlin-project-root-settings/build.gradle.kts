@@ -5,7 +5,12 @@ plugins {
 
 
 dependencies {
-   platform(":platforms:plugins-platform")
+    println("name: ${platform(":platforms:plugins-platform").name}")
+    println("version: ${platform(":platforms:plugins-platform").version}")
+    println("group: ${platform(":platforms:plugins-platform").group}")
+    // println("group: ${platform(":platforms:plugins-platform").group}")
+    // implementation(platform(":platforms:plugins-platform"))
+   // platform(":platforms:plugins-platform")
     // println("${project("com.nophasenokill.platform.platforms:plugins-platform")}")
     // println(implementation("com.nophasenokill.platform:platforms:plugins-platform"))
 
