@@ -10,7 +10,6 @@ dependencyResolutionManagement {
 rootProject.name = "plugins"
 
 include("commons-plugin")
-include("base-kotlin-plugin")
+include("java-library-plugin")
 include("kotlin-library-plugin")
 include("kotlin-application-plugin")
-include("capability-conflict-avoidance-plugin")
