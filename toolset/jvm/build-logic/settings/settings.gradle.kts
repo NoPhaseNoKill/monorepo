@@ -1,11 +1,6 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-    }
-}
-
 dependencyResolutionManagement {
     repositories {
+        gradlePluginPortal()
         mavenCentral()
     }
     includeBuild("../platforms")
