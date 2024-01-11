@@ -1,4 +1,10 @@
-// Include all subfolders that contain a 'build.gradle.kts' as subprojects
-rootDir.listFiles()?.filter { File(it, "build.gradle.kts").exists() }?.forEach { subproject ->
-    include(subproject.name)
+// Dynamically includes top level directories within each of the modules' sub-folders
+val directories = setOf("applications", "libraries")
+directories.forEach { dir ->
+    rootDir
+        .resolve("modules/${dir}")
+        .listFiles { file -> file.isDirectory && !file.isHidden }
+        ?.forEach {
+            include("modules:$dir:${it.name}")
+    }
 }
