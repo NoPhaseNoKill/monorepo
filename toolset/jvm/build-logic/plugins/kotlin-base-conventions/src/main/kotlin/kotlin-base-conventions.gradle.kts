@@ -47,9 +47,8 @@ dependencies {
     constraints {
         implementation("org.apache.commons:commons-text:1.10.0")
     }
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-    // implementation("io.fuchs.gradle.classpath-collision-detector:classpath-collision-detector")
 
+    testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 }

@@ -9,6 +9,8 @@ javaPlatform.allowDependencies()
 dependencies {
     api(platform("org.jetbrains.kotlin:kotlin-bom:1.9.20"))
 
+    api(platform("org.junit:junit-bom:5.10.0"))
+
     constraints {
         api("com.autonomousapps:dependency-analysis-gradle-plugin:1.28.0")
         api("io.fuchs.gradle.classpath-collision-detector:classpath-collision-detector:0.3")
