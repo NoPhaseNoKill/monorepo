@@ -5,5 +5,5 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    api("org.jetbrains.kotlin:kotlin-stdlib")
 }
