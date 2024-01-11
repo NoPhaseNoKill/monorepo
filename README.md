@@ -78,6 +78,18 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
     3. Is it better to actually declare the specific versions and constraints in one file and throw errors
        when a user/person tries to manually add a dependency which does not declare both at the plugin level?
 7. Templates feel like a much better name rather than plugins
+8. Feels like you should absolutely have some logger/gradle property which effectively alerts the user if it's
+a 'near' miss when settings up repositories. Feels like an absolute no-brainer, and I have wasted a good month
+coming to the conclusion that this was what was causing my issues this whole time. Absolutely dreadful API, 0 feedback
+and about a zillion chances to shoot yourself in the foot here.
+   1. It's almost mandatory IMO that there should be some form of debug mode which easily allows turning on/off the deps,
+   what they're being resolved to when trying to include them, the versions, group, name etc
+
+## Gradle learnings
+1. Due to multiple build scripts running concurrently for composite builds, rather than a single entrypoint, misconfigurations of 
+setting up your repositories will fail silently and are extremely hard to diagnose. This means when running tasks again,
+unless you have a very specific idea of which tasks you're expecting to run (aka the number of them in larger projects),
+you're most likely going to trip yourself up at some stage. 
 
 
 ## Useful commands
