@@ -4,6 +4,12 @@ plugins {
 
 group = "com.nophasenokill.platform"
 
+configurations.api.get().dependencies.map { d -> println("${d.toDeclaredString()}") }
+configurations.runtime.get().dependencies.map { d -> d.toDeclaredString() }
+
+fun Dependency.toDeclaredString() = "$group:$name:$version"
+fun DependencyConstraint.toDeclaredString() = "$group:$name:$version"
+
 javaPlatform.allowDependencies()
 
 dependencies {

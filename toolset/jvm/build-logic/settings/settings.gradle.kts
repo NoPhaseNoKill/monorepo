@@ -1,10 +1,16 @@
 dependencyResolutionManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-    includeBuild("../platforms")
+    repositories.gradlePluginPortal()
+    // includeBuild("../platforms")
 }
+
+// dependencyResolutionManagement {
+//     repositories {
+//         gradlePluginPortal()
+//         mavenCentral()
+//     }
+
+// }
+
 
 rootProject.name = "settings"
 

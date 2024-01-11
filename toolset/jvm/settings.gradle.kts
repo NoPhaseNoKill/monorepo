@@ -1,26 +1,9 @@
-import com.google.gson.GsonBuilder
-
 pluginManagement {
-    repositories {
-        gradlePluginPortal()
-    }
     includeBuild("build-logic/settings")
-    includeBuild("build-logic/plugins")
-}
-
-
-dependencyResolutionManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-    }
-
-    includeBuild("build-logic/platforms")
 }
 
 plugins {
     id("kotlin-project-root-settings")
-
 }
 
 rootProject.name = "jvm"
