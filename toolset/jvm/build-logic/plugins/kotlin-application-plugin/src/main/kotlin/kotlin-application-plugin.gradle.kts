@@ -1,9 +1,4 @@
 plugins {
-    id("commons-plugin")
-    id("org.jetbrains.kotlin.jvm")
+    id("base-kotlin-plugin")
     id("application")
-}
-
-dependencies {
-    implementation(kotlin("stdlib"))
 }
