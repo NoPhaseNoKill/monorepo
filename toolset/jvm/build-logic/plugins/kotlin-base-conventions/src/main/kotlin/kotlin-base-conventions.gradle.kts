@@ -34,7 +34,6 @@ plugins {
     id("io.fuchs.gradle.classpath-collision-detector")
     id("org.gradlex.java-ecosystem-capabilities")
     id("idea")
-
 }
 
 kotlin {
@@ -44,9 +43,7 @@ kotlin {
 dependencies {
     implementation(platform("com.nophasenokill.platform:base-platform"))
 
-    constraints {
-        implementation("org.apache.commons:commons-text:1.10.0")
-    }
+    implementation("org.apache.commons:commons-text")
 
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
