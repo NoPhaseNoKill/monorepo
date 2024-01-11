@@ -11,6 +11,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        gradlePluginPortal()
         mavenCentral()
     }
 
@@ -19,6 +20,7 @@ dependencyResolutionManagement {
 
 plugins {
     id("kotlin-project-root-settings")
+
 }
 
 rootProject.name = "jvm"
