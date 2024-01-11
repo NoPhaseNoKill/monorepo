@@ -8,6 +8,15 @@ pluginManagement {
     includeBuild("build-logic/plugins")
 }
 
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+
+    includeBuild("build-logic/platforms")
+}
+
 plugins {
     id("kotlin-project-root-settings")
 }

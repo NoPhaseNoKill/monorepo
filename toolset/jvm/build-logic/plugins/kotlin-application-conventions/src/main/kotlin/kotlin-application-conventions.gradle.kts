@@ -1,4 +1,4 @@
 plugins {
-    id("kotlin-common-conventions")
+    id("kotlin-base-conventions")
     application
 }

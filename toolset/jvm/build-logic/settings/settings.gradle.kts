@@ -1,8 +1,14 @@
-dependencyResolutionManagement {
-    // Reuse version catalog from the main build.
-    versionCatalogs {
-        create("libs") { from(files("../../gradle/libs.versions.toml")) }
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
     }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+    includeBuild("../platforms")
 }
 
 rootProject.name = "settings"

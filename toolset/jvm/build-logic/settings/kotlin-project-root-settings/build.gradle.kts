@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.kotlin.gradle.plugin)
-    implementation(libs.foojay.resolver)
-    implementation(libs.gradle.enterprise)
+    implementation("org.gradle.toolchains:foojay-resolver")
+    implementation("com.gradle.enterprise:com.gradle.enterprise.gradle.plugin")
+    implementation(platform("com.nophasenokill.platform:base-platform"))
 }
