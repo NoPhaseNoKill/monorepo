@@ -85,7 +85,7 @@ gradle.taskGraph.whenReady {
 
         val taskOutputs: List<TaskSnapshotOutput> = task.outputs.files.asFileTree.files.map { file ->
             TaskSnapshotOutput(file.name, file.path)
-        }.sortedByDescending { it.name }
+        }.sortedByDescending { it.name } // As per docs: "The order of the files in a FileTree is not stable"
 
         TaskSnapshot(
             task.project.name,
