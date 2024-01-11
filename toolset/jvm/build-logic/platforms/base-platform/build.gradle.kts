@@ -4,7 +4,11 @@ plugins {
 
 group = "com.nophasenokill.platform"
 
+javaPlatform.allowDependencies()
+
 dependencies {
+    api(platform("org.jetbrains.kotlin:kotlin-bom:1.9.20"))
+
     constraints {
         api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20")
         api("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
