@@ -29,7 +29,10 @@ dependencies {
 
         api("org.gradle.toolchains:foojay-resolver:0.7.0")
         api("com.gradle.enterprise:com.gradle.enterprise.gradle.plugin:3.16.1")
-        api( "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+
+        api(runtime("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3"))
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
+
         api("org.apache.commons:commons-text:1.10.0")
     }
 }

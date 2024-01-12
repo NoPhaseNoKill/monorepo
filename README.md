@@ -134,75 +134,53 @@ unset EPOCH_TIME
 ### Rename package structure
 
 ```
-        val path = "/home/tomga/projects/gradle-project-setup-howto"
-        val renameFrom = "com.example"
-        val renameTo = "com.nophasenokill"
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import java.io.IOException
+import java.nio.file.*
+import java.nio.file.attribute.BasicFileAttributes
 
 
-        fun rescursive() {
-            val rootDir = File(path)
-
-            fun getPart(value: String): Pair<String, String> {
-                val left = value.split(".").first()
-                val right = value.split(".").last()
-                return left to right
-            }
-
-            val fromPart = getPart(renameFrom)
-            try {
-                rootDir.toPath().visitFileTree {
-                    onPreVisitDirectory { directory, _ ->
-                        if(directory.isDirectory()) {
-                            if(directory.fileName.toString() == fromPart.second) {
-                                val newPathName = renameTo.replace(".", "/").replace(fromPart.first + "/", "")
-                                val newPath = directory.parent.resolve(newPathName)
-                                println("Renaming: ${directory.toFile()}")
-                                directory.toFile().renameTo(newPath.toFile())
-                                println("Renamed to: ${newPath.toFile()}")
-                                FileVisitResult.TERMINATE
-                            }
-                        }
-
-                        FileVisitResult.CONTINUE
-                    }
-                }
-            } catch (e: Exception) {
-                rescursive()
-            }
-        }
-
-        val rootDir = File(path)
-
-
-        fun getPart(value: String): Pair<String, String> {
-            val left = value.split(".").first()
-            val right = value.split(".").last()
-            return left to right
-        }
-
-        val fromPart = getPart(renameFrom)
+class SomeTest {
+    @Test
+    fun `should rename directories based on group and platform`() {
         
-        try {
-            @OptIn(ExperimentalPathApi::class)
-            rootDir.toPath().visitFileTree {
-                onPreVisitDirectory { directory, _ ->
-                    if(directory.isDirectory()) {
-                        if(directory.fileName.toString() == fromPart.second) {
-                            val newPathName = renameTo.replace(".", "/").replace(fromPart.first + "/", "")
-                            val newPath = directory.parent.resolve(newPathName)
-                            println("Renaming: ${directory.toFile()}")
-                            directory.toFile().renameTo(newPath.toFile())
-                            println("Renamed to: ${newPath.toFile()}")
+        // Example usage
+        val startingDir = "/home/tomga/projects/test-file-project"
+        val from = "org/example"
+        val to = "com/nophasenokill"
+
+        renameDirectoriesRecursively(startingDir, from, to)
+    }
+
+    fun renameDirectoriesRecursively(startingDir: String, from: String, to: String) {
+        val startingPath = Paths.get(startingDir)
+        val fromPath = Paths.get(from)
+        val toPath = Paths.get(to)
+
+        Files.walkFileTree(startingPath, object : SimpleFileVisitor<Path>() {
+            @Throws(IOException::class)
+            override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
+                if (dir.endsWith(fromPath)) {
+                    val newDir = startingPath.resolve(dir.toString().replace(fromPath.toString(), toPath.toString()))
+                    Files.move(dir, newDir, StandardCopyOption.REPLACE_EXISTING)
+
+                    // Remove empty parent directories
+                    var parent = dir.parent
+                    while (parent != null && !parent.equals(startingPath)) {
+                        if (parent.toFile().list().isEmpty()) {
+                            Files.delete(parent)
                         }
+                        parent = parent.parent
                     }
 
-                    FileVisitResult.CONTINUE
+                    return FileVisitResult.SKIP_SUBTREE
                 }
+                return FileVisitResult.CONTINUE
             }
-        } catch (e: Exception) {
-            rescursive()
-        }
+        })
     }
+}
 ```
 
 ### Influence repositories I found along the way
