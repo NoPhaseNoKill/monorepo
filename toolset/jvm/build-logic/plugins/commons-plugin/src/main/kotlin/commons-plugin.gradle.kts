@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    // id("org.jetbrains.kotlin.jvm")
 }
 
 
@@ -10,7 +11,6 @@ java {
 }
 
 dependencies {
-    testImplementation(platform("com.nophasenokill.platform:test-platform"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
