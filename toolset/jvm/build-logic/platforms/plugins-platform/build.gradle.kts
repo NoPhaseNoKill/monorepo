@@ -18,8 +18,6 @@ dependencies {
 
     constraints {
         api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20")
-        api("org.jetbrains.kotlin:kotlin-stdlib-common:1.9.20")
-        api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
 
         api("org.apache.commons:commons-text:1.10.0")
 
