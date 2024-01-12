@@ -4,12 +4,6 @@ plugins {
 
 group = "com.nophasenokill.platform"
 
-configurations.api.get().dependencies.map { d -> println("${d.toDeclaredString()}") }
-configurations.runtime.get().dependencies.map { d -> d.toDeclaredString() }
-
-fun Dependency.toDeclaredString() = "$group:$name:$version"
-fun DependencyConstraint.toDeclaredString() = "$group:$name:$version"
-
 javaPlatform.allowDependencies()
 
 dependencies {
@@ -28,10 +22,6 @@ dependencies {
         api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
 
         api("org.apache.commons:commons-text:1.10.0")
-
-        // api("org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:1.9.20")
-        // api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin")
-
 
         api("com.autonomousapps:dependency-analysis-gradle-plugin:1.28.0")
         api("io.fuchs.gradle.classpath-collision-detector:classpath-collision-detector:0.3")
