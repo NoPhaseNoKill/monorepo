@@ -16,7 +16,7 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    // Get components from Maven Central
+    // Allows retrieval of actual dependencies declared by the platform
     repositories.mavenCentral()
 
     when(rootProject.name) {

@@ -5,9 +5,7 @@ plugins {
 
 dependencyAnalysis {
     issues {
-        // configure for all projects
         all {
-            // set behavior for all issue types
             onAny {
                 severity("fail")
             }
