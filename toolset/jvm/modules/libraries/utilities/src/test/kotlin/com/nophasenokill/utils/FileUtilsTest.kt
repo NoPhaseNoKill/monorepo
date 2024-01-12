@@ -1,17 +1,18 @@
 package com.nophasenokill.utils
 
 import org.junit.jupiter.api.Test
+import java.io.File
 import java.io.IOException
 import java.nio.file.*
 import java.nio.file.attribute.BasicFileAttributes
+import kotlin.io.path.pathString
 
 class FileUtilsTest {
 
     @Test
-    fun `should rename directories based on group and platform`() {
-
+    fun `should rename directories recursively`() {
         // Example usage
-        val startingDir = "/home/tomga/projects/test-file-project"
+        val startingDir = "/home/tomga/projects/gradle-project-setup-howto"
         val from = "org/example"
         val to = "com/nophasenokill"
 
@@ -28,6 +29,9 @@ class FileUtilsTest {
             override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
                 if (dir.endsWith(fromPath)) {
                     val newDir = startingPath.resolve(dir.toString().replace(fromPath.toString(), toPath.toString()))
+                    if(!File(newDir.pathString).exists()) {
+                        File(newDir.pathString).mkdirs()
+                    }
                     Files.move(dir, newDir, StandardCopyOption.REPLACE_EXISTING)
 
                     // Remove empty parent directories
