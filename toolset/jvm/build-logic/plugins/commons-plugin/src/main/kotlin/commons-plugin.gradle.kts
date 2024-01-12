@@ -34,3 +34,9 @@ tasks.register("compileAll") {
     description = "Compile all Java code"
     dependsOn(tasks.withType<JavaCompile>())
 }
+
+tasks.register("testAll") {
+    group = LifecycleBasePlugin.BUILD_GROUP
+    description = "Test all Java code"
+    dependsOn(tasks.withType<Test>())
+}
