@@ -25,7 +25,7 @@ dependencyResolutionManagement {
             includeBuild("build-logic/platforms")
         }
         "platforms" -> {
-            println("Dependency management for project: ${rootProject.name} is NOT including a build as it should already be configurd")
+            println("Dependency management for project: ${rootProject.name} is NOT including a build as it should already be configured")
         } // do nothing as platforms already configured
         else -> throw Exception("Unknown root project. Please fix: kotlin-project-root-repositories.settings.gradle.kts")
     }

@@ -17,8 +17,7 @@ term decisions you may or may not have kept putting off
 
 ## Current work in progress - IntegraBoost - Enhance your ability to write integration or e2e tests easily
 
-
-### Inspiration/purpsoe
+### Inspiration/purpose
 
 1. Feel as though there's just so much wasted time with config and build systems in JVM land
 2. Astonishing that out of the box there is no easy to way have high performance tests setup
@@ -26,13 +25,43 @@ term decisions you may or may not have kept putting off
 the need to support legacy systems, performance is on the back burner
 4. This takes the approach that testing speeds are way too slow the majority of the time for what
 they could be, and aims to investigate pragmatic ways of solving something people are 'just used to'
-5. The current endgoal feels like a full test product, which allows you to:
+5. The current end goal feels like a full test product, which allows you to:
    1. Detect regressions (in terms of both speed for individual tasks and overall time). Meaning that you may
     never have realised you introduced regressions, or a regression alongside an improvement that balanced each other out
    2. It focuses on how we might reduce what is universally considered 'slow' tests (integration/e2e tests)
    3. Parallelism and concurrently are on by default
    4. New java version comes out? Cool we upgrading due to speed improvements
 6. Make writing code fun again, by not having to have wait for so much compilation!
+
+### Current short-term roadmap
+
+1. Create new module representing the renaming of package structure and copy across contents of script from README 
+
+2. Fix script for renaming package structure to include:
+   1. Renaming files too
+   2. Renaming any strings referenced in each of the files
+   3. This should enable us move to next item in roadmap, which is copying the tasks from here: https://github.com/jjohannes/gradle-project-setup-howto/tree/main/gradle/plugins/dependency-analysis-plugins
+
+3. Copy task that checks the dependencies for a module, and ensures they meet the following requirements:
+   1. Alphabetical order
+   2. Don't have version declared (should be pulling these in through platforms)
+   3. Checks that versions declared in platform are actually used and are consistent with consistent resolution result
+   4. Scoping is correct and outputs useful errors/suggestions if
+      not
+Note: Should be able to pretty much copy/paste after running our script for renaming package structures with a few slight modifications
+
+4. Gradle config regressions can be fixed by using plugin testing
+    1. We can then verify if we have regressed anything with our 'dependency adherence plugins', 
+    by systematically testing prior expectations 
+    2. This offers the fastest feedback loop
+    3. Every other task would depend on this one
+    4. This ensures that we validate our gradle scripts functionality before even running anything, and fail fast
+    5. It also allows us to assert that from X commit we have coverage against Y,Z regressions which allow much faster upgrades
+
+5. Now that we have all of gradle plugin functionality tested, we can copy across previous modules one-by-one 
+to new structure, see: https://github.com/NoPhaseNoKill/monorepo/tree/285b90b6334971b2978ed0954c0220f0914ca917/modules
+
+6. Add better output of logging for plugin/dependency management print statements in [kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
 
 ### Create script to make a new module (under modules/applications or modules/libraries)
 1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)
@@ -88,7 +117,20 @@ and about a zillion chances to shoot yourself in the foot here.
    1. Should throw error if you don't configure it
    2. Should iterate over any files with the name 'App', and find the one with the code: 'fun main(' , which indicates
    that this is the main method
-      
+10. Create library which is a wrapper around gradle to manage files/file trees easily
+    1. Gradle's APIs feel extremely clunky and unintuitive
+    2. This may form the start/creation of the DSL (see point 5)
+11. Performance profile file encodings (UTF-8 versus UTF-16 versus X)
+12. IntelliJ performance for creating indexes is mind-bogglingly slow
+    1. Can we just autogenerate this? 
+       1. If yes, instead of Java/Kotlin, this most likely should be built in C
+       2. Before starting this, ensure you benchmark/profile properly, and validate this ASSUMPTION (which is what it
+       is atm, it's just an assumption and NOT fact)
+    2. From a given project, we should actually have well-defined inputs/outputs which enable us to thoroughly test this
+    3. Downside of this is that we're tied to a version of intellij possibly - whereby bugs/nwe features may affect this
+    4. Upside if that even if we have this downside, slowly we build an interface for the functionality expected by
+    IntelliJ and can actually post REAL fixes based on specific versions
+     
 ## Gradle learnings
 1. Due to multiple build scripts running concurrently for composite builds, rather than a single entrypoint, misconfigurations of 
 setting up your repositories will fail silently and are extremely hard to diagnose. This means when running tasks again,
