@@ -84,7 +84,11 @@ coming to the conclusion that this was what was causing my issues this whole tim
 and about a zillion chances to shoot yourself in the foot here.
    1. It's almost mandatory IMO that there should be some form of debug mode which easily allows turning on/off the deps,
    what they're being resolved to when trying to include them, the versions, group, name etc
-
+9. Create custom task which automatically sets application main class rather than manual configuration
+   1. Should throw error if you don't configure it
+   2. Should iterate over any files with the name 'App', and find the one with the code: 'fun main(' , which indicates
+   that this is the main method
+      
 ## Gradle learnings
 1. Due to multiple build scripts running concurrently for composite builds, rather than a single entrypoint, misconfigurations of 
 setting up your repositories will fail silently and are extremely hard to diagnose. This means when running tasks again,
