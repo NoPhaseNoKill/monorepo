@@ -7,10 +7,6 @@ dependencyResolutionManagement {
     repositories.gradlePluginPortal()
 }
 
-plugins {
-    id("kotlin-project-root-settings")
-}
-
 rootProject.name = "platforms"
 
 include("plugins-platform")

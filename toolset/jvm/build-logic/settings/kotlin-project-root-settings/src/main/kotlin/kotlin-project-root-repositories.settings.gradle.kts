@@ -4,14 +4,11 @@ pluginManagement {
 
     when(rootProject.name) {
         "jvm" -> {
-            println("Plugin management for project: ${rootProject.name} is including a build: includeBuild(\"build-logic/plugins\")")
             includeBuild("build-logic/plugins")
         }
-        "platforms" -> {
-            println("Plugin management for project: ${rootProject.name} is including a build: includeBuild(\"../plugins\")")
-            includeBuild("../plugins")
+        else -> {
+            alertUserToMisconfiguration("pluginManagement")
         }
-        else -> throw Exception("Unknown root project. Please fix: kotlin-project-root-repositories.settings.gradle.kts")
     }
 }
 
@@ -24,9 +21,32 @@ dependencyResolutionManagement {
             println("Dependency management for project: ${rootProject.name} is including build:includeBuild(\"build-logic/platforms\")")
             includeBuild("build-logic/platforms")
         }
-        "platforms" -> {
-            println("Dependency management for project: ${rootProject.name} is NOT including a build as it should already be configured")
-        } // do nothing as platforms already configured
-        else -> throw Exception("Unknown root project. Please fix: kotlin-project-root-repositories.settings.gradle.kts")
+        else -> {
+            alertUserToMisconfiguration("dependencyResolutionManagement")
+        }
     }
+}
+
+@Throws(Exception::class)
+fun alertUserToMisconfiguration(managementType: String) {
+    /*
+        Two line before/two line after message is intentional so error is easier to read due to gradle formatting being
+        difficult to read in terminal. Glance value becomes hard otherwise.
+     */
+    val message = """
+        
+        
+        Attempted '${managementType}' for unknown root project: '${rootProject.name}'.
+        
+        The only project that should be attempting this is 'jvm' which is the root of the multi-project, composite build.
+        
+        Most likely causes are:
+            - Cause 1: Applying 'kotlin-project-root-settings' plugin to anything EXCEPT the settings.gradle.kts inside of jvm root dir
+            - Cause 2: You have changed the jvm root dir settings file in a way which now includes another project's settings file.
+        
+        If you need a starting point, try looking at: '${rootProject.projectDir.toPath()}/settings.gradle.kts'.
+        
+        
+    """.trimIndent()
+    throw Exception(message)
 }
