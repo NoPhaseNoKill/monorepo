@@ -94,7 +94,7 @@ you're most likely going to trip yourself up at some stage.
 
 ## Useful commands
 
-## Checking project dependency health
+### Checking project dependency health
 
 ```
 ./gradlew build
@@ -108,7 +108,7 @@ gradle-profiler --benchmark --iterations 100 --scenario-file ./gradle-profiler/s
 unset EPOCH_TIME
 ```
 
-## Walking file tree
+### Walking file tree
 
 ```
    @OptIn(ExperimentalPathApi::class)
@@ -188,6 +188,35 @@ class FileUtilsTest {
     }
 }
 ```
+
+## Random unrelated scripts
+
+
+### Convert youtube video between two timestamps to mp3
+
+Example: This downloads the song 'glitter' from a tiny desk clip of Tyler the Creator
+
+1. Go to: https://github.com/yt-dlp/yt-dlp/releases/latest
+2. Download linux version: https://github.com/yt-dlp/yt-dlp/releases/download/2023.12.30/yt-dlp_linux
+3. Assuming downloaded file is in ~/Downloads, run the following. Note: 'N1w-hDiJ4dM' for the output file name can be replaced with anything if you want
+   ```
+   ./yt-dlp_linux "https://www.youtube.com/watch?v=N1w-hDiJ4dM" -o N1w-hDiJ4dM.webm
+   ```
+4. Run below to convert to mp3:
+   1. '797' is the start time in seconds
+   2. '340' is the duration you want to clip it for in seconds
+   3. 'glitter.mp3' is the output
+   ```
+   ffmpeg -ss 797 -t 340 -i N1w-hDiJ4dM.webm -vn -ab 128k glitter.mp3
+   ```
+5. Create and copy song to desktop directory named 'spotify-songs'
+   ```
+   mkdir spotify-songs && cp glitter.mp3 ~/Desktop/spotify-songs
+   ```
+6. Run below to add song tag metadata (in this case the title and artist):
+   ```
+   id3v2 -t "Glitter" -a "Tyler the Creator" ~/Desktop/spotify-songs/glitter.mp3
+   ```
 
 ### Influence repositories I found along the way
 https://github.com/blundell/monorepo
