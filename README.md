@@ -62,6 +62,7 @@ Note: Should be able to pretty much copy/paste after running our script for rena
 to new structure, see: https://github.com/NoPhaseNoKill/monorepo/tree/285b90b6334971b2978ed0954c0220f0914ca917/modules
 
 6. Add better output of logging for plugin/dependency management print statements in [kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
+7. Add folder in build-logic named tasks, and have sub-folders java/kotlin/root tasks etc 
 
 ### Create script to make a new module (under modules/applications or modules/libraries)
 1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)
