@@ -24,7 +24,7 @@ tasks.withType<JavaCompile>().configureEach {
 dependencies {
     // this allows use to declare non-versioned dependencies inside each project
     // ie: implementation("org.apache.commons:commons-text")
-    implementation(platform("com.nophasenokill.platform:plugins-platform"))
+    implementation(platform("com.nophasenokill.platforms:platforms"))
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

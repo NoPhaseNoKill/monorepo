@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("com.nophasenokill.platform:plugins-platform"))
+    implementation(platform("com.nophasenokill.platforms:platforms"))
 
     implementation(project(":commons-plugin"))
 }
