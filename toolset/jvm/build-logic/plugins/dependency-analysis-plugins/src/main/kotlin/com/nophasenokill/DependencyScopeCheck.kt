@@ -15,10 +15,15 @@ abstract class DependencyScopeCheck : AbstractPostProcessingTask() {
     fun check() {
         val projectAdvice = projectAdvice().dependencyAdvice
         if (projectAdvice.isNotEmpty()) {
-            val toAdd = projectAdvice.filter { it.toConfiguration != null && it.toConfiguration != "runtimeOnly" }
+
+            val toAdd = projectAdvice
+                .filter { it.toConfiguration != null && it.toConfiguration != "runtimeOnly" }
                 .map { it.declaration(it.toConfiguration) }.sorted()
+
             val toRemove =
-                projectAdvice.filter { it.fromConfiguration != null }.map { it.declaration(it.fromConfiguration) }
+                projectAdvice
+                    .filter { it.fromConfiguration != null }
+                    .map { it.declaration(it.fromConfiguration) }
                     .sorted()
 
             throw RuntimeException(

@@ -27,6 +27,7 @@ abstract class DependencyFormatCheck : DefaultTask() {
     fun check() {
         declaredDependencies.get().forEach { (scope, dependencies) ->
             if (shouldNotHaveVersions.get()) {
+
                 dependencies.forEach { coordinates ->
                     if (coordinates.count { it == ':' } == 2 && !coordinates.startsWith("org.jetbrains.kotlin:kotlin-stdlib:")) {
                         throw RuntimeException("""
@@ -51,7 +52,6 @@ abstract class DependencyFormatCheck : DefaultTask() {
                     "com.nophasenokill.platform:plugins-platform",
                     "com.nophasenokill.platform:test-platform",
                     "org.junit.jupiter:junit-jupiter-engine",
-                    "org.junit.jupiter:junit-jupiter"
                 )
             }
             val sortedProject = declaredInBuildFile.filter { it.startsWith(":") }.sorted()
