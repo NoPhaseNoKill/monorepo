@@ -50,7 +50,6 @@ abstract class DependencyFormatCheck : DefaultTask() {
                 // Ignore dependencies that are defined in commons plugins. Found inside commons-plugin.gradle.kts
                 it !in listOf(
                     "com.nophasenokill.platform:plugins-platform",
-                    "com.nophasenokill.platform:test-platform",
                     "org.junit.jupiter:junit-jupiter-engine",
                 )
             }

@@ -16,6 +16,8 @@ dependencies {
         because("It matches the version of 1.9.20 for kotlin bom")
     }
 
+    api(platform("org.junit:junit-bom:5.10.1"))
+
     constraints {
         api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20")
 

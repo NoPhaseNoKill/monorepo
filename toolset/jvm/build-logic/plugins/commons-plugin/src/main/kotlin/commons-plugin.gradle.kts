@@ -20,12 +20,11 @@ tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
 }
 
-// Configure common test runtime dependencies for all projects
+// Configure common dependencies for all projects
 dependencies {
     // this allows use to declare non-versioned dependencies inside each project
     // ie: implementation("org.apache.commons:commons-text")
     implementation(platform("com.nophasenokill.platform:plugins-platform"))
-    implementation(platform("com.nophasenokill.platform:test-platform"))
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
