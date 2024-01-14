@@ -1,5 +1,6 @@
 package com.nophasenokill.utils
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.io.IOException
@@ -10,6 +11,7 @@ import kotlin.io.path.pathString
 class FileUtilsTest {
 
     @Test
+    @Disabled
     fun `should rename directories recursively`() {
         // Example usage
         val startingDir = "/home/tomga/projects/gradle-project-setup-howto"

@@ -18,6 +18,11 @@ kotlin {
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
+    /*
+        Setting the release flag ensures the specified language level is used regardless of which compiler actually performs the compilation.
+        For more details: https://docs.gradle.org/current/userguide/building_java_projects.html#sec:compiling_with_release
+     */
+    options.release.set(javaLanguageVersion.asInt())
 }
 
 // Configure common dependencies for all projects
