@@ -1,10 +1,19 @@
 pluginManagement {
-    // Get community plugins from the Gradle Plugin Portal
+    /*
+        Unsure whether we actually need this line, works fine without, but may be needed in the future.
+        Was previously used to get community plugins.
+     */
     repositories.gradlePluginPortal()
 
     when(rootProject.name) {
         "jvm" -> {
             includeBuild("build-logic/plugins")
+        }
+        "platform" -> {
+            includeBuild("../plugins")
+        }
+        "plugins" -> {
+            // already have everything we need
         }
         else -> {
             alertUserToMisconfiguration("pluginManagement")
@@ -13,13 +22,20 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    // Allows retrieval of actual dependencies declared by the platform
-    repositories.mavenCentral()
-
     when(rootProject.name) {
         "jvm" -> {
-            println("Dependency management for project: ${rootProject.name} is including build:includeBuild(\"build-logic/platforms\")")
+            repositories.mavenCentral() // Allows retrieval of actual dependencies declared by the platform
             includeBuild("build-logic/platform")
+        }
+        "platform" -> {
+            // allows for delegation of dependency resolution discovery to each of the platform plugins
+            repositories.gradlePluginPortal()
+        }
+        "plugins" -> {
+            // explicitly gradle plugin portal because we only want to search for our convention plugins,
+            // where the convention plugins delegate the dependency retrieval to the platform
+            repositories.gradlePluginPortal()
+            includeBuild("../platform")
         }
         else -> {
             alertUserToMisconfiguration("dependencyResolutionManagement")
@@ -38,11 +54,19 @@ fun alertUserToMisconfiguration(managementType: String) {
         
         Attempted '${managementType}' for unknown root project: '${rootProject.name}'.
         
-        The only project that should be attempting this is 'jvm' which is the root of the multi-project, composite build.
+        The only projects that should be attempting this are:
+            - jvm
+            - plugins
+            - platform 
         
-        Most likely causes are:
-            - Cause 1: Applying 'kotlin-project-root-settings' plugin to anything EXCEPT the settings.gradle.kts inside of jvm root dir
-            - Cause 2: You have changed the jvm root dir settings file in a way which now includes another project's settings file.
+        If you have added a new project (that is NOT in modules/libraries or modules/applications) which requires 
+        access to 'kotlin-project-root-settings', please configure this inside of: 
+        
+            kotlin-project-root-repositories.settings.gradle.kts.
+        
+        Otherwise, most likely causes are:
+            - Cause 1: Applying 'kotlin-project-root-settings' plugin to anything OTHER THAN (jvm|plugins|platform) settings' files
+            - Cause 2: You have changed any of the (jvm|plugins|platform) settings' files in a way which now includes another project's settings file.
         
         If you need a starting point, try looking at: '${rootProject.projectDir.toPath()}/settings.gradle.kts'.
         

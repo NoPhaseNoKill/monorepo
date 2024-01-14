@@ -136,7 +136,10 @@ and about a zillion chances to shoot yourself in the foot here.
 1. Due to multiple build scripts running concurrently for composite builds, rather than a single entrypoint, misconfigurations of 
 setting up your repositories will fail silently and are extremely hard to diagnose. This means when running tasks again,
 unless you have a very specific idea of which tasks you're expecting to run (aka the number of them in larger projects),
-you're most likely going to trip yourself up at some stage. 
+you're most likely going to trip yourself up at some stage. To fix this type of issue, I have created an attempt to
+protect/make it as hard as possible for people to trip themselves up. 
+See: [settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fsettings.gradle.kts) and
+[kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
 
 
 ## Useful commands
