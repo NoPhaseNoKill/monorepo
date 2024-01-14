@@ -7,4 +7,5 @@ dependencies {
     testImplementation(platform("com.nophasenokill.platform:test-platform"))
 
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    implementation(project(":dependency-analysis-plugins"))
 }

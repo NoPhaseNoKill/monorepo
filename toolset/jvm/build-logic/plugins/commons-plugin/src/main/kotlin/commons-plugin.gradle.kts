@@ -4,7 +4,6 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
 }
 
-// Configure Java/Kotlin compilation on java/kotlin {} extension or directly on 'JavaCompile' tasks
 val javaLanguageVersion = JavaLanguageVersion.of(17)
 
 java {
@@ -21,7 +20,13 @@ tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
 }
 
+// Configure common test runtime dependencies for all projects
 dependencies {
+    // this allows use to declare non-versioned dependencies inside each project
+    // ie: implementation("org.apache.commons:commons-text")
+    implementation(platform("com.nophasenokill.platform:plugins-platform"))
+    implementation(platform("com.nophasenokill.platform:test-platform"))
+
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
