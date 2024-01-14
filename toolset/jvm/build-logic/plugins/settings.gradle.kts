@@ -3,7 +3,7 @@ dependencyResolutionManagement {
     // where the convention plugins delegate the dependency retrieval to the platform
     repositories.gradlePluginPortal()
 
-    includeBuild("../platforms")
+    includeBuild("../platform")
 }
 
 

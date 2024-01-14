@@ -37,8 +37,8 @@ abstract class DependencyFormatCheck : DefaultTask() {
                             
                                 ${scope}("${coordinates.substring(0, coordinates.lastIndexOf(':'))}")
                             
-                            All versions must be declared in 'build-logic/platforms'.
-                            If the version is not yet defined there, add the following to 'build-logic/platforms/build.gradle.kts':
+                            All versions must be declared in 'build-logic/platform'.
+                            If the version is not yet defined there, add the following to 'build-logic/platform/build.gradle.kts':
                             
                                 api("$coordinates")
                         """.trimIndent())
@@ -49,7 +49,7 @@ abstract class DependencyFormatCheck : DefaultTask() {
             val declaredInBuildFile = dependencies.filter {
                 // Ignore dependencies that are defined in commons plugins. Found inside commons-plugin.gradle.kts
                 it !in listOf(
-                    "com.nophasenokill.platforms:platforms",
+                    "com.nophasenokill.platform:platform",
                     "org.junit.jupiter:junit-jupiter-engine",
                 )
             }

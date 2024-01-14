@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     when(rootProject.name) {
         "jvm" -> {
             println("Dependency management for project: ${rootProject.name} is including build:includeBuild(\"build-logic/platforms\")")
-            includeBuild("build-logic/platforms")
+            includeBuild("build-logic/platform")
         }
         else -> {
             alertUserToMisconfiguration("dependencyResolutionManagement")

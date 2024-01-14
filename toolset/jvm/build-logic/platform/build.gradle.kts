@@ -2,7 +2,7 @@ plugins {
     id("java-platform")
 }
 
-group = "com.nophasenokill.platforms"
+group = "com.nophasenokill.platform"
 
 javaPlatform.allowDependencies()
 
