@@ -4,19 +4,40 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
 }
 
-val javaLanguageVersion = JavaLanguageVersion.of(21)
+/*
+    Basic benchmarking indicates speed improves of NON-GENERIC function of anywhere between 1.5-4x.
+    Considering it's 381 -> 1357 or 157976 -> 282628 nanoseconds, probably doesn't matter.
+    Could be worth it if we start to use this everywhere
+ */
+fun <T : Any> getLazilyEvaluatedValue(value: T): Provider<T> = provider { value }
 
+val javaVersion = getLazilyEvaluatedValue(JavaVersion.VERSION_21)
+val currentJavaVersion = getLazilyEvaluatedValue(JavaVersion.current())
+val javaLanguageVersion = getLazilyEvaluatedValue(JavaLanguageVersion.of(javaVersion.get().toString()))
+val buildJavaHome = getLazilyEvaluatedValue(System.getProperty("java.home"))
+
+gradle.beforeProject {
+    if (currentJavaVersion.get() != javaVersion.get()) {
+        throw GradleException("This build requires JDK ${javaVersion.get()}. It's currently ${buildJavaHome.get()}.")
+    }
+}
+
+// See: https://kotlinlang.org/docs/gradle-configure-project.html#check-for-jvm-target-compatibility-of-related-compile-tasks
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
     jvmTargetValidationMode.set(org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode.ERROR)
 }
 
 java {
-    toolchain.languageVersion.set(javaLanguageVersion)
+    toolchain{
+        vendor = JvmVendorSpec.MICROSOFT
+        languageVersion = javaLanguageVersion.get()
+    }
 }
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(javaLanguageVersion)
+        vendor = JvmVendorSpec.MICROSOFT
+        languageVersion = javaLanguageVersion.get()
     }
 }
 
@@ -26,7 +47,7 @@ tasks.withType<JavaCompile>().configureEach {
         Setting the release flag ensures the specified language level is used regardless of which compiler actually performs the compilation.
         For more details: https://docs.gradle.org/current/userguide/building_java_projects.html#sec:compiling_with_release
      */
-    options.release.set(javaLanguageVersion.asInt())
+    options.release.set(javaLanguageVersion.get().asInt())
 }
 
 /*
@@ -38,7 +59,6 @@ tasks.jar {
     from(sourceSets.main.get().output)
     from(sourceSets.main.get().kotlin.classesDirectory)
 }
-
 
 // Configure common dependencies for all projects
 dependencies {
