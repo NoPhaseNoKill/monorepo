@@ -35,22 +35,7 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
 
 ### Current short-term roadmap
 
-1. Create new module representing the renaming of package structure and copy across contents of script from README 
-
-2. Fix script for renaming package structure to include:
-   1. Renaming files too
-   2. Renaming any strings referenced in each of the files
-   3. This should enable us move to next item in roadmap, which is copying the tasks from here: https://github.com/jjohannes/gradle-project-setup-howto/tree/main/gradle/plugins/dependency-analysis-plugins
-
-3. Copy task that checks the dependencies for a module, and ensures they meet the following requirements:
-   1. Alphabetical order
-   2. Don't have version declared (should be pulling these in through platforms)
-   3. Checks that versions declared in platform are actually used and are consistent with consistent resolution result
-   4. Scoping is correct and outputs useful errors/suggestions if
-      not
-Note: Should be able to pretty much copy/paste after running our script for renaming package structures with a few slight modifications
-
-4. Gradle config regressions can be fixed by using plugin testing
+1. Gradle config regressions can be fixed by using plugin testing
     1. We can then verify if we have regressed anything with our 'dependency adherence plugins', 
     by systematically testing prior expectations 
     2. This offers the fastest feedback loop
@@ -58,11 +43,14 @@ Note: Should be able to pretty much copy/paste after running our script for rena
     4. This ensures that we validate our gradle scripts functionality before even running anything, and fail fast
     5. It also allows us to assert that from X commit we have coverage against Y,Z regressions which allow much faster upgrades
 
-5. Now that we have all of gradle plugin functionality tested, we can copy across previous modules one-by-one 
+2. Now that we have all of gradle plugin functionality tested, we can copy across previous modules one-by-one 
 to new structure, see: https://github.com/NoPhaseNoKill/monorepo/tree/285b90b6334971b2978ed0954c0220f0914ca917/modules
 
-6. Add better output of logging for plugin/dependency management print statements in [kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
-7. Add folder in build-logic named tasks, and have sub-folders java/kotlin/root tasks etc 
+3. Add better output of logging for plugin/dependency management print statements in [kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
+4. Add folder in build-logic named tasks, and have sub-folders java/kotlin/root tasks etc 
+5. Split each singular dependency into its own project, so we can get maximum concurrency. This means each
+node in the tree gets its own project, but would be responsible for a singular fetch -> enabling extremely high speeds
+when fetching packages and configuring projects
 
 ### Create script to make a new module (under modules/applications or modules/libraries)
 1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)
