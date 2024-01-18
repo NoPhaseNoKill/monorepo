@@ -119,7 +119,31 @@ and about a zillion chances to shoot yourself in the foot here.
     3. Downside of this is that we're tied to a version of intellij possibly - whereby bugs/nwe features may affect this
     4. Upside if that even if we have this downside, slowly we build an interface for the functionality expected by
     IntelliJ and can actually post REAL fixes based on specific versions
-     
+13. File reproducibility around concurrency. Consider carefully what value we choose in future
+    1. See: https://docs.gradle.org/current/userguide/working_with_files.html#sec:reproducible_archives
+    2. To me, it wasn't immediately obvious why, but the context is:
+
+        - Archives are based on timestamps
+
+        - Different computers (remote cache, versus local, versus dev to dev)
+          would then technically have different inputs and outputs
+
+        - This would render the cache a miss even on the same inputs/outputs with
+          the only difference being WHEN it was run
+
+        - This can be confusing where conceptually most people have thought
+          this would be a build cache hit (and it now is).
+
+    Note: While there is currently no need to have this on, there may come a time
+    where we do want to render it a build cache miss. The first example that
+    springs to mind is something like:
+    - Scheduled task
+    - Runs on CI every night
+    - It's based on the latest git sha/commit in the repo
+    - This may mean if someone doesn't commit to said repo, you still want the build cache
+      to miss, because this represents two consecutive days (separate from each other)
+    - However, I'd argue this then just modelled with the wrong inputs/outputs
+
 ## Gradle learnings
 1. Due to multiple build scripts running concurrently for composite builds, rather than a single entrypoint, misconfigurations of 
 setting up your repositories will fail silently and are extremely hard to diagnose. This means when running tasks again,
