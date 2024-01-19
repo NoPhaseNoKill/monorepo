@@ -3,7 +3,7 @@ import com.nophasenokill.DependencyFormatCheck
 import com.nophasenokill.DependencyScopeCheck
 
 plugins {
-    id("java")
+    id("org.jetbrains.kotlin.jvm")
 }
 
 val checkDependencyFormatting = tasks.register<DependencyFormatCheck>("checkDependencyFormatting") {
@@ -26,7 +26,6 @@ val checkDependencyScopes = tasks.register<DependencyScopeCheck>("checkDependenc
 }
 
 tasks.check {
-    println("Check task of project: ${project.name} depends on checkDependencyFormatting and checkDependencyScopes")
     dependsOn(checkDependencyFormatting)
     dependsOn(checkDependencyScopes)
 }

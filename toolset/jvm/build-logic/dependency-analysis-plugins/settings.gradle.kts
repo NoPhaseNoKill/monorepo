@@ -1,6 +1,7 @@
 
 pluginManagement {
     repositories.gradlePluginPortal()
+    includeBuild("../plugins")
 }
 
 dependencyResolutionManagement {
@@ -8,9 +9,9 @@ dependencyResolutionManagement {
     // where the convention plugins delegate the dependency retrieval to the platform
     repositories.gradlePluginPortal()
     includeBuild("../platform")
+
 }
 
 rootProject.name = "dependency-analysis-plugins"
 
-include("dependency-analysis-platform")
 include("dependency-analysis-project")
