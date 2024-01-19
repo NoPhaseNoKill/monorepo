@@ -1,10 +1,8 @@
-pluginManagement {
-//    includeBuild("build-logic/settings")
-}
 
 dependencyResolutionManagement {
-    repositories.gradlePluginPortal()  // forces underlying modules to use our own convention plugins
+
     includeBuild("build-logic/plugins")
+    repositories.gradlePluginPortal()  // ensures that we have access to our own convention plugins
 
     // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
     repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
