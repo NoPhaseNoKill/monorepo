@@ -3,6 +3,8 @@ plugins {
     id("com.autonomousapps.dependency-analysis") version "1.28.0"
 }
 
+group = "com.nophasenokill.jvm"
+
 dependencyAnalysis {
     issues {
         all {
