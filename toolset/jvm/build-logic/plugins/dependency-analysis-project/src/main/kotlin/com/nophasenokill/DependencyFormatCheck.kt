@@ -48,6 +48,7 @@ abstract class DependencyFormatCheck : DefaultTask() {
 
             val declaredInBuildFile = dependencies.filter {
                 // Ignore dependencies that are defined in commons plugins. Found inside commons-plugin.gradle.kts
+                // This is currently duplicated with platform/project
                 it !in listOf(
                     "com.nophasenokill.platform:platform",
                     "org.junit.jupiter:junit-jupiter-engine",

@@ -7,5 +7,4 @@ dependencies {
     implementation(project(":commons-plugin"))
     implementation("com.autonomousapps:dependency-analysis-gradle-plugin")
     implementation(project(":dependency-analysis-project"))
-//    implementation(":dependency-analysis-project:dependency-analysis-project")
 }

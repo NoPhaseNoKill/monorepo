@@ -26,6 +26,7 @@ val checkDependencyScopes = tasks.register<DependencyScopeCheck>("checkDependenc
 }
 
 tasks.check {
+    println("Check task of project: ${project.name} depends on checkDependencyFormatting and checkDependencyScopes")
     dependsOn(checkDependencyFormattingProject)
     dependsOn(checkDependencyScopes)
 }
