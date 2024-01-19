@@ -66,8 +66,6 @@ tasks.withType<AbstractArchiveTask>().configureEach {
     isReproducibleFileOrder = true
 }
 
-
-
 // Configure common dependencies for all projects
 dependencies {
     // this allows use to declare non-versioned dependencies inside each project
