@@ -3,7 +3,7 @@ pluginManagement {
 }
 
 plugins {
-    id("kotlin-project-root-settings")
+    id("kotlin-project-root-repositories")
 }
 
 rootProject.name = "plugins"
