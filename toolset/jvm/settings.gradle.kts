@@ -2,8 +2,16 @@ pluginManagement {
     includeBuild("build-logic/settings")
 }
 
+dependencyResolutionManagement {
+    repositories.gradlePluginPortal()  // forces underlying modules to use our own convention plugins
+    includeBuild("build-logic/plugins")
+
+    // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
+}
+
+
 plugins {
-    id("kotlin-project-root-repositories")
     id("com.gradle.enterprise") version "3.15.1"
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0"
 }
