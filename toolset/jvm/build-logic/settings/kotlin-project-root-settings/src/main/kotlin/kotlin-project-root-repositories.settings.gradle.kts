@@ -4,14 +4,9 @@ pluginManagement {
         Was previously used to get community plugins.
      */
     repositories.gradlePluginPortal()
+    println("ROOT IS FOR PLUGIN MANAGEMENT: ${rootProject.name}")
 
     when(rootProject.name) {
-        "jvm" -> {
-            includeBuild("build-logic/plugins")
-        }
-        "platform" -> {
-            includeBuild("../plugins")
-        }
         "plugins" -> {
             // already have everything we need
         }
@@ -22,15 +17,8 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
+    println("ROOT IS FOR DEPENDENCY MANAGEMENT: ${rootProject.name}")
     when(rootProject.name) {
-        "jvm" -> {
-            repositories.mavenCentral() // Allows retrieval of actual dependencies declared by the platform
-            includeBuild("build-logic/platform")
-        }
-        "platform" -> {
-            // allows for delegation of dependency resolution discovery to each of the platform plugins
-            repositories.gradlePluginPortal()
-        }
         "plugins" -> {
             // explicitly gradle plugin portal because we only want to search for our convention plugins,
             // where the convention plugins delegate the dependency retrieval to the platform
