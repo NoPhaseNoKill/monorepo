@@ -1,5 +1,5 @@
 pluginManagement {
-    includeBuild("build-logic/settings")
+//    includeBuild("build-logic/settings")
 }
 
 dependencyResolutionManagement {
