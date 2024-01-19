@@ -1,8 +1,6 @@
 
-
 pluginManagement {
     repositories.gradlePluginPortal()
-//    includeBuild("../settings")
 }
 
 dependencyResolutionManagement {
@@ -12,13 +10,7 @@ dependencyResolutionManagement {
     includeBuild("../platform")
 }
 
-plugins {
-//    id("kotlin-project-root-repositories")
-}
+rootProject.name = "dependency-analysis-plugins"
 
-rootProject.name = "plugins"
-
-include("commons-plugin")
-include("kotlin-library-plugin")
-include("kotlin-application-plugin")
-//include("dependency-analysis-plugins")
+include("dependency-analysis-platform")
+include("dependency-analysis-project")

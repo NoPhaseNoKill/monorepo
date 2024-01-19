@@ -1,6 +1,6 @@
 plugins {
     id("java-platform")
-    id("com.nophasenokill.dependency-analysis-platform")
+//    id("com.nophasenokill.dependency-analysis-platform")
 }
 
 group = "com.nophasenokill.platform"
