@@ -12,6 +12,6 @@ dependencyResolutionManagement {
 
 }
 
-rootProject.name = "dependency-analysis-plugins"
+rootProject.name = "dependency-analysis"
 
 include("dependency-analysis-project")

@@ -1,6 +1,6 @@
 pluginManagement {
     repositories {
-        includeBuild("../dependency-analysis-plugins")
+        includeBuild("../dependency-analysis")
         includeBuild("../plugins")
 
     }
