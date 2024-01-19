@@ -1,11 +1,19 @@
 
 
 pluginManagement {
-    includeBuild("../settings")
+    repositories.gradlePluginPortal()
+//    includeBuild("../settings")
+}
+
+dependencyResolutionManagement {
+    // explicitly gradle plugin portal because we only want to search for our convention plugins,
+    // where the convention plugins delegate the dependency retrieval to the platform
+    repositories.gradlePluginPortal()
+    includeBuild("../platform")
 }
 
 plugins {
-    id("kotlin-project-root-repositories")
+//    id("kotlin-project-root-repositories")
 }
 
 rootProject.name = "plugins"
