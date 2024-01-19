@@ -8,5 +8,4 @@ dependencies {
 
     implementation("com.autonomousapps:dependency-analysis-gradle-plugin")
     implementation(project(":dependency-analysis-project"))
-
 }

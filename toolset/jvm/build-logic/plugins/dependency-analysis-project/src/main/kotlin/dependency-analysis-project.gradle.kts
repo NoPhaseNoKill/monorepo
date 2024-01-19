@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
 }
 
-val checkDependencyFormatting = tasks.register<DependencyFormatCheck>("checkDependencyFormatting") {
+val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("checkDependencyFormattingProject") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
 
     buildFilePath.set(project.buildFile.absolutePath)
@@ -22,11 +22,11 @@ val checkDependencyFormatting = tasks.register<DependencyFormatCheck>("checkDepe
 
 val checkDependencyScopes = tasks.register<DependencyScopeCheck>("checkDependencyScopes") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
-    shouldRunAfter(checkDependencyFormatting)
+    shouldRunAfter(checkDependencyFormattingProject)
 }
 
 tasks.check {
-    dependsOn(checkDependencyFormatting)
+    dependsOn(checkDependencyFormattingProject)
     dependsOn(checkDependencyScopes)
 }
 
