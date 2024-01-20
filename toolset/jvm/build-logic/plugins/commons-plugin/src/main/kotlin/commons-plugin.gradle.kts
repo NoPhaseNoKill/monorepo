@@ -48,6 +48,21 @@ tasks.withType<JavaCompile>().configureEach {
         For more details: https://docs.gradle.org/current/userguide/building_java_projects.html#sec:compiling_with_release
      */
     options.release.set(javaLanguageVersion.get().asInt())
+
+    /*
+        Runs the compiler as a separate process
+
+        Specifically:
+
+        "Gradle reuses this process within the duration the build, so the forking overhead is minimal.
+        By forking memory-intensive compilation into a separate process, we minimize garbage collection in the main
+        Gradle process. Less garbage collection means that Gradle’s infrastructure can run faster, especially when
+        you also use parallel builds."
+
+        For more details: https://docs.gradle.org/current/userguide/performance.html#optimize_the_compiler
+     */
+
+    options.isFork = true
 }
 
 /*

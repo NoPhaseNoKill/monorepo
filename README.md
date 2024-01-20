@@ -35,7 +35,24 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
 
 ### Current short-term roadmap
 
-1. Gradle config regressions can be fixed by using plugin testing
+1. Check parallelism against build scan and confirm that all currently known 'requirements' are met. See: https://docs.gradle.org/current/userguide/performance.html
+   1. Are long running tasks being initiated as soon as possible?
+   2. Check to see explicitly what gradle means here: https://docs.gradle.org/current/userguide/performance.html#additional_configuration_cache_benefits
+      1. While working locally/creating this plugin, do we actually want dependency resolution results cached?
+   3. Search for not cacheable tasks in the build scan. Is there anything included here that shouldn't be?
+   4. https://docs.gradle.org/current/userguide/performance.html#create_builds_for_specific_developer_workflows
+   5. Optimize dependency resolution, namely: 'repository order', 'count', 'dynamic versus snapshot versions',
+   'avoiding dependency resolution during configuration', 'remove slow or unaffected downloads'. All can be found at:
+      https://docs.gradle.org/current/userguide/performance.html#dependency_resolution
+   6. Reduce issue where the project has large 'ripple effects' when making single change. Most likely cause is:
+   https://docs.gradle.org/current/userguide/performance.html#switch_internal_only_dependencies_to_implementation_visibility
+   7. Ensure that incremental compilation is absolutely on and working by doing:
+    tasks.withType<JavaCompile>().configureEach {
+    options.isIncremental = true
+    }
+   8. Running tests in parallel: https://docs.gradle.org/current/userguide/performance.html#optimize_java_projects
+
+2. Gradle config regressions can be fixed by using plugin testing
     1. We can then verify if we have regressed anything with our 'dependency adherence plugins', 
     by systematically testing prior expectations 
     2. This offers the fastest feedback loop
@@ -43,12 +60,12 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
     4. This ensures that we validate our gradle scripts functionality before even running anything, and fail fast
     5. It also allows us to assert that from X commit we have coverage against Y,Z regressions which allow much faster upgrades
 
-2. Now that we have all of gradle plugin functionality tested, we can copy across previous modules one-by-one 
+3. Now that we have all of gradle plugin functionality tested, we can copy across previous modules one-by-one 
 to new structure, see: https://github.com/NoPhaseNoKill/monorepo/tree/285b90b6334971b2978ed0954c0220f0914ca917/modules
 
-3. Add better output of logging for plugin/dependency management print statements in [kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
-4. Add folder in build-logic named tasks, and have sub-folders java/kotlin/root tasks etc 
-5. Split each singular dependency into its own project, so we can get maximum concurrency. This means each
+4. Add better output of logging for plugin/dependency management print statements in [kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
+5. Add folder in build-logic named tasks, and have sub-folders java/kotlin/root tasks etc 
+6. Split each singular dependency into its own project, so we can get maximum concurrency. This means each
 node in the tree gets its own project, but would be responsible for a singular fetch -> enabling extremely high speeds
 when fetching packages and configuring projects
 
