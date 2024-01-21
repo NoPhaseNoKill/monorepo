@@ -11,10 +11,6 @@ dependencyResolutionManagement {
     includeBuild("../platform")
 }
 
-plugins {
-//    id("kotlin-project-root-repositories")
-}
-
 rootProject.name = "plugins"
 
 include("commons-plugin")

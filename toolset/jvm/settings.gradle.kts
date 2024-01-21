@@ -1,6 +1,5 @@
 
 dependencyResolutionManagement {
-
     includeBuild("build-logic/plugins")
     repositories.gradlePluginPortal()  // ensures that we have access to our own convention plugins
 
