@@ -51,6 +51,10 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
     options.isIncremental = true
     }
    8. Running tests in parallel: https://docs.gradle.org/current/userguide/performance.html#optimize_java_projects
+   9. Enable remote build cache: https://docs.gradle.org/current/userguide/part6_gradle_caching.html#step_4_understanding_remote_caching
+      1. https://docs.gradle.com/build-cache-node/#installation
+      2. https://docs.gradle.com/build-cache-node/#version_history
+      3. https://hub.docker.com/r/gradle/build-cache-node
 
 2. Gradle config regressions can be fixed by using plugin testing
     1. We can then verify if we have regressed anything with our 'dependency adherence plugins', 
