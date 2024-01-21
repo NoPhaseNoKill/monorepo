@@ -83,7 +83,7 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 
 // Configure common dependencies for all projects
 dependencies {
-    // this allows use to declare non-versioned dependencies inside each project
+    // this allows us to declare non-versioned dependencies inside each project
     // ie: implementation("org.apache.commons:commons-text")
     implementation(platform("com.nophasenokill.platform:platform"))
     testImplementation("org.junit.jupiter:junit-jupiter")
@@ -102,7 +102,7 @@ tasks.register("compileAll") {
 }
 
 tasks.register("testAll") {
-    group = LifecycleBasePlugin.BUILD_GROUP
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
     description = "Test all Java code"
     dependsOn(tasks.withType<Test>())
 }
