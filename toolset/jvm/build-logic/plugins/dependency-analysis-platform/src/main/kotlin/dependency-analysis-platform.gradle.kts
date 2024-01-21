@@ -15,13 +15,11 @@ val checkDependencyFormattingPlatform = tasks.register<DependencyFormatCheck>("c
     // these are not duplicate lines like intellij says
     declaredConstraints.put("api", provider { configurations.api.get().dependencyConstraints.map { d -> d.toDeclaredString() } })
     declaredConstraints.put("runtime", provider { configurations.runtime.get().dependencyConstraints.map { d -> d.toDeclaredString() } })
-
 }
 
 tasks.check {
     dependsOn(checkDependencyFormattingPlatform)
 }
-
 
 fun Dependency.toDeclaredString() = "$group:$name:$version"
 fun DependencyConstraint.toDeclaredString() = "$group:$name:$version"
