@@ -4,4 +4,8 @@ pluginManagement {
     }
 }
 
+dependencyResolutionManagement {
+    repositories.gradlePluginPortal()
+}
+
 rootProject.name = "platform"
