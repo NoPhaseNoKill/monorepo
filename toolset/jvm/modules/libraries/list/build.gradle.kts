@@ -1,6 +1,7 @@
+println("Initializing build.gradle.kts for: $name")
+
 plugins {
     id("kotlin-library-plugin")
-
 }
 
 dependencies {

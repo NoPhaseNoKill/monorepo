@@ -1,3 +1,5 @@
+println("Initializing build.gradle.kts for: $name")
+
 plugins {
     `kotlin-dsl`
 }
