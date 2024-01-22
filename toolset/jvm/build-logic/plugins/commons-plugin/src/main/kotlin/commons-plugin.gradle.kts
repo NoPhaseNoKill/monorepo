@@ -30,14 +30,14 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEa
 java {
     toolchain{
         vendor = JvmVendorSpec.MICROSOFT
-        languageVersion = javaLanguageVersion.get()
+        languageVersion = javaLanguageVersion
     }
 }
 
 kotlin {
     jvmToolchain {
         vendor = JvmVendorSpec.MICROSOFT
-        languageVersion = javaLanguageVersion.get()
+        languageVersion = javaLanguageVersion
     }
 }
 
@@ -47,7 +47,7 @@ tasks.withType<JavaCompile>().configureEach {
         Setting the release flag ensures the specified language level is used regardless of which compiler actually performs the compilation.
         For more details: https://docs.gradle.org/current/userguide/building_java_projects.html#sec:compiling_with_release
      */
-    options.release.set(javaLanguageVersion.get().asInt())
+    options.release.set(getLazilyEvaluatedValue(javaLanguageVersion.get().asInt()))
 
     /*
         Runs the compiler as a separate process
@@ -71,8 +71,8 @@ tasks.withType<JavaCompile>().configureEach {
  */
 
 tasks.jar {
-    from(sourceSets.main.get().output)
-    from(sourceSets.main.get().kotlin.classesDirectory)
+    from(getLazilyEvaluatedValue(sourceSets.main.get().output ))
+    from(getLazilyEvaluatedValue(sourceSets.main.get().kotlin.classesDirectory ))
 }
 
 // See: https://docs.gradle.org/current/userguide/working_with_files.html#sec:reproducible_archives
