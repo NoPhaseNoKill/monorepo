@@ -68,3 +68,5 @@ directories.forEach { dir ->
 }
 
 println("Root project build file: ${rootProject.buildFile}")
+
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
