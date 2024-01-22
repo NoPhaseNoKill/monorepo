@@ -36,7 +36,10 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
 ### Current short-term roadmap
 
 1. Check parallelism against build scan and confirm that all currently known 'requirements' are met. See: https://docs.gradle.org/current/userguide/performance.html
-   1. https://docs.gradle.org/current/userguide/performance.html#create_builds_for_specific_developer_workflows
+   1. Configuration avoidance
+      1. See from here onwards: https://docs.gradle.org/current/userguide/task_configuration_avoidance.html#sec:task_configuration_avoidance_migration_steps
+      2. Remove tasks.all {}) or subsets by type (tasks.withType() {}), migrate TaskContainer#getByName(String, Closure), 
+       migrate from old create to register
    2. Optimize dependency resolution, namely: 'repository order', 'count', 'dynamic versus snapshot versions',
    'avoiding dependency resolution during configuration', 'remove slow or unaffected downloads'. All can be found at:
       https://docs.gradle.org/current/userguide/performance.html#dependency_resolution
@@ -46,8 +49,7 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
     tasks.withType<JavaCompile>().configureEach {
     options.isIncremental = true
     }
-   5. Running tests in parallel: https://docs.gradle.org/current/userguide/performance.html#optimize_java_projects
-   6. Enable remote build cache: https://docs.gradle.org/current/userguide/part6_gradle_caching.html#step_4_understanding_remote_caching
+   5. Enable remote build cache: https://docs.gradle.org/current/userguide/part6_gradle_caching.html#step_4_understanding_remote_caching
       1. https://docs.gradle.com/build-cache-node/#installation
       2. https://docs.gradle.com/build-cache-node/#version_history
       3. https://hub.docker.com/r/gradle/build-cache-node
