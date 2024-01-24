@@ -91,7 +91,9 @@ when fetching packages and configuring projects
 
 ## Park bench ideas
 
-1. Fix deprecation warnings for creation of task dependency trees
+1. Build performance tracking
+   1. See: BuildPerformanceMetric from package org.jetbrains.kotlin.build.report.metrics and
+      package org.jetbrains.kotlin.gradle.report TaskExecutionResult/TaskExecutionInfo
 2. Way of figuring out whether you have inadvertently regressed the top level settings.gradle.kts/build files (ie broken buildAll etc)
 3. Compilation improvements: https://kotlinlang.org/docs/gradle-compilation-and-caches.html
     1. Build reports: https://kotlinlang.org/docs/gradle-compilation-and-caches.html#build-reports
@@ -162,6 +164,7 @@ and about a zillion chances to shoot yourself in the foot here.
     - This may mean if someone doesn't commit to said repo, you still want the build cache
       to miss, because this represents two consecutive days (separate from each other)
     - However, I'd argue this then just modelled with the wrong inputs/outputs
+
 
 ## Gradle learnings
 1. Due to multiple build scripts running concurrently for composite builds, rather than a single entrypoint, misconfigurations of 
