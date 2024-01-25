@@ -175,6 +175,23 @@ protect/make it as hard as possible for people to trip themselves up.
 See: [settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fsettings.gradle.kts) and
 [kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
 
+2. When using include, Gradle only needs the leaves of the tree. This means that
+    using 'include("services:hotels:api")', it will create three projects:
+    'services' 'services:hotels' and 'services:hotels:api'
+   1. A nuance of this is to do with dependency resolution when you mis-configure it.
+      Because you are now including many more projects than you may want to (ie 
+      all intermediary directories), you quickly run into issues.
+   
+        Examples of such issues may be: 
+            - build speed slowly degrading before
+            - all of a sudden, you realise just how slow it is.
+            - Getting strange results when trying to import a project dependency that you SWORE  worked very recently (ie project(":list").
+   2. This has tripped me up several times now, and ultimately the wrong to assist in trying to not regress everything
+      is via a test suite. Gaining an understanding of the pain points is crucial, as it'll allow me configure everything
+        in a way which prevents me from having the same issue I've already had
+
+   More details can be found here: https://docs.gradle.org/current/userguide/fine_tuning_project_layout.html#sub:building_the_tree
+3. 
 
 ## Useful commands
 
