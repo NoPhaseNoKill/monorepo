@@ -29,8 +29,10 @@ rootProject.name = "jvm"
 
 gradleEnterprise {
     buildScan {
+        isUploadInBackground = false
         termsOfServiceUrl = "https://gradle.com/terms-of-service"
         termsOfServiceAgree = "yes"
+        
 
         /*
             If you try to abstract these strings to a 'val' outside gradleEnterprise lambda, you get errors
