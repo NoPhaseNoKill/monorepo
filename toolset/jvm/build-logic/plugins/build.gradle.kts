@@ -1,7 +1,5 @@
 
 
-println("Initializing build.gradle.kts for: $name")
-
 /*
     Fixes undeclared build service usage when using: enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
     Known issue to be fixed here: https://youtrack.jetbrains.com/issue/KT-63165

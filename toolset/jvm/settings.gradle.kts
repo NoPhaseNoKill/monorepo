@@ -1,12 +1,12 @@
-println("Initializing settings.gradle.kts for ${rootProject.name}")
+
 
 pluginManagement {
-    println("pluginManagement for: ${rootProject.name}")
+
     repositories.gradlePluginPortal()
 }
 
 dependencyResolutionManagement {
-    println("dependencyResolutionManagement for: ${rootProject.name}")
+
     includeBuild("build-logic/plugins")
     repositories.gradlePluginPortal()  // ensures that we have access to our own convention plugins
 
@@ -57,9 +57,6 @@ buildCache {
     }
 }
 
-includeBuild("build-logic/platform").also { println("Including build: platform") }
-includeBuild("build-logic/plugins").also { println("Including build: plugins") }
-
 // Dynamically includes top level directories within each of the modules' sub-folders
 val directories = setOf("applications", "libraries")
 directories.forEach { dir ->
@@ -68,10 +65,8 @@ directories.forEach { dir ->
             .listFiles { file -> file.isDirectory && !file.isHidden }
             ?.forEach {
                 include("modules:$dir:${it.name}")
-                println("Included: ${"modules:$dir:${it.name}"}")
             }
 }
 
-println("Root project build file: ${rootProject.buildFile}")
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")

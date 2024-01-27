@@ -1,4 +1,4 @@
-println("Initializing build.gradle.kts for: $name")
+
 
 plugins {
     id("java-platform")
