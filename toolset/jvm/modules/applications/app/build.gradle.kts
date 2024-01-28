@@ -5,8 +5,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":modules:libraries:list"))
-    implementation(project(":modules:libraries:utilities"))
+    implementation(project(":list"))
+    implementation(project(":utilities"))
 
     implementation("org.apache.commons:commons-text")
 

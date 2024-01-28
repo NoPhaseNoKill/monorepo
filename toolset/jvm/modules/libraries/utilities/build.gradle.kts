@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":modules:libraries:list"))
+    api(project(":list"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
 
     /*

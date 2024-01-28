@@ -59,15 +59,46 @@ buildCache {
     }
 }
 
-// Dynamically includes top level directories within each of the modules' sub-folders
 val directories = setOf("applications", "libraries")
-directories.forEach { dir ->
+
+directories.forEach { moduleCategory ->
     rootDir
-            .resolve("modules/${dir}")
-            .listFiles { file -> file.isDirectory && !file.isHidden }
-            ?.forEach {
-                include("modules:$dir:${it.name}")
-            }
+        .resolve("modules/${moduleCategory}")
+        .listFiles { file -> file.isDirectory && !file.isHidden && !file.name.startsWith("gradle")}
+        ?.forEach { projectDirectory: File ->
+            /*
+                This specifically means each subproject is accessible from :projectName.
+
+                Another benefit is that it only includes the specific leaf node directory
+                and NOT any directories in-between the root (where this file is located)
+                and the included directory. A HUGE downside of the old approach as default
+                behaviour, is that the OBSERVED speed of dependency resolution is significantly
+                slower. Currently, I do not quite understand why, but my suspicion is that
+                instead of checking for dependency resolution against a single folder (what we want),
+                it would previously check against 3, thereby slowing it down by 200% in comparison.
+
+                Taken from the Settings.java docs:
+
+                "As an example, the path a:b adds a project with path :a:b, name b and project
+                directory $rootDir/a/b. It also adds the a project with path :a, name a and project
+                directory $rootDir/a, if it does not exist already."
+
+                Meaning:
+
+                    include("modules/applications/app")
+
+                    - Adds a project with path ':modules', name 'modules', and project directory '$rootDir/modules'
+                    - Adds a project 'modules/applications' with path ':modules:applications', name 'applications', and project directory '$rootDir/modules/applications'
+                    - Adds a project 'modules/applications/app' with path ':modules:applications:app', name 'app', and project directory '$rootDir/modules/applications/app'
+
+                The first two of which are completely unnecessary in our use case.
+
+                Please note: IntelliJ currently chooses to display the subsequent folder incorrectly.
+                    See: https://youtrack.jetbrains.com/issue/IDEA-82965/Clean-module-names for fix and details
+             */
+            include(projectDirectory.name)
+            project(":${projectDirectory.name}").projectDir = file(projectDirectory.path)
+        }
 }
 
 

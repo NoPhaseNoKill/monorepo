@@ -195,10 +195,10 @@ See: [settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fsettings.gra
 
 ## Useful commands
 
-### Checking project dependency health
+### Remove any references (.build, .gradle, ~/.gradle, .idea) to gradle caches
 
 ```
-./gradlew build
+./remove-gradle-cache.sh
 ```
 
 ### Running the gradle profiler
