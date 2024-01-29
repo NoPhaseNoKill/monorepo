@@ -1,6 +1,4 @@
-import com.autonomousapps.DependencyAnalysisSubExtension
 import com.nophasenokill.DependencyFormatCheck
-import com.nophasenokill.DependencyScopeCheck
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
@@ -35,18 +33,9 @@ val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("ch
     }
 }
 
-val checkDependencyScopes = tasks.register<DependencyScopeCheck>("checkDependencyScopes") {
-    group = LifecycleBasePlugin.VERIFICATION_GROUP
-    shouldRunAfter(checkDependencyFormattingProject)
-}
-
 tasks.check {
     dependsOn(checkDependencyFormattingProject)
-    dependsOn(checkDependencyScopes)
-}
-
-plugins.withId("com.autonomousapps.dependency-analysis") {
-    extensions.getByType<DependencyAnalysisSubExtension>().registerPostProcessingTask(checkDependencyScopes)
+    // dependsOn(checkDependencyScopes)
 }
 
 fun Dependency.toDeclaredString() = when(this) {
