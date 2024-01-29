@@ -59,6 +59,8 @@ buildCache {
     }
 }
 
+includeBuild("build-logic/plugins-tested")
+
 val directories = setOf("applications", "libraries")
 
 directories.forEach { moduleCategory ->
