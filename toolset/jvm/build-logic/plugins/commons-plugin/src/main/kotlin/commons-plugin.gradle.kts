@@ -93,6 +93,15 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+
+
+    doFirst {
+        println("Starting tests")
+    }
+
+    doLast {
+        println("Finishing tests")
+    }
 }
 
 tasks.register("compileAll") {
