@@ -114,4 +114,42 @@ tasks.register("testAll") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
     description = "Test all Java code"
     dependsOn(tasks.withType<Test>())
+
+    /*
+        The useTarget method is used to replace a dependency before it is resolved. This is useful
+        under the circumstance where we want a clear distinction between our out of date build script
+         compiled plugins (locally cached) and our absolute most up-to-date build script compiled plugins
+         (the code). This then ensures that dependencies when in local development are always using whatever
+         is the latest code you have in it.
+    */
+    configurations.all {
+        resolutionStrategy.dependencySubstitution.all {
+            requested.let {
+                if (it is ModuleComponentSelector && it.group == "com.nophasenokill") {
+                    val targetProject = findProject(":${it.module}")
+                    if (targetProject != null) {
+                        useTarget(targetProject)
+                    }
+                }
+            }
+        }
+    }
+}
+
+val printDependenciesTask = tasks.register("printDependencies") {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = "Prints dependencies by configuration"
+
+    configurations.forEach { config ->
+        if (config.isCanBeResolved) {
+            println("\nConfiguration dependencies: ${config.name}")
+            try {
+                config.resolvedConfiguration.resolvedArtifacts.forEach { artifact ->
+                    println(" - ${artifact.moduleVersion.id.group}:${artifact.name}:${artifact.moduleVersion.id.version}")
+                }
+            } catch (e: Exception) {
+                println("Failed to resolve ${config.name}: ${e.message}")
+            }
+        }
+    }
 }
