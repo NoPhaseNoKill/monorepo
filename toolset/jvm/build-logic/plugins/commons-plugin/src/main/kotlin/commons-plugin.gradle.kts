@@ -22,19 +22,16 @@ gradle.beforeProject {
     }
 }
 
-// See: https://kotlinlang.org/docs/gradle-configure-project.html#check-for-jvm-target-compatibility-of-related-compile-tasks
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
-    jvmTargetValidationMode.set(org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode.ERROR)
-}
-
-java {
-    toolchain{
-        vendor = JvmVendorSpec.MICROSOFT
-        languageVersion = javaLanguageVersion
-    }
-}
-
 kotlin {
+    /*
+        Uncomment this + the properties in gradle.properties to run using k2 compiler
+     */
+    // sourceSets.all {
+    //     languageSettings {
+    //         languageVersion = "2.0"
+    //     }
+    // }
+
     jvmToolchain {
         vendor = JvmVendorSpec.MICROSOFT
         languageVersion = javaLanguageVersion
@@ -42,6 +39,15 @@ kotlin {
 }
 
 tasks.withType<JavaCompile>().configureEach {
+    /*
+        If you need to verify that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
+        works, uncomment this code and you should still see:
+
+            Execution failed for task ':list:compileKotlin'.
+            > Inconsistent JVM-target compatibility detected for tasks 'compileJava' (15) and 'compileKotlin' (21).
+     */
+    // targetCompatibility = "15"
+
     options.encoding = "UTF-8"
     /*
         Setting the release flag ensures the specified language level is used regardless of which compiler actually performs the compilation.
