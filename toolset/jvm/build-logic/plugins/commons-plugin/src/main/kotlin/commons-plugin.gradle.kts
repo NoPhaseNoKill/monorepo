@@ -93,7 +93,7 @@ dependencies {
     // ie: implementation("org.apache.commons:commons-text")
     implementation(platform("com.nophasenokill.platform:platform"))
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    // implementation("org.jetbrains.kotlin:kotlin-stdlib")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -116,7 +116,6 @@ tasks.register("compileAll") {
     group = LifecycleBasePlugin.BUILD_GROUP
     description = "Compile all Java code"
     dependsOn(tasks.withType<JavaCompile>())
-    dependsOn(tasks.check)
 }
 
 tasks.register("testAll") {

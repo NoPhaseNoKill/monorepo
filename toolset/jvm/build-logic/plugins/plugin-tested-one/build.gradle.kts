@@ -4,7 +4,6 @@ plugins {
 
     // In future, it might be beter to alternatively use alias(libs.plugins.jvm)
     `kotlin-dsl`
-    // alias(libs.plugins.jvm)
 }
 
 dependencies {

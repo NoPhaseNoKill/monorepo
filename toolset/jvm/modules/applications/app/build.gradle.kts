@@ -10,12 +10,6 @@ dependencies {
 
     implementation("org.apache.commons:commons-text")
 
-    /*
-        This is excluded from dependency analysis failure (ie allowed/expected behaviour currently)
-        TODO confirm whether we cant just declare it on the plugin level rather than for each project
-     */
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
-
     testImplementation("org.junit.jupiter:junit-jupiter-api")
 
     /*

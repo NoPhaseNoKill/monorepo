@@ -28,7 +28,36 @@ abstract class DependencyFormatCheck : DefaultTask() {
         declaredDependencies.get().forEach { (scope, dependencies) ->
             if (shouldNotHaveVersions.get()) {
 
+                val stbLibDependencies = dependencies.filter { it.startsWith("org.jetbrains.kotlin:kotlin-stdlib:") }
+
+                if(stbLibDependencies.count() > 1) {
+                    throw RuntimeException("""
+                            ${buildFilePath.get()}
+                            
+                            Dependency 'org.jetbrains.kotlin:kotlin-stdlib' should only ever be included once, 
+                            and instead was included ${stbLibDependencies.count()} times.
+                            
+                            
+                            This may happen when:
+                                - You are have set kotlin.stdlib.default.dependency=false inside
+                                gradle.properties to true, and it is now implicitly being included
+                                an extra time
+                                
+                                - You are now including a plugin which implicitly includes this
+                                
+                                - You have added it manually to a plugin
+                                
+                                Please fix and try again.
+                            
+                    """.trimIndent())
+                }
+
                 dependencies.forEach { coordinates ->
+                    val foundPlatformCoordinates = coordinates.startsWith("org.jetbrains.kotlin:kotlin-stdlib:")
+                    if(foundPlatformCoordinates) {
+                        println("Found platform coordinates: ${coordinates}")
+                    }
+
                     if (coordinates.count { it == ':' } == 2 && !coordinates.startsWith("org.jetbrains.kotlin:kotlin-stdlib:")) {
                         throw RuntimeException("""
                             ${buildFilePath.get()}
