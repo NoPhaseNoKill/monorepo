@@ -1,3 +1,8 @@
+import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.internal.encodePluginOptions
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("base")
     id("java")
@@ -22,6 +27,28 @@ gradle.beforeProject {
     }
 }
 
+java {
+    /*
+        If you need to verify that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
+        works, uncomment this code AND uncomment the compiler options jvmTarget in the kotlin extension.
+        You should still see:
+
+            Execution failed for task ':list:compileKotlin'.
+            > Inconsistent JVM-target compatibility detected for tasks 'compileJava' (15) and 'compileKotlin' (21).
+    */
+    // targetCompatibility = JavaVersion.VERSION_15
+
+    /*
+        By setting this here, any kotlin tasks will also pick this up.
+
+        See: https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support
+    */
+    toolchain {
+        vendor = JvmVendorSpec.MICROSOFT
+        languageVersion = javaLanguageVersion
+    }
+}
+
 kotlin {
     /*
         Uncomment this + the properties in gradle.properties to run using k2 compiler
@@ -32,25 +59,27 @@ kotlin {
     //     }
     // }
 
-    jvmToolchain {
-        vendor = JvmVendorSpec.MICROSOFT
-        languageVersion = javaLanguageVersion
-    }
+    /*
+        Uncomment this + targetCompatibility in the java extension if you need to verify
+        that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
+        is worked (default behaviour)
+     */
+    // compilerOptions {
+    //     jvmTarget = JvmTarget.JVM_1_8
+    // }
 }
 
 tasks.withType<JavaCompile>().configureEach {
     /*
-        If you need to verify that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
-        works, uncomment this code and you should still see:
-
-            Execution failed for task ':list:compileKotlin'.
-            > Inconsistent JVM-target compatibility detected for tasks 'compileJava' (15) and 'compileKotlin' (21).
+        The kotlin language spec uses this by default but this
+        protects us against any java compilation tasks not using it.
      */
-    // targetCompatibility = "15"
-
     options.encoding = "UTF-8"
+
     /*
-        Setting the release flag ensures the specified language level is used regardless of which compiler actually performs the compilation.
+        Setting the release flag ensures the specified language level is used regardless of which compiler actually
+        performs the compilation.
+
         For more details: https://docs.gradle.org/current/userguide/building_java_projects.html#sec:compiling_with_release
      */
     options.release.set(getLazilyEvaluatedValue(javaLanguageVersion.get().asInt()))
@@ -93,7 +122,6 @@ dependencies {
     // ie: implementation("org.apache.commons:commons-text")
     implementation(platform("com.nophasenokill.platform:platform"))
 
-    // implementation("org.jetbrains.kotlin:kotlin-stdlib")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -101,7 +129,6 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
-
 
     doFirst {
         println("Starting tests")
@@ -115,13 +142,29 @@ tasks.test {
 tasks.register("compileAll") {
     group = LifecycleBasePlugin.BUILD_GROUP
     description = "Compile all Java code"
-    dependsOn(tasks.withType<JavaCompile>())
+
+    println("Project ${project.name}")
+    project.subprojects.forEach {
+        println("Subproject: ${it.name}")
+    }
+
+    gradle.includedBuilds.forEach {
+        println("Included builds are: ${it.name}")
+    }
+
+    val dependantTasks = tasks.withType<KotlinCompile>()
+    dependantTasks.forEach {
+        println("Dependant task: ${it.name}")
+    }
+
+    dependsOn(dependantTasks)
 }
 
 tasks.register("testAll") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
     description = "Test all Java code"
     dependsOn(tasks.withType<Test>())
+
     /*
         TODO
             1. explore the concept of doing substitution on something like :jvm:list ,
