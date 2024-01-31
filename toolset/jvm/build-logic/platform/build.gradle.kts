@@ -28,6 +28,7 @@ dependencies {
         api("org.apache.commons:commons-text:1.11.0")
         api("org.gradle.toolchains:foojay-resolver:0.7.0")
         api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20")
+        api("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
         api("org.junit.jupiter:junit-jupiter-api:5.10.1")
     }
 }

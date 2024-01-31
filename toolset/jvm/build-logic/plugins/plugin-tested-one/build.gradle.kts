@@ -1,18 +1,15 @@
 plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
-    `java-gradle-plugin`
+    id("java-gradle-plugin")
 
-    // Apply the Kotlin JVM plugin to add support for Kotlin.
-    alias(libs.plugins.jvm)
-}
-
-repositories {
-    // Use Maven Central for resolving dependencies.
-    mavenCentral()
+    // In future, it might be beter to alternatively use alias(libs.plugins.jvm)
+    `kotlin-dsl`
+    // alias(libs.plugins.jvm)
 }
 
 dependencies {
-    // Use the Kotlin JUnit 5 integration.
+    implementation(platform("com.nophasenokill.platform:platform"))
+
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -21,8 +18,8 @@ dependencies {
 gradlePlugin {
     // Define the plugin
     val greeting by plugins.creating {
-        id = "com.nophasenokill.someTask"
-        implementationClass = "com.nophasenokill.PluginTestedOne"
+        id = "com.nophasenokill.greetingPlugin"
+        implementationClass = "com.nophasenokill.GreetingPlugin"
     }
 }
 
@@ -45,9 +42,16 @@ gradlePlugin.testSourceSets.add(functionalTestSourceSet)
 tasks.named<Task>("check") {
     // Run the functional tests as part of `check`
     dependsOn(functionalTest)
+    doLast {
+        println("Has run check on the greeting plugin")
+    }
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Jupiter for unit tests.
     useJUnitPlatform()
+
+    doLast {
+        println("Has run test on the greeting plugin")
+    }
 }

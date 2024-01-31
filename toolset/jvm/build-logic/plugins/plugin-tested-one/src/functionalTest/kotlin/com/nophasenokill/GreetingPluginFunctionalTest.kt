@@ -6,7 +6,7 @@ import kotlin.test.Test
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.io.TempDir
 
-class PluginTestedOneFunctionalTest {
+class GreetingPluginFunctionalTest {
 
     @field:TempDir
     lateinit var projectDir: File
@@ -19,7 +19,7 @@ class PluginTestedOneFunctionalTest {
         settingsFile.writeText("")
         buildFile.writeText("""
             plugins {
-                id('com.nophasenokill.someTask')
+                id('com.nophasenokill.greetingPlugin')
             }
         """.trimIndent())
 
@@ -27,11 +27,11 @@ class PluginTestedOneFunctionalTest {
         val runner = GradleRunner.create()
         runner.forwardOutput()
         runner.withPluginClasspath()
-        runner.withArguments("someTask")
+        runner.withArguments("taskInsideGreetingPlugin")
         runner.withProjectDir(projectDir)
         val result = runner.build()
 
         // Verify the result
-        assertTrue(result.output.contains("Hello from plugin 'com.nophasenokill.someTask'"))
+        assertTrue(result.output.contains("Hello from plugin 'com.nophasenokill.greetingPlugin'"))
     }
 }

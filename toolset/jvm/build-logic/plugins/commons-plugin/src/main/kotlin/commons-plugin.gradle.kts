@@ -92,6 +92,8 @@ dependencies {
     // this allows us to declare non-versioned dependencies inside each project
     // ie: implementation("org.apache.commons:commons-text")
     implementation(platform("com.nophasenokill.platform:platform"))
+
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -114,12 +116,21 @@ tasks.register("compileAll") {
     group = LifecycleBasePlugin.BUILD_GROUP
     description = "Compile all Java code"
     dependsOn(tasks.withType<JavaCompile>())
+    dependsOn(tasks.check)
 }
 
 tasks.register("testAll") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
     description = "Test all Java code"
     dependsOn(tasks.withType<Test>())
+    /*
+        TODO
+            1. explore the concept of doing substitution on something like :jvm:list ,
+            back to the original include("modules:libraries:utilities"), so intellij
+            may not have to do the funky display stuff/we're using as 'default as possible'
+            config as we can
+            2. Cleanup plugins
+     */
 
     /*
         The useTarget method is used to replace a dependency before it is resolved. This is useful
@@ -133,6 +144,7 @@ tasks.register("testAll") {
             requested.let {
                 if (it is ModuleComponentSelector && it.group == "com.nophasenokill") {
                     val targetProject = findProject(":${it.module}")
+                    targetProject?.version = "1.0"
                     if (targetProject != null) {
                         useTarget(targetProject)
                     }
