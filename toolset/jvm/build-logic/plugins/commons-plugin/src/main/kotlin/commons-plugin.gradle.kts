@@ -152,7 +152,7 @@ tasks.register("compileAll") {
         println("Included builds are: ${it.name}")
     }
 
-    val dependantTasks = tasks.withType<KotlinCompile>()
+    val dependantTasks = tasks.withType<JavaCompile>() + tasks.withType<KotlinCompile>()
     dependantTasks.forEach {
         println("Dependant task: ${it.name}")
     }

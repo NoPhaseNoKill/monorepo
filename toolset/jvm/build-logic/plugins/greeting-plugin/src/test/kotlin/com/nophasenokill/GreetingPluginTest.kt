@@ -11,7 +11,7 @@ class GreetingPluginTest {
     fun `plugin registers task`() {
         // Create a test project and apply the plugin
         val project = ProjectBuilder.builder().build()
-        project.plugins.apply("com.nophasenokill.greetingPlugin")
+        project.plugins.apply("greeting-plugin")
 
         // Verify the result
         assertNotNull(project.tasks.findByName("taskInsideGreetingPlugin"))

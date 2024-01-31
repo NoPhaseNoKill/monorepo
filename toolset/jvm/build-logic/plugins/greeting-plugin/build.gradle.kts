@@ -17,7 +17,7 @@ dependencies {
 gradlePlugin {
     // Define the plugin
     val greeting by plugins.creating {
-        id = "com.nophasenokill.greetingPlugin"
+        id = "greeting-plugin"
         implementationClass = "com.nophasenokill.GreetingPlugin"
     }
 }
