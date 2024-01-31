@@ -9,8 +9,5 @@ application {
 }
 
 dependencies {
-    /*
-        This is not required, but is being implicitly included
-     */
-    // implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
 }
