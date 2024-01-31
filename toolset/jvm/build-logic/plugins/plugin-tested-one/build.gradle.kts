@@ -9,7 +9,7 @@ plugins {
 dependencies {
     implementation(platform("com.nophasenokill.platform:platform"))
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("org.junit.jupiter:junit-jupiter")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
