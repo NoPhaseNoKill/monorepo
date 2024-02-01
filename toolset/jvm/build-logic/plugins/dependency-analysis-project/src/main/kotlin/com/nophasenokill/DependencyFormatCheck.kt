@@ -26,11 +26,28 @@ abstract class DependencyFormatCheck : DefaultTask() {
     @TaskAction
     fun check() {
         declaredDependencies.get().forEach { (scope, dependencies) ->
+
+            val (nonStbLibDependencies: List<String>, stbLibDependencies: List<String> ) = dependencies.partition { !it.startsWith("org.jetbrains.kotlin:kotlin-stdlib") }
+
             if (shouldNotHaveVersions.get()) {
 
-                // Prevent multiple dependency declarations of org.jetbrains.kotlin:kotlin-stdlib
-                // This is currently duplicated with platform/project
-                val stbLibDependencies = dependencies.filter { it.startsWith("org.jetbrains.kotlin:kotlin-stdlib:") }
+                /*
+                    Prevent multiple dependency declarations of org.jetbrains.kotlin:kotlin-stdlib
+                    This is currently duplicated with platform/project.
+
+                    To replicate: comment out gradle.properties 'kotlin.stdlib.default.dependency=false'
+                    and run: ./gradlew checkDependencyFormattingProject
+
+
+                        ./gradlew checkDependencyFormattingProject
+                        $rootDir/modules/applications/app/build.gradle.kts
+
+                        implementation dependencies are not declared in alphabetical order. Please use this order:
+                        implementation(project(":list"))
+                        implementation(project(":utilities"))
+                        implementation("org.apache.commons:commons-text")
+                        implementation("org.jetbrains.kotlin:kotlin-stdlib")
+                 */
 
                 if(stbLibDependencies.count() > 1) {
                     throw RuntimeException("""
@@ -54,8 +71,8 @@ abstract class DependencyFormatCheck : DefaultTask() {
                     """.trimIndent())
                 }
 
-                dependencies.forEach { coordinates ->
-                    if (coordinates.count { it == ':' } == 2 && !coordinates.startsWith("org.jetbrains.kotlin:kotlin-stdlib:")) {
+                nonStbLibDependencies.forEach { coordinates ->
+                    if (coordinates.count { it == ':' } == 2) {
                         throw RuntimeException("""
                             ${buildFilePath.get()}
                             
@@ -72,7 +89,7 @@ abstract class DependencyFormatCheck : DefaultTask() {
                 }
             }
 
-            val declaredInBuildFile = dependencies.filter {
+            val declaredInBuildFile = nonStbLibDependencies.filter {
                 // Ignore dependencies that are defined in commons plugins. Found inside commons-plugin.gradle.kts
                 // This is currently duplicated with platform/project
                 it !in listOf(

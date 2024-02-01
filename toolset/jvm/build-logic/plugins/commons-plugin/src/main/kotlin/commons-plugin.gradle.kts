@@ -164,36 +164,6 @@ tasks.register("testAll") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
     description = "Test all Java code"
     dependsOn(tasks.withType<Test>())
-
-    /*
-        TODO
-            1. explore the concept of doing substitution on something like :jvm:list ,
-            back to the original include("modules:libraries:utilities"), so intellij
-            may not have to do the funky display stuff/we're using as 'default as possible'
-            config as we can
-            2. Cleanup plugins
-     */
-
-    /*
-        The useTarget method is used to replace a dependency before it is resolved. This is useful
-        under the circumstance where we want a clear distinction between our out of date build script
-         compiled plugins (locally cached) and our absolute most up-to-date build script compiled plugins
-         (the code). This then ensures that dependencies when in local development are always using whatever
-         is the latest code you have in it.
-    */
-    configurations.all {
-        resolutionStrategy.dependencySubstitution.all {
-            requested.let {
-                if (it is ModuleComponentSelector && it.group == "com.nophasenokill") {
-                    val targetProject = findProject(":${it.module}")
-                    targetProject?.version = "1.0"
-                    if (targetProject != null) {
-                        useTarget(targetProject)
-                    }
-                }
-            }
-        }
-    }
 }
 
 val printDependenciesTask = tasks.register("printDependencies") {
