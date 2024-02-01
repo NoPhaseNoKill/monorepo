@@ -2,11 +2,12 @@ package com.nophasenokill
 
 import java.io.File
 import org.gradle.testkit.runner.GradleRunner
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 
-class GreetingPluginFunctionalTest {
+class CommonsTestedPluginFunctionalTest {
 
     @field:TempDir
     lateinit var projectDir: File
@@ -20,7 +21,7 @@ class GreetingPluginFunctionalTest {
         settingsFile.writeText("")
         buildFile.writeText("""
             plugins {
-                id('greeting-plugin')
+                id('commons-tested-plugin')
             }
         """.trimIndent())
 
@@ -28,11 +29,12 @@ class GreetingPluginFunctionalTest {
         val runner = GradleRunner.create()
         runner.forwardOutput()
         runner.withPluginClasspath()
-        runner.withArguments("taskInsideGreetingPlugin")
+        runner.withArguments("taskInsideCommonsTestedPlugin")
         runner.withProjectDir(projectDir)
         val result = runner.build()
 
         // Verify the result
-        assertTrue(result.output.contains("Hello from plugin 'greeting-plugin'"))
+        assertTrue(result.output.contains("Hello from plugin 'commons-tested-plugin'"))
+        assertEquals(result.tasks.size, 1)
     }
 }

@@ -20,6 +20,11 @@ gradlePlugin {
         id = "greeting-plugin"
         implementationClass = "com.nophasenokill.GreetingPlugin"
     }
+
+    val commons by plugins.creating {
+        id = "commons-tested-plugin"
+        implementationClass = "com.nophasenokill.CommonsTestedPlugin"
+    }
 }
 
 // Add a source set for the functional test suite
@@ -42,15 +47,27 @@ tasks.named<Task>("check") {
     // Run the functional tests as part of `check`
     dependsOn(functionalTest)
     doLast {
-        println("Has run check on the greeting plugin")
+        println("Has run check on the tested-plugins")
     }
 }
 
-tasks.named<Test>("test") {
+val testTask = tasks.named<Test>("test") {
     // Use JUnit Jupiter for unit tests.
     useJUnitPlatform()
 
     doLast {
-        println("Has run test on the greeting plugin")
+        println("Has run test on the tested-plugins")
+    }
+}
+
+tasks.register<Test>("testAll") {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = "Runs plugin unit and functional tests"
+
+    dependsOn(functionalTest)
+    dependsOn(testTask)
+
+    doLast {
+        println("Has run testAll on the tested-plugins")
     }
 }

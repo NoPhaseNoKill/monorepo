@@ -171,7 +171,7 @@ tasks.register("testAll") {
     dependsOn(tasks.withType<Test>())
 }
 
-val printDependenciesTask = tasks.register("printDependencies") {
+tasks.register("printDependencies") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
     description = "Prints dependencies by configuration"
 

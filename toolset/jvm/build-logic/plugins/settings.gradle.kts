@@ -14,7 +14,7 @@ dependencyResolutionManagement {
 rootProject.name = "plugins"
 
 include("commons-plugin")
-include("greeting-plugin")
+include("tested-plugins")
 include("kotlin-library-plugin")
 include("kotlin-application-plugin")
 include("dependency-analysis-project")
