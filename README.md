@@ -43,13 +43,7 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
    2. Optimize dependency resolution, namely: 'repository order', 'count', 'dynamic versus snapshot versions',
    'avoiding dependency resolution during configuration', 'remove slow or unaffected downloads'. All can be found at:
       https://docs.gradle.org/current/userguide/performance.html#dependency_resolution
-   3. Reduce issue where the project has large 'ripple effects' when making single change. Most likely cause is:
-   https://docs.gradle.org/current/userguide/performance.html#switch_internal_only_dependencies_to_implementation_visibility
-   4. Ensure that incremental compilation is absolutely on and working by doing:
-    tasks.withType<JavaCompile>().configureEach {
-    options.isIncremental = true
-    }
-   5. Enable remote build cache: https://docs.gradle.org/current/userguide/part6_gradle_caching.html#step_4_understanding_remote_caching
+   3. Enable remote build cache: https://docs.gradle.org/current/userguide/part6_gradle_caching.html#step_4_understanding_remote_caching
       1. https://docs.gradle.com/build-cache-node/#installation
       2. https://docs.gradle.com/build-cache-node/#version_history
       3. https://hub.docker.com/r/gradle/build-cache-node

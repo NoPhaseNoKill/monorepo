@@ -98,6 +98,11 @@ tasks.withType<JavaCompile>().configureEach {
      */
 
     options.isFork = true
+
+    /*
+        Ensures that incremental compilation is absolutely on and is not being overriden somehow
+     */
+    options.isIncremental = true
 }
 
 /*
