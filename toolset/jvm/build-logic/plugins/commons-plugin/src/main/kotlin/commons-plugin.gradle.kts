@@ -118,11 +118,22 @@ tasks.withType<AbstractArchiveTask>().configureEach {
     isReproducibleFileOrder = true
 }
 
+configurations.all {
+    withDependencies {
+        this.removeAll {
+            println("Dependency from configuration in project ${project.name}: ${it.name}:${it.group}:${it.version}")
+            false
+        }
+    }
+}
+
 // Configure common dependencies for all projects
 dependencies {
     // this allows us to declare non-versioned dependencies inside each project
     // ie: implementation("org.apache.commons:commons-text")
     implementation(platform("com.nophasenokill.platform:platform"))
+
+    implementation(kotlin("stdlib"))
 
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

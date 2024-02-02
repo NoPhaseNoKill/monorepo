@@ -22,13 +22,16 @@ dependencies {
     }
 
     constraints {
-        api("com.autonomousapps:dependency-analysis-gradle-plugin:1.28.0")
-        api("com.gradle.enterprise:com.gradle.enterprise.gradle.plugin:3.16.1")
-        api("io.fuchs.gradle.classpath-collision-detector:classpath-collision-detector:0.3")
+        api("com.autonomousapps:dependency-analysis-gradle-plugin:1.29.0")
+        api("com.gradle.enterprise:com.gradle.enterprise.gradle.plugin")
+        // api("io.fuchs.gradle.classpath-collision-detector:classpath-collision-detector")
         api("org.apache.commons:commons-text:1.11.0")
-        api("org.gradle.toolchains:foojay-resolver:0.7.0")
+        api("org.gradle.toolchains:foojay-resolver")
         api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20")
-        api("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
-        api("org.junit.jupiter:junit-jupiter-api:5.10.1")
+        api("org.jetbrains.kotlin:kotlin-bom")
+
+        api("org.junit:junit-bom")
+        api("org.junit.jupiter:junit-jupiter-api")
+        api("org.springframework.boot:spring-boot-dependencies")
     }
 }

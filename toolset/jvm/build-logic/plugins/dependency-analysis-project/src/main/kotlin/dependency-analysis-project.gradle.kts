@@ -4,6 +4,10 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
 }
 
+dependencies {
+    implementation(kotlin("stdlib"))
+}
+
 val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("checkDependencyFormattingProject") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
 
@@ -32,6 +36,7 @@ val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("ch
         declaredDependencies.put(compileOnlyApiConfigurationName, provider { configurations.findByName(compileOnlyApiConfigurationName)?.dependencies?.map { d -> d.toDeclaredString() } ?: emptyList() })
     }
 }
+
 
 tasks.check {
     dependsOn(checkDependencyFormattingProject)

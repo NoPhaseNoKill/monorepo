@@ -8,7 +8,7 @@ plugins {
 
         See: 'dependency-analysis-project' plugin for details
      */
-    id("com.autonomousapps.dependency-analysis") version "1.28.0"
+    id("com.autonomousapps.dependency-analysis") version "1.29.0"
 }
 
 
