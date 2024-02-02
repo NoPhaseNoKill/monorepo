@@ -170,15 +170,15 @@ class CustomEventLogger : BuildAdapter(), ProjectEvaluationListener, TaskExecuti
         if(taskStartTimes.isEmpty()) {
             buildStartTime = System.nanoTime()
         }
-        taskStartTimes["${task.path}:${task.name}"] = System.nanoTime()
+        taskStartTimes[task.path] = System.nanoTime()
     }
 
     override fun afterExecute(task: Task, state: TaskState) {
         println("${TERMINAL_INDENT}|------> was executed")
-        val startTime = taskStartTimes["${task.path}:${task.name}"] ?: return
+        val startTime = taskStartTimes[task.path] ?: return
         val endTime = System.nanoTime()
-        taskEndTimes["${task.path}:${task.name}"] = endTime
-        taskDurationTimes["${task.path}:${task.name}"] = endTime - startTime
+        taskEndTimes[task.path] = endTime
+        taskDurationTimes[task.path] = endTime - startTime
     }
 
 

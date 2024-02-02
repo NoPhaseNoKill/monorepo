@@ -2,6 +2,7 @@ import com.nophasenokill.DependencyFormatCheck
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
+    id("capability-conflict-avoidance-plugin")
 }
 
 dependencies {
