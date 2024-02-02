@@ -12,7 +12,7 @@ class GreetingPlugin : Plugin<Project> {
 
             task("taskInsideGreetingPlugin") {
                 this.doLast {
-                    println("Hello from plugin 'greeting-plugin'")
+                    logger.lifecycle("Hello from plugin 'greeting-plugin'")
                 }
             }
         }

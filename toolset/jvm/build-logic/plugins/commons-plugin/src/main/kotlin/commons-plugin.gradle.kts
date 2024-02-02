@@ -133,11 +133,11 @@ tasks.test {
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
 
     doFirst {
-        println("Starting tests")
+        logger.lifecycle("Starting tests")
     }
 
     doLast {
-        println("Finishing tests")
+        logger.lifecycle("Finishing tests")
     }
 }
 
@@ -145,18 +145,18 @@ tasks.register("compileAll") {
     group = LifecycleBasePlugin.BUILD_GROUP
     description = "Compile all Java code"
 
-    println("Project ${project.name}")
+    logger.lifecycle("Project ${project.name}")
     project.subprojects.forEach {
-        println("Subproject: ${it.name}")
+        logger.lifecycle("Subproject: ${it.name}")
     }
 
     gradle.includedBuilds.forEach {
-        println("Included builds are: ${it.name}")
+        logger.lifecycle("Included builds are: ${it.name}")
     }
 
     val dependantTasks = tasks.withType<JavaCompile>() + tasks.withType<KotlinCompile>()
     dependantTasks.forEach {
-        println("Dependant task: ${it.name}")
+        logger.lifecycle("Dependant task: ${it.name}")
     }
 
     dependsOn(dependantTasks)
@@ -174,13 +174,13 @@ tasks.register("printDependencies") {
 
     configurations.forEach { config ->
         if (config.isCanBeResolved) {
-            println("\nConfiguration dependencies: ${config.name}")
+            logger.lifecycle("\nConfiguration dependencies: ${config.name}")
             try {
                 config.resolvedConfiguration.resolvedArtifacts.forEach { artifact ->
-                    println(" - ${artifact.moduleVersion.id.group}:${artifact.name}:${artifact.moduleVersion.id.version}")
+                    logger.lifecycle(" - ${artifact.moduleVersion.id.group}:${artifact.name}:${artifact.moduleVersion.id.version}")
                 }
             } catch (e: Exception) {
-                println("Failed to resolve ${config.name}: ${e.message}")
+                logger.lifecycle("Failed to resolve ${config.name}: ${e.message}")
             }
         }
     }

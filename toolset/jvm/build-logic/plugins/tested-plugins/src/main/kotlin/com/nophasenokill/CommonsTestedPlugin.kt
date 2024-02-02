@@ -9,7 +9,7 @@ class CommonsTestedPlugin : Plugin<Project> {
 
         project.task("taskInsideCommonsTestedPlugin") {
             this.doLast {
-                println("Hello from plugin 'commons-tested-plugin'")
+                logger.lifecycle("Hello from plugin 'commons-tested-plugin'")
             }
         }
     }

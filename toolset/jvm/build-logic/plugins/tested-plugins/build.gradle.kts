@@ -47,7 +47,7 @@ tasks.named<Task>("check") {
     // Run the functional tests as part of `check`
     dependsOn(functionalTest)
     doLast {
-        println("Has run check on the tested-plugins")
+        logger.lifecycle("Has run check on the tested-plugins")
     }
 }
 
@@ -56,7 +56,7 @@ val testTask = tasks.named<Test>("test") {
     useJUnitPlatform()
 
     doLast {
-        println("Has run test on the tested-plugins")
+        logger.lifecycle("Has run test on the tested-plugins")
     }
 }
 
@@ -68,6 +68,6 @@ tasks.register<Test>("testAll") {
     dependsOn(testTask)
 
     doLast {
-        println("Has run testAll on the tested-plugins")
+        logger.lifecycle("Has run testAll on the tested-plugins")
     }
 }
