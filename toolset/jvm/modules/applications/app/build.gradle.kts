@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+    implementation(platform("com.nophasenokill.platform:platform"))
+
     implementation(project(":list"))
     implementation(project(":utilities"))
 

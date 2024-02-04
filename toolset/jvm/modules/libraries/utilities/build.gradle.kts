@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+    implementation(platform("com.nophasenokill.platform:platform"))
+
     api(project(":list"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
 
