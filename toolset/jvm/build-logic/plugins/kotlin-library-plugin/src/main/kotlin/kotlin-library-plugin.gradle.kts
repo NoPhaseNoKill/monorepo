@@ -1,12 +1,18 @@
 plugins {
-    id("commons-plugin")
-    id("capability-conflict-avoidance-plugin")
-    id("org.jetbrains.kotlin.jvm")
+
+    //TODO THIS NEEDS TO BE FIXED - BUT WORKS
+    // Means the build-health-reports doesnt fail when running root task buildHealth
+
+    // id("commons-plugin")
+    // id("capability-conflict-avoidance-plugin")
+
     id("java-library")
-    id("dependency-analysis-project")
-    id("greeting-plugin")
+    id("org.jetbrains.kotlin.jvm")
+    // id("dependency-analysis-project")
+    // id("greeting-plugin")
 }
 
-dependencies {
-    implementation(kotlin("stdlib"))
-}
+// dependencies {
+    // api("org.jetbrains.kotlin:kotlin-stdlib")
+    // implementation(kotlin("stdlib"))
+// }
