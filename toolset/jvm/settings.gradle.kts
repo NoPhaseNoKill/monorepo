@@ -1,8 +1,41 @@
 
+/*
+    By explicitly using exclusive content, regardless of what is defined first,
+    we have the ability to say that a particular repository will contain
+    everything except a particular group. This can be used to increase
+    performance, where we know that precompiled scripts/binary plugins
+    for our project should only reference the local version.
 
+    For example:
+
+        repositories {
+        // This repository will NOT be searched for artifacts in my.company
+        // despite being declared first
+        gradlePluginPortal()
+        exclusiveContent {
+            forRepository {
+                maven {
+                    url = uri("https://repo.mycompany.com/maven2")
+                }
+            }
+            filter {
+                // this repository ONLY contains artifacts with group "com.nophasenokill"
+                includeGroup("com.nophasenokill")
+            }
+        }
+    }
+ */
 pluginManagement {
-
-    repositories.gradlePluginPortal()
+    repositories {
+        gradlePluginPortal()
+        exclusiveContent {
+            val repos = listOf<ArtifactRepository>(mavenCentral(), mavenLocal())
+            forRepositories(*repos.toSet().toTypedArray())
+            filter {
+                includeGroup("com.nophasenokill")
+            }
+        }
+    }
 }
 
 dependencyResolutionManagement {

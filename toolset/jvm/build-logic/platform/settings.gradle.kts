@@ -7,7 +7,10 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    repositories.gradlePluginPortal()
+
+    repositories {
+        gradlePluginPortal()
+    }
 }
 
 rootProject.name = "platform"
