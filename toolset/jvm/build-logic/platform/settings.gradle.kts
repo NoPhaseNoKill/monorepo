@@ -1,9 +1,7 @@
 
 
 pluginManagement {
-    repositories {
-        includeBuild("../plugins")
-    }
+    includeBuild("../plugins")
 }
 
 dependencyResolutionManagement {
