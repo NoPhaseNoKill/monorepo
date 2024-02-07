@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    // implementation(platform("com.nophasenokill.platform:platform"))
+    implementation(platform("com.nophasenokill.platform:platform"))
     //
     // testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     //

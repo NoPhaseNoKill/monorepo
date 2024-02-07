@@ -14,8 +14,8 @@ dependencies {
     // // // implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
     // //
 
-    implementation(project(":modules:libraries:list"))
-    implementation(project(":modules:libraries:utilities"))
+    implementation(project(":libraries:list"))
+    implementation(project(":libraries:utilities"))
 
     /*
         This is used to test/confirm that the capability conflict plugin is working correctly.

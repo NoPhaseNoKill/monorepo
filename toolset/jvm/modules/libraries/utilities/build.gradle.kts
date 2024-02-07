@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
 
-    // implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
     // testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
 
     // testImplementation("org.junit.jupiter:junit-jupiter")
@@ -13,7 +13,7 @@ dependencies {
 
     // implementation(platform("com.nophasenokill.platform:platform"))
 
-    api(project(":modules:libraries:list"))
+    api(project(":libraries:list"))
     // api(project(":list"))
 
     // testRuntimeOnly("org.junit.platform:junit-platform-launcher")

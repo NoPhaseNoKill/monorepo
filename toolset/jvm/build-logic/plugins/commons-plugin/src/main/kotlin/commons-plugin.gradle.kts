@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.isIncludeCompileClasspath
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -94,12 +95,17 @@ tasks.withType<JavaCompile>().configureEach {
         For more details: https://docs.gradle.org/current/userguide/performance.html#optimize_the_compiler
      */
 
-    options.isFork = true
+    options.isFork = false
 
     /*
         Ensures that incremental compilation is absolutely on and is not being overriden somehow
      */
-    options.isIncremental = true
+    options.isIncremental = false
+
+    /*
+        Is kept consistent with gradle.properties to ensure that there is no daemon (not even a single use daemon)
+     */
+    options.forkOptions.jvmArgs = listOf("-Xmx2g", "-XX:MaxMetaspaceSize=384m", "-Dfile.encoding=UTF-8", "-XX:+HeapDumpOnOutOfMemoryError")
 }
 
 /*
@@ -114,25 +120,14 @@ tasks.jar {
 
 // See: https://docs.gradle.org/current/userguide/working_with_files.html#sec:reproducible_archives
 tasks.withType<AbstractArchiveTask>().configureEach {
-    isPreserveFileTimestamps = false
+    isPreserveFileTimestamps = true
     isReproducibleFileOrder = true
 }
 
-// Configure common dependencies for all projects
-dependencies {
-    // enforces that versions from each of the boms are used
-    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
-    testImplementation(enforcedPlatform("org.junit:junit-bom"))
-
-    // // applies test projects
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
 
 tasks.test {
     useJUnitPlatform()
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+    // maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
 
     doFirst {
         logger.lifecycle("Starting tests")
@@ -141,9 +136,11 @@ tasks.test {
     doLast {
         logger.lifecycle("Finishing tests")
     }
+
+    // dependsOn("checkKotlinGradlePluginConfigurationErrors")
 }
 
-tasks.register("compileAll") {
+val compileAllTask = tasks.register("compileAll") {
     group = LifecycleBasePlugin.BUILD_GROUP
     description = "Compile all Java code"
 
@@ -156,18 +153,22 @@ tasks.register("compileAll") {
         logger.lifecycle("Included builds are: ${it.name}")
     }
 
-    val dependantTasks = tasks.withType<JavaCompile>() + tasks.withType<KotlinCompile>()
-    dependantTasks.forEach {
-        logger.lifecycle("Dependant task: ${it.name}")
-    }
+    // val dependantTasks = tasks.withType<KotlinCompile>()
+    // dependantTasks.forEach {
+    //     logger.lifecycle("Dependant task: ${it.name}")
+    // }
+    // tasks.named('detectCollisions', DetectCollisionsTask).configure {
+    //     configurations.from(project.configurations.runtimeClasspath)
+    // }
 
-    dependsOn(dependantTasks)
-}
 
-tasks.register("testAll") {
-    group = LifecycleBasePlugin.VERIFICATION_GROUP
-    description = "Test all Java code"
-    dependsOn(tasks.withType<Test>())
+
+    // dependsOn(":generateExternalPluginSpecBuilders")
+    // dependsOn(":extractPrecompiledScriptPluginPlugins")
+    dependsOn(tasks.compileJava)
+    dependsOn(tasks.compileTestJava)
+    dependsOn(tasks.compileKotlin)
+    dependsOn(tasks.compileTestKotlin)
 }
 
 tasks.register("printDependencies") {

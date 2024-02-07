@@ -12,6 +12,18 @@ plugins {
     // id("greeting-plugin")
 }
 
+// Configure common dependencies for all projects
+dependencies {
+    // enforces that versions from each of the boms are used
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
+    testImplementation(enforcedPlatform("org.junit:junit-bom"))
+
+    // // applies test projects
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
 // dependencies {
 //     // applies basic deps
 //     implementation(enforcedPlatform("com.nophasenokill.platform:platform"))

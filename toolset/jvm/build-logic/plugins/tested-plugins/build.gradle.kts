@@ -44,33 +44,33 @@ val functionalTest by tasks.registering(Test::class) {
 
 gradlePlugin.testSourceSets.add(functionalTestSourceSet)
 
-tasks.named<Task>("check") {
-    // Run the functional tests as part of `check`
-    dependsOn(functionalTest)
-    doLast {
-        logger.lifecycle("Has run check on the tested-plugins")
-    }
-}
-
-val testTask = tasks.named<Test>("test") {
-    // Use JUnit Jupiter for unit tests.
-    useJUnitPlatform()
-
-    doLast {
-        logger.lifecycle("Has run test on the tested-plugins")
-    }
-}
-
-tasks.register<Test>("testAll") {
-    group = LifecycleBasePlugin.VERIFICATION_GROUP
-    description = "Runs plugin unit and functional tests"
-
-    useJUnitPlatform()
-
-    dependsOn(functionalTest)
-    dependsOn(testTask)
-
-    doLast {
-        logger.lifecycle("Has run testAll on the tested-plugins")
-    }
-}
+// tasks.named<Task>("check") {
+//     // Run the functional tests as part of `check`
+//     dependsOn(functionalTest)
+//     doLast {
+//         logger.lifecycle("Has run check on the tested-plugins")
+//     }
+// }
+//
+// val testTask = tasks.named<Test>("test") {
+//     // Use JUnit Jupiter for unit tests.
+//     useJUnitPlatform()
+//
+//     doLast {
+//         logger.lifecycle("Has run test on the tested-plugins")
+//     }
+// }
+//
+// tasks.register<Test>("testAll") {
+//     group = LifecycleBasePlugin.VERIFICATION_GROUP
+//     description = "Runs plugin unit and functional tests"
+//
+//     useJUnitPlatform()
+//
+//     dependsOn(functionalTest)
+//     dependsOn(testTask)
+//
+//     doLast {
+//         logger.lifecycle("Has run testAll on the tested-plugins")
+//     }
+// }
