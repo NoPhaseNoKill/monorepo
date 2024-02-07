@@ -3,7 +3,7 @@ plugins {
     //TODO THIS NEEDS TO BE FIXED - BUT WORKS
     // Means the build-health-reports doesnt fail when running root task buildHealth
 
-    // id("commons-plugin")
+    id("commons-plugin")
     // id("capability-conflict-avoidance-plugin")
 
     id("java-library")
@@ -11,6 +11,12 @@ plugins {
     // id("dependency-analysis-project")
     // id("greeting-plugin")
 }
+
+// dependencies {
+//     // applies basic deps
+//     implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+//     testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+// }
 
 // dependencies {
     // api("org.jetbrains.kotlin:kotlin-stdlib")

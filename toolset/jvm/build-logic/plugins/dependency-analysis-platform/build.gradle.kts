@@ -4,13 +4,13 @@ plugins {
     `kotlin-dsl`
 }
 
-configurations.all {
-    resolutionStrategy {
-        // force("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
-        force("org.jetbrains.kotlin:kotlin-reflect:1.9.20")
-        failOnVersionConflict()
-    }
-}
+// configurations.all {
+//     resolutionStrategy {
+//         // force("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
+//         force("org.jetbrains.kotlin:kotlin-reflect:1.9.20")
+//         failOnVersionConflict()
+//     }
+// }
 
 dependencies {
     // requires version for current implementation, ideally we should have central repo for declaration of versions (maybe toml)

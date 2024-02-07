@@ -1,14 +1,23 @@
 plugins {
+    // TODO THIS NEEDS TO BE FIXED - BUT WORKS
     id("commons-plugin")
-    id("capability-conflict-avoidance-plugin")
+    // id("capability-conflict-avoidance-plugin")
     id("org.jetbrains.kotlin.jvm")
     id("application")
-    id("dependency-analysis-project")
+    // id("dependency-analysis-project")
 }
 
 application {
     mainClass.set("com.nophasenokill.app.AppKt")
 }
+
+// dependencies {
+//     // // applies basic deps
+//     // implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+//     // testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+//     // implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+//     // testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+// }
 
 /*
     Should display something like:

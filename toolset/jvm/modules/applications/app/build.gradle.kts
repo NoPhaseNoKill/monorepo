@@ -1,14 +1,21 @@
-
-
 plugins {
     id("kotlin-application-plugin")
 }
 
 dependencies {
-    implementation(platform("com.nophasenokill.platform:platform"))
+    //
+    // api(enforcedPlatform("com.nophasenokill.platform:platform"))
+    // testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    //
+    // // testImplementation("org.junit.jupiter:junit-jupiter")
+    // // testImplementation("org.junit.jupiter:junit-jupiter-api")
+    // //
+    // // testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    // // // implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    // //
 
-    implementation(project(":list"))
-    implementation(project(":utilities"))
+    implementation(project(":modules:libraries:list"))
+    implementation(project(":modules:libraries:utilities"))
 
     /*
         This is used to test/confirm that the capability conflict plugin is working correctly.
@@ -24,13 +31,16 @@ dependencies {
             > Task :app:run
             file:/home/REDACTED/.gradle/caches/modules-2/files-2.1/javax.activation/activation/1.1.1/485de3a253e23f645037828c07f1d7f1af40763a/activation-1.1.1.jar
      */
-    implementation("javax.activation:activation:1.1.1")
-    implementation("javax.activation:activation:1.1")
-    implementation("jakarta.activation:jakarta.activation-api:1.2.2")
+    // implementation("javax.activation:activation:1.1.1")
+    implementation("jakarta.activation:jakarta.activation-api")
+    implementation("javax.activation:activation")
+
 
     implementation("org.apache.commons:commons-text")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    // testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    // testImplementation("org.junit.jupiter:junit-jupiter-api")
+
 
     /*
         Both of these should error when uncommented due to to com.nophasenokill.dependency-analysis-project.gradle.kts.

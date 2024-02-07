@@ -7,10 +7,11 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("com.nophasenokill.platform:platform"))
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    testImplementation(enforcedPlatform("org.junit:junit-bom"))
 
+    // // applies test projects
     testImplementation("org.junit.jupiter:junit-jupiter")
-
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -63,6 +64,8 @@ val testTask = tasks.named<Test>("test") {
 tasks.register<Test>("testAll") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
     description = "Runs plugin unit and functional tests"
+
+    useJUnitPlatform()
 
     dependsOn(functionalTest)
     dependsOn(testTask)

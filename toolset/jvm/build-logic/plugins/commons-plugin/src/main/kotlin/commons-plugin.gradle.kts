@@ -120,10 +120,12 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 
 // Configure common dependencies for all projects
 dependencies {
-    // this allows us to declare non-versioned dependencies inside each project
-    // ie: implementation("org.apache.commons:commons-text")
-    implementation(platform("com.nophasenokill.platform:platform"))
+    // enforces that versions from each of the boms are used
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
+    testImplementation(enforcedPlatform("org.junit:junit-bom"))
 
+    // // applies test projects
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
