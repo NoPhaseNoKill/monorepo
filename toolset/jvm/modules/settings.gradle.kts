@@ -60,7 +60,6 @@ include(":applications:app")
 
 gradle.useLogger(CustomEventLogger())
 
-@Suppress("deprecation")
 class CustomEventLogger : BuildAdapter(), ProjectEvaluationListener, TaskExecutionGraphListener, TaskExecutionListener {
 
     /*
