@@ -1,9 +1,11 @@
 plugins {
-    // TODO THIS NEEDS TO BE FIXED - BUT WORKS
+
     id("commons-plugin")
-    // id("capability-conflict-avoidance-plugin")
+
     id("org.jetbrains.kotlin.jvm")
     id("application")
+    // TODO THIS NEEDS TO BE FIXED - BUT WORKS - also clean up the build file of this
+    // id("capability-conflict-avoidance-plugin")
     // id("dependency-analysis-project")
 }
 
@@ -18,18 +20,12 @@ dependencies {
     implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
     testImplementation(enforcedPlatform("org.junit:junit-bom"))
 
-    // // applies test projects
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    // applies test projects
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
-
-// dependencies {
-//     // // applies basic deps
-//     // implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-//     // testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-//     // implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-//     // testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-// }
 
 /*
     Should display something like:
@@ -86,14 +82,6 @@ val printRuntimeClasspathTask = tasks.register("printRuntimeClasspath") {
         }
     }
 }
-
-// tasks.named("run") {
-//     dependsOn(printRuntimeClasspathTask)
-// }
-//
-// tasks.testAll {
-//     dependsOn(printRuntimeClasspathTask)
-// }
 
 tasks.test {
     dependsOn(printRuntimeClasspathTask)

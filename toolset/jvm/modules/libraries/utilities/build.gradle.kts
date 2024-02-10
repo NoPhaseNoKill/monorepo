@@ -3,21 +3,7 @@ plugins {
 }
 
 dependencies {
-
-    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-    // testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-
-    // testImplementation("org.junit.jupiter:junit-jupiter")
-    // testImplementation("org.junit.jupiter:junit-jupiter-api")
-    // testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // implementation(platform("com.nophasenokill.platform:platform"))
-
     api(project(":libraries:list"))
-    // api(project(":list"))
-
-    // testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    // testImplementation("org.junit.jupiter:junit-jupiter-api")
 
     /*
         Both of these should error when uncommented due to to com.nophasenokill.dependency-analysis-project.gradle.kts.

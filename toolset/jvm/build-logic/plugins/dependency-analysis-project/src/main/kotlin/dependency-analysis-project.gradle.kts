@@ -9,23 +9,6 @@ dependencies {
     implementation(kotlin("stdlib"))
 }
 
-// dependencies {
-//     implementation(kotlin("stdlib"))
-//
-//     implementation("com.autonomousapps:dependency-analysis-gradle-plugin") {
-//         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
-//         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
-//         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-//         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-common")
-//         exclude(group = "org.jetbrains.kotlin", module = "kotlin-scripting-common")
-//         exclude(group = "org.jetbrains.kotlin", module = "kotlin-scripting-jvm")
-//         exclude(group = "org.jetbrains.kotlin", module = "kotlin-compiler-embeddable")
-//         exclude(group = "org.jetbrains.kotlin", module = "kotlin-daemon-client")
-//         exclude(group = "org.checkerframework", module = "checker-qual")
-//         exclude(group = "com.google.errorprone", module = "error_prone_annotations")
-//     }
-// }
-
 val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("checkDependencyFormattingProject") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
 
@@ -58,7 +41,6 @@ val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("ch
 
 tasks.check {
     dependsOn(checkDependencyFormattingProject)
-    // dependsOn(checkDependencyScopes)
 }
 
 fun Dependency.toDeclaredString() = when(this) {

@@ -3,17 +3,6 @@ plugins {
 }
 
 dependencies {
-    //
-    // api(enforcedPlatform("com.nophasenokill.platform:platform"))
-    // testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-    //
-    // // testImplementation("org.junit.jupiter:junit-jupiter")
-    // // testImplementation("org.junit.jupiter:junit-jupiter-api")
-    // //
-    // // testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    // // // implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-    // //
-
     implementation(project(":libraries:list"))
     implementation(project(":libraries:utilities"))
 
@@ -31,15 +20,11 @@ dependencies {
             > Task :app:run
             file:/home/REDACTED/.gradle/caches/modules-2/files-2.1/javax.activation/activation/1.1.1/485de3a253e23f645037828c07f1d7f1af40763a/activation-1.1.1.jar
      */
-    // implementation("javax.activation:activation:1.1.1")
     implementation("jakarta.activation:jakarta.activation-api")
     implementation("javax.activation:activation")
 
-
     implementation("org.apache.commons:commons-text")
 
-    // testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    // testImplementation("org.junit.jupiter:junit-jupiter-api")
 
 
     /*

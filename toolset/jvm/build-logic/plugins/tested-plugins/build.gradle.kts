@@ -10,7 +10,7 @@ dependencies {
     implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
     testImplementation(enforcedPlatform("org.junit:junit-bom"))
 
-    // // applies test projects
+    // applies test projects
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -53,7 +53,6 @@ tasks.named<Task>("check") {
 }
 
 val testTask = tasks.named<Test>("test") {
-    // Use JUnit Jupiter for unit tests.
     useJUnitPlatform()
 
     doLast {

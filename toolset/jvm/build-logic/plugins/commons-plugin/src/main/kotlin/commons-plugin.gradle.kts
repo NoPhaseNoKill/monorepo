@@ -98,12 +98,14 @@ tasks.withType<JavaCompile>().configureEach {
     options.isFork = false
 
     /*
-        Ensures that incremental compilation is absolutely on and is not being overriden somehow
+        Ensures that incremental compilation is absolutely OFF and is not being overriden somehow.
+
+        This is due to noticed issues with caching when it was on.
      */
     options.isIncremental = false
 
     /*
-        Is kept consistent with gradle.properties to ensure that there is no daemon (not even a single use daemon)
+        Is kept consistent with gradle.properties to ensure that single use daemon's can be made if we need them
      */
     options.forkOptions.jvmArgs = listOf("-Xmx2g", "-XX:MaxMetaspaceSize=384m", "-Dfile.encoding=UTF-8", "-XX:+HeapDumpOnOutOfMemoryError")
 }
@@ -127,7 +129,7 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 
 tasks.test {
     useJUnitPlatform()
-    // maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
 
     doFirst {
         logger.lifecycle("Starting tests")
@@ -136,39 +138,14 @@ tasks.test {
     doLast {
         logger.lifecycle("Finishing tests")
     }
-
-    // dependsOn("checkKotlinGradlePluginConfigurationErrors")
 }
 
-val compileAllTask = tasks.register("compileAll") {
+tasks.register("compileAll") {
     group = LifecycleBasePlugin.BUILD_GROUP
     description = "Compile all Java code"
 
-    logger.lifecycle("Project ${project.name}")
-    project.subprojects.forEach {
-        logger.lifecycle("Subproject: ${it.name}")
-    }
+    dependsOn(tasks.check)
 
-    gradle.includedBuilds.forEach {
-        logger.lifecycle("Included builds are: ${it.name}")
-    }
-
-    // val dependantTasks = tasks.withType<KotlinCompile>()
-    // dependantTasks.forEach {
-    //     logger.lifecycle("Dependant task: ${it.name}")
-    // }
-    // tasks.named('detectCollisions', DetectCollisionsTask).configure {
-    //     configurations.from(project.configurations.runtimeClasspath)
-    // }
-
-
-
-    // dependsOn(":generateExternalPluginSpecBuilders")
-    // dependsOn(":extractPrecompiledScriptPluginPlugins")
-    dependsOn(tasks.compileJava)
-    dependsOn(tasks.compileTestJava)
-    dependsOn(tasks.compileKotlin)
-    dependsOn(tasks.compileTestKotlin)
 }
 
 tasks.register("printDependencies") {

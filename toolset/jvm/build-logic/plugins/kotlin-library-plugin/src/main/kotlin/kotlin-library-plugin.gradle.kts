@@ -1,6 +1,6 @@
 plugins {
 
-    //TODO THIS NEEDS TO BE FIXED - BUT WORKS
+    // TODO THIS NEEDS TO BE FIXED - BUT WORKS - also clean up the build file of this
     // Means the build-health-reports doesnt fail when running root task buildHealth
 
     id("commons-plugin")
@@ -19,18 +19,9 @@ dependencies {
     implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
     testImplementation(enforcedPlatform("org.junit:junit-bom"))
 
-    // // applies test projects
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    // applies test projects
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
-
-// dependencies {
-//     // applies basic deps
-//     implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-//     testImplementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-// }
-
-// dependencies {
-    // api("org.jetbrains.kotlin:kotlin-stdlib")
-    // implementation(kotlin("stdlib"))
-// }
