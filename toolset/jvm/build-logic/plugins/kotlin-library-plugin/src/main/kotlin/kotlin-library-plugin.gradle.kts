@@ -19,6 +19,10 @@ dependencies {
     implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
     testImplementation(enforcedPlatform("org.junit:junit-bom"))
 
+    /*
+        adds kotlin to the project. jdk8 ensures that when we set kotlin.stdlib.default.dependency=false
+        that our apps/libraries still get kotlin
+    */
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     // applies test projects
