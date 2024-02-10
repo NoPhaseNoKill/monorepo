@@ -8,4 +8,5 @@ dependencies {
 
     implementation(project(":dependency-analysis-project"))
     implementation(project(":capability-conflict-avoidance-plugin"))
+    implementation(project(":tested-plugins"))
 }

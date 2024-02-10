@@ -6,7 +6,13 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    /*
+        adds kotlin to the project. jdk8 ensures that when we set kotlin.stdlib.default.dependency=false
+        that our apps/libraries still get kotlin
+        DO NOT USE:
+            - kotlin("stdlib")
+     */
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
 
 val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("checkDependencyFormattingProject") {
