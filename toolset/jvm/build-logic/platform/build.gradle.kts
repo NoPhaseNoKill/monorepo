@@ -10,8 +10,10 @@ group = "com.nophasenokill.platform"
 // Do not use this. This includes the dependencies
 // javaPlatform.allowDependencies()
 
+
 dependencies {
     constraints {
+
         api("com.autonomousapps:dependency-analysis-gradle-plugin:1.29.0")
         api("com.google.errorprone:error_prone_annotations:2.13.1")
         api("io.fuchs.gradle.classpath-collision-detector:classpath-collision-detector:0.3")
@@ -26,11 +28,9 @@ dependencies {
         api("org.jetbrains.kotlin:kotlin-bom:1.9.20") {
             because("It matches the version of 3.2.0 for spring")
         }
-        api("org.jetbrains.kotlin:kotlin-stdlib-common:1.9.20")
-        api("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.20")
-        api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20")
+
         api("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
-        api("org.jetbrains.kotlin:kotlin-reflect:1.9.20")
+
         api("org.junit:junit-bom:5.10.1")
 
         api("org.springframework.boot:spring-boot-dependencies:3.2.0") {

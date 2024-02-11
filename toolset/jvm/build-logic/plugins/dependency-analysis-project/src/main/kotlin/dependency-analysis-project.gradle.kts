@@ -12,7 +12,7 @@ dependencies {
         DO NOT USE:
             - kotlin("stdlib")
      */
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
 }
 
 val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("checkDependencyFormattingProject") {

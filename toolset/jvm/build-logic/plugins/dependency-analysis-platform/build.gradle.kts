@@ -4,8 +4,21 @@ plugins {
     `kotlin-dsl`
 }
 
+configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+        /*
+            equivalent to both:
+                - failOnDynamicVersions()
+                - failOnChangingVersions()
+         */
+        failOnNonReproducibleResolution()
+    }
+}
+
 dependencies {
     // requires version for current implementation, ideally we should have central repo for declaration of versions (maybe toml)
+    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:1.9.20"))
 
     implementation("com.autonomousapps:dependency-analysis-gradle-plugin:1.29.0") {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")

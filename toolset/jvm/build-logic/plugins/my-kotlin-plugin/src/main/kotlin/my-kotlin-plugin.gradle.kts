@@ -11,10 +11,11 @@ dependencies {
 
     // applies standard kotlin libs to projects
     implementation(kotlin("stdlib-jdk8"))
-    implementation(kotlin("reflect"))
+    runtimeOnly(kotlin("reflect"))
 
     // applies test projects
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 }
