@@ -72,7 +72,7 @@ abstract class DependencyFormatCheck : DefaultTask() {
                 }
 
                 nonStbLibDependencies.forEach { coordinates ->
-                    if (coordinates.count { it == ':' } == 2) {
+                    if (coordinates.count { it == ':' } == 2 && !coordinates.startsWith("org.jetbrains.kotlin")) {
                         throw RuntimeException("""
                             ${buildFilePath.get()}
                             
