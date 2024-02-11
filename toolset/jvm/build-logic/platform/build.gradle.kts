@@ -17,6 +17,8 @@ dependencies {
         api("jakarta.activation:jakarta.activation-api:1.2.2")
         api("javax.activation:activation:1.1.1")
         api("org.apache.commons:commons-text:1.11.0")
+        api("commons-io:commons-io:2.5")
+        api("commons-codec:commons-codec:1.9")
         api("org.gradlex:java-ecosystem-capabilities:1.4")
         api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20")
         api("org.jetbrains.kotlin:kotlin-bom:1.9.20") {

@@ -1,5 +1,6 @@
 plugins {
     id("kotlin-application-plugin")
+    id("source-file-hashing-plugin")
 }
 
 dependencies {
