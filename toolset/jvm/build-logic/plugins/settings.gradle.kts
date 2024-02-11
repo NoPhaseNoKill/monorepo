@@ -13,13 +13,19 @@ dependencyResolutionManagement {
 
 rootProject.name = "plugins"
 
-include("commons-plugin")
 include("capability-conflict-avoidance-plugin")
 include("tested-plugins")
-include("kotlin-library-plugin")
-include("kotlin-application-plugin")
 include("dependency-analysis-project")
 include("dependency-analysis-platform")
 include("source-file-hashing-plugin")
+
+include("base-plugin")
+include("my-kotlin-plugin")
+include("library-plugin")
+include("application-plugin")
+include("kotlin-app-plugin")
+include("junit-test-plugin")
+include("kotlin-lib-plugin")
+
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")

@@ -1,10 +1,6 @@
-import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.isIncludeCompileClasspath
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("base")
-    id("java")
-    id("org.jetbrains.kotlin.jvm")
+    java
 }
 
 /*
@@ -47,26 +43,6 @@ java {
     }
 }
 
-kotlin {
-    /*
-        Uncomment this + the properties in gradle.properties to run using k2 compiler
-     */
-    // sourceSets.all {
-    //     languageSettings {
-    //         languageVersion = "2.0"
-    //     }
-    // }
-
-    /*
-        Uncomment this + targetCompatibility in the java extension if you need to verify
-        that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
-        is worked (default behaviour)
-     */
-    // compilerOptions {
-    //     jvmTarget = JvmTarget.JVM_1_8
-    // }
-}
-
 tasks.withType<JavaCompile>().configureEach {
     /*
         The kotlin language spec uses this by default but this
@@ -89,7 +65,7 @@ tasks.withType<JavaCompile>().configureEach {
 
         "Gradle reuses this process within the duration the build, so the forking overhead is minimal.
         By forking memory-intensive compilation into a separate process, we minimize garbage collection in the main
-        Gradle process. Less garbage collection means that Gradle’s infrastructure can run faster, especially when
+        Gradle process. Less garbage collection means that Gradle?s infrastructure can run faster, especially when
         you also use parallel builds."
 
         For more details: https://docs.gradle.org/current/userguide/performance.html#optimize_the_compiler
@@ -110,58 +86,14 @@ tasks.withType<JavaCompile>().configureEach {
     options.forkOptions.jvmArgs = listOf("-Xmx2g", "-XX:MaxMetaspaceSize=384m", "-Dfile.encoding=UTF-8", "-XX:+HeapDumpOnOutOfMemoryError")
 }
 
-/*
-    Ensures that jar is included properly for anyone who overrides destination folder
-    See: https://kotlinlang.org/docs/gradle-configure-project.html#non-default-location-of-compile-tasks-destinationdirectory
- */
-
-tasks.jar {
-    from(getLazilyEvaluatedValue(sourceSets.main.get().output ))
-    from(getLazilyEvaluatedValue(sourceSets.main.get().kotlin.classesDirectory ))
-}
-
 // See: https://docs.gradle.org/current/userguide/working_with_files.html#sec:reproducible_archives
 tasks.withType<AbstractArchiveTask>().configureEach {
     isPreserveFileTimestamps = true
     isReproducibleFileOrder = true
 }
 
-
-tasks.test {
-    useJUnitPlatform()
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
-
-    doFirst {
-        logger.lifecycle("Starting tests")
-    }
-
-    doLast {
-        logger.lifecycle("Finishing tests")
-    }
-}
-
-tasks.register("compileAll") {
-    group = LifecycleBasePlugin.BUILD_GROUP
-    description = "Compile all Java code"
-
-    dependsOn(tasks.check)
-
-}
-
-tasks.register("printDependencies") {
-    group = LifecycleBasePlugin.VERIFICATION_GROUP
-    description = "Prints dependencies by configuration"
-
-    configurations.forEach { config ->
-        if (config.isCanBeResolved) {
-            logger.lifecycle("\nConfiguration dependencies: ${config.name}")
-            try {
-                config.resolvedConfiguration.resolvedArtifacts.forEach { artifact ->
-                    logger.lifecycle(" - ${artifact.moduleVersion.id.group}:${artifact.name}:${artifact.moduleVersion.id.version}")
-                }
-            } catch (e: Exception) {
-                logger.lifecycle("Failed to resolve ${config.name}: ${e.message}")
-            }
-        }
-    }
+dependencies {
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    // Annotation processor does not extend implementation. For more details see: https://docs.gradle.org/current/userguide/java_plugin.html#tab:configurations
+    annotationProcessor(enforcedPlatform("com.nophasenokill.platform:platform"))
 }

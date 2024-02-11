@@ -4,10 +4,24 @@ plugins {
     `kotlin-dsl`
 }
 
+
+
+configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+        /*
+            equivalent to both:
+                - failOnDynamicVersions()
+                - failOnChangingVersions()
+         */
+        failOnNonReproducibleResolution()
+    }
+}
+
 dependencies {
     implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
 
-    implementation(project(":commons-plugin"))
+    implementation(project(":base-plugin"))
     implementation(project(":capability-conflict-avoidance-plugin"))
 
     implementation("com.autonomousapps:dependency-analysis-gradle-plugin")

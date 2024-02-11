@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin-application-plugin")
+    id("kotlin-app-plugin")
     id("source-file-hashing-plugin")
 }
 

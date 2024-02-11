@@ -1,5 +1,3 @@
-
-
 plugins {
     `kotlin-dsl`
 }
@@ -7,10 +5,9 @@ plugins {
 dependencies {
     implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
 
-    // implementation(project(":commons-plugin"))
+    implementation(project(":application-plugin"))
+    implementation(project(":my-kotlin-plugin"))
+    implementation(project(":junit-test-plugin"))
     implementation(project(":capability-conflict-avoidance-plugin"))
     implementation(project(":dependency-analysis-project"))
-    // implementation(project(":tested-plugins"))
-
-
 }

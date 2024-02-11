@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin-library-plugin")
+    id("kotlin-lib-plugin")
 }
 
 dependencies {

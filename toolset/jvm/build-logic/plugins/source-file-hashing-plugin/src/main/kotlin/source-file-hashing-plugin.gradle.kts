@@ -2,7 +2,7 @@ import com.nophasenokill.CreateMD5
 
 
 plugins {
-    id("commons-plugin")
+    id("base-plugin")
 }
 
 /*

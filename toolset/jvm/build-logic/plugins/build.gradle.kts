@@ -16,4 +16,16 @@ gradle.allprojects {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+        /*
+            equivalent to both:
+                - failOnDynamicVersions()
+                - failOnChangingVersions()
+         */
+        failOnNonReproducibleResolution()
+    }
+}
+
 group = "com.nophasenokill.plugins"

@@ -90,7 +90,7 @@ abstract class DependencyFormatCheck : DefaultTask() {
             }
 
             val declaredInBuildFile = dependencies.filter {
-                // Ignore dependencies that are defined in commons plugins. Found inside commons-plugin.gradle.kts
+                // Ignore dependencies that are defined in commons plugins. Found inside base-plugin.gradle.kts
                 // This is currently duplicuated with platform/project
                 it !in listOf(
                     "com.nophasenokill.platform:platform",
