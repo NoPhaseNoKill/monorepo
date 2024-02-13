@@ -7,17 +7,10 @@ dependencies {
     // enforces that versions from each of the boms are used
     implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
     implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
-    testImplementation(enforcedPlatform("org.junit:junit-bom"))
 
     // applies standard kotlin libs to projects
     implementation(kotlin("stdlib-jdk8"))
     runtimeOnly(kotlin("reflect"))
-
-    // applies test projects
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
 }
 
 kotlin {

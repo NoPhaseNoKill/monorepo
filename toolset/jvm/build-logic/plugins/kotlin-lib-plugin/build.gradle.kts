@@ -6,8 +6,9 @@ plugins {
 dependencies {
 
     implementation(project(":base-plugin"))
-    implementation(project(":library-plugin"))
-    implementation(project(":junit-test-plugin"))
-    implementation(project(":my-kotlin-plugin"))
 
+    // includes junit plugin which includes test deps etc
+    implementation(project(":library-plugin"))
+
+    implementation(project(":my-kotlin-plugin"))
 }
