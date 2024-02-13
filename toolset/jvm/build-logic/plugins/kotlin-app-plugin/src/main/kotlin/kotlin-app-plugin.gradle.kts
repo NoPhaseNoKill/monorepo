@@ -4,6 +4,7 @@ plugins {
     id("application-plugin")
     id("junit-test-plugin")
     id("my-kotlin-plugin")
+    id("source-file-hashing-plugin")
 }
 
 /*

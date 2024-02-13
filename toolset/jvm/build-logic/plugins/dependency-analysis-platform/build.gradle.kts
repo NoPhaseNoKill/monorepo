@@ -17,9 +17,12 @@ configurations.all {
 }
 
 dependencies {
-    // requires version for current implementation, ideally we should have central repo for declaration of versions (maybe toml)
+    /*
+        Because this is a requirement to compile our full app platform (it's doing a pre-check of our platform),
+        currently versions need to be declared manually here. this is currently a workaround, ideally we
+        should be storing these in a .toml file for consistency
+     */
     implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:1.9.20"))
-
     implementation("com.autonomousapps:dependency-analysis-gradle-plugin:1.29.0") {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")

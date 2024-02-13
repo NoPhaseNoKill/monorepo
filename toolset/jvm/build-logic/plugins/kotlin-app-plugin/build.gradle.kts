@@ -9,4 +9,5 @@ dependencies {
     implementation(project(":application-plugin"))
 
     implementation(project(":my-kotlin-plugin"))
+    implementation(project(":source-file-hashing-plugin"))
 }
