@@ -11,6 +11,17 @@ plugins {
     id("com.autonomousapps.dependency-analysis") version "1.29.0"
 }
 
+dependencyAnalysis {
+    issues {
+        all {
+            onAny {
+                severity("fail")
+                exclude("jakarta.activation:jakarta.activation-api", "javax.activation:activation")
+            }
+        }
+    }
+}
+
 /*
     Fixes undeclared build service usage when using: enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
     Known issue to be fixed here: https://youtrack.jetbrains.com/issue/KT-63165

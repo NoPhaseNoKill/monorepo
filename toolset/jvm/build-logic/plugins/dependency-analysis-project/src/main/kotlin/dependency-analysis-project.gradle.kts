@@ -1,18 +1,8 @@
 import com.nophasenokill.DependencyFormatCheck
 
 plugins {
+    id("base-plugin")
     id("org.jetbrains.kotlin.jvm")
-    id("capability-conflict-avoidance-plugin")
-}
-
-dependencies {
-    /*
-        adds kotlin to the project. jdk8 ensures that when we set kotlin.stdlib.default.dependency=false
-        that our apps/libraries still get kotlin
-        DO NOT USE:
-            - kotlin("stdlib")
-     */
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
 }
 
 val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("checkDependencyFormattingProject") {

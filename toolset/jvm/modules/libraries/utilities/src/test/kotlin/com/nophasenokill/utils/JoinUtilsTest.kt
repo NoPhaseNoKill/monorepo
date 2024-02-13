@@ -10,5 +10,6 @@ class JoinUtilsTest {
         val one = 1
         val three = 3
         assertEquals(one + three, 4)
+        assertEquals(2 + 2, 4)
     }
 }

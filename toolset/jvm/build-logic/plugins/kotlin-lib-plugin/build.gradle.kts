@@ -11,4 +11,9 @@ dependencies {
     implementation(project(":library-plugin"))
 
     implementation(project(":my-kotlin-plugin"))
+    implementation(project(":capability-conflict-avoidance-plugin"))
+    implementation(project(":dependency-analysis-project"))
+    implementation(project(":source-file-hashing-plugin"))
+    implementation(project(":tested-plugins"))
+
 }

@@ -33,37 +33,82 @@ they could be, and aims to investigate pragmatic ways of solving something peopl
    4. New java version comes out? Cool we upgrading due to speed improvements
 6. Make writing code fun again, by not having to have wait for so much compilation!
 
-### Current short-term roadmap
+### Initial Benchmarks - 14/02/2024 - Low parallelism, mainly just understanding/configuring gradle correctly
+The benchmark testing I have done (based on the build scans at the time of writing) were:
 
-1. Check parallelism against build scan and confirm that all currently known 'requirements' are met. See: https://docs.gradle.org/current/userguide/performance.html
-   1. Configuration avoidance
-      1. See from here onwards: https://docs.gradle.org/current/userguide/task_configuration_avoidance.html#sec:task_configuration_avoidance_migration_steps
-      2. Remove tasks.all {}) or subsets by type (tasks.withType() {}), migrate TaskContainer#getByName(String, Closure), 
-       migrate from old create to register
-   2. Optimize dependency resolution, namely: 'repository order', 'count', 'dynamic versus snapshot versions',
-   'avoiding dependency resolution during configuration', 'remove slow or unaffected downloads'. All can be found at:
-      https://docs.gradle.org/current/userguide/performance.html#dependency_resolution
-   3. Enable remote build cache: https://docs.gradle.org/current/userguide/part6_gradle_caching.html#step_4_understanding_remote_caching
-      1. https://docs.gradle.com/build-cache-node/#installation
-      2. https://docs.gradle.com/build-cache-node/#version_history
-      3. https://hub.docker.com/r/gradle/build-cache-node
+1. Build scan when going from a cold cache/with no dependencies, aka './gradlew :runAllMainBuildTasks --rerun-tasks --refresh-dependencies --scan': https://scans.gradle.com/s/45nfivplxf6m2
+2. I then ran './gradlew :runAllMainBuildTasks --scan' which gave: https://scans.gradle.com/s/l6nrbxtrgrjlo
+3. Followed up by changing a single file in the utilities test folder: https://scans.gradle.com/s/lh7wfafqrwuq4/performance/build
 
-2. Gradle config regressions can be fixed by using plugin testing
-    1. We can then verify if we have regressed anything with our 'dependency adherence plugins', 
-    by systematically testing prior expectations 
-    2. This offers the fastest feedback loop
-    3. Every other task would depend on this one
-    4. This ensures that we validate our gradle scripts functionality before even running anything, and fail fast
-    5. It also allows us to assert that from X commit we have coverage against Y,Z regressions which allow much faster upgrades
+The promising thing about this was:
+1. Dependency downloads took roughly ~3/4 of the build scan wall clock time for the initial cold cache/no cache (indicating the idea around dependency splitting for parallelism has merit)
+2. The absolute shortest time from a cache this build could have taken was just over 3 seconds,  (due to me putting in an absolute minimum test time of 3 seconds).
+See: :modules:libraries:utilities:sourceFileHashingPluginTask here: https://scans.gradle.com/s/l6nrbxtrgrjlo/timeline?sort=longest
+   2.172s	3.005s	com.nophasenokill.CreateMD5
+If everything else worked completely in parallel, this gives us an indication that there are approx 2.188s being wasted (something to work off as a baseline),
+as the 'extra' time the whole build took was 5.188s (total) - 3.005s = 2.185s. This is already a HUGE improvement over maven
+3. Changing a single file, of which all applications/libraries were dependant on, meant that the avoidance savings (ie re-usable cache)
+from step 2 only decreased from 85.05% -> 83.73%
 
-3. Now that we have all of gradle plugin functionality tested, we can copy across previous modules one-by-one 
-to new structure, see: https://github.com/NoPhaseNoKill/monorepo/tree/285b90b6334971b2978ed0954c0220f0914ca917/modules
+Stats were: 
 
-4. Add better output of logging for plugin/dependency management print statements in [kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
-5. Add folder in build-logic named tasks, and have sub-folders java/kotlin/root tasks etc 
-6. Split each singular dependency into its own project, so we can get maximum concurrency. This means each
-node in the tree gets its own project, but would be responsible for a singular fetch -> enabling extremely high speeds
-when fetching packages and configuring projects
+Step 2:
+    - All tasks: 290
+    - Tasks avoided: 190
+    - Avoidance savings: 58.505s (85.05%)
+    - Total wall clock time: 5.188s
+    -290 tasks, 0 transforms executed in 16 projects in 5.188s , with 190 avoided tasks saving 58.505s
+
+Step 3:
+- All tasks: 290
+- Tasks avoided: 186
+- Avoidance savings: 57.578s (83.73%)
+- Total wall clock time: 5.587s
+- 290 tasks, 0 transforms executed in 16 projects in 5.587s with 186 avoided tasks saving 57.578s
+
+Keeping in mind these are benchmarks for what I'll say are still 'relatively unoptimized' (aka very little work has been
+done to keep them in parallel) - this an absolute amazing result so far.
+
+### Current short-term/medium roadmap (Updated 12/02/2024)
+#### ***IMPORTANT NOTE***: Very very basic benchmarking was just completed (12/02/2024). 
+Turns out our idea has merit. Large merit. Big enough merit that I ran a single benchmark test (normally would do approx 100,
+in an actual container rather than on a host OS), and instantly knew this was a go-ahead. Please see above if you interested.
+
+The following are in no particular order:
+
+1. Add testing to all plugins/properly ensure that we don't break backwards compatibility we care about
+
+2. Create a systemic way to actually measure these builds properly
+   1. This probably includes creating our own gradle profiler (gradle's one does not expose meaningful/useful enough info)
+   2. We probably need a docker container with certain specs (rather than our own OS), to get more consistent results
+   3. This will give us our 'actual' baseline, rather than just generalised baseline/benchmark we have now
+
+3. Enable as much parallelism using gradle's WorkQueue (see source-file-hashing-plugin) as possible. This may include things like:
+   1. Dependency resolution. All found here: https://docs.gradle.org/current/userguide/performance.html#dependency_resolution
+   2. Configuration avoidance
+      1. To enable this, we firstly need to migrate the logger to the new useService
+      2. We also probably need to look at getting rid of the dependency analysis plugin - as this uses lots of deprecated features
+      3. Maybe: Split each singular dependency into its own project, so we can get maximum concurrency. This means each
+         node in the tree gets its own project, but would be responsible for a singular fetch -> enabling extremely high speeds
+         when fetching packages and configuring projects
+   3. Enable remote build cache
+      1. https://docs.gradle.org/current/userguide/part6_gradle_caching.html#step_4_understanding_remote_caching
+      2. https://docs.gradle.com/build-cache-node/#installation
+      3. https://docs.gradle.com/build-cache-node/#version_history
+      4. https://hub.docker.com/r/gradle/build-cache-node
+
+4. Organisation of plugins still feels a bit weird. There's a concept of 'meta-plugins' already occurring which:
+   1. Means we firstly have a dependency on the kotlin version being used for gradle
+   2. We then have a dependency on the dependency-analysis=plugin (to check our platform dependencies)
+   3. Majority of other stuff can then be built/done with that
+   4. How could we optimize this is the real question here?
+
+5. Add better output which may analyse inefficiency of dependency resolution. This could be things like:
+   1. Suggested ordering 
+   2. Something you may be doing inadvertently that is having a major impact
+   3. Output of the largest wall clock time syncs so you can investigate
+
+6. Continue from GenerateMD5.kt: https://docs.gradle.org/current/userguide/worker_api.html#changing_the_isolation_mode
 
 ### Create script to make a new module (under modules/applications or modules/libraries)
 1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)

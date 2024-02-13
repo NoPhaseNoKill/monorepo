@@ -10,4 +10,7 @@ dependencies {
 
     implementation(project(":my-kotlin-plugin"))
     implementation(project(":source-file-hashing-plugin"))
+    implementation(project(":capability-conflict-avoidance-plugin"))
+    implementation(project(":dependency-analysis-project"))
+    implementation(project(":tested-plugins"))
 }

@@ -24,5 +24,3 @@ abstract class GenerateMD5 : WorkAction<MD5WorkParameters?> {
     }
 }
 
-// TODO continue from https://docs.gradle.org/current/userguide/worker_api.html#changing_the_isolation_mode
-

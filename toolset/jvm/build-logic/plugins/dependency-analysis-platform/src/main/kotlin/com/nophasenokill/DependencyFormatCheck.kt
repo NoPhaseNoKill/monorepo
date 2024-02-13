@@ -72,7 +72,7 @@ abstract class DependencyFormatCheck : DefaultTask() {
 
                 nonStbLibDependencies.forEach { coordinates ->
 
-                    if (coordinates.count { it == ':' } == 2 && !coordinates.startsWith("org.jetbrains.kotlin")) {
+                    if (coordinates.count { it == ':' } >= 2 && !coordinates.startsWith("org.jetbrains.kotlin")) {
                         throw RuntimeException("""
                             ${buildFilePath.get()}
                             
@@ -89,14 +89,18 @@ abstract class DependencyFormatCheck : DefaultTask() {
                 }
             }
 
-            val declaredInBuildFile = dependencies.filter {
-                // Ignore dependencies that are defined in commons plugins. Found inside base-plugin.gradle.kts
-                // This is currently duplicuated with platform/project
-                it !in listOf(
-                    "com.nophasenokill.platform:platform",
-                    "org.junit.jupiter:junit-jupiter-engine",
-                )
+            val exclusions = listOf(
+                "com.nophasenokill.platform:platform",
+                "org.jetbrains.kotlin:kotlin-bom",
+                "org.junit:junit-bom",
+                "org.junit.jupiter:junit-jupiter-engine",
+            )
+
+            // Removes any of the declared boms/platforms
+            val declaredInBuildFile = nonStbLibDependencies.filter { dependency ->
+                exclusions.none { exclusion -> dependency.contains(exclusion) }
             }
+
             val sortedProject = declaredInBuildFile.filter { it.startsWith(":") }.sorted()
             val sortedExternal = declaredInBuildFile.filter { !it.startsWith(":") }.sorted()
             if (declaredInBuildFile != sortedProject + sortedExternal) {

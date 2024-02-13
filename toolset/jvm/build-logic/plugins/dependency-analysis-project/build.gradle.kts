@@ -18,16 +18,15 @@ configurations.all {
     }
 }
 
+
 dependencies {
-    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:1.9.20"))
+    implementation(project(":base-plugin"))
 
-    implementation(platform("com.nophasenokill.platform:platform"))
-
-    implementation(project(":capability-conflict-avoidance-plugin"))
-
+    // required to compile the plugin, and hence implicitly relies on the platform being declared
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin")
-
-    implementation("com.autonomousapps:dependency-analysis-gradle-plugin:1.29.0") {
+    implementation("com.autonomousapps:dependency-analysis-gradle-plugin") {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
