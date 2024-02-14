@@ -56,7 +56,7 @@ tasks.withType<JavaCompile>().configureEach {
 
         For more details: https://docs.gradle.org/current/userguide/building_java_projects.html#sec:compiling_with_release
      */
-    options.release.set(getLazilyEvaluatedValue(javaLanguageVersion.get().asInt()))
+    options.release = getLazilyEvaluatedValue(javaLanguageVersion.get().asInt())
 
     /*
         Runs the compiler as a separate process

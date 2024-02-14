@@ -8,8 +8,8 @@ plugins {
 val checkDependencyFormattingProject = tasks.register<DependencyFormatCheck>("checkDependencyFormattingProject") {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
 
-    buildFilePath.set(project.buildFile.absolutePath)
-    shouldNotHaveVersions.set(true)
+    buildFilePath = project.buildFile.absolutePath
+    shouldNotHaveVersions = true
     sourceSets.all {
         /*
             The subtle nuance here is that we're using a provider, and not eagerly realizing it with a .get().

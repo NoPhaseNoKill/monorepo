@@ -5,5 +5,5 @@ plugins {
 }
 
 application {
-    mainClass.set("com.nophasenokill.app.AppKt")
+    mainClass = "com.nophasenokill.app.AppKt"
 }
