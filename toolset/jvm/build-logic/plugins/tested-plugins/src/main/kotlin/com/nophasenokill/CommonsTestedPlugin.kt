@@ -7,7 +7,8 @@ import org.gradle.api.Project
 class CommonsTestedPlugin : Plugin<Project> {
     override fun apply(project: Project) {
 
-        project.task("taskInsideCommonsTestedPlugin") {
+        // Register task lazily instead of eagerly
+        project.tasks.register("taskInsideCommonsTestedPlugin") {
             this.doLast {
                 logger.lifecycle("Hello from plugin 'commons-tested-plugin'")
             }
