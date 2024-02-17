@@ -1,7 +1,12 @@
-
-
 pluginManagement {
-    repositories.gradlePluginPortal()
+    repositories {
+        gradlePluginPortal()
+
+        maven(url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+        mavenCentral()
+        gradlePluginPortal()
+        maven(url = "https://jitpack.io")
+    }
 }
 
 dependencyResolutionManagement {
@@ -18,6 +23,7 @@ include("tested-plugins")
 include("dependency-analysis-project")
 include("dependency-analysis-platform")
 include("source-file-hashing-plugin")
+include("performance-metrics-plugin")
 
 include("base-plugin")
 include("my-kotlin-plugin")

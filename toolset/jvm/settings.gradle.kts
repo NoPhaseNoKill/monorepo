@@ -1,3 +1,15 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        exclusiveContent {
+            val repos = listOf<ArtifactRepository>(mavenCentral(), mavenLocal())
+            forRepositories(*repos.toSet().toTypedArray())
+            filter {
+                includeGroup("com.nophasenokill")
+            }
+        }
+    }
+}
 
 dependencyResolutionManagement {
     includeBuild("modules")

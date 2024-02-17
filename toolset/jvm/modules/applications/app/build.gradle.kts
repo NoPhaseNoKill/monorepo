@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
     implementation(project(":libraries:list"))
     implementation(project(":libraries:utilities"))
 

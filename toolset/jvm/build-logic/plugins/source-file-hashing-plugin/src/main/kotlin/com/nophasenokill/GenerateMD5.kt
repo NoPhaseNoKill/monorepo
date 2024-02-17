@@ -8,11 +8,11 @@ import java.io.InputStream
 
 
 // Do not implement the getParameters() method - Gradle will inject this at runtime
-abstract class GenerateMD5 : WorkAction<MD5WorkParameters?> {
+abstract class GenerateMD5 : WorkAction<MD5WorkParameters> {
     override fun execute() {
         try {
-            val sourceFile = requireNotNull(parameters).sourceFile.asFile.get()
-            val md5File = requireNotNull(parameters).mD5File.asFile.get()
+            val sourceFile = parameters.sourceFile.asFile.get()
+            val md5File = parameters.mD5File.asFile.get()
             val stream: InputStream = FileInputStream(sourceFile)
             println("Generating MD5 for " + sourceFile.name + "...")
             // Artificially make this task slower.

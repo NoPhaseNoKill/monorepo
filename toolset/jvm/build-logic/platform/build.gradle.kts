@@ -15,8 +15,12 @@ dependencies {
     constraints {
 
         api("com.autonomousapps:dependency-analysis-gradle-plugin:1.29.0")
+        api("com.google.code.gson:gson:2.10.1")
         api("com.google.errorprone:error_prone_annotations:2.13.1")
         api("io.fuchs.gradle.classpath-collision-detector:classpath-collision-detector:0.3")
+        api("io.github.cdsap:talaiot:2.0.3")
+        api("io.github.cdsap.talaiot:talaiot:2.0.3")
+        api("io.github.cdsap.talaiot:io.github.cdsap.talaiot.gradle.plugin:2.0.3")
         api("jakarta.activation:jakarta.activation-api:1.2.2")
         api("javax.activation:activation:1.1.1")
         api("org.apache.commons:commons-text:1.11.0")
