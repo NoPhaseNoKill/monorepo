@@ -5,11 +5,17 @@ group = "com.nophasenokill.jvm"
 tasks.register("runAllMainBuildTasks") {
     group = mainBuildGroup
     description = "Runs all of the main build tasks, which are checks that you would do manually for each of the sub-projects"
+    /*
+        This ensures that the clean/build tasks are run initially, so that all build files are retained.
+        Without this, we were noticing that the sourceFileHashingPluginTask would result in a build folder
+        that didn't contain any of the build files (as if the sourceFileHashingPluginTask had re-created
+        the folder)
+     */
+    mustRunAfter(recompileAllTask)
 
     dependsOn(checkDependenciesTask)
     dependsOn(detectAllCollisionsTask)
     dependsOn(getAllProjectHealthTask)
-    dependsOn(recompileAllTask)
     dependsOn(runAllSourceFileHashingTasks)
     dependsOn(testAllTask)
     dependsOn(printAllRuntimeClasspath)
