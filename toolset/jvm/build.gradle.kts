@@ -12,25 +12,18 @@ plugins {
 
 group = "com.nophasenokill.jvm"
 
-// runs everything inside of this file
-tasks.register("runAllMainBuildTasks") {
-    group = mainBuildGroup
-    description = "Runs all of the main build tasks, which are checks that you would do manually for each of the sub-projects"
-    /*
-        This ensures that the clean/build tasks are run initially, so that all build files are retained.
-        Without this, we were noticing that the sourceFileHashingPluginTask would result in a build folder
-        that didn't contain any of the build files (as if the sourceFileHashingPluginTask had re-created
-        the folder)
-     */
-    mustRunAfter(recompileAllTask)
+/*
 
-    dependsOn(checkDependenciesTask)
-    dependsOn(detectAllCollisionsTask)
-    dependsOn(getAllProjectHealthTask)
-    dependsOn(runAllSourceFileHashingTasks)
-    dependsOn(testAllTask)
-    dependsOn(printAllRuntimeClasspath)
-}
+    This file contains primarily two tasks you should run:
+        - runAll or;
+        - cleanRunAll
+
+    Alternatively, run ./gradlew tasks for a full list of exposed tasks. Other
+    useful tasks are exposed, or available directly through the normal :path:to:task.
+
+    The only difference between runAll and cleanRunAll are that the second one
+    ensures it cleans everything first, and that the clean task for each of the projects runs before anything else does.
+*/
 
 /*
     Configure the ':tasks' task of the root project to only show
@@ -41,7 +34,34 @@ tasks.named<TaskReportTask>("tasks") {
     displayGroup = mainBuildGroup
 }
 
-val testAllTask = tasks.register("testAll") {
+val runAll = tasks.register("runAll") {
+    group = mainBuildGroup
+    description = "Runs all of the main build sub-tasks"
+
+    dependsOn(subTaskCheckDependenciesAll)
+    dependsOn(subTaskDetectCollisionsAll)
+    dependsOn(subTaskProjectHealthAll)
+    dependsOn(subTaskSourceFileHashingRunAll)
+    dependsOn(subTaskTestAll)
+    dependsOn(subTaskPrintRuntimeClasspathAll)
+}
+
+
+tasks.register("cleanRunAll") {
+    group = mainBuildGroup
+    description = "Cleans everything first, and then runs all of the main build sub-tasks"
+    /*
+        This ensures that the clean/build tasks are run initially, so that all build files are retained.
+        Without this, we were noticing that the runAllSourceFileHashingTasks would result in a build folder
+        that didn't contain any of the build files (as if the runAllSourceFileHashingTasks had re-created
+        the folder)
+     */
+    dependsOn(subTaskCleanAll)
+    finalizedBy(runAll)
+}
+
+
+val subTaskTestAll = tasks.register("subTaskTestAll") {
     group = mainBuildGroup
     description = "Runs all of the modules' tests"
 
@@ -51,21 +71,16 @@ val testAllTask = tasks.register("testAll") {
 
 }
 
-val recompileAllTask = tasks.register("recompileAll") {
+val subTaskCleanAll = tasks.register("subTaskCleanAll") {
     group = mainBuildGroup
-    description = "Cleans and then re-builds each of the modules' sub projects"
+    description = "Cleans each of the modules' sub projects"
 
     dependsOn(gradle.includedBuild("modules").task(":applications:app:clean"))
     dependsOn(gradle.includedBuild("modules").task(":libraries:list:clean"))
     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:clean"))
-
-    dependsOn(gradle.includedBuild("modules").task(":applications:app:build"))
-    dependsOn(gradle.includedBuild("modules").task(":libraries:list:build"))
-    dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:build"))
-
 }
 
-val checkDependenciesTask = tasks.register("checkDependencies") {
+val subTaskCheckDependenciesAll = tasks.register("subTaskCheckDependenciesAll") {
     group = mainBuildGroup
     description = "Checks the formatting of each of the modules' sub-projects"
 
@@ -75,7 +90,7 @@ val checkDependenciesTask = tasks.register("checkDependencies") {
 
 }
 
-val runAllSourceFileHashingTasks = tasks.register("runAllSourceFileHashingTasks") {
+val subTaskSourceFileHashingRunAll = tasks.register("subTaskSourceFileHashingRunAll") {
     group = mainBuildGroup
     description = "Hashes all of the source files for any sub-projects inside of the modules folder"
 
@@ -84,14 +99,14 @@ val runAllSourceFileHashingTasks = tasks.register("runAllSourceFileHashingTasks"
     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:sourceFileHashingPluginTask"))
 }
 
-val printAllRuntimeClasspath = tasks.register("printAllRuntimeClasspath") {
+val subTaskPrintRuntimeClasspathAll = tasks.register("subTaskPrintRuntimeClasspathAll") {
     group = mainBuildGroup
     description = "Prints the run-time classpath of each of the apps inside of the modules folder"
 
     dependsOn(gradle.includedBuild("modules").task(":applications:app:printRuntimeClasspath"))
 }
 
-val detectAllCollisionsTask = tasks.register("detectAllCollisions") {
+val subTaskDetectCollisionsAll = tasks.register("subTaskDetectCollisionsAll") {
     group = mainBuildGroup
     description = "Detects potential classpath collisions for any sub-project in the modules folder"
 
@@ -100,7 +115,7 @@ val detectAllCollisionsTask = tasks.register("detectAllCollisions") {
     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:detectCollisions"))
 }
 
-val getAllProjectHealthTask = tasks.register("getAllProjectHealth") {
+val subTaskProjectHealthAll = tasks.register("subTaskProjectHealthAll") {
     group = mainBuildGroup
     description = "Runs dependency analysis for all sub-projects and outputs the project health in the build/reports folder"
 
