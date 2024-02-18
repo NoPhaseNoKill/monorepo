@@ -3,7 +3,7 @@ package com.nophasenokill
 import io.github.cdsap.talaiot.entities.ExecutionReport
 import io.github.cdsap.talaiot.publisher.Publisher
 
-class CustomPublisher : Publisher {
+class PerformanceMetricConsolePublisher : Publisher {
 
     override fun publish(report: ExecutionReport) {
         println("[CustomPublisher] : Number of tasks = ${report.tasks?.size}")

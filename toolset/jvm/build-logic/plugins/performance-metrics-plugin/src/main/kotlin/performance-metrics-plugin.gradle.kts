@@ -1,5 +1,5 @@
-import com.nophasenokill.CustomPublisher
-import com.nophasenokill.MyJsonPublisher
+import com.nophasenokill.PerformanceMetricConsolePublisher
+import com.nophasenokill.PerformanceMetricJsonPublisher
 
 plugins {
     id("io.github.cdsap.talaiot")
@@ -9,8 +9,8 @@ talaiot {
 
     publishers {
         customPublishers(
-            CustomPublisher(),
-            MyJsonPublisher(project.layout.buildDirectory.get().asFile.path)
+            PerformanceMetricConsolePublisher(),
+            PerformanceMetricJsonPublisher(project.layout.projectDirectory.asFile.path)
         )
     }
     metrics {
