@@ -31,6 +31,12 @@ plugins {
         > Task :utilities:compileKotlin UP-TO-DATE
  */
 val printRuntimeClasspathTask = tasks.register("printRuntimeClasspath") {
+    inputs.files(sourceSets["main"].runtimeClasspath).withPropertyName("runtimeClasspath").withPathSensitivity(PathSensitivity.ABSOLUTE)
+
+    val outputDir = layout.buildDirectory.dir("printRuntimeClasspath")
+    val outputFile = outputDir.map { it.file("runtimeClasspathCheckResult.txt") }
+    outputs.file(outputFile)
+
     doLast {
         val sourceSets = sourceSets["main"].runtimeClasspath.asPath
         val checkingEvent = "[EVENT] Checking classpath capability conflict avoidance..."
@@ -38,8 +44,12 @@ val printRuntimeClasspathTask = tasks.register("printRuntimeClasspath") {
         val capabilityConflictsThatShouldBeAvoided = "javax.activation:activation:1.1"
         val expectedCapability = "jakarta.activation/jakarta.activation-api/1.2.2"
 
-        if(sourceSets.contains(capabilityConflictsThatShouldBeAvoided) || !sourceSets.contains(expectedCapability)) {
-            throw GradleException("""      |
+        val isError =
+            sourceSets.contains(capabilityConflictsThatShouldBeAvoided) || !sourceSets.contains(expectedCapability)
+
+        if (isError) {
+            throw GradleException(
+                """      |
           | ${checkingEvent}
           | 
           |     Classpath should contain: 
@@ -48,9 +58,10 @@ val printRuntimeClasspathTask = tasks.register("printRuntimeClasspath") {
           |      - '${capabilityConflictsThatShouldBeAvoided}.1'
           |      - '${capabilityConflictsThatShouldBeAvoided}'
           |     Classpath was: ${sourceSets}
-            """)
+            """
+            )
         } else {
-            println("""      |
+            val outputText = """      |
       | ${checkingEvent}
       | 
       |     Classpath correctly applied capability conflict avoidance
@@ -61,7 +72,10 @@ val printRuntimeClasspathTask = tasks.register("printRuntimeClasspath") {
       |        Did not contain:
       |           - '${capabilityConflictsThatShouldBeAvoided}.1'
       |           - '${capabilityConflictsThatShouldBeAvoided}'
-      |           """)
+      |           """
+
+            outputFile.get().asFile.writeText(outputText)
+            println(outputText)
         }
     }
 }
