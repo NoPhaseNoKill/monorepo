@@ -1,0 +1,2826 @@
+{
+  "environment": {
+    "cpuCount": "12",
+    "osVersion": "Linux-5.15.0-94-generic",
+    "maxWorkers": "12",
+    "javaVmName": "21.0.2+13-LTS",
+    "javaXmxBytes": "2147483648",
+    "locale": "en",
+    "username": "tomga",
+    "defaultChartset": "UTF-8",
+    "gradleVersion": "8.6",
+    "plugins": [],
+    "gitBranch": "master",
+    "gitUser": "Tom Gardiner",
+    "switches": {
+      "buildCache": "true",
+      "configurationOnDemand": "true",
+      "daemon": "false",
+      "parallel": "true",
+      "dryRun": "false",
+      "rerunTasks": "false",
+      "refreshDependencies": "false",
+      "buildScan": "true",
+      "configurationCache": ""
+    },
+    "hostname": "gardo"
+  },
+  "customProperties": {
+    "buildProperties": {},
+    "taskProperties": {}
+  },
+  "beginMs": "1708248467426",
+  "endMs": "1708248471149",
+  "durationMs": "4590",
+  "configurationDurationMs": "867",
+  "executionDurationMs": "3723",
+  "tasks": [
+    {
+      "ms": 2,
+      "taskName": "checkDependencyFormattingProject",
+      "taskPath": ":modules:libraries:list:checkDependencyFormattingProject",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467408,
+      "stopMs": 1708248467410
+    },
+    {
+      "ms": 2,
+      "taskName": "checkDependencyFormattingProject",
+      "taskPath": ":modules:libraries:utilities:checkDependencyFormattingProject",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467408,
+      "stopMs": 1708248467410
+    },
+    {
+      "ms": 9,
+      "taskName": "clean",
+      "taskPath": ":modules:libraries:list:clean",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467411,
+      "stopMs": 1708248467420
+    },
+    {
+      "ms": 13,
+      "taskName": "clean",
+      "taskPath": ":modules:applications:app:clean",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467408,
+      "stopMs": 1708248467421
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:libraries:list:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467421,
+      "stopMs": 1708248467422
+    },
+    {
+      "ms": 11,
+      "taskName": "clean",
+      "taskPath": ":modules:libraries:utilities:clean",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467411,
+      "stopMs": 1708248467422
+    },
+    {
+      "ms": 2,
+      "taskName": "checkDependencyFormattingProject",
+      "taskPath": ":modules:applications:app:checkDependencyFormattingProject",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467421,
+      "stopMs": 1708248467423
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:libraries:utilities:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467422,
+      "stopMs": 1708248467423
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskCleanAll",
+      "taskPath": ":subTaskCleanAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248467424,
+      "stopMs": 1708248467424
+    },
+    {
+      "ms": 1,
+      "taskName": "cleanRunAll",
+      "taskPath": ":cleanRunAll",
+      "state": "EXECUTED",
+      "rootNode": true,
+      "module": "no_module",
+      "startMs": 1708248467424,
+      "stopMs": 1708248467425
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskCheckDependenciesAll",
+      "taskPath": ":subTaskCheckDependenciesAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248467425,
+      "stopMs": 1708248467425
+    },
+    {
+      "ms": 2,
+      "taskName": "processResources",
+      "taskPath": ":modules:libraries:utilities:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467424,
+      "stopMs": 1708248467426
+    },
+    {
+      "ms": 19,
+      "taskName": "findDeclarations",
+      "taskPath": ":modules:libraries:utilities:findDeclarations",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467427,
+      "stopMs": 1708248467446
+    },
+    {
+      "ms": 7,
+      "taskName": "graphViewMain",
+      "taskPath": ":modules:libraries:utilities:graphViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467447,
+      "stopMs": 1708248467454
+    },
+    {
+      "ms": 3,
+      "taskName": "findDeclaredProcsMain",
+      "taskPath": ":modules:libraries:utilities:findDeclaredProcsMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467455,
+      "stopMs": 1708248467458
+    },
+    {
+      "ms": 40,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:libraries:list:compileKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467423,
+      "stopMs": 1708248467463
+    },
+    {
+      "ms": 6,
+      "taskName": "explodeCodeSourceMain",
+      "taskPath": ":modules:libraries:utilities:explodeCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467458,
+      "stopMs": 1708248467464
+    },
+    {
+      "ms": 2,
+      "taskName": "compileJava",
+      "taskPath": ":modules:libraries:list:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467464,
+      "stopMs": 1708248467466
+    },
+    {
+      "ms": 1,
+      "taskName": "processResources",
+      "taskPath": ":modules:libraries:list:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467467,
+      "stopMs": 1708248467468
+    },
+    {
+      "ms": 0,
+      "taskName": "classes",
+      "taskPath": ":modules:libraries:list:classes",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467468,
+      "stopMs": 1708248467468
+    },
+    {
+      "ms": 8,
+      "taskName": "graphViewTest",
+      "taskPath": ":modules:libraries:utilities:graphViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467465,
+      "stopMs": 1708248467473
+    },
+    {
+      "ms": 9,
+      "taskName": "jar",
+      "taskPath": ":modules:libraries:list:jar",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467469,
+      "stopMs": 1708248467478
+    },
+    {
+      "ms": 23,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:libraries:utilities:compileKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467474,
+      "stopMs": 1708248467497
+    },
+    {
+      "ms": 2,
+      "taskName": "compileJava",
+      "taskPath": ":modules:libraries:utilities:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467498,
+      "stopMs": 1708248467500
+    },
+    {
+      "ms": 1,
+      "taskName": "classes",
+      "taskPath": ":modules:libraries:utilities:classes",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467500,
+      "stopMs": 1708248467501
+    },
+    {
+      "ms": 10,
+      "taskName": "jar",
+      "taskPath": ":modules:libraries:utilities:jar",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467501,
+      "stopMs": 1708248467511
+    },
+    {
+      "ms": 64,
+      "taskName": "abiAnalysisMain",
+      "taskPath": ":modules:libraries:utilities:abiAnalysisMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467511,
+      "stopMs": 1708248467575
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeByteCodeSourceMain",
+      "taskPath": ":modules:libraries:utilities:explodeByteCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467575,
+      "stopMs": 1708248467578
+    },
+    {
+      "ms": 7,
+      "taskName": "synthesizeProjectViewMain",
+      "taskPath": ":modules:libraries:utilities:synthesizeProjectViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467578,
+      "stopMs": 1708248467585
+    },
+    {
+      "ms": 2,
+      "taskName": "findDeclaredProcsTest",
+      "taskPath": ":modules:libraries:utilities:findDeclaredProcsTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467586,
+      "stopMs": 1708248467588
+    },
+    {
+      "ms": 19,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:libraries:utilities:compileTestKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467588,
+      "stopMs": 1708248467607
+    },
+    {
+      "ms": 2,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:libraries:utilities:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467607,
+      "stopMs": 1708248467609
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeByteCodeSourceTest",
+      "taskPath": ":modules:libraries:utilities:explodeByteCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467609,
+      "stopMs": 1708248467612
+    },
+    {
+      "ms": 137,
+      "taskName": "detectCollisions",
+      "taskPath": ":modules:libraries:list:detectCollisions",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467479,
+      "stopMs": 1708248467616
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeCodeSourceTest",
+      "taskPath": ":modules:libraries:utilities:explodeCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467613,
+      "stopMs": 1708248467617
+    },
+    {
+      "ms": 2,
+      "taskName": "synthesizeProjectViewTest",
+      "taskPath": ":modules:libraries:utilities:synthesizeProjectViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467617,
+      "stopMs": 1708248467619
+    },
+    {
+      "ms": 3,
+      "taskName": "findDeclarations",
+      "taskPath": ":modules:libraries:list:findDeclarations",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467617,
+      "stopMs": 1708248467620
+    },
+    {
+      "ms": 6,
+      "taskName": "graphViewMain",
+      "taskPath": ":modules:libraries:list:graphViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467620,
+      "stopMs": 1708248467626
+    },
+    {
+      "ms": 6,
+      "taskName": "detectRedundantJvmPlugin",
+      "taskPath": ":modules:libraries:utilities:detectRedundantJvmPlugin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467620,
+      "stopMs": 1708248467626
+    },
+    {
+      "ms": 3,
+      "taskName": "artifactsReportMain",
+      "taskPath": ":modules:libraries:list:artifactsReportMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467626,
+      "stopMs": 1708248467629
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeJarMain",
+      "taskPath": ":modules:libraries:list:explodeJarMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467630,
+      "stopMs": 1708248467633
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:libraries:utilities:processTestResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467633,
+      "stopMs": 1708248467634
+    },
+    {
+      "ms": 1,
+      "taskName": "testClasses",
+      "taskPath": ":modules:libraries:utilities:testClasses",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467634,
+      "stopMs": 1708248467635
+    },
+    {
+      "ms": 3,
+      "taskName": "findDeclaredProcsMain",
+      "taskPath": ":modules:libraries:list:findDeclaredProcsMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467633,
+      "stopMs": 1708248467636
+    },
+    {
+      "ms": 4,
+      "taskName": "findInlineMembersMain",
+      "taskPath": ":modules:libraries:list:findInlineMembersMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467636,
+      "stopMs": 1708248467640
+    },
+    {
+      "ms": 3,
+      "taskName": "serviceLoaderMain",
+      "taskPath": ":modules:libraries:list:serviceLoaderMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467640,
+      "stopMs": 1708248467643
+    },
+    {
+      "ms": 4,
+      "taskName": "synthesizeDependenciesMain",
+      "taskPath": ":modules:libraries:list:synthesizeDependenciesMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467643,
+      "stopMs": 1708248467647
+    },
+    {
+      "ms": 3,
+      "taskName": "abiAnalysisMain",
+      "taskPath": ":modules:libraries:list:abiAnalysisMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467648,
+      "stopMs": 1708248467651
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeByteCodeSourceMain",
+      "taskPath": ":modules:libraries:list:explodeByteCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467651,
+      "stopMs": 1708248467654
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeCodeSourceMain",
+      "taskPath": ":modules:libraries:list:explodeCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467655,
+      "stopMs": 1708248467658
+    },
+    {
+      "ms": 3,
+      "taskName": "synthesizeProjectViewMain",
+      "taskPath": ":modules:libraries:list:synthesizeProjectViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467659,
+      "stopMs": 1708248467662
+    },
+    {
+      "ms": 3,
+      "taskName": "computeActualUsageMain",
+      "taskPath": ":modules:libraries:list:computeActualUsageMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467662,
+      "stopMs": 1708248467665
+    },
+    {
+      "ms": 6,
+      "taskName": "graphViewTest",
+      "taskPath": ":modules:libraries:list:graphViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467666,
+      "stopMs": 1708248467672
+    },
+    {
+      "ms": 3,
+      "taskName": "artifactsReportTest",
+      "taskPath": ":modules:libraries:list:artifactsReportTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467672,
+      "stopMs": 1708248467675
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeJarTest",
+      "taskPath": ":modules:libraries:list:explodeJarTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467676,
+      "stopMs": 1708248467680
+    },
+    {
+      "ms": 2,
+      "taskName": "findDeclaredProcsTest",
+      "taskPath": ":modules:libraries:list:findDeclaredProcsTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467680,
+      "stopMs": 1708248467682
+    },
+    {
+      "ms": 4,
+      "taskName": "findInlineMembersTest",
+      "taskPath": ":modules:libraries:list:findInlineMembersTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467682,
+      "stopMs": 1708248467686
+    },
+    {
+      "ms": 2,
+      "taskName": "serviceLoaderTest",
+      "taskPath": ":modules:libraries:list:serviceLoaderTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467687,
+      "stopMs": 1708248467689
+    },
+    {
+      "ms": 4,
+      "taskName": "synthesizeDependenciesTest",
+      "taskPath": ":modules:libraries:list:synthesizeDependenciesTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467690,
+      "stopMs": 1708248467694
+    },
+    {
+      "ms": 17,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:libraries:list:compileTestKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467695,
+      "stopMs": 1708248467712
+    },
+    {
+      "ms": 2,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:libraries:list:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467713,
+      "stopMs": 1708248467715
+    },
+    {
+      "ms": 2,
+      "taskName": "explodeByteCodeSourceTest",
+      "taskPath": ":modules:libraries:list:explodeByteCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467715,
+      "stopMs": 1708248467717
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeCodeSourceTest",
+      "taskPath": ":modules:libraries:list:explodeCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467717,
+      "stopMs": 1708248467720
+    },
+    {
+      "ms": 2,
+      "taskName": "synthesizeProjectViewTest",
+      "taskPath": ":modules:libraries:list:synthesizeProjectViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467721,
+      "stopMs": 1708248467723
+    },
+    {
+      "ms": 2,
+      "taskName": "computeActualUsageTest",
+      "taskPath": ":modules:libraries:list:computeActualUsageTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467724,
+      "stopMs": 1708248467726
+    },
+    {
+      "ms": 3,
+      "taskName": "detectRedundantJvmPlugin",
+      "taskPath": ":modules:libraries:list:detectRedundantJvmPlugin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467727,
+      "stopMs": 1708248467730
+    },
+    {
+      "ms": 5,
+      "taskName": "computeAdvice",
+      "taskPath": ":modules:libraries:list:computeAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467731,
+      "stopMs": 1708248467736
+    },
+    {
+      "ms": 3,
+      "taskName": "filterAdvice",
+      "taskPath": ":modules:libraries:list:filterAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467737,
+      "stopMs": 1708248467740
+    },
+    {
+      "ms": 2,
+      "taskName": "generateConsoleReport",
+      "taskPath": ":modules:libraries:list:generateConsoleReport",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467741,
+      "stopMs": 1708248467743
+    },
+    {
+      "ms": 103,
+      "taskName": "projectHealth",
+      "taskPath": ":modules:libraries:list:projectHealth",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467743,
+      "stopMs": 1708248467846
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:libraries:list:processTestResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467850,
+      "stopMs": 1708248467851
+    },
+    {
+      "ms": 1,
+      "taskName": "testClasses",
+      "taskPath": ":modules:libraries:list:testClasses",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467851,
+      "stopMs": 1708248467852
+    },
+    {
+      "ms": 10,
+      "taskName": "test",
+      "taskPath": ":modules:libraries:list:test",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467853,
+      "stopMs": 1708248467863
+    },
+    {
+      "ms": 442,
+      "taskName": "printRuntimeClasspath",
+      "taskPath": ":modules:applications:app:printRuntimeClasspath",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467424,
+      "stopMs": 1708248467866
+    },
+    {
+      "ms": 1,
+      "taskName": "subTaskPrintRuntimeClasspathAll",
+      "taskPath": ":subTaskPrintRuntimeClasspathAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248467866,
+      "stopMs": 1708248467867
+    },
+    {
+      "ms": 74,
+      "taskName": "detectCollisions",
+      "taskPath": ":modules:libraries:utilities:detectCollisions",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467864,
+      "stopMs": 1708248467938
+    },
+    {
+      "ms": 16,
+      "taskName": "artifactsReportMain",
+      "taskPath": ":modules:libraries:utilities:artifactsReportMain",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467938,
+      "stopMs": 1708248467954
+    },
+    {
+      "ms": 88,
+      "taskName": "detectCollisions",
+      "taskPath": ":modules:applications:app:detectCollisions",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467866,
+      "stopMs": 1708248467954
+    },
+    {
+      "ms": 1,
+      "taskName": "subTaskDetectCollisionsAll",
+      "taskPath": ":subTaskDetectCollisionsAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248467954,
+      "stopMs": 1708248467955
+    },
+    {
+      "ms": 3,
+      "taskName": "findDeclarations",
+      "taskPath": ":modules:applications:app:findDeclarations",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467955,
+      "stopMs": 1708248467958
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeJarMain",
+      "taskPath": ":modules:libraries:utilities:explodeJarMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467954,
+      "stopMs": 1708248467958
+    },
+    {
+      "ms": 4,
+      "taskName": "findInlineMembersMain",
+      "taskPath": ":modules:libraries:utilities:findInlineMembersMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467958,
+      "stopMs": 1708248467962
+    },
+    {
+      "ms": 5,
+      "taskName": "graphViewMain",
+      "taskPath": ":modules:applications:app:graphViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467958,
+      "stopMs": 1708248467963
+    },
+    {
+      "ms": 2,
+      "taskName": "serviceLoaderMain",
+      "taskPath": ":modules:libraries:utilities:serviceLoaderMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467963,
+      "stopMs": 1708248467965
+    },
+    {
+      "ms": 3,
+      "taskName": "synthesizeDependenciesMain",
+      "taskPath": ":modules:libraries:utilities:synthesizeDependenciesMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467965,
+      "stopMs": 1708248467968
+    },
+    {
+      "ms": 5,
+      "taskName": "artifactsReportMain",
+      "taskPath": ":modules:applications:app:artifactsReportMain",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467964,
+      "stopMs": 1708248467969
+    },
+    {
+      "ms": 2,
+      "taskName": "computeActualUsageMain",
+      "taskPath": ":modules:libraries:utilities:computeActualUsageMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467969,
+      "stopMs": 1708248467971
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeJarMain",
+      "taskPath": ":modules:applications:app:explodeJarMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467970,
+      "stopMs": 1708248467973
+    },
+    {
+      "ms": 4,
+      "taskName": "artifactsReportTest",
+      "taskPath": ":modules:libraries:utilities:artifactsReportTest",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467971,
+      "stopMs": 1708248467975
+    },
+    {
+      "ms": 2,
+      "taskName": "findDeclaredProcsMain",
+      "taskPath": ":modules:applications:app:findDeclaredProcsMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467974,
+      "stopMs": 1708248467976
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeJarTest",
+      "taskPath": ":modules:libraries:utilities:explodeJarTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467975,
+      "stopMs": 1708248467979
+    },
+    {
+      "ms": 3,
+      "taskName": "findInlineMembersMain",
+      "taskPath": ":modules:applications:app:findInlineMembersMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467976,
+      "stopMs": 1708248467979
+    },
+    {
+      "ms": 2,
+      "taskName": "serviceLoaderMain",
+      "taskPath": ":modules:applications:app:serviceLoaderMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467979,
+      "stopMs": 1708248467981
+    },
+    {
+      "ms": 3,
+      "taskName": "findInlineMembersTest",
+      "taskPath": ":modules:libraries:utilities:findInlineMembersTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467979,
+      "stopMs": 1708248467982
+    },
+    {
+      "ms": 4,
+      "taskName": "serviceLoaderTest",
+      "taskPath": ":modules:libraries:utilities:serviceLoaderTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467982,
+      "stopMs": 1708248467986
+    },
+    {
+      "ms": 6,
+      "taskName": "synthesizeDependenciesMain",
+      "taskPath": ":modules:applications:app:synthesizeDependenciesMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467982,
+      "stopMs": 1708248467988
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:applications:app:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467988,
+      "stopMs": 1708248467989
+    },
+    {
+      "ms": 6,
+      "taskName": "synthesizeDependenciesTest",
+      "taskPath": ":modules:libraries:utilities:synthesizeDependenciesTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467986,
+      "stopMs": 1708248467992
+    },
+    {
+      "ms": 3,
+      "taskName": "computeActualUsageTest",
+      "taskPath": ":modules:libraries:utilities:computeActualUsageTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467992,
+      "stopMs": 1708248467995
+    },
+    {
+      "ms": 5,
+      "taskName": "computeAdvice",
+      "taskPath": ":modules:libraries:utilities:computeAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467996,
+      "stopMs": 1708248468001
+    },
+    {
+      "ms": 2,
+      "taskName": "filterAdvice",
+      "taskPath": ":modules:libraries:utilities:filterAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248468001,
+      "stopMs": 1708248468003
+    },
+    {
+      "ms": 2,
+      "taskName": "generateConsoleReport",
+      "taskPath": ":modules:libraries:utilities:generateConsoleReport",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248468004,
+      "stopMs": 1708248468006
+    },
+    {
+      "ms": 1,
+      "taskName": "projectHealth",
+      "taskPath": ":modules:libraries:utilities:projectHealth",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248468006,
+      "stopMs": 1708248468007
+    },
+    {
+      "ms": 22,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:applications:app:compileKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467990,
+      "stopMs": 1708248468012
+    },
+    {
+      "ms": 2,
+      "taskName": "compileJava",
+      "taskPath": ":modules:applications:app:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468013,
+      "stopMs": 1708248468015
+    },
+    {
+      "ms": 7,
+      "taskName": "test",
+      "taskPath": ":modules:libraries:utilities:test",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248468008,
+      "stopMs": 1708248468015
+    },
+    {
+      "ms": 2,
+      "taskName": "explodeByteCodeSourceMain",
+      "taskPath": ":modules:applications:app:explodeByteCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468015,
+      "stopMs": 1708248468017
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeCodeSourceMain",
+      "taskPath": ":modules:applications:app:explodeCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468018,
+      "stopMs": 1708248468021
+    },
+    {
+      "ms": 2,
+      "taskName": "synthesizeProjectViewMain",
+      "taskPath": ":modules:applications:app:synthesizeProjectViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468022,
+      "stopMs": 1708248468024
+    },
+    {
+      "ms": 2,
+      "taskName": "computeActualUsageMain",
+      "taskPath": ":modules:applications:app:computeActualUsageMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468025,
+      "stopMs": 1708248468027
+    },
+    {
+      "ms": 5,
+      "taskName": "graphViewTest",
+      "taskPath": ":modules:applications:app:graphViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468028,
+      "stopMs": 1708248468033
+    },
+    {
+      "ms": 5,
+      "taskName": "artifactsReportTest",
+      "taskPath": ":modules:applications:app:artifactsReportTest",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468034,
+      "stopMs": 1708248468039
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeJarTest",
+      "taskPath": ":modules:applications:app:explodeJarTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468039,
+      "stopMs": 1708248468043
+    },
+    {
+      "ms": 1,
+      "taskName": "findDeclaredProcsTest",
+      "taskPath": ":modules:applications:app:findDeclaredProcsTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468044,
+      "stopMs": 1708248468045
+    },
+    {
+      "ms": 3,
+      "taskName": "findInlineMembersTest",
+      "taskPath": ":modules:applications:app:findInlineMembersTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468046,
+      "stopMs": 1708248468049
+    },
+    {
+      "ms": 2,
+      "taskName": "serviceLoaderTest",
+      "taskPath": ":modules:applications:app:serviceLoaderTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468050,
+      "stopMs": 1708248468052
+    },
+    {
+      "ms": 5,
+      "taskName": "synthesizeDependenciesTest",
+      "taskPath": ":modules:applications:app:synthesizeDependenciesTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468053,
+      "stopMs": 1708248468058
+    },
+    {
+      "ms": 1,
+      "taskName": "processResources",
+      "taskPath": ":modules:applications:app:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468058,
+      "stopMs": 1708248468059
+    },
+    {
+      "ms": 0,
+      "taskName": "classes",
+      "taskPath": ":modules:applications:app:classes",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468060,
+      "stopMs": 1708248468060
+    },
+    {
+      "ms": 17,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:applications:app:compileTestKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468061,
+      "stopMs": 1708248468078
+    },
+    {
+      "ms": 1,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:applications:app:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468079,
+      "stopMs": 1708248468080
+    },
+    {
+      "ms": 2,
+      "taskName": "explodeByteCodeSourceTest",
+      "taskPath": ":modules:applications:app:explodeByteCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468081,
+      "stopMs": 1708248468083
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeCodeSourceTest",
+      "taskPath": ":modules:applications:app:explodeCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468083,
+      "stopMs": 1708248468086
+    },
+    {
+      "ms": 2,
+      "taskName": "synthesizeProjectViewTest",
+      "taskPath": ":modules:applications:app:synthesizeProjectViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468086,
+      "stopMs": 1708248468088
+    },
+    {
+      "ms": 1,
+      "taskName": "computeActualUsageTest",
+      "taskPath": ":modules:applications:app:computeActualUsageTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468089,
+      "stopMs": 1708248468090
+    },
+    {
+      "ms": 3,
+      "taskName": "computeAdvice",
+      "taskPath": ":modules:applications:app:computeAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468091,
+      "stopMs": 1708248468094
+    },
+    {
+      "ms": 2,
+      "taskName": "filterAdvice",
+      "taskPath": ":modules:applications:app:filterAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468095,
+      "stopMs": 1708248468097
+    },
+    {
+      "ms": 2,
+      "taskName": "generateConsoleReport",
+      "taskPath": ":modules:applications:app:generateConsoleReport",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468097,
+      "stopMs": 1708248468099
+    },
+    {
+      "ms": 1,
+      "taskName": "projectHealth",
+      "taskPath": ":modules:applications:app:projectHealth",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468099,
+      "stopMs": 1708248468100
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskProjectHealthAll",
+      "taskPath": ":subTaskProjectHealthAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248468100,
+      "stopMs": 1708248468100
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:applications:app:processTestResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468105,
+      "stopMs": 1708248468106
+    },
+    {
+      "ms": 1,
+      "taskName": "testClasses",
+      "taskPath": ":modules:applications:app:testClasses",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468106,
+      "stopMs": 1708248468107
+    },
+    {
+      "ms": 9,
+      "taskName": "test",
+      "taskPath": ":modules:applications:app:test",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468107,
+      "stopMs": 1708248468116
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskTestAll",
+      "taskPath": ":subTaskTestAll",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248468116,
+      "stopMs": 1708248468116
+    },
+    {
+      "ms": 3039,
+      "taskName": "sourceFileHashingPluginTask",
+      "taskPath": ":modules:libraries:utilities:sourceFileHashingPluginTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467627,
+      "stopMs": 1708248470666
+    },
+    {
+      "ms": 3007,
+      "taskName": "sourceFileHashingPluginTask",
+      "taskPath": ":modules:libraries:list:sourceFileHashingPluginTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467847,
+      "stopMs": 1708248470854
+    },
+    {
+      "ms": 3032,
+      "taskName": "sourceFileHashingPluginTask",
+      "taskPath": ":modules:applications:app:sourceFileHashingPluginTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468100,
+      "stopMs": 1708248471132
+    },
+    {
+      "ms": 1,
+      "taskName": "subTaskSourceFileHashingRunAll",
+      "taskPath": ":subTaskSourceFileHashingRunAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248471133,
+      "stopMs": 1708248471134
+    },
+    {
+      "ms": 1,
+      "taskName": "runAll",
+      "taskPath": ":runAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248471134,
+      "stopMs": 1708248471135
+    }
+  ],
+  "unfilteredTasks": [
+    {
+      "ms": 2,
+      "taskName": "checkDependencyFormattingProject",
+      "taskPath": ":modules:libraries:list:checkDependencyFormattingProject",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467408,
+      "stopMs": 1708248467410
+    },
+    {
+      "ms": 2,
+      "taskName": "checkDependencyFormattingProject",
+      "taskPath": ":modules:libraries:utilities:checkDependencyFormattingProject",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467408,
+      "stopMs": 1708248467410
+    },
+    {
+      "ms": 9,
+      "taskName": "clean",
+      "taskPath": ":modules:libraries:list:clean",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467411,
+      "stopMs": 1708248467420
+    },
+    {
+      "ms": 13,
+      "taskName": "clean",
+      "taskPath": ":modules:applications:app:clean",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467408,
+      "stopMs": 1708248467421
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:libraries:list:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467421,
+      "stopMs": 1708248467422
+    },
+    {
+      "ms": 11,
+      "taskName": "clean",
+      "taskPath": ":modules:libraries:utilities:clean",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467411,
+      "stopMs": 1708248467422
+    },
+    {
+      "ms": 2,
+      "taskName": "checkDependencyFormattingProject",
+      "taskPath": ":modules:applications:app:checkDependencyFormattingProject",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467421,
+      "stopMs": 1708248467423
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:libraries:utilities:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467422,
+      "stopMs": 1708248467423
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskCleanAll",
+      "taskPath": ":subTaskCleanAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248467424,
+      "stopMs": 1708248467424
+    },
+    {
+      "ms": 1,
+      "taskName": "cleanRunAll",
+      "taskPath": ":cleanRunAll",
+      "state": "EXECUTED",
+      "rootNode": true,
+      "module": "no_module",
+      "startMs": 1708248467424,
+      "stopMs": 1708248467425
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskCheckDependenciesAll",
+      "taskPath": ":subTaskCheckDependenciesAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248467425,
+      "stopMs": 1708248467425
+    },
+    {
+      "ms": 2,
+      "taskName": "processResources",
+      "taskPath": ":modules:libraries:utilities:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467424,
+      "stopMs": 1708248467426
+    },
+    {
+      "ms": 19,
+      "taskName": "findDeclarations",
+      "taskPath": ":modules:libraries:utilities:findDeclarations",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467427,
+      "stopMs": 1708248467446
+    },
+    {
+      "ms": 7,
+      "taskName": "graphViewMain",
+      "taskPath": ":modules:libraries:utilities:graphViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467447,
+      "stopMs": 1708248467454
+    },
+    {
+      "ms": 3,
+      "taskName": "findDeclaredProcsMain",
+      "taskPath": ":modules:libraries:utilities:findDeclaredProcsMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467455,
+      "stopMs": 1708248467458
+    },
+    {
+      "ms": 40,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:libraries:list:compileKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467423,
+      "stopMs": 1708248467463
+    },
+    {
+      "ms": 6,
+      "taskName": "explodeCodeSourceMain",
+      "taskPath": ":modules:libraries:utilities:explodeCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467458,
+      "stopMs": 1708248467464
+    },
+    {
+      "ms": 2,
+      "taskName": "compileJava",
+      "taskPath": ":modules:libraries:list:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467464,
+      "stopMs": 1708248467466
+    },
+    {
+      "ms": 1,
+      "taskName": "processResources",
+      "taskPath": ":modules:libraries:list:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467467,
+      "stopMs": 1708248467468
+    },
+    {
+      "ms": 0,
+      "taskName": "classes",
+      "taskPath": ":modules:libraries:list:classes",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467468,
+      "stopMs": 1708248467468
+    },
+    {
+      "ms": 8,
+      "taskName": "graphViewTest",
+      "taskPath": ":modules:libraries:utilities:graphViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467465,
+      "stopMs": 1708248467473
+    },
+    {
+      "ms": 9,
+      "taskName": "jar",
+      "taskPath": ":modules:libraries:list:jar",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467469,
+      "stopMs": 1708248467478
+    },
+    {
+      "ms": 23,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:libraries:utilities:compileKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467474,
+      "stopMs": 1708248467497
+    },
+    {
+      "ms": 2,
+      "taskName": "compileJava",
+      "taskPath": ":modules:libraries:utilities:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467498,
+      "stopMs": 1708248467500
+    },
+    {
+      "ms": 1,
+      "taskName": "classes",
+      "taskPath": ":modules:libraries:utilities:classes",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467500,
+      "stopMs": 1708248467501
+    },
+    {
+      "ms": 10,
+      "taskName": "jar",
+      "taskPath": ":modules:libraries:utilities:jar",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467501,
+      "stopMs": 1708248467511
+    },
+    {
+      "ms": 64,
+      "taskName": "abiAnalysisMain",
+      "taskPath": ":modules:libraries:utilities:abiAnalysisMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467511,
+      "stopMs": 1708248467575
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeByteCodeSourceMain",
+      "taskPath": ":modules:libraries:utilities:explodeByteCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467575,
+      "stopMs": 1708248467578
+    },
+    {
+      "ms": 7,
+      "taskName": "synthesizeProjectViewMain",
+      "taskPath": ":modules:libraries:utilities:synthesizeProjectViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467578,
+      "stopMs": 1708248467585
+    },
+    {
+      "ms": 2,
+      "taskName": "findDeclaredProcsTest",
+      "taskPath": ":modules:libraries:utilities:findDeclaredProcsTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467586,
+      "stopMs": 1708248467588
+    },
+    {
+      "ms": 19,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:libraries:utilities:compileTestKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467588,
+      "stopMs": 1708248467607
+    },
+    {
+      "ms": 2,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:libraries:utilities:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467607,
+      "stopMs": 1708248467609
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeByteCodeSourceTest",
+      "taskPath": ":modules:libraries:utilities:explodeByteCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467609,
+      "stopMs": 1708248467612
+    },
+    {
+      "ms": 137,
+      "taskName": "detectCollisions",
+      "taskPath": ":modules:libraries:list:detectCollisions",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467479,
+      "stopMs": 1708248467616
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeCodeSourceTest",
+      "taskPath": ":modules:libraries:utilities:explodeCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467613,
+      "stopMs": 1708248467617
+    },
+    {
+      "ms": 2,
+      "taskName": "synthesizeProjectViewTest",
+      "taskPath": ":modules:libraries:utilities:synthesizeProjectViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467617,
+      "stopMs": 1708248467619
+    },
+    {
+      "ms": 3,
+      "taskName": "findDeclarations",
+      "taskPath": ":modules:libraries:list:findDeclarations",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467617,
+      "stopMs": 1708248467620
+    },
+    {
+      "ms": 6,
+      "taskName": "graphViewMain",
+      "taskPath": ":modules:libraries:list:graphViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467620,
+      "stopMs": 1708248467626
+    },
+    {
+      "ms": 6,
+      "taskName": "detectRedundantJvmPlugin",
+      "taskPath": ":modules:libraries:utilities:detectRedundantJvmPlugin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467620,
+      "stopMs": 1708248467626
+    },
+    {
+      "ms": 3,
+      "taskName": "artifactsReportMain",
+      "taskPath": ":modules:libraries:list:artifactsReportMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467626,
+      "stopMs": 1708248467629
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeJarMain",
+      "taskPath": ":modules:libraries:list:explodeJarMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467630,
+      "stopMs": 1708248467633
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:libraries:utilities:processTestResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467633,
+      "stopMs": 1708248467634
+    },
+    {
+      "ms": 1,
+      "taskName": "testClasses",
+      "taskPath": ":modules:libraries:utilities:testClasses",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467634,
+      "stopMs": 1708248467635
+    },
+    {
+      "ms": 3,
+      "taskName": "findDeclaredProcsMain",
+      "taskPath": ":modules:libraries:list:findDeclaredProcsMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467633,
+      "stopMs": 1708248467636
+    },
+    {
+      "ms": 4,
+      "taskName": "findInlineMembersMain",
+      "taskPath": ":modules:libraries:list:findInlineMembersMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467636,
+      "stopMs": 1708248467640
+    },
+    {
+      "ms": 3,
+      "taskName": "serviceLoaderMain",
+      "taskPath": ":modules:libraries:list:serviceLoaderMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467640,
+      "stopMs": 1708248467643
+    },
+    {
+      "ms": 4,
+      "taskName": "synthesizeDependenciesMain",
+      "taskPath": ":modules:libraries:list:synthesizeDependenciesMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467643,
+      "stopMs": 1708248467647
+    },
+    {
+      "ms": 3,
+      "taskName": "abiAnalysisMain",
+      "taskPath": ":modules:libraries:list:abiAnalysisMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467648,
+      "stopMs": 1708248467651
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeByteCodeSourceMain",
+      "taskPath": ":modules:libraries:list:explodeByteCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467651,
+      "stopMs": 1708248467654
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeCodeSourceMain",
+      "taskPath": ":modules:libraries:list:explodeCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467655,
+      "stopMs": 1708248467658
+    },
+    {
+      "ms": 3,
+      "taskName": "synthesizeProjectViewMain",
+      "taskPath": ":modules:libraries:list:synthesizeProjectViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467659,
+      "stopMs": 1708248467662
+    },
+    {
+      "ms": 3,
+      "taskName": "computeActualUsageMain",
+      "taskPath": ":modules:libraries:list:computeActualUsageMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467662,
+      "stopMs": 1708248467665
+    },
+    {
+      "ms": 6,
+      "taskName": "graphViewTest",
+      "taskPath": ":modules:libraries:list:graphViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467666,
+      "stopMs": 1708248467672
+    },
+    {
+      "ms": 3,
+      "taskName": "artifactsReportTest",
+      "taskPath": ":modules:libraries:list:artifactsReportTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467672,
+      "stopMs": 1708248467675
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeJarTest",
+      "taskPath": ":modules:libraries:list:explodeJarTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467676,
+      "stopMs": 1708248467680
+    },
+    {
+      "ms": 2,
+      "taskName": "findDeclaredProcsTest",
+      "taskPath": ":modules:libraries:list:findDeclaredProcsTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467680,
+      "stopMs": 1708248467682
+    },
+    {
+      "ms": 4,
+      "taskName": "findInlineMembersTest",
+      "taskPath": ":modules:libraries:list:findInlineMembersTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467682,
+      "stopMs": 1708248467686
+    },
+    {
+      "ms": 2,
+      "taskName": "serviceLoaderTest",
+      "taskPath": ":modules:libraries:list:serviceLoaderTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467687,
+      "stopMs": 1708248467689
+    },
+    {
+      "ms": 4,
+      "taskName": "synthesizeDependenciesTest",
+      "taskPath": ":modules:libraries:list:synthesizeDependenciesTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467690,
+      "stopMs": 1708248467694
+    },
+    {
+      "ms": 17,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:libraries:list:compileTestKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467695,
+      "stopMs": 1708248467712
+    },
+    {
+      "ms": 2,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:libraries:list:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467713,
+      "stopMs": 1708248467715
+    },
+    {
+      "ms": 2,
+      "taskName": "explodeByteCodeSourceTest",
+      "taskPath": ":modules:libraries:list:explodeByteCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467715,
+      "stopMs": 1708248467717
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeCodeSourceTest",
+      "taskPath": ":modules:libraries:list:explodeCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467717,
+      "stopMs": 1708248467720
+    },
+    {
+      "ms": 2,
+      "taskName": "synthesizeProjectViewTest",
+      "taskPath": ":modules:libraries:list:synthesizeProjectViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467721,
+      "stopMs": 1708248467723
+    },
+    {
+      "ms": 2,
+      "taskName": "computeActualUsageTest",
+      "taskPath": ":modules:libraries:list:computeActualUsageTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467724,
+      "stopMs": 1708248467726
+    },
+    {
+      "ms": 3,
+      "taskName": "detectRedundantJvmPlugin",
+      "taskPath": ":modules:libraries:list:detectRedundantJvmPlugin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467727,
+      "stopMs": 1708248467730
+    },
+    {
+      "ms": 5,
+      "taskName": "computeAdvice",
+      "taskPath": ":modules:libraries:list:computeAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467731,
+      "stopMs": 1708248467736
+    },
+    {
+      "ms": 3,
+      "taskName": "filterAdvice",
+      "taskPath": ":modules:libraries:list:filterAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467737,
+      "stopMs": 1708248467740
+    },
+    {
+      "ms": 2,
+      "taskName": "generateConsoleReport",
+      "taskPath": ":modules:libraries:list:generateConsoleReport",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467741,
+      "stopMs": 1708248467743
+    },
+    {
+      "ms": 103,
+      "taskName": "projectHealth",
+      "taskPath": ":modules:libraries:list:projectHealth",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467743,
+      "stopMs": 1708248467846
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:libraries:list:processTestResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467850,
+      "stopMs": 1708248467851
+    },
+    {
+      "ms": 1,
+      "taskName": "testClasses",
+      "taskPath": ":modules:libraries:list:testClasses",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467851,
+      "stopMs": 1708248467852
+    },
+    {
+      "ms": 10,
+      "taskName": "test",
+      "taskPath": ":modules:libraries:list:test",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467853,
+      "stopMs": 1708248467863
+    },
+    {
+      "ms": 442,
+      "taskName": "printRuntimeClasspath",
+      "taskPath": ":modules:applications:app:printRuntimeClasspath",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467424,
+      "stopMs": 1708248467866
+    },
+    {
+      "ms": 1,
+      "taskName": "subTaskPrintRuntimeClasspathAll",
+      "taskPath": ":subTaskPrintRuntimeClasspathAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248467866,
+      "stopMs": 1708248467867
+    },
+    {
+      "ms": 74,
+      "taskName": "detectCollisions",
+      "taskPath": ":modules:libraries:utilities:detectCollisions",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467864,
+      "stopMs": 1708248467938
+    },
+    {
+      "ms": 16,
+      "taskName": "artifactsReportMain",
+      "taskPath": ":modules:libraries:utilities:artifactsReportMain",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467938,
+      "stopMs": 1708248467954
+    },
+    {
+      "ms": 88,
+      "taskName": "detectCollisions",
+      "taskPath": ":modules:applications:app:detectCollisions",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467866,
+      "stopMs": 1708248467954
+    },
+    {
+      "ms": 1,
+      "taskName": "subTaskDetectCollisionsAll",
+      "taskPath": ":subTaskDetectCollisionsAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248467954,
+      "stopMs": 1708248467955
+    },
+    {
+      "ms": 3,
+      "taskName": "findDeclarations",
+      "taskPath": ":modules:applications:app:findDeclarations",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467955,
+      "stopMs": 1708248467958
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeJarMain",
+      "taskPath": ":modules:libraries:utilities:explodeJarMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467954,
+      "stopMs": 1708248467958
+    },
+    {
+      "ms": 4,
+      "taskName": "findInlineMembersMain",
+      "taskPath": ":modules:libraries:utilities:findInlineMembersMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467958,
+      "stopMs": 1708248467962
+    },
+    {
+      "ms": 5,
+      "taskName": "graphViewMain",
+      "taskPath": ":modules:applications:app:graphViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467958,
+      "stopMs": 1708248467963
+    },
+    {
+      "ms": 2,
+      "taskName": "serviceLoaderMain",
+      "taskPath": ":modules:libraries:utilities:serviceLoaderMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467963,
+      "stopMs": 1708248467965
+    },
+    {
+      "ms": 3,
+      "taskName": "synthesizeDependenciesMain",
+      "taskPath": ":modules:libraries:utilities:synthesizeDependenciesMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467965,
+      "stopMs": 1708248467968
+    },
+    {
+      "ms": 5,
+      "taskName": "artifactsReportMain",
+      "taskPath": ":modules:applications:app:artifactsReportMain",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467964,
+      "stopMs": 1708248467969
+    },
+    {
+      "ms": 2,
+      "taskName": "computeActualUsageMain",
+      "taskPath": ":modules:libraries:utilities:computeActualUsageMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467969,
+      "stopMs": 1708248467971
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeJarMain",
+      "taskPath": ":modules:applications:app:explodeJarMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467970,
+      "stopMs": 1708248467973
+    },
+    {
+      "ms": 4,
+      "taskName": "artifactsReportTest",
+      "taskPath": ":modules:libraries:utilities:artifactsReportTest",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467971,
+      "stopMs": 1708248467975
+    },
+    {
+      "ms": 2,
+      "taskName": "findDeclaredProcsMain",
+      "taskPath": ":modules:applications:app:findDeclaredProcsMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467974,
+      "stopMs": 1708248467976
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeJarTest",
+      "taskPath": ":modules:libraries:utilities:explodeJarTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467975,
+      "stopMs": 1708248467979
+    },
+    {
+      "ms": 3,
+      "taskName": "findInlineMembersMain",
+      "taskPath": ":modules:applications:app:findInlineMembersMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467976,
+      "stopMs": 1708248467979
+    },
+    {
+      "ms": 2,
+      "taskName": "serviceLoaderMain",
+      "taskPath": ":modules:applications:app:serviceLoaderMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467979,
+      "stopMs": 1708248467981
+    },
+    {
+      "ms": 3,
+      "taskName": "findInlineMembersTest",
+      "taskPath": ":modules:libraries:utilities:findInlineMembersTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467979,
+      "stopMs": 1708248467982
+    },
+    {
+      "ms": 4,
+      "taskName": "serviceLoaderTest",
+      "taskPath": ":modules:libraries:utilities:serviceLoaderTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467982,
+      "stopMs": 1708248467986
+    },
+    {
+      "ms": 6,
+      "taskName": "synthesizeDependenciesMain",
+      "taskPath": ":modules:applications:app:synthesizeDependenciesMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467982,
+      "stopMs": 1708248467988
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:applications:app:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467988,
+      "stopMs": 1708248467989
+    },
+    {
+      "ms": 6,
+      "taskName": "synthesizeDependenciesTest",
+      "taskPath": ":modules:libraries:utilities:synthesizeDependenciesTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467986,
+      "stopMs": 1708248467992
+    },
+    {
+      "ms": 3,
+      "taskName": "computeActualUsageTest",
+      "taskPath": ":modules:libraries:utilities:computeActualUsageTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467992,
+      "stopMs": 1708248467995
+    },
+    {
+      "ms": 5,
+      "taskName": "computeAdvice",
+      "taskPath": ":modules:libraries:utilities:computeAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467996,
+      "stopMs": 1708248468001
+    },
+    {
+      "ms": 2,
+      "taskName": "filterAdvice",
+      "taskPath": ":modules:libraries:utilities:filterAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248468001,
+      "stopMs": 1708248468003
+    },
+    {
+      "ms": 2,
+      "taskName": "generateConsoleReport",
+      "taskPath": ":modules:libraries:utilities:generateConsoleReport",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248468004,
+      "stopMs": 1708248468006
+    },
+    {
+      "ms": 1,
+      "taskName": "projectHealth",
+      "taskPath": ":modules:libraries:utilities:projectHealth",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248468006,
+      "stopMs": 1708248468007
+    },
+    {
+      "ms": 22,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:applications:app:compileKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248467990,
+      "stopMs": 1708248468012
+    },
+    {
+      "ms": 2,
+      "taskName": "compileJava",
+      "taskPath": ":modules:applications:app:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468013,
+      "stopMs": 1708248468015
+    },
+    {
+      "ms": 7,
+      "taskName": "test",
+      "taskPath": ":modules:libraries:utilities:test",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248468008,
+      "stopMs": 1708248468015
+    },
+    {
+      "ms": 2,
+      "taskName": "explodeByteCodeSourceMain",
+      "taskPath": ":modules:applications:app:explodeByteCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468015,
+      "stopMs": 1708248468017
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeCodeSourceMain",
+      "taskPath": ":modules:applications:app:explodeCodeSourceMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468018,
+      "stopMs": 1708248468021
+    },
+    {
+      "ms": 2,
+      "taskName": "synthesizeProjectViewMain",
+      "taskPath": ":modules:applications:app:synthesizeProjectViewMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468022,
+      "stopMs": 1708248468024
+    },
+    {
+      "ms": 2,
+      "taskName": "computeActualUsageMain",
+      "taskPath": ":modules:applications:app:computeActualUsageMain",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468025,
+      "stopMs": 1708248468027
+    },
+    {
+      "ms": 5,
+      "taskName": "graphViewTest",
+      "taskPath": ":modules:applications:app:graphViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468028,
+      "stopMs": 1708248468033
+    },
+    {
+      "ms": 5,
+      "taskName": "artifactsReportTest",
+      "taskPath": ":modules:applications:app:artifactsReportTest",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468034,
+      "stopMs": 1708248468039
+    },
+    {
+      "ms": 4,
+      "taskName": "explodeJarTest",
+      "taskPath": ":modules:applications:app:explodeJarTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468039,
+      "stopMs": 1708248468043
+    },
+    {
+      "ms": 1,
+      "taskName": "findDeclaredProcsTest",
+      "taskPath": ":modules:applications:app:findDeclaredProcsTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468044,
+      "stopMs": 1708248468045
+    },
+    {
+      "ms": 3,
+      "taskName": "findInlineMembersTest",
+      "taskPath": ":modules:applications:app:findInlineMembersTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468046,
+      "stopMs": 1708248468049
+    },
+    {
+      "ms": 2,
+      "taskName": "serviceLoaderTest",
+      "taskPath": ":modules:applications:app:serviceLoaderTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468050,
+      "stopMs": 1708248468052
+    },
+    {
+      "ms": 5,
+      "taskName": "synthesizeDependenciesTest",
+      "taskPath": ":modules:applications:app:synthesizeDependenciesTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468053,
+      "stopMs": 1708248468058
+    },
+    {
+      "ms": 1,
+      "taskName": "processResources",
+      "taskPath": ":modules:applications:app:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468058,
+      "stopMs": 1708248468059
+    },
+    {
+      "ms": 0,
+      "taskName": "classes",
+      "taskPath": ":modules:applications:app:classes",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468060,
+      "stopMs": 1708248468060
+    },
+    {
+      "ms": 17,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:applications:app:compileTestKotlin",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468061,
+      "stopMs": 1708248468078
+    },
+    {
+      "ms": 1,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:applications:app:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468079,
+      "stopMs": 1708248468080
+    },
+    {
+      "ms": 2,
+      "taskName": "explodeByteCodeSourceTest",
+      "taskPath": ":modules:applications:app:explodeByteCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468081,
+      "stopMs": 1708248468083
+    },
+    {
+      "ms": 3,
+      "taskName": "explodeCodeSourceTest",
+      "taskPath": ":modules:applications:app:explodeCodeSourceTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468083,
+      "stopMs": 1708248468086
+    },
+    {
+      "ms": 2,
+      "taskName": "synthesizeProjectViewTest",
+      "taskPath": ":modules:applications:app:synthesizeProjectViewTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468086,
+      "stopMs": 1708248468088
+    },
+    {
+      "ms": 1,
+      "taskName": "computeActualUsageTest",
+      "taskPath": ":modules:applications:app:computeActualUsageTest",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468089,
+      "stopMs": 1708248468090
+    },
+    {
+      "ms": 3,
+      "taskName": "computeAdvice",
+      "taskPath": ":modules:applications:app:computeAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468091,
+      "stopMs": 1708248468094
+    },
+    {
+      "ms": 2,
+      "taskName": "filterAdvice",
+      "taskPath": ":modules:applications:app:filterAdvice",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468095,
+      "stopMs": 1708248468097
+    },
+    {
+      "ms": 2,
+      "taskName": "generateConsoleReport",
+      "taskPath": ":modules:applications:app:generateConsoleReport",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468097,
+      "stopMs": 1708248468099
+    },
+    {
+      "ms": 1,
+      "taskName": "projectHealth",
+      "taskPath": ":modules:applications:app:projectHealth",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468099,
+      "stopMs": 1708248468100
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskProjectHealthAll",
+      "taskPath": ":subTaskProjectHealthAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248468100,
+      "stopMs": 1708248468100
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:applications:app:processTestResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468105,
+      "stopMs": 1708248468106
+    },
+    {
+      "ms": 1,
+      "taskName": "testClasses",
+      "taskPath": ":modules:applications:app:testClasses",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468106,
+      "stopMs": 1708248468107
+    },
+    {
+      "ms": 9,
+      "taskName": "test",
+      "taskPath": ":modules:applications:app:test",
+      "state": "FROM_CACHE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468107,
+      "stopMs": 1708248468116
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskTestAll",
+      "taskPath": ":subTaskTestAll",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248468116,
+      "stopMs": 1708248468116
+    },
+    {
+      "ms": 3039,
+      "taskName": "sourceFileHashingPluginTask",
+      "taskPath": ":modules:libraries:utilities:sourceFileHashingPluginTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708248467627,
+      "stopMs": 1708248470666
+    },
+    {
+      "ms": 3007,
+      "taskName": "sourceFileHashingPluginTask",
+      "taskPath": ":modules:libraries:list:sourceFileHashingPluginTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708248467847,
+      "stopMs": 1708248470854
+    },
+    {
+      "ms": 3032,
+      "taskName": "sourceFileHashingPluginTask",
+      "taskPath": ":modules:applications:app:sourceFileHashingPluginTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708248468100,
+      "stopMs": 1708248471132
+    },
+    {
+      "ms": 1,
+      "taskName": "subTaskSourceFileHashingRunAll",
+      "taskPath": ":subTaskSourceFileHashingRunAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248471133,
+      "stopMs": 1708248471134
+    },
+    {
+      "ms": 1,
+      "taskName": "runAll",
+      "taskPath": ":runAll",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": "no_module",
+      "startMs": 1708248471134,
+      "stopMs": 1708248471135
+    }
+  ],
+  "buildId": "99650cc8-01fb-4e20-890f-a6df51919ca6",
+  "rootProject": "jvm",
+  "requestedTasks": "cleanRunAll",
+  "success": true,
+  "configurationCacheHit": false
+}
