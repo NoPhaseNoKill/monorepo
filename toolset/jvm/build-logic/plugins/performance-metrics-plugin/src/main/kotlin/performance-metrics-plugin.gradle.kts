@@ -13,5 +13,8 @@ talaiot {
             MyJsonPublisher(project.layout.buildDirectory.get().asFile.path)
         )
     }
+    metrics {
+        generateBuildId = true
+    }
 }
 
