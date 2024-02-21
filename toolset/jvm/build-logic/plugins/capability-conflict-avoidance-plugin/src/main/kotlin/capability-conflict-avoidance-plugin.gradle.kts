@@ -1,3 +1,5 @@
+import io.fuchs.gradle.collisiondetector.DetectCollisionsTask
+
 /*
     Prevents issues under the following circumstances:
 
@@ -32,4 +34,10 @@
 plugins {
     id("io.fuchs.gradle.classpath-collision-detector")
     id("org.gradlex.java-ecosystem-capabilities")
+}
+
+tasks.named("detectCollisions", DetectCollisionsTask::class.java).configure {
+    collisionFilter {
+        exclude("**.properties")
+    }
 }
