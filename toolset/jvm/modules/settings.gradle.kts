@@ -60,7 +60,7 @@ include(":applications:app")
 
 gradle.useLogger(CustomEventLogger())
 
-class CustomEventLogger : BuildAdapter(), ProjectEvaluationListener, TaskExecutionGraphListener, TaskExecutionListener {
+class CustomEventLogger : BuildAdapter(), ProjectEvaluationListener, TaskExecutionGraphListener {
 
     /*
         These are both Ways to get it to output semi-nicely in terminal, basically something like:
@@ -119,24 +119,16 @@ class CustomEventLogger : BuildAdapter(), ProjectEvaluationListener, TaskExecuti
         }
     }
 
-    override fun beforeExecute(task: Task) {
-        println("${TERMINAL_INDENT}|------> about to be executed")
-        if(taskStartTimes.isEmpty()) {
-            buildStartTime = System.nanoTime()
-        }
-        taskStartTimes[task.path] = System.nanoTime()
-    }
-
-    override fun afterExecute(task: Task, state: TaskState) {
-        println("${TERMINAL_INDENT}|------> was executed")
-        val startTime = taskStartTimes[task.path] ?: return
-        val endTime = System.nanoTime()
-        taskEndTimes[task.path] = endTime
-        taskDurationTimes[task.path] = endTime - startTime
-    }
-
-
     override fun graphPopulated(graph: TaskExecutionGraph) {
+        graph.allTasks.forEach {
+            it.doFirst {
+                beforeExecute(this)
+            }
+
+            it.doLast {
+                afterExecute(this)
+            }
+        }
         printEvent("Graph populated with tasks: ${graph.allTasks.joinToString { it.name }}")
         printPhase(Phase.CONFIGURATION, PhaseStage.END)
         printPhase(Phase.EXECUTION, PhaseStage.START)
@@ -152,6 +144,22 @@ class CustomEventLogger : BuildAdapter(), ProjectEvaluationListener, TaskExecuti
         }
         buildEndTime = System.nanoTime()
         printSummary()
+    }
+
+    private fun beforeExecute(task: Task) {
+        println("${TERMINAL_INDENT}|------> about to be executed")
+        if(taskStartTimes.isEmpty()) {
+            buildStartTime = System.nanoTime()
+        }
+        taskStartTimes[task.path] = System.nanoTime()
+    }
+
+    private fun afterExecute(task: Task) {
+        println("${TERMINAL_INDENT}|------> was executed")
+        val startTime = taskStartTimes[task.path] ?: return
+        val endTime = System.nanoTime()
+        taskEndTimes[task.path] = endTime
+        taskDurationTimes[task.path] = endTime - startTime
     }
 
     /*
