@@ -3,6 +3,7 @@ package com.nophasenokill
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFile
 import org.gradle.api.provider.Provider
+import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.SourceTask
 import org.gradle.api.tasks.TaskAction
@@ -35,7 +36,7 @@ import javax.inject.Inject
     }
 
  */
-
+@CacheableTask
 abstract class CreateMD5 : SourceTask() {
     @get:OutputDirectory
     abstract val destinationDirectory: DirectoryProperty
