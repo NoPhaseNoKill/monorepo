@@ -26,24 +26,15 @@
     }
  */
 pluginManagement {
+    includeBuild("../build-logic/settings")
     repositories {
         gradlePluginPortal()
-        exclusiveContent {
-            val repos = listOf<ArtifactRepository>(mavenCentral(), mavenLocal())
-            forRepositories(*repos.toSet().toTypedArray())
-            filter {
-                includeGroup("com.nophasenokill")
-            }
-        }
     }
 }
 
 
-
 dependencyResolutionManagement {
 
-    includeBuild("../build-logic/plugins")
-    includeBuild("../build-logic/platform")
     repositories.gradlePluginPortal()  // ensures that we have access to our own convention plugins
 
     // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
@@ -53,6 +44,8 @@ dependencyResolutionManagement {
 
 
 rootProject.name = "modules"
+
+includeBuild("../build-logic/plugins")
 
 include(":libraries:list")
 include(":libraries:utilities")
