@@ -39,7 +39,7 @@ val runAll = tasks.register("runAll") {
     description = "Runs all of the main build sub-tasks"
 
     dependsOn(subTaskCheckDependenciesAll)
-    dependsOn(subTaskDetectCollisionsAll)
+    dependsOn(subTaskDetectClasspathCollisionsAll)
     dependsOn(subTaskProjectHealthAll)
     dependsOn(subTaskSourceFileHashingRunAll)
     dependsOn(subTaskTestAll)
@@ -106,13 +106,13 @@ val subTaskPrintRuntimeClasspathAll = tasks.register("subTaskPrintRuntimeClasspa
     dependsOn(gradle.includedBuild("modules").task(":applications:app:printRuntimeClasspath"))
 }
 
-val subTaskDetectCollisionsAll = tasks.register("subTaskDetectCollisionsAll") {
+val subTaskDetectClasspathCollisionsAll = tasks.register("subTaskDetectClasspathCollisionsAll") {
     group = mainBuildGroup
-    description = "Detects potential classpath collisions for any sub-project in the modules folder"
+    description = "Detects classpath collisions for any sub-project in the modules folder"
 
-    dependsOn(gradle.includedBuild("modules").task(":applications:app:detectCollisions"))
-    dependsOn(gradle.includedBuild("modules").task(":libraries:list:detectCollisions"))
-    dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:detectCollisions"))
+    dependsOn(gradle.includedBuild("modules").task(":applications:app:detectClasspathCollisions"))
+    dependsOn(gradle.includedBuild("modules").task(":libraries:list:detectClasspathCollisions"))
+    dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:detectClasspathCollisions"))
 }
 
 val subTaskProjectHealthAll = tasks.register("subTaskProjectHealthAll") {

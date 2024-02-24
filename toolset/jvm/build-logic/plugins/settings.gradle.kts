@@ -9,6 +9,7 @@ rootProject.name = "plugins"
 includeBuild("../platform")
 
 include("capability-conflict-avoidance-plugin")
+include("classpath-collision-detector-plugin")
 include("tested-plugins")
 include("dependency-analysis-project")
 include("dependency-analysis-platform")
