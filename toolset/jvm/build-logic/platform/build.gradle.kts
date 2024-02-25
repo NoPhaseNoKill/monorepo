@@ -2,7 +2,8 @@
 
 plugins {
     id("java-platform")
-    id("dependency-analysis-platform")
+    // TODO fix why this is adding 10 tasks?
+    // id("dependency-analysis-platform")
 }
 
 group = "com.nophasenokill.platform"
