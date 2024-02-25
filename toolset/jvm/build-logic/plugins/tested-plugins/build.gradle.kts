@@ -7,23 +7,8 @@ plugins {
 }
 
 dependencies {
-    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
-    testImplementation(enforcedPlatform("org.junit:junit-bom"))
-
-    /*
-        adds kotlin to the project. org.jetbrains.kotlin:kotlin-stdlib manages ensures that when we set kotlin.stdlib.default.dependency=false
-        that our apps/libraries still get kotlin
-        DO NOT USE:
-            - implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-            - kotlin("stdlib")
-     */
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
-
-    // applies test projects
+    testImplementation(enforcedPlatform("org.junit:junit-bom:${libs.versions.junit.get()}"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 gradlePlugin {

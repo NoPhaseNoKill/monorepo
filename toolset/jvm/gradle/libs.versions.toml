@@ -1,8 +1,24 @@
 [versions]
-foojay-resolver = "0.7.0"
-gradle-enterprise-gradle-plugin = "3.16.1"
+# BOM's/frequently updated
+kotlin = "1.9.20"
+junit = "5.10.1"
+springBootDependencies = "3.2.0"
+talaiot = "2.0.3"
 
-[libraries]
-foojay-resolver = { module = "org.gradle.toolchains:foojay-resolver", version.ref = "foojay-resolver" }
-gradle-enterprise-gradle-plugin = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise-gradle-plugin" }
+# External plugins
+dependencyAnalysisGradlePlugin = "1.29.0"
+foojayResolver = "0.7.0"
+gradleEnterpriseGradlePlugin = "3.16.2"
+commonCustomUserDataGradlePlugin = "1.12.1"
+
+# Standard deps
+checkerQual = "3.21.4"
+commonsText = "1.11.0"
+commonsIo = "2.5"
+commonsCodec = "1.9"
+errorProneAnnotations = "2.13.1"
+gson = "2.10.1"
+jakartaActivationApi = "1.2.2"
+javaxActivation = "1.1.1"
+
 

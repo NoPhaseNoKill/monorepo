@@ -2,6 +2,15 @@ dependencyResolutionManagement {
     // explicitly gradle plugin portal because we only want to search for our convention plugins,
     // where the convention plugins delegate the dependency retrieval to the platform
     repositories.gradlePluginPortal()
+
+    // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
+
+    versionCatalogs {
+        create("libs") {
+            from(files("../../gradle/libs.versions.toml"))
+        }
+    }
 }
 
 rootProject.name = "plugins"
@@ -15,6 +24,7 @@ include("dependency-analysis-project")
 include("dependency-analysis-platform")
 include("source-file-hashing-plugin")
 include("performance-metrics-plugin")
+include("dependency-analysis-plugin")
 
 include("base-plugin")
 include("my-kotlin-plugin")

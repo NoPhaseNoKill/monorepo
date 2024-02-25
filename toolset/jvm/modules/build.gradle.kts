@@ -8,18 +8,7 @@ plugins {
 
         See: 'dependency-analysis-project' plugin for details
      */
-    id("com.autonomousapps.dependency-analysis") version "1.29.0"
-}
-
-dependencyAnalysis {
-    issues {
-        all {
-            onAny {
-                severity("fail")
-                exclude("jakarta.activation:jakarta.activation-api", "javax.activation:activation")
-            }
-        }
-    }
+    id("dependency-analysis-plugin")
 }
 
 /*

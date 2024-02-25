@@ -1,5 +1,4 @@
 plugins {
-    id("base-plugin")
     id("org.jetbrains.kotlin.jvm")
 }
 

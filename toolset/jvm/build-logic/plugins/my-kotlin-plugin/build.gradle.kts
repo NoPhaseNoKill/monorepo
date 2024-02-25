@@ -4,6 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":base-plugin"))
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
 }

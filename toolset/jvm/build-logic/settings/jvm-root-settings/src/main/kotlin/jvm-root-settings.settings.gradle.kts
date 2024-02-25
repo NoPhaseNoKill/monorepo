@@ -1,7 +1,7 @@
 plugins {
     id("com.gradle.enterprise")
     id("org.gradle.toolchains.foojay-resolver-convention")
-    // id("com.gradle.common-custom-user-data-gradle-plugin") version "1.12.1"
+    id("com.gradle.common-custom-user-data-gradle-plugin")
 }
 
 gradleEnterprise {

@@ -22,11 +22,9 @@ configurations.all {
 dependencies {
     implementation(project(":base-plugin"))
 
-    // required to compile the plugin, and hence implicitly relies on the platform being declared
-    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin")
-    implementation("com.autonomousapps:dependency-analysis-gradle-plugin") {
+    implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:${libs.versions.kotlin.get()}"))
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
+    implementation("com.autonomousapps:dependency-analysis-gradle-plugin:${libs.versions.dependencyAnalysisGradlePlugin.get()}") {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")

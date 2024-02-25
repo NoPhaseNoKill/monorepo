@@ -6,11 +6,9 @@ plugins {
 
 
 dependencies {
-    // required to compile the plugin, and hence implicitly relies on the platform being declared
-    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-    implementation("commons-io:commons-io")
+    implementation("commons-io:commons-io:${libs.versions.commonsIo.get()}")
 
-    implementation("io.github.cdsap.talaiot:talaiot")
-    implementation("io.github.cdsap.talaiot:io.github.cdsap.talaiot.gradle.plugin")
-    implementation("com.google.code.gson:gson")
+    implementation("io.github.cdsap.talaiot:talaiot:${libs.versions.talaiot.get()}")
+    implementation("io.github.cdsap.talaiot:io.github.cdsap.talaiot.gradle.plugin:${libs.versions.talaiot.get()}")
+    implementation("com.google.code.gson:gson:${libs.versions.gson.get()}")
 }
