@@ -10,11 +10,6 @@ gradleEnterprise {
         termsOfServiceUrl = "https://gradle.com/terms-of-service"
         termsOfServiceAgree = "yes"
 
-        capture {
-            isBuildLogging = false
-            isTestLogging = false
-        }
-
         val username = "OBFUSCATED_USERNAME"
         val ipAddress = "OBFUSCATED_IP_ADDRESS"
         val hostname = "OBFUSCATED_HOSTNAME"
