@@ -36,11 +36,20 @@ val testTask = tasks.test {
     }
 }
 
+tasks.processTestResources {
+    dependsOn(junitPropertiesCreationTask)
+}
+
 val junitPropertiesCreationTask = tasks.register("junitPropertiesCreationTask") {
 
     // Store variables to avoid project reference in the configuration cache
     val resourcesDir = file("src/test/resources")
-    val propertiesFile = file(resourcesDir.toPath().toString() + "/junit-platform.properties")
+    val baseJunitPath = resourcesDir.toPath().toString()
+    val fullPath = "$baseJunitPath/junit-platform.properties"
+    val propertiesFile = file(fullPath)
+
+    // Declares task outputs for incremental build support
+    outputs.file(propertiesFile)
 
     doLast {
 
@@ -74,6 +83,8 @@ val junitPropertiesCreationTask = tasks.register("junitPropertiesCreationTask") 
             propertiesLines.forEach { line ->
                 propertiesFile.appendText("${line.first} = ${line.second}\n")
             }
+
+
 
             /*
                 Should look like:
@@ -110,6 +121,7 @@ val junitPropertiesCreationTask = tasks.register("junitPropertiesCreationTask") 
         } else {
             logger.lifecycle("        Expected content in junit-platform.properties matched. No need to create file.")
         }
+
     }
 }
 

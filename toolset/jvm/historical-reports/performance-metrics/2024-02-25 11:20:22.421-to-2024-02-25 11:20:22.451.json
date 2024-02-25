@@ -1,0 +1,786 @@
+{
+  "environment": {
+    "cpuCount": "12",
+    "osVersion": "Linux-5.15.0-94-generic",
+    "maxWorkers": "12",
+    "javaVmName": "21.0.2+13-LTS",
+    "javaXmxBytes": "2147483648",
+    "locale": "en",
+    "username": "tomga",
+    "defaultChartset": "UTF-8",
+    "gradleVersion": "8.6",
+    "plugins": [],
+    "gitBranch": "master",
+    "gitUser": "Tom Gardiner",
+    "switches": {
+      "buildCache": "true",
+      "configurationOnDemand": "true",
+      "daemon": "false",
+      "parallel": "true",
+      "dryRun": "false",
+      "rerunTasks": "false",
+      "refreshDependencies": "false",
+      "buildScan": "false",
+      "configurationCache": ""
+    },
+    "hostname": "gardo"
+  },
+  "customProperties": {
+    "buildProperties": {},
+    "taskProperties": {}
+  },
+  "beginMs": "1708860022421",
+  "endMs": "1708860022451",
+  "durationMs": "107",
+  "configurationDurationMs": "77",
+  "executionDurationMs": "30",
+  "tasks": [
+    {
+      "ms": 0,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:libraries:list:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022419,
+      "stopMs": 1708860022419
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:libraries:utilities:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022419,
+      "stopMs": 1708860022420
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:applications:app:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022419,
+      "stopMs": 1708860022420
+    },
+    {
+      "ms": 0,
+      "taskName": "processResources",
+      "taskPath": ":modules:applications:app:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022420,
+      "stopMs": 1708860022420
+    },
+    {
+      "ms": 1,
+      "taskName": "junitPropertiesCreationTask",
+      "taskPath": ":modules:applications:app:junitPropertiesCreationTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022420,
+      "stopMs": 1708860022421
+    },
+    {
+      "ms": 2,
+      "taskName": "processResources",
+      "taskPath": ":modules:libraries:utilities:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022420,
+      "stopMs": 1708860022422
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:applications:app:processTestResources",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022421,
+      "stopMs": 1708860022422
+    },
+    {
+      "ms": 1,
+      "taskName": "junitPropertiesCreationTask",
+      "taskPath": ":modules:libraries:utilities:junitPropertiesCreationTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022422,
+      "stopMs": 1708860022423
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:libraries:utilities:processTestResources",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022423,
+      "stopMs": 1708860022424
+    },
+    {
+      "ms": 4,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:libraries:list:compileKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022420,
+      "stopMs": 1708860022424
+    },
+    {
+      "ms": 1,
+      "taskName": "compileJava",
+      "taskPath": ":modules:libraries:list:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022424,
+      "stopMs": 1708860022425
+    },
+    {
+      "ms": 1,
+      "taskName": "processResources",
+      "taskPath": ":modules:libraries:list:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022425,
+      "stopMs": 1708860022426
+    },
+    {
+      "ms": 0,
+      "taskName": "classes",
+      "taskPath": ":modules:libraries:list:classes",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022426,
+      "stopMs": 1708860022426
+    },
+    {
+      "ms": 1,
+      "taskName": "jar",
+      "taskPath": ":modules:libraries:list:jar",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022427,
+      "stopMs": 1708860022428
+    },
+    {
+      "ms": 3,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:libraries:utilities:compileKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022425,
+      "stopMs": 1708860022428
+    },
+    {
+      "ms": 1,
+      "taskName": "compileJava",
+      "taskPath": ":modules:libraries:utilities:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022429,
+      "stopMs": 1708860022430
+    },
+    {
+      "ms": 1,
+      "taskName": "classes",
+      "taskPath": ":modules:libraries:utilities:classes",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022432,
+      "stopMs": 1708860022433
+    },
+    {
+      "ms": 5,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:libraries:list:compileTestKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022429,
+      "stopMs": 1708860022434
+    },
+    {
+      "ms": 1,
+      "taskName": "jar",
+      "taskPath": ":modules:libraries:utilities:jar",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022434,
+      "stopMs": 1708860022435
+    },
+    {
+      "ms": 5,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:applications:app:compileKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022431,
+      "stopMs": 1708860022436
+    },
+    {
+      "ms": 1,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:libraries:list:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022435,
+      "stopMs": 1708860022436
+    },
+    {
+      "ms": 1,
+      "taskName": "compileJava",
+      "taskPath": ":modules:applications:app:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022436,
+      "stopMs": 1708860022437
+    },
+    {
+      "ms": 1,
+      "taskName": "junitPropertiesCreationTask",
+      "taskPath": ":modules:libraries:list:junitPropertiesCreationTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022436,
+      "stopMs": 1708860022437
+    },
+    {
+      "ms": 1,
+      "taskName": "classes",
+      "taskPath": ":modules:applications:app:classes",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022437,
+      "stopMs": 1708860022438
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:libraries:list:processTestResources",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022437,
+      "stopMs": 1708860022438
+    },
+    {
+      "ms": 4,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:libraries:utilities:compileTestKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022435,
+      "stopMs": 1708860022439
+    },
+    {
+      "ms": 1,
+      "taskName": "testClasses",
+      "taskPath": ":modules:libraries:list:testClasses",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022438,
+      "stopMs": 1708860022439
+    },
+    {
+      "ms": 1,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:libraries:utilities:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022439,
+      "stopMs": 1708860022440
+    },
+    {
+      "ms": 0,
+      "taskName": "testClasses",
+      "taskPath": ":modules:libraries:utilities:testClasses",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022440,
+      "stopMs": 1708860022440
+    },
+    {
+      "ms": 4,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:applications:app:compileTestKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022438,
+      "stopMs": 1708860022442
+    },
+    {
+      "ms": 1,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:applications:app:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022442,
+      "stopMs": 1708860022443
+    },
+    {
+      "ms": 3,
+      "taskName": "test",
+      "taskPath": ":modules:libraries:list:test",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022440,
+      "stopMs": 1708860022443
+    },
+    {
+      "ms": 3,
+      "taskName": "test",
+      "taskPath": ":modules:libraries:utilities:test",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022441,
+      "stopMs": 1708860022444
+    },
+    {
+      "ms": 1,
+      "taskName": "printRuntimeClasspath",
+      "taskPath": ":modules:applications:app:printRuntimeClasspath",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022443,
+      "stopMs": 1708860022444
+    },
+    {
+      "ms": 0,
+      "taskName": "testClasses",
+      "taskPath": ":modules:applications:app:testClasses",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022444,
+      "stopMs": 1708860022444
+    },
+    {
+      "ms": 2,
+      "taskName": "test",
+      "taskPath": ":modules:applications:app:test",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022445,
+      "stopMs": 1708860022447
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskTestAll",
+      "taskPath": ":subTaskTestAll",
+      "state": "UP_TO_DATE",
+      "rootNode": true,
+      "module": "no_module",
+      "startMs": 1708860022448,
+      "stopMs": 1708860022448
+    }
+  ],
+  "unfilteredTasks": [
+    {
+      "ms": 0,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:libraries:list:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022419,
+      "stopMs": 1708860022419
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:libraries:utilities:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022419,
+      "stopMs": 1708860022420
+    },
+    {
+      "ms": 1,
+      "taskName": "checkKotlinGradlePluginConfigurationErrors",
+      "taskPath": ":modules:applications:app:checkKotlinGradlePluginConfigurationErrors",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022419,
+      "stopMs": 1708860022420
+    },
+    {
+      "ms": 0,
+      "taskName": "processResources",
+      "taskPath": ":modules:applications:app:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022420,
+      "stopMs": 1708860022420
+    },
+    {
+      "ms": 1,
+      "taskName": "junitPropertiesCreationTask",
+      "taskPath": ":modules:applications:app:junitPropertiesCreationTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022420,
+      "stopMs": 1708860022421
+    },
+    {
+      "ms": 2,
+      "taskName": "processResources",
+      "taskPath": ":modules:libraries:utilities:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022420,
+      "stopMs": 1708860022422
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:applications:app:processTestResources",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022421,
+      "stopMs": 1708860022422
+    },
+    {
+      "ms": 1,
+      "taskName": "junitPropertiesCreationTask",
+      "taskPath": ":modules:libraries:utilities:junitPropertiesCreationTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022422,
+      "stopMs": 1708860022423
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:libraries:utilities:processTestResources",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022423,
+      "stopMs": 1708860022424
+    },
+    {
+      "ms": 4,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:libraries:list:compileKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022420,
+      "stopMs": 1708860022424
+    },
+    {
+      "ms": 1,
+      "taskName": "compileJava",
+      "taskPath": ":modules:libraries:list:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022424,
+      "stopMs": 1708860022425
+    },
+    {
+      "ms": 1,
+      "taskName": "processResources",
+      "taskPath": ":modules:libraries:list:processResources",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022425,
+      "stopMs": 1708860022426
+    },
+    {
+      "ms": 0,
+      "taskName": "classes",
+      "taskPath": ":modules:libraries:list:classes",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022426,
+      "stopMs": 1708860022426
+    },
+    {
+      "ms": 1,
+      "taskName": "jar",
+      "taskPath": ":modules:libraries:list:jar",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022427,
+      "stopMs": 1708860022428
+    },
+    {
+      "ms": 3,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:libraries:utilities:compileKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022425,
+      "stopMs": 1708860022428
+    },
+    {
+      "ms": 1,
+      "taskName": "compileJava",
+      "taskPath": ":modules:libraries:utilities:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022429,
+      "stopMs": 1708860022430
+    },
+    {
+      "ms": 1,
+      "taskName": "classes",
+      "taskPath": ":modules:libraries:utilities:classes",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022432,
+      "stopMs": 1708860022433
+    },
+    {
+      "ms": 5,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:libraries:list:compileTestKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022429,
+      "stopMs": 1708860022434
+    },
+    {
+      "ms": 1,
+      "taskName": "jar",
+      "taskPath": ":modules:libraries:utilities:jar",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022434,
+      "stopMs": 1708860022435
+    },
+    {
+      "ms": 5,
+      "taskName": "compileKotlin",
+      "taskPath": ":modules:applications:app:compileKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022431,
+      "stopMs": 1708860022436
+    },
+    {
+      "ms": 1,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:libraries:list:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022435,
+      "stopMs": 1708860022436
+    },
+    {
+      "ms": 1,
+      "taskName": "compileJava",
+      "taskPath": ":modules:applications:app:compileJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022436,
+      "stopMs": 1708860022437
+    },
+    {
+      "ms": 1,
+      "taskName": "junitPropertiesCreationTask",
+      "taskPath": ":modules:libraries:list:junitPropertiesCreationTask",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022436,
+      "stopMs": 1708860022437
+    },
+    {
+      "ms": 1,
+      "taskName": "classes",
+      "taskPath": ":modules:applications:app:classes",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022437,
+      "stopMs": 1708860022438
+    },
+    {
+      "ms": 1,
+      "taskName": "processTestResources",
+      "taskPath": ":modules:libraries:list:processTestResources",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022437,
+      "stopMs": 1708860022438
+    },
+    {
+      "ms": 4,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:libraries:utilities:compileTestKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022435,
+      "stopMs": 1708860022439
+    },
+    {
+      "ms": 1,
+      "taskName": "testClasses",
+      "taskPath": ":modules:libraries:list:testClasses",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022438,
+      "stopMs": 1708860022439
+    },
+    {
+      "ms": 1,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:libraries:utilities:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022439,
+      "stopMs": 1708860022440
+    },
+    {
+      "ms": 0,
+      "taskName": "testClasses",
+      "taskPath": ":modules:libraries:utilities:testClasses",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022440,
+      "stopMs": 1708860022440
+    },
+    {
+      "ms": 4,
+      "taskName": "compileTestKotlin",
+      "taskPath": ":modules:applications:app:compileTestKotlin",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022438,
+      "stopMs": 1708860022442
+    },
+    {
+      "ms": 1,
+      "taskName": "compileTestJava",
+      "taskPath": ":modules:applications:app:compileTestJava",
+      "state": "SKIPPED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022442,
+      "stopMs": 1708860022443
+    },
+    {
+      "ms": 3,
+      "taskName": "test",
+      "taskPath": ":modules:libraries:list:test",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:list",
+      "startMs": 1708860022440,
+      "stopMs": 1708860022443
+    },
+    {
+      "ms": 3,
+      "taskName": "test",
+      "taskPath": ":modules:libraries:utilities:test",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:libraries:utilities",
+      "startMs": 1708860022441,
+      "stopMs": 1708860022444
+    },
+    {
+      "ms": 1,
+      "taskName": "printRuntimeClasspath",
+      "taskPath": ":modules:applications:app:printRuntimeClasspath",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022443,
+      "stopMs": 1708860022444
+    },
+    {
+      "ms": 0,
+      "taskName": "testClasses",
+      "taskPath": ":modules:applications:app:testClasses",
+      "state": "EXECUTED",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022444,
+      "stopMs": 1708860022444
+    },
+    {
+      "ms": 2,
+      "taskName": "test",
+      "taskPath": ":modules:applications:app:test",
+      "state": "UP_TO_DATE",
+      "rootNode": false,
+      "module": ":modules:applications:app",
+      "startMs": 1708860022445,
+      "stopMs": 1708860022447
+    },
+    {
+      "ms": 0,
+      "taskName": "subTaskTestAll",
+      "taskPath": ":subTaskTestAll",
+      "state": "UP_TO_DATE",
+      "rootNode": true,
+      "module": "no_module",
+      "startMs": 1708860022448,
+      "stopMs": 1708860022448
+    }
+  ],
+  "buildId": "94680978-b248-4fb1-8233-a01f2ee40841",
+  "rootProject": "jvm",
+  "requestedTasks": "subTaskTestAll",
+  "success": true,
+  "configurationCacheHit": false
+}

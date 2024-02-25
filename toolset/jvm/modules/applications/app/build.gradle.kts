@@ -1,11 +1,15 @@
 plugins {
-    id("kotlin-app-plugin")
+    id("base-plugin")
+    id("application-plugin")
+    id("junit-test-plugin")
+    id("my-kotlin-plugin")
 }
 
 dependencies {
-    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
     implementation(project(":libraries:list"))
     implementation(project(":libraries:utilities"))
+    testImplementation(project(":libraries:utilities"))
+    testImplementation(project(":libraries:utilities"))
 
     /*
         This is used to test/confirm that the capability conflict plugin is working correctly.
