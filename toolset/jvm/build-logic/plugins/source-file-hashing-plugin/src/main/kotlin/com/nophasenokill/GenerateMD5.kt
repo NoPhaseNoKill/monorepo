@@ -24,7 +24,7 @@ abstract class GenerateMD5 : WorkAction<MD5WorkParameters> {
     override fun execute() {
         try {
             val stream: InputStream = FileInputStream(sourceFile)
-            println("Generating MD5 for " + sourceFile.name + "...")
+            // println("Generating MD5 for " + sourceFile.name + "...")
             // Artificially make this task slower.
             Thread.sleep(3000)
             FileUtils.writeStringToFile(md5File, DigestUtils.md5Hex(stream), null as String?)

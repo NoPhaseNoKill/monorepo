@@ -1,4 +1,3 @@
-import com.nophasenokill.PerformanceMetricConsolePublisher
 import com.nophasenokill.PerformanceMetricJsonPublisher
 
 plugins {
@@ -9,7 +8,6 @@ talaiot {
 
     publishers {
         customPublishers(
-            PerformanceMetricConsolePublisher(),
             PerformanceMetricJsonPublisher(project.layout.projectDirectory.asFile.path)
         )
     }
