@@ -1,15 +1,13 @@
 plugins {
-    id("base-plugin")
+    id("my-kotlin-plugin")
     id("application-plugin")
     id("junit-test-plugin")
-    id("my-kotlin-plugin")
+    // id("kotlin-app-plugin")
 }
 
 dependencies {
     implementation(project(":libraries:list"))
     implementation(project(":libraries:utilities"))
-    testImplementation(project(":libraries:utilities"))
-    testImplementation(project(":libraries:utilities"))
 
     /*
         This is used to test/confirm that the capability conflict plugin is working correctly.
