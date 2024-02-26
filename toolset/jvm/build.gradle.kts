@@ -1,12 +1,26 @@
 
 
-tasks.register("checkFeatures") {
-    group = "verification"
-    description = "Run all feature tests"
-    dependsOn(gradle.includedBuild("modules").task(":applications:app:test"))
-    dependsOn(gradle.includedBuild("modules").task(":libraries:list:test"))
-    dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:test"))
-}
+// tasks.register("checkFeatures") {
+//     group = "verification"
+//     description = "Run all feature tests"
+//     // dependsOn(tasks.test)
+//     dependsOn(gradle.includedBuild("modules").task(":applications:app:test"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:list:test"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:utilities:test"))
+// }
+
+// gradle.projectsEvaluated {
+//     gradle.taskGraph.whenReady {
+//         val tasks = this.allTasks
+//         tasks.forEach { task ->
+//             println("OHAI")
+//             when (task) {
+//                 is org.gradle.api.tasks.Exec -> println("Executing command: ${task.commandLine}")
+//                 else -> println("Not exec. Is; ${task::class.java.name}")
+//             }
+//         }
+//     }
+// }
 
 // plugins {
 //     /*
@@ -76,8 +90,8 @@ tasks.register("checkFeatures") {
 //     description = "Runs all of the modules' tests"
 //
 //     dependsOn(gradle.includedBuild("modules").task(":applications:app:test"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:list:test"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:test"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:list:test"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:utilities:test"))
 //
 // }
 //
@@ -86,8 +100,8 @@ tasks.register("checkFeatures") {
 //     description = "Cleans each of the modules' sub projects"
 //
 //     dependsOn(gradle.includedBuild("modules").task(":applications:app:clean"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:list:clean"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:clean"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:list:clean"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:utilities:clean"))
 // }
 //
 // val subTaskCheckDependenciesAll = tasks.register("subTaskCheckDependenciesAll") {
@@ -95,8 +109,8 @@ tasks.register("checkFeatures") {
 //     description = "Checks the formatting of each of the modules' sub-projects"
 //
 //     // dependsOn(gradle.includedBuild("modules").task(":applications:app:checkDependencyFormattingProject"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:list:checkDependencyFormattingProject"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:checkDependencyFormattingProject"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:list:checkDependencyFormattingProject"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:utilities:checkDependencyFormattingProject"))
 //
 // }
 //
@@ -105,8 +119,8 @@ tasks.register("checkFeatures") {
 //     description = "Hashes all of the source files for any sub-projects inside of the modules folder"
 //
 //     // dependsOn(gradle.includedBuild("modules").task(":applications:app:sourceFileHashingPluginTask"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:list:sourceFileHashingPluginTask"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:sourceFileHashingPluginTask"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:list:sourceFileHashingPluginTask"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:utilities:sourceFileHashingPluginTask"))
 // }
 //
 // val subTaskPrintRuntimeClasspathAll = tasks.register("subTaskPrintRuntimeClasspathAll") {
@@ -121,8 +135,8 @@ tasks.register("checkFeatures") {
 //     description = "Detects classpath collisions for any sub-project in the modules folder"
 //
 //     // dependsOn(gradle.includedBuild("modules").task(":applications:app:detectClasspathCollisions"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:list:detectClasspathCollisions"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:detectClasspathCollisions"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:list:detectClasspathCollisions"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:utilities:detectClasspathCollisions"))
 // }
 //
 // val subTaskProjectHealthAll = tasks.register("subTaskProjectHealthAll") {
@@ -130,6 +144,7 @@ tasks.register("checkFeatures") {
 //     description = "Runs dependency analysis for all sub-projects and outputs the project health in the build/reports folder"
 //
 //     // dependsOn(gradle.includedBuild("modules").task(":applications:app:projectHealth"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:list:projectHealth"))
-//     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:projectHealth"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:list:projectHealth"))
+//     dependsOn(gradle.includedBuild("modules").task(":modules:libraries:utilities:projectHealth"))
 // }
+

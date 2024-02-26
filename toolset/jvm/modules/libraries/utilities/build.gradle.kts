@@ -6,7 +6,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":libraries:list"))
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    api(project(":modules:libraries:list"))
 
     /*
         Both of these should error when uncommented due to to com.nophasenokill.dependency-analysis-project.gradle.kts.

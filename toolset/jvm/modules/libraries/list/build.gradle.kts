@@ -6,6 +6,7 @@ plugins {
 }
 
 dependencies {
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
     /*
         Both of these should error when uncommented due to to com.nophasenokill.dependency-analysis-project.gradle.kts.
         That plugin is meant to prevent project level dependency level declarations.

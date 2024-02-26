@@ -88,7 +88,7 @@ val junitPropertiesCreationTask = tasks.register("junitPropertiesCreationTask") 
 
             /*
                 Should look like:
-                    > Task :modules:libraries:utilities:createJUnitPlatformPropertiesFile
+                    > Task :modules:modules:libraries:utilities:createJUnitPlatformPropertiesFile
                           |------> about to be executed
                             - Created resource directory to use with junit-platform.properties. Path was: /path/to/project/src/test/resources.
                             - Created junit-platform.properties. Path was: /path/to/project/src/test/resources/junit-platform.properties.

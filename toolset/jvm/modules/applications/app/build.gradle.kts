@@ -6,8 +6,9 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":libraries:list"))
-    implementation(project(":libraries:utilities"))
+    implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+    implementation(project(":modules:libraries:list"))
+    implementation(project(":modules:libraries:utilities"))
 
     /*
         This is used to test/confirm that the capability conflict plugin is working correctly.

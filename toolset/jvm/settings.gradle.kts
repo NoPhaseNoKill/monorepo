@@ -1,25 +1,45 @@
 pluginManagement {
-    includeBuild("build-logic/settings")
+    includeBuild("build-logic/plugins")
+    // includeBuild("build-logic/settings")
+    // include(":base-plugin")
+    // project(":base-plugin").projectDir = file("build-logic/plugins/base-plugin")
+    //
+    // include(":my-kotlin-plugin")
+    // project(":my-kotlin-plugin").projectDir = file("build-logic/plugins/my-kotlin-plugin")
+    //
+    //
+    // include(":library-plugin")
+    // project(":library-plugin").projectDir = file("build-logic/plugins/library-plugin")
+    // include(":application-plugin")
+    // project(":application-plugin").projectDir = file("build-logic/plugins/application-plugin")
+    //
+    // include(":junit-test-plugin")
+    // project(":junit-test-plugin").projectDir = file("build-logic/plugins/junit-test-plugin")
+}
+
+dependencyResolutionManagement {
+    repositories.gradlePluginPortal()
+
+    // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
 }
 
 plugins {
-    id("jvm-root-settings")
+    // id("jvm-root-settings")
 }
 
-// include(":build-logic:plugins:base-plugin")
-// project(":build-logic:plugins:base-plugin").projectDir = file("build-logic/plugins/base-plugin")
-//
-// include(":build-logic:plugins:my-kotlin-plugin")
-// project(":build-logic:plugins:my-kotlin-plugin").projectDir = file("build-logic/plugins/my-kotlin-plugin")
-//
-//
-// include(":build-logic:plugins:library-plugin")
-// project(":build-logic:plugins:library-plugin").projectDir = file("build-logic/plugins/library-plugin")
-// include(":build-logic:plugins:application-plugin")
-// project(":build-logic:plugins:application-plugin").projectDir = file("build-logic/plugins/application-plugin")
-//
-// include(":build-logic:plugins:junit-test-plugin")
-// project(":build-logic:plugins:junit-test-plugin").projectDir = file("build-logic/plugins/junit-test-plugin")
+gradle.projectsEvaluated {
+    gradle.taskGraph.whenReady {
+        if (this is Exec) {
+            println("Executing command: ${this.commandLine}")
+        }
+    }
+}
 
-includeBuild("build-logic/plugins")
-includeBuild("modules")
+
+
+
+includeBuild("build-logic/platform")
+include(":modules:libraries:list")
+include(":modules:libraries:utilities")
+include(":modules:applications:app")
