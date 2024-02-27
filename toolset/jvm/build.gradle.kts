@@ -1,5 +1,56 @@
 
 
+
+
+
+/*
+    TODO investigate below:
+
+    1. is intellij basically just labelling this as buildSrc!?
+        - http://localhost:63342/jvm/toolset/jvm/build/reports/configuration-cache/58voi8s0p8os496rfgf3zca1x/559aimx9vnuhdbif7ddvnv78v/configuration-cache-report.html?_ijt=lksc6c3ucub5jmuip1pb58u86m&_ij_reload=RELOAD_ON_SAVE
+    2. See these too:
+        ? kotlin.daemon.custom.run.files.path.for.tests
+        ? kotlin.daemon.debug.log
+        ? kotlin.daemon.enabled
+        ? kotlin.daemon.jvm.options
+        ? kotlin.daemon.log.path
+        ? kotlin.daemon.options
+        ? kotlin.daemon.perf
+        ? kotlin.daemon.socket.backlog.size
+        ? kotlin.daemon.socket.connect.attempts
+        ? kotlin.daemon.socket.connect.interval
+        ? kotlin.daemon.startup.timeout
+        ? kotlin.daemon.verbose
+        ? kotlin.environment.keepalive
+
+    3. What are these files?
+        ? CustomPropertiesFileValueSource, properties file /home/tomga/projects/monorepo/toolset/jvm/build-logic/plugins/local.properties
+        ? CustomPropertiesFileValueSource, properties file /home/tomga/projects/monorepo/toolset/jvm/local.properties
+    4. May need to execute task at runtime, something like:
+            doFirst {
+        logger.lifecycle("Starting tests")
+        val out = ByteArrayOutputStream()
+        val result: ExecResult = project.exec {
+            this.args = listOf("sh", "-c", "echo \$XDG_DATA_HOME")
+            this.standardOutput = out
+        }
+
+        logger.lifecycle(out.toString().trim())
+    }
+ */
+
+// gradle.taskGraph.whenReady {
+//     this.allTasks.forEach {
+//
+//         it.args.forEach {
+//             println("Printing arg: ${it}")
+//         }
+//
+//         exec {
+//
+//         }
+//     }
+// }
 // tasks.register("checkFeatures") {
 //     group = "verification"
 //     description = "Run all feature tests"

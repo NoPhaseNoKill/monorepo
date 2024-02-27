@@ -21,7 +21,7 @@ class FileUtilsTest {
         renameDirectoriesRecursively(startingDir, from, to)
     }
 
-    fun renameDirectoriesRecursively(startingDir: String, from: String, to: String) {
+    private fun renameDirectoriesRecursively(startingDir: String, from: String, to: String) {
         val startingPath = Paths.get(startingDir)
         val fromPath = Paths.get(from)
         val toPath = Paths.get(to)
@@ -39,7 +39,7 @@ class FileUtilsTest {
                     // Remove empty parent directories
                     var parent = dir.parent
                     while (parent != null && !parent.equals(startingPath)) {
-                        if (parent.toFile().list().isEmpty()) {
+                        if (parent.toFile().list()?.isEmpty() == true) {
                             Files.delete(parent)
                         }
                         parent = parent.parent
