@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
+
 plugins {
     id("org.jetbrains.kotlin.jvm")
 }
@@ -8,29 +10,37 @@ dependencies {
     implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
 
     // applies standard kotlin libs to projects
-    implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
     runtimeOnly(kotlin("reflect"))
 }
 
 kotlin {
-    /*
-        Uncomment this + the properties in gradle.properties to run using k2 compiler
-     */
-    // sourceSets.all {
-    //     languageSettings {
-    //         languageVersion = "2.0"
-    //     }
-    // }
-
-    /*
-        Uncomment this + targetCompatibility in the java extension if you need to verify
-        that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
-        is worked (default behaviour)
-     */
-    // compilerOptions {
-    //     jvmTarget = JvmTarget.JVM_1_8
-    // }
+    kotlinDaemonJvmArgs = listOf("-Xmx486m", "-Xms256m", "-XX:+UseParallelGC")
 }
+
+tasks.withType<CompileUsingKotlinDaemon>().configureEach {
+    kotlinDaemonJvmArguments.set(listOf("-Xmx486m", "-Xms256m", "-XX:+UseParallelGC"))
+}
+
+// kotlin {
+//     /*
+//         Uncomment this + the properties in gradle.properties to run using k2 compiler
+//      */
+//     // sourceSets.all {
+//     //     languageSettings {
+//     //         languageVersion = "2.0"
+//     //     }
+//     // }
+//
+//     /*
+//         Uncomment this + targetCompatibility in the java extension if you need to verify
+//         that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
+//         is worked (default behaviour)
+//      */
+//     // compilerOptions {
+//     //     jvmTarget = JvmTarget.JVM_1_8
+//     // }
+// }
 
 
 

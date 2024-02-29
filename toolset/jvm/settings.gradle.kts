@@ -1,6 +1,7 @@
 pluginManagement {
+    includeBuild("build-logic/settings")
     includeBuild("build-logic/plugins")
-    // includeBuild("build-logic/settings")
+
     // include(":base-plugin")
     // project(":base-plugin").projectDir = file("build-logic/plugins/base-plugin")
     //
@@ -25,19 +26,8 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    // id("jvm-root-settings")
+    id("jvm-root-settings")
 }
-
-gradle.projectsEvaluated {
-    gradle.taskGraph.whenReady {
-        if (this is Exec) {
-            println("Executing command: ${this.commandLine}")
-        }
-    }
-}
-
-
-
 
 includeBuild("build-logic/platform")
 include(":modules:libraries:list")

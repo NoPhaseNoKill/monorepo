@@ -1,3 +1,4 @@
+import com.nophasenokill.GradleDaemonClasspathEnhancer
 
 plugins {
     java

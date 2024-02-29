@@ -1,6 +1,6 @@
 
 
-// rootProject.name = "modules"
+rootProject.name = "modules"
 //
 // /*
 //     By explicitly using exclusive content, regardless of what is defined first,

@@ -1,5 +1,84 @@
 
 
+tasks.wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = "8.6"
+}
+
+/*
+    BELOW THIS IS WHAT GETS RUN FOR THE INTELLIJ RUN THROUGH
+ */
+
+// this = {DaemonCommandExecuter@2834}
+// connection = {DefaultDaemonConnection@2820} "DefaultDaemonConnection: socket connection from /127.0.0.1:36671 to /127.0.0.1:47708"
+// command = {Build@2821} "Build{id=307b9205-f759-4474-b8f8-1b188a5456cc, currentDir=/home/tomga/projects/monorepo/toolset/jvm}"
+// daemonContext = {DefaultDaemonContext@2822} "DefaultDaemonContext[uid=3a603cfb-6677-4a31-af63-456f4ae6cbdc,javaHome=/home/tomga/.sdkman/candidates/java/21.0.2-ms,daemonRegistryDir=/home/tomga/.gradle/daemon,pid=21914,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,daemonOpts=-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED,-agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=127.0.0.1:38639,--add-opens=java.base/java.util=ALL-UNNAMED,--add-opens=java.base/java.lang=ALL-UNNAMED,--add-opens=java.base/java.lang.invoke=ALL-UNNAMED,--add-opens=java.prefs/java.util.prefs=ALL-UNNAMED,--add-opens=java.base/java.nio.charset=ALL-UNNAMED,--add-opens=java.base/java.net=ALL-UNNAMED,--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED,-Xmx2g,-Dfile.encoding=UTF-8,-Duser.country=AU,-Duser.language=en,-Duser.variant]"
+// daemonStateControl = {DaemonStateCoordinator@2823}
+// configuration = {DefaultDaemonServerConfiguration@2819}
+// actions = {RegularImmutableList@2824}  size = 14
+
+
+
+// Starting Gradle Daemon...
+// Connected to the target VM, address: '127.0.0.1:39833', transport: 'socket'
+// Gradle Daemon started in 805 ms
+//         Breakpoint reached at org.gradle.launcher.daemon.server.exec.DaemonCommandExecuter.executeCommand(DaemonCommandExecuter.java:48)
+// Breakpoint reached
+//         at org.gradle.launcher.daemon.server.exec.DaemonCommandExecuter.executeCommand(DaemonCommandExecuter.java:48)
+// at org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler$ConnectionWorker.handleCommand(DefaultIncomingConnectionHandler.java:161)
+// at org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler$ConnectionWorker.receiveAndHandleCommand(DefaultIncomingConnectionHandler.java:134)
+// at org.gradle.launcher.daemon.server.DefaultIncomingConnectionHandler$ConnectionWorker.run(DefaultIncomingConnectionHandler.java:122)
+// at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+// at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
+// at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+// at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+// at java.lang.Thread.runWith(Thread.java:1596)
+// at java.lang.Thread.run(Thread.java:1583)
+// Reusing configuration cache.
+// > Task :modules:applications:app:processResources NO-SOURCE
+// > Task :modules:libraries:list:processResources NO-SOURCE
+// > Task :modules:libraries:utilities:processResources NO-SOURCE
+// > Task :modules:libraries:list:checkKotlinGradlePluginConfigurationErrors
+// > Task :modules:applications:app:checkKotlinGradlePluginConfigurationErrors
+// > Task :modules:libraries:utilities:checkKotlinGradlePluginConfigurationErrors
+// > Task :modules:applications:app:junitPropertiesCreationTask UP-TO-DATE
+// > Task :modules:libraries:list:junitPropertiesCreationTask UP-TO-DATE
+// > Task :modules:libraries:utilities:junitPropertiesCreationTask UP-TO-DATE
+// > Task :modules:applications:app:processTestResources UP-TO-DATE
+// > Task :modules:libraries:list:processTestResources UP-TO-DATE
+// > Task :modules:libraries:utilities:processTestResources UP-TO-DATE
+// > Task :modules:libraries:list:compileKotlin UP-TO-DATE
+// > Task :modules:libraries:list:compileJava NO-SOURCE
+// > Task :modules:libraries:list:classes UP-TO-DATE
+// > Task :modules:libraries:list:jar UP-TO-DATE
+// > Task :modules:libraries:utilities:compileKotlin UP-TO-DATE
+// > Task :modules:libraries:list:compileTestKotlin UP-TO-DATE
+// > Task :modules:libraries:utilities:compileJava NO-SOURCE
+// > Task :modules:libraries:utilities:classes UP-TO-DATE
+// > Task :modules:libraries:list:compileTestJava NO-SOURCE
+// > Task :modules:libraries:list:testClasses UP-TO-DATE
+// > Task :modules:libraries:utilities:jar UP-TO-DATE
+// > Task :modules:applications:app:compileKotlin UP-TO-DATE
+// > Task :modules:libraries:utilities:compileTestKotlin UP-TO-DATE
+// > Task :modules:applications:app:compileJava NO-SOURCE
+// > Task :modules:libraries:utilities:compileTestJava NO-SOURCE
+// > Task :modules:applications:app:classes UP-TO-DATE
+// > Task :modules:libraries:utilities:testClasses UP-TO-DATE
+// > Task :modules:libraries:list:test UP-TO-DATE
+// > Task :modules:libraries:utilities:test UP-TO-DATE
+// > Task :modules:applications:app:compileTestKotlin UP-TO-DATE
+// > Task :modules:applications:app:compileTestJava NO-SOURCE
+// > Task :modules:applications:app:testClasses UP-TO-DATE
+// > Task :modules:applications:app:test UP-TO-DATE
+// BUILD SUCCESSFUL in 4s
+//         20 actionable tasks: 3 executed, 17 up-to-date
+// Configuration cache entry reused.
+// 9:19:55 pm: Execution finished 'test'.
+// Disconnected from the target VM, address: '127.0.0.1:39833', transport: 'socket'
+
+
+
+
 
 
 

@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "settings"
 
 include("jvm-root-settings")
+
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
