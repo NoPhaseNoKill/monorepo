@@ -7,6 +7,85 @@ tasks.wrapper {
 
 /*
     BELOW THIS IS WHAT GETS RUN FOR THE INTELLIJ RUN THROUGH
+
+    Attribute(jvmArguments, Type(text))
+    -XX:ErrorFile=/home/tomga/java_error_in_idea_%p.log
+    -XX:HeapDumpPath=/home/tomga/java_error_in_idea_.hprof
+    -Xms128m
+    -Xmx2048m
+    -XX:ReservedCodeCacheSize=512m
+    -XX:+UseG1GC
+    -XX:SoftRefLRUPolicyMSPerMB=50
+    -XX:CICompilerCount=2
+    -XX:+HeapDumpOnOutOfMemoryError
+    -XX:-OmitStackTraceInFastThrow
+    -XX:+IgnoreUnrecognizedVMOptions
+    -XX:CompileCommand=exclude,com/intellij/openapi/vfs/impl/FilePartNodeRoot,trieDescend
+    -ea
+    -Dsun.io.useCanonCaches=false
+    -Dsun.java2d.metal=true
+    -Djbr.catch.SIGABRT=true
+    -Djdk.http.auth.tunneling.disabledSchemes=""
+    -Djdk.attach.allowAttachSelf=true
+    -Djdk.module.illegalAccess.silent=true
+    -Dkotlinx.coroutines.debug=off
+    -Dsun.tools.attach.tmp.only=true
+    -Dawt.lock.fair=true
+    -Xmx4096m
+    -Dide.managed.by.toolbox=/home/tomga/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox
+    -Dtoolbox.notification.token=9ce55a41-4b7e-4c6f-b6e1-8911394e9095
+    -Dtoolbox.notification.portFile=/home/tomga/.cache/JetBrains/Toolbox/ports/1781205792.port
+    -Djb.vmOptionsFile=/home/tomga/.config/JetBrains/IntelliJIdea2023.3/idea64.vmoptions
+    -Djava.system.class.loader=com.intellij.util.lang.PathClassLoader
+    -Didea.vendor.name=JetBrains
+    -Didea.paths.selector=IntelliJIdea2023.3
+    -Djna.boot.library.path=/home/tomga/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/lib/jna/amd64
+    -Dpty4j.preferred.native.folder=/home/tomga/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/lib/pty4j
+    -Djna.nosys=true -Djna.noclasspath=true
+    -Dintellij.platform.runtime.repository.path=/home/tomga/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/modules/module-descriptors.jar
+    -Dsplash=true
+    -Daether.connector.resumeDownloads=false
+    --add-opens=java.base/java.io=ALL-UNNAMED
+    --add-opens=java.base/java.lang=ALL-UNNAMED
+    --add-opens=java.base/java.lang.ref=ALL-UNNAMED
+    --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+    --add-opens=java.base/java.net=ALL-UNNAMED
+    --add-opens=java.base/java.nio=ALL-UNNAMED
+    --add-opens=java.base/java.nio.charset=ALL-UNNAMED
+    --add-opens=java.base/java.text=ALL-UNNAMED
+    --add-opens=java.base/java.time=ALL-UNNAMED
+    --add-opens=java.base/java.util=ALL-UNNAMED
+    --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+    --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED
+    --add-opens=java.base/java.util.concurrent.locks=ALL-UNNAMED
+    --add-opens=java.base/jdk.internal.vm=ALL-UNNAMED
+    --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+    --add-opens=java.base/sun.nio.fs=ALL-UNNAMED
+    --add-opens=java.base/sun.security.ssl=ALL-UNNAMED
+    --add-opens=java.base/sun.security.util=ALL-UNNAMED
+    --add-opens=java.base/sun.net.dns=ALL-UNNAMED
+    --add-opens=java.desktop/com.sun.java.swing.plaf.gtk=ALL-UNNAMED
+    --add-opens=java.desktop/java.awt=ALL-UNNAMED
+    --add-opens=java.desktop/java.awt.dnd.peer=ALL-UNNAMED
+    --add-opens=java.desktop/java.awt.event=ALL-UNNAMED
+    --add-opens=java.desktop/java.awt.image=ALL-UNNAMED
+    --add-opens=java.desktop/java.awt.peer=ALL-UNNAMED
+    --add-opens=java.desktop/java.awt.font=ALL-UNNAMED
+    --add-opens=java.desktop/javax.swing=ALL-UNNAMED
+    --add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED
+    --add-opens=java.desktop/javax.swing.text.html=ALL-UNNAMED
+    --add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED
+    --add-opens=java.desktop/sun.awt.datatransfer=ALL-UNNAMED
+    --add-opens=java.desktop/sun.awt.image=ALL-UNNAMED
+    --add-opens=java.desktop/sun.awt=ALL-UNNAMED
+    --add-opens=java.desktop/sun.font=ALL-UNNAMED
+    --add-opens=java.desktop/sun.java2d=ALL-UNNAMED
+    --add-opens=java.desktop/sun.swing=ALL-UNNAMED
+    --add-opens=java.desktop/com.sun.java.swing=ALL-UNNAMED
+    --add-opens=jdk.attach/sun.tools.attach=ALL-UNNAMED
+    --add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+    --add-opens=jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED
+    --add-opens=jdk.jdi/com.sun.tools.jdi=ALL-UNNAMED
  */
 
 // this = {DaemonCommandExecuter@2834}
