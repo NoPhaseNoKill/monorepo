@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
-
 plugins {
     id("org.jetbrains.kotlin.jvm")
 }
@@ -14,45 +12,44 @@ dependencies {
     runtimeOnly(kotlin("reflect"))
 }
 
+// used here because scoping means that it can't be used inside
+val mainSourceSetOutputProvider = sourceSets.main.map { it.output }
+
+
 kotlin {
     kotlinDaemonJvmArgs = listOf("-Xmx486m", "-Xms256m", "-XX:+UseParallelGC")
+
+    /*
+        Ensures that jar is included properly for anyone who overrides destination folder
+        See: https://kotlinlang.org/docs/gradle-configure-project.html#non-default-location-of-compile-tasks-destinationdirectory
+    */
+    tasks.jar {
+
+        val mainSourceSetKotlinClasses = sourceSets.main.map { it.kotlin.classesDirectory }
+
+        from(mainSourceSetOutputProvider)
+        from(mainSourceSetKotlinClasses)
+    }
+
+    //     /*
+    //         Uncomment this + the properties in gradle.properties to run using k2 compiler
+    //      */
+    //     // sourceSets.all {
+    //     //     languageSettings {
+    //     //         languageVersion = "2.0"
+    //     //     }
+    //     // }
+    //
+    //     /*
+    //         Uncomment this + targetCompatibility in the java extension if you need to verify
+    //         that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
+    //         is worked (default behaviour)
+    //      */
+    //     // compilerOptions {
+    //     //     jvmTarget = JvmTarget.JVM_1_8
+    //     // }
 }
 
-tasks.withType<CompileUsingKotlinDaemon>().configureEach {
-    kotlinDaemonJvmArguments.set(listOf("-Xmx486m", "-Xms256m", "-XX:+UseParallelGC"))
-}
-
-// kotlin {
-//     /*
-//         Uncomment this + the properties in gradle.properties to run using k2 compiler
-//      */
-//     // sourceSets.all {
-//     //     languageSettings {
-//     //         languageVersion = "2.0"
-//     //     }
-//     // }
-//
-//     /*
-//         Uncomment this + targetCompatibility in the java extension if you need to verify
-//         that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
-//         is worked (default behaviour)
-//      */
-//     // compilerOptions {
-//     //     jvmTarget = JvmTarget.JVM_1_8
-//     // }
-// }
-
-
-
-/*
-    Ensures that jar is included properly for anyone who overrides destination folder
-    See: https://kotlinlang.org/docs/gradle-configure-project.html#non-default-location-of-compile-tasks-destinationdirectory
- */
-
-tasks.jar {
-    from(sourceSets.main.get().output )
-    from(sourceSets.main.get().kotlin.classesDirectory )
-}
 
 tasks.register("compileAll") {
     group = LifecycleBasePlugin.BUILD_GROUP
