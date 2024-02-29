@@ -1,5 +1,3 @@
-import com.nophasenokill.GradleDaemonClasspathEnhancer
-
 plugins {
     java
 }
@@ -22,7 +20,8 @@ plugins {
 //     }
 // }
 //
-// java {
+
+java {
 //     /*
 //         If you need to verify that the default setting: jvmTargetValidationMode = JvmTargetValidationMode.ERROR
 //         works, uncomment this code AND uncomment the compiler options jvmTarget in the kotlin extension.
@@ -42,7 +41,15 @@ plugins {
 //         vendor = JvmVendorSpec.MICROSOFT
 //         languageVersion = javaLanguageVersion
 //     }
-// }
+
+    tasks.compileJava {
+        enabled = false
+    }
+
+    tasks.compileTestJava {
+        enabled = false
+    }
+}
 //
 // tasks.withType<JavaCompile>().configureEach {
 //     /*
