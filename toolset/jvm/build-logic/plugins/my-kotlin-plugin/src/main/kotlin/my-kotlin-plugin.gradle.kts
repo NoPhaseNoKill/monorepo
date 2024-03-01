@@ -15,7 +15,6 @@ dependencies {
 // used here because scoping means that it can't be used inside
 val mainSourceSetOutputProvider = sourceSets.main.map { it.output }
 
-
 kotlin {
     kotlinDaemonJvmArgs = listOf("-Xmx486m", "-Xms256m", "-XX:+UseParallelGC")
 
@@ -29,6 +28,31 @@ kotlin {
 
         from(mainSourceSetOutputProvider)
         from(mainSourceSetKotlinClasses)
+    }
+
+    /*
+        Adds an output to task checkKotlinGradlePluginConfigurationErrors, which allows
+        us to skip it if none of the inputs/outputs change.
+     */
+    tasks.named("checkKotlinGradlePluginConfigurationErrors").configure {
+
+        val output: String =
+            if (state.failure != null) {
+                "Configuration error detected: ${state.failure?.message}"
+            } else {
+                "Check Kotlin Gradle Plugin Configuration Errors task was successful."
+            }
+
+        val outputDir = layout.buildDirectory.dir("extendedCheckKotlinGradlePluginConfigurationErrors")
+        val outputFile = outputDir.map {
+            it.file("extendedCheckKotlinGradlePluginConfigurationErrorsResult.txt")
+        }
+        outputs.file(outputFile)
+
+        doLast {
+            outputFile.get().asFile.writeText("") // clear file contents
+            outputFile.get().asFile.appendText(output)
+        }
     }
 
     //     /*
