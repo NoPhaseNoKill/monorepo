@@ -1,11 +1,17 @@
 
-// this.maxParallelForks
-// FILE_SYSTEM_WATCHING
-// JANSI
-
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
     gradleVersion = "8.6"
+}
+
+tasks.register("testAll") {
+    group = "verification"
+    description = "Runs all the tests for every module."
+    dependsOn(
+        ":modules:libraries:list:test",
+        ":modules:libraries:utilities:test",
+        ":modules:applications:app:test"
+    )
 }
 
 /*
