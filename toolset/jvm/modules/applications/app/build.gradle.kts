@@ -1,6 +1,6 @@
 plugins {
     // id("my-kotlin-plugin")
-    kotlin("jvm")
+    kotlin("jvm") version "1.9.20"
     application
     // id("application-plugin")
     // id("junit-test-plugin")

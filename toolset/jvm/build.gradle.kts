@@ -1,4 +1,3 @@
-
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
     gradleVersion = "8.6"
@@ -12,6 +11,23 @@ tasks.register("testAll") {
         ":modules:libraries:utilities:test",
         ":modules:applications:app:test"
     )
+}
+
+
+gradle.allprojects {
+    val projectName = this.name
+    gradle.sharedServices.registrations.all {  ->
+        if(this.service.get().toString().contains("org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnosticsCollector")) {
+            val collectorService: Provider<out BuildService<out BuildServiceParameters>> = this.service
+
+            tasks.withType(DefaultTask::class.java).configureEach {
+                if(this.name == "checkKotlinGradlePluginConfigurationErrors") {
+                    logger.lifecycle("Applying checkKotlinGradlePluginConfigurationErrors workaround to task: ${this.name} for project: $projectName")
+                    usesService(collectorService)
+                }
+            }
+        }
+    }
 }
 
 /*
