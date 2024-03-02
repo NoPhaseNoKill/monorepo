@@ -1,7 +1,6 @@
 plugins {
-    id("base-plugin")
+    // id("base-plugin")
     application
-    id("junit-test-plugin")
 }
 
 application {
