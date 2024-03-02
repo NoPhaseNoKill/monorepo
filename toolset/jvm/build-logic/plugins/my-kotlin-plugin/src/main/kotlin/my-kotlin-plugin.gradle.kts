@@ -16,7 +16,7 @@ dependencies {
 val mainSourceSetOutputProvider = sourceSets.main.map { it.output }
 
 kotlin {
-    kotlinDaemonJvmArgs = listOf("-Xmx486m", "-Xms256m", "-XX:+UseParallelGC")
+    // kotlinDaemonJvmArgs = listOf("-Xmx486m", "-Xms256m", "-XX:+UseParallelGC")
 
     /*
         Ensures that jar is included properly for anyone who overrides destination folder

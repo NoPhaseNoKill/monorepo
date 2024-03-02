@@ -29,7 +29,10 @@ val testTask = tasks.test {
 
     dependsOn(junitPropertiesCreationTask)
 
+    val jvmArgs = this.allJvmArgs
+
     doFirst {
+        logger.lifecycle("Jvm args: $jvmArgs")
         logger.lifecycle("Starting tests")
     }
 

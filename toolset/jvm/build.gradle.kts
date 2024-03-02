@@ -1,4 +1,7 @@
 
+// this.maxParallelForks
+// FILE_SYSTEM_WATCHING
+// JANSI
 
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
