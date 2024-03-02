@@ -1,10 +1,22 @@
 plugins {
     // id("my-kotlin-plugin")
-    kotlin("jvm") version "1.9.20"
+    alias(libs.plugins.kotlinJvm)
     `java-library`
     // id("library-plugin")
     // id("junit-test-plugin")
     // id("kotlin-lib-plugin")
+}
+
+tasks.compileJava {
+    enabled = false
+}
+
+tasks.compileTestJava {
+    enabled = false
+}
+
+tasks.processResources {
+    enabled = false
 }
 
 tasks.test {
