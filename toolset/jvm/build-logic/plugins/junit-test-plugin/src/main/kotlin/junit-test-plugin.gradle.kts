@@ -1,5 +1,3 @@
-import java.io.ByteArrayOutputStream
-
 plugins {
     id("base-plugin")
 }
@@ -47,7 +45,7 @@ tasks.processTestResources {
 
 val junitPropertiesCreationTask = tasks.register("junitPropertiesCreationTask") {
 
-    // Store variables to avoid project reference in the configuration cache
+    // Store variables to avoid project reference in the configuration cache if it's ever enabled
     val resourcesDir = file("src/test/resources")
     val baseJunitPath = resourcesDir.toPath().toString()
     val fullPath = "$baseJunitPath/junit-platform.properties"
@@ -128,11 +126,4 @@ val junitPropertiesCreationTask = tasks.register("junitPropertiesCreationTask") 
         }
 
     }
-}
-
-tasks.register<Test>("testAll") {
-    group = LifecycleBasePlugin.VERIFICATION_GROUP
-    description = "Test all Java code"
-
-    dependsOn(testTask)
 }
