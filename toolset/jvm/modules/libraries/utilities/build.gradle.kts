@@ -1,5 +1,6 @@
 plugins {
-    id("my-kotlin-plugin")
+    // id("my-kotlin-plugin")
+    kotlin("jvm")
     id("library-plugin")
     id("junit-test-plugin")
     // id("kotlin-lib-plugin")
@@ -7,6 +8,10 @@ plugins {
 
 dependencies {
     implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+
+    // applies standard kotlin libs to projects
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
     api(project(":modules:libraries:list"))
 
     /*

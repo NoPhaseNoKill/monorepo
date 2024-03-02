@@ -27,7 +27,7 @@ includeBuild("../platform")
 // include("dependency-analysis-plugin")
 
 include("base-plugin")
-include("my-kotlin-plugin")
+// include("my-kotlin-plugin")
 include("library-plugin")
 include("application-plugin")
 // include("kotlin-app-plugin")
