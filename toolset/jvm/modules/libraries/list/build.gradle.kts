@@ -1,7 +1,8 @@
 plugins {
     // id("my-kotlin-plugin")
     kotlin("jvm")
-    id("library-plugin")
+    `java-library`
+    // id("library-plugin")
     // id("junit-test-plugin")
     // id("kotlin-lib-plugin")
 }

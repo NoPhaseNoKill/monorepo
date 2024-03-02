@@ -1,7 +1,8 @@
 plugins {
     // id("my-kotlin-plugin")
     kotlin("jvm")
-    id("application-plugin")
+    application
+    // id("application-plugin")
     // id("junit-test-plugin")
     // id("kotlin-app-plugin")
 }
