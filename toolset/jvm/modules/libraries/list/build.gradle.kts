@@ -54,7 +54,9 @@ dependencies {
     }
 
     // applies standard kotlin libs to projects
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib") {
+        isTransitive = false
+    }
 
     testImplementation(enforcedPlatform("org.junit:junit-bom"))
     testImplementation("org.junit.jupiter:junit-jupiter")

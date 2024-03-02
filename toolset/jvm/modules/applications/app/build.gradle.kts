@@ -54,10 +54,16 @@ dependencies {
     }
 
     // applies standard kotlin libs to projects
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib") {
+        isTransitive = false
+    }
 
-    implementation(project(":modules:libraries:list"))
-    implementation(project(":modules:libraries:utilities"))
+    implementation(project(":modules:libraries:list")) {
+        isTransitive = false
+    }
+    implementation(project(":modules:libraries:utilities")) {
+        isTransitive = false
+    }
 
     /*
         This is used to test/confirm that the capability conflict plugin is working correctly.
