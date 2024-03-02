@@ -66,7 +66,7 @@ buildCache {
     }
 }
 
-includeBuild("build-logic/platform")
+// includeBuild("build-logic/platform")
 include(":modules:libraries:list")
 include(":modules:libraries:utilities")
 include(":modules:applications:app")
