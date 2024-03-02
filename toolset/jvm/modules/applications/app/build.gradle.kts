@@ -2,8 +2,12 @@ plugins {
     // id("my-kotlin-plugin")
     kotlin("jvm")
     id("application-plugin")
-    id("junit-test-plugin")
+    // id("junit-test-plugin")
     // id("kotlin-app-plugin")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -34,6 +38,11 @@ dependencies {
 
 
     implementation("org.apache.commons:commons-text")
+
+    testImplementation(enforcedPlatform("org.junit:junit-bom"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 
 

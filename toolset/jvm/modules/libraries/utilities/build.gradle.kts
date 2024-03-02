@@ -2,8 +2,12 @@ plugins {
     // id("my-kotlin-plugin")
     kotlin("jvm")
     id("library-plugin")
-    id("junit-test-plugin")
+    // id("junit-test-plugin")
     // id("kotlin-lib-plugin")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -13,6 +17,11 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
     api(project(":modules:libraries:list"))
+
+    testImplementation(enforcedPlatform("org.junit:junit-bom"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     /*
         Both of these should error when uncommented due to to com.nophasenokill.dependency-analysis-project.gradle.kts.

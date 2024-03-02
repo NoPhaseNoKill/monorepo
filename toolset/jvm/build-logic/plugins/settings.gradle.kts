@@ -31,7 +31,7 @@ include("base-plugin")
 include("library-plugin")
 include("application-plugin")
 // include("kotlin-app-plugin")
-include("junit-test-plugin")
+// include("junit-test-plugin")
 // include("kotlin-lib-plugin")
 
 
