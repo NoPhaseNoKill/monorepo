@@ -11,9 +11,6 @@ dependencyResolutionManagement {
     }
 }
 
-pluginManagement {
-    includeBuild("../plugins")
-}
 
 rootProject.name = "platform"
 
