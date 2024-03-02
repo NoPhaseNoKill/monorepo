@@ -1,6 +1,6 @@
-pluginManagement {
+// pluginManagement {
     // includeBuild("build-logic/settings")
-    includeBuild("build-logic/plugins")
+    // includeBuild("build-logic/plugins")
 
     // include(":base-plugin")
     // project(":base-plugin").projectDir = file("build-logic/plugins/base-plugin")
@@ -16,7 +16,7 @@ pluginManagement {
     //
     // include(":junit-test-plugin")
     // project(":junit-test-plugin").projectDir = file("build-logic/plugins/junit-test-plugin")
-}
+// }
 
 dependencyResolutionManagement {
     repositories.gradlePluginPortal()
