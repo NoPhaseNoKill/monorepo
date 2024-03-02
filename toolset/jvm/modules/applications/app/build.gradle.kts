@@ -7,6 +7,31 @@ plugins {
     // id("kotlin-app-plugin")
 }
 
+tasks.named("checkKotlinGradlePluginConfigurationErrors").configure {
+
+    val output: String =
+        if (state.failure != null) {
+            "Configuration error detected: ${state.failure?.message}"
+        } else {
+            "Check Kotlin Gradle Plugin Configuration Errors task was successful."
+        }
+
+    // assumed up to date unless kotlin build folders change, signifying plugin needs to be re-checked
+    inputs.dir(layout.buildDirectory.dir("classes"))
+    inputs.dir(layout.buildDirectory.dir("kotlin"))
+
+    val outputDir = layout.buildDirectory.dir("extendedCheckKotlinGradlePluginConfigurationErrors")
+    val outputFile = outputDir.map {
+        it.file("extendedCheckKotlinGradlePluginConfigurationErrorsResult.txt")
+    }
+    outputs.file(outputFile)
+
+    doLast {
+        outputFile.get().asFile.writeText("") // clear file contents
+        outputFile.get().asFile.appendText(output)
+    }
+}
+
 tasks.compileJava {
     enabled = false
 }
