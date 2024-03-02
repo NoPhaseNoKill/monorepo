@@ -22,7 +22,11 @@ gradle.allprojects {
 
             tasks.withType(DefaultTask::class.java).configureEach {
                 if(this.name == "checkKotlinGradlePluginConfigurationErrors") {
-                    logger.lifecycle("Applying checkKotlinGradlePluginConfigurationErrors workaround to task: ${this.name} for project: $projectName")
+                    logger.debug(
+                        "Applying checkKotlinGradlePluginConfigurationErrors workaround to task: {} for project: {}",
+                        this.name,
+                        projectName
+                    )
                     usesService(collectorService)
                 }
             }
