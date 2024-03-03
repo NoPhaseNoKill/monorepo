@@ -2,13 +2,13 @@ plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id("java-gradle-plugin")
 
-    // In future, it might be beter to alternatively use alias(libs.plugins.jvm)
-    `kotlin-dsl`
+    alias(libs.plugins.kotlinDsl)
 }
 
 dependencies {
     testImplementation(enforcedPlatform("org.junit:junit-bom:${libs.versions.junit.get()}"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 gradlePlugin {

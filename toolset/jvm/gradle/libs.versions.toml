@@ -1,6 +1,7 @@
 [versions]
 # BOM's/frequently updated
 kotlin = "1.9.20"
+kotlinDsl = "4.2.1"
 junit = "5.10.1"
 springBootDependencies = "3.2.0"
 talaiot = "2.0.3"
@@ -23,6 +24,7 @@ javaxActivation = "1.1.1"
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }
 
 
 

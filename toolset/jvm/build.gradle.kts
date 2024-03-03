@@ -13,7 +13,10 @@ tasks.register("testAll") {
     )
 }
 
-
+/*
+    Fixes undeclared build service usage when using: enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+    Known issue to be fixed here: https://youtrack.jetbrains.com/issue/KT-63165
+ */
 gradle.allprojects {
     val projectName = this.name
     gradle.sharedServices.registrations.all {  ->
