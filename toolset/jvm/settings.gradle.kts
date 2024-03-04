@@ -1,6 +1,6 @@
 pluginManagement {
     // includeBuild("build-logic/settings")
-    includeBuild("build-logic/plugins")
+    // includeBuild("build-logic/plugins")
     repositories {
         gradlePluginPortal()
     }
@@ -69,7 +69,7 @@ buildCache {
     }
 }
 
-// includeBuild("build-logic/platform")
+includeBuild("build-logic/platform")
 include(":modules:libraries:list")
 include(":modules:libraries:utilities")
 include(":modules:applications:app")

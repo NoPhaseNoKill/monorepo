@@ -7,7 +7,7 @@
 gradle.allprojects {
     val projectName = this.name
     gradle.sharedServices.registrations.all {  ->
-        if(this.service.get().toString().contains("org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnosticsCollector")) {
+        if(this.service.map { it.toString().contains("org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnosticsCollector") }.get()) {
             val collectorService: Provider<out BuildService<out BuildServiceParameters>> = this.service
 
             tasks.withType(DefaultTask::class.java).configureEach {
