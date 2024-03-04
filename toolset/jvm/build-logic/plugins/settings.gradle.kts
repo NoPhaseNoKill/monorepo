@@ -5,12 +5,6 @@ dependencyResolutionManagement {
 
     // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
     repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
-
-    versionCatalogs {
-        create("libs") {
-            from(files("../../gradle/libs.versions.toml"))
-        }
-    }
 }
 
 rootProject.name = "plugins"
@@ -19,7 +13,7 @@ includeBuild("../platform")
 
 // include("capability-conflict-avoidance-plugin")
 // include("classpath-collision-detector-plugin")
-include("tested-plugins")
+// include("tested-plugins")
 // include("dependency-analysis-project")
 // include("dependency-analysis-platform")
 // include("source-file-hashing-plugin")
