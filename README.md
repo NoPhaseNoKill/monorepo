@@ -1,5 +1,19 @@
 # Monorepo
 
+<!-- TOC -->
+* [Monorepo](#monorepo)
+  * [Purpose](#purpose)
+    * [JVM Purpose](#jvm-purpose)
+  * [Current work in progress](#current-work-in-progress-)
+  * [Unrelated tools](#unrelated-tools)
+    * [ReadME diagram tool (mermaid for intellij)](#readme-diagram-tool-mermaid-for-intellij)
+  * [Random unrelated scripts](#random-unrelated-scripts)
+    * [Walking file tree](#walking-file-tree)
+    * [Rename package structure](#rename-package-structure)
+    * [Convert youtube video between two timestamps to mp3](#convert-youtube-video-between-two-timestamps-to-mp3)
+  * [Influence repositories I found along the way](#influence-repositories-i-found-along-the-way)
+<!-- TOC -->
+
 ## Purpose
 
 - A showcase of the work I do in my spare time for any future employers
@@ -14,239 +28,44 @@ which allows high throughput, but maximum accountability for the terrible code I
 more valuable than working amongst code you wrote, and having to deal with the trade-offs or short
 term decisions you may or may not have kept putting off
 
-
-## Current work in progress - IntegraBoost - Enhance your ability to write integration or e2e tests easily
-
-### Inspiration/purpose
+### JVM Purpose
 
 1. Feel as though there's just so much wasted time with config and build systems in JVM land
 2. Astonishing that out of the box there is no easy to way have high performance tests setup
 3. All of the performance options are normally OFF by default, and because the build systems feel
-the need to support legacy systems, performance is on the back burner
+   the need to support legacy systems, performance is on the back burner
 4. This takes the approach that testing speeds are way too slow the majority of the time for what
-they could be, and aims to investigate pragmatic ways of solving something people are 'just used to'
+   they could be, and aims to investigate pragmatic ways of solving something people are 'just used to'
 5. The current end goal feels like a full test product, which allows you to:
-   1. Detect regressions (in terms of both speed for individual tasks and overall time). Meaning that you may
-    never have realised you introduced regressions, or a regression alongside an improvement that balanced each other out
-   2. It focuses on how we might reduce what is universally considered 'slow' tests (integration/e2e tests)
-   3. Parallelism and concurrently are on by default
-   4. New java version comes out? Cool we upgrading due to speed improvements
+    1. Detect regressions (in terms of both speed for individual tasks and overall time). Meaning that you may
+       never have realised you introduced regressions, or a regression alongside an improvement that balanced each other out
+    2. It focuses on how we might reduce what is universally considered 'slow' tests (integration/e2e tests)
+    3. Parallelism and concurrently are on by default
+    4. New java version comes out? Cool we upgrading due to speed improvements
 6. Make writing code fun again, by not having to have wait for so much compilation!
 
-### Initial Benchmarks - 14/02/2024 - Low parallelism, mainly just understanding/configuring gradle correctly
-The benchmark testing I have done (based on the build scans at the time of writing) were:
 
-1. Build scan when going from a cold cache/with no dependencies, aka './gradlew :runAllMainBuildTasks --rerun-tasks --refresh-dependencies --scan': https://scans.gradle.com/s/45nfivplxf6m2
-2. I then ran './gradlew :runAllMainBuildTasks --scan' which gave: https://scans.gradle.com/s/l6nrbxtrgrjlo
-3. Followed up by changing a single file in the utilities test folder: https://scans.gradle.com/s/lh7wfafqrwuq4/performance/build
+## Current work in progress 
 
-The promising thing about this was:
-1. Dependency downloads took roughly ~3/4 of the build scan wall clock time for the initial cold cache/no cache (indicating the idea around dependency splitting for parallelism has merit)
-2. The absolute shortest time from a cache this build could have taken was just over 3 seconds,  (due to me putting in an absolute minimum test time of 3 seconds).
-See: :modules:libraries:utilities:sourceFileHashingPluginTask here: https://scans.gradle.com/s/l6nrbxtrgrjlo/timeline?sort=longest
-   2.172s	3.005s	com.nophasenokill.CreateMD5
-If everything else worked completely in parallel, this gives us an indication that there are approx 2.188s being wasted (something to work off as a baseline),
-as the 'extra' time the whole build took was 5.188s (total) - 3.005s = 2.185s. This is already a HUGE improvement over maven
-3. Changing a single file, of which all applications/libraries were dependant on, meant that the avoidance savings (ie re-usable cache)
-from step 2 only decreased from 85.05% -> 83.73%
+See [JVM README](toolset/jvm/README.md)
 
-Stats were: 
+## Unrelated tools
 
-Step 2:
-    - All tasks: 290
-    - Tasks avoided: 190
-    - Avoidance savings: 58.505s (85.05%)
-    - Total wall clock time: 5.188s
-    -290 tasks, 0 transforms executed in 16 projects in 5.188s , with 190 avoided tasks saving 58.505s
+### ReadME diagram tool (mermaid for intellij)
 
-Step 3:
-- All tasks: 290
-- Tasks avoided: 186
-- Avoidance savings: 57.578s (83.73%)
-- Total wall clock time: 5.587s
-- 290 tasks, 0 transforms executed in 16 projects in 5.587s with 186 avoided tasks saving 57.578s
-
-Keeping in mind these are benchmarks for what I'll say are still 'relatively unoptimized' (aka very little work has been
-done to keep them in parallel) - this an absolute amazing result so far.
-
-### Current short-term/medium roadmap (Updated 12/02/2024)
-#### ***IMPORTANT NOTE***: Very very basic benchmarking was just completed (12/02/2024). 
-Turns out our idea has merit. Large merit. Big enough merit that I ran a single benchmark test (normally would do approx 100,
-in an actual container rather than on a host OS), and instantly knew this was a go-ahead. Please see above if you interested.
-
-The following are in no particular order:
-
-1. Add testing to all plugins/properly ensure that we don't break backwards compatibility we care about
-
-2. Create a systemic way to actually measure these builds properly
-   1. This probably includes creating our own gradle profiler (gradle's one does not expose meaningful/useful enough info)
-   2. We probably need a docker container with certain specs (rather than our own OS), to get more consistent results
-   3. This will give us our 'actual' baseline, rather than just generalised baseline/benchmark we have now
-
-3. Enable as much parallelism using gradle's WorkQueue (see source-file-hashing-plugin) as possible. This may include things like:
-   1. Dependency resolution. All found here: https://docs.gradle.org/current/userguide/performance.html#dependency_resolution
-   2. Configuration avoidance
-      1. To enable this, we firstly need to migrate the logger to the new useService
-      2. We also probably need to look at getting rid of the dependency analysis plugin - as this uses lots of deprecated features
-      3. Maybe: Split each singular dependency into its own project, so we can get maximum concurrency. This means each
-         node in the tree gets its own project, but would be responsible for a singular fetch -> enabling extremely high speeds
-         when fetching packages and configuring projects
-   3. Enable remote build cache
-      1. https://docs.gradle.org/current/userguide/part6_gradle_caching.html#step_4_understanding_remote_caching
-      2. https://docs.gradle.com/build-cache-node/#installation
-      3. https://docs.gradle.com/build-cache-node/#version_history
-      4. https://hub.docker.com/r/gradle/build-cache-node
-
-4. Organisation of plugins still feels a bit weird. There's a concept of 'meta-plugins' already occurring which:
-   1. Means we firstly have a dependency on the kotlin version being used for gradle
-   2. We then have a dependency on the dependency-analysis=plugin (to check our platform dependencies)
-   3. Majority of other stuff can then be built/done with that
-   4. How could we optimize this is the real question here?
-
-5. Add better output which may analyse inefficiency of dependency resolution. This could be things like:
-   1. Suggested ordering 
-   2. Something you may be doing inadvertently that is having a major impact
-   3. Output of the largest wall clock time syncs so you can investigate
-
-6. Continue from GenerateMD5.kt: https://docs.gradle.org/current/userguide/worker_api.html#changing_the_isolation_mode
-
-### Create script to make a new module (under modules/applications or modules/libraries)
-1. Create basic structure of project (ie something like: src/main/kotlin, src/main/resources, src/test/kotlin, src/test/resources)
-2. Create gradle build files (this would mean we would need some way of templating this?)
-    1. Could we possibly create a DSL syntax for this instead? Seems way better as alternative
-3. Does this mean that we also need a 'modules/scripts' folder? Seems like it could be appropriate for ad-hoc things
-   where you might want to build/compile something for re-use at the top level?
-
-### Investigate creating profiler for build times
-1. Start dirty, work way up to better. Run ./gradlew someGradleTaskHere 10 times for instance
-2. Needs to be historically storable.
-    1. git sha
-    2. time (whatever metric that is)
-    3. which specific command was run (buildAll versus compileAll versus X)
-3. Needs to run each time gradle task is done + when committing.
-4. Maybe docker image to isolate runs?
-5. Needs to be run in parallel, so that you could run 20 isolated tasks, and if the longest task take took 7 seconds,
-   7 seconds would be total amount to run this 'full process'
-
-## Park bench ideas
-
-1. Build performance tracking
-   1. See: BuildPerformanceMetric from package org.jetbrains.kotlin.build.report.metrics and
-      package org.jetbrains.kotlin.gradle.report TaskExecutionResult/TaskExecutionInfo
-2. Way of figuring out whether you have inadvertently regressed the top level settings.gradle.kts/build files (ie broken buildAll etc)
-3. Compilation improvements: https://kotlinlang.org/docs/gradle-compilation-and-caches.html
-    1. Build reports: https://kotlinlang.org/docs/gradle-compilation-and-caches.html#build-reports
-    2. Incremental compilation (precise backup): https://kotlinlang.org/docs/gradle-compilation-and-caches.html#incremental-compilation
-    3. The Kotlin daemon and how to use it with Gradle: https://kotlinlang.org/docs/gradle-compilation-and-caches.html#the-kotlin-daemon-and-how-to-use-it-with-gradle
-4. Does grouping logic in build-logic ACTUALLY improve performance? Consider the following example:
-    1. You have some plugin which gets updated
-    2. Does this plugin then invalidate caches concurrently of each of the projects using it?
-    3. If no, how could we then have some shared logic still, but invalidate/revalidate the affected projects concurrently?
-    4. Could we make our own using coroutines instead? Or with java 21, using virtual threads?
-5. Make a proper DSL similar to the original modules applications/libraries one, but for plugins and platforms
-    1. This will need to be an external plugin (separately managed/directory) so that the settings file can use a basic
-       setup similar to what we're doing for root
-    2. This gives you granularity between responsibilities for plugins, but also allows you dynamically configure them
-       and not have to manually include them each time
-6. Why does it feel completely wasteful having to declare constraints for dependencies in a build file, only to have
-   to declare the dependencies again AND THEN declare dependencies on the plugin level?
-    1. Duplication seems outrageous
-    2. Is the folder structure actually wrong here? Maybe plugins needs to be similar to platforms (standalone)
-       which sub-projects that define each of their own?
-    3. Is it better to actually declare the specific versions and constraints in one file and throw errors
-       when a user/person tries to manually add a dependency which does not declare both at the plugin level?
-7. Templates feel like a much better name rather than plugins
-8. Feels like you should absolutely have some logger/gradle property which effectively alerts the user if it's
-a 'near' miss when settings up repositories. Feels like an absolute no-brainer, and I have wasted a good month
-coming to the conclusion that this was what was causing my issues this whole time. Absolutely dreadful API, 0 feedback
-and about a zillion chances to shoot yourself in the foot here.
-   1. It's almost mandatory IMO that there should be some form of debug mode which easily allows turning on/off the deps,
-   what they're being resolved to when trying to include them, the versions, group, name etc
-9. Create custom task which automatically sets application main class rather than manual configuration
-   1. Should throw error if you don't configure it
-   2. Should iterate over any files with the name 'App', and find the one with the code: 'fun main(' , which indicates
-   that this is the main method
-10. Create library which is a wrapper around gradle to manage files/file trees easily
-    1. Gradle's APIs feel extremely clunky and unintuitive
-    2. This may form the start/creation of the DSL (see point 5)
-11. Performance profile file encodings (UTF-8 versus UTF-16 versus X)
-12. IntelliJ performance for creating indexes is mind-bogglingly slow
-    1. Can we just autogenerate this? 
-       1. If yes, instead of Java/Kotlin, this most likely should be built in C
-       2. Before starting this, ensure you benchmark/profile properly, and validate this ASSUMPTION (which is what it
-       is atm, it's just an assumption and NOT fact)
-    2. From a given project, we should actually have well-defined inputs/outputs which enable us to thoroughly test this
-    3. Downside of this is that we're tied to a version of intellij possibly - whereby bugs/nwe features may affect this
-    4. Upside if that even if we have this downside, slowly we build an interface for the functionality expected by
-    IntelliJ and can actually post REAL fixes based on specific versions
-13. File reproducibility around concurrency. Consider carefully what value we choose in future
-    1. See: https://docs.gradle.org/current/userguide/working_with_files.html#sec:reproducible_archives
-    2. To me, it wasn't immediately obvious why, but the context is:
-
-        - Archives are based on timestamps
-
-        - Different computers (remote cache, versus local, versus dev to dev)
-          would then technically have different inputs and outputs
-
-        - This would render the cache a miss even on the same inputs/outputs with
-          the only difference being WHEN it was run
-
-        - This can be confusing where conceptually most people have thought
-          this would be a build cache hit (and it now is).
-
-    Note: While there is currently no need to have this on, there may come a time
-    where we do want to render it a build cache miss. The first example that
-    springs to mind is something like:
-    - Scheduled task
-    - Runs on CI every night
-    - It's based on the latest git sha/commit in the repo
-    - This may mean if someone doesn't commit to said repo, you still want the build cache
-      to miss, because this represents two consecutive days (separate from each other)
-    - However, I'd argue this then just modelled with the wrong inputs/outputs
-
-
-## Gradle learnings
-1. Due to multiple build scripts running concurrently for composite builds, rather than a single entrypoint, misconfigurations of 
-setting up your repositories will fail silently and are extremely hard to diagnose. This means when running tasks again,
-unless you have a very specific idea of which tasks you're expecting to run (aka the number of them in larger projects),
-you're most likely going to trip yourself up at some stage. To fix this type of issue, I have created an attempt to
-protect/make it as hard as possible for people to trip themselves up. 
-See: [settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fsettings.gradle.kts) and
-[kotlin-project-root-repositories.settings.gradle.kts](toolset%2Fjvm%2Fbuild-logic%2Fsettings%2Fkotlin-project-root-settings%2Fsrc%2Fmain%2Fkotlin%2Fkotlin-project-root-repositories.settings.gradle.kts)
-
-2. When using include, Gradle only needs the leaves of the tree. This means that
-    using 'include("services:hotels:api")', it will create three projects:
-    'services' 'services:hotels' and 'services:hotels:api'
-   1. A nuance of this is to do with dependency resolution when you mis-configure it.
-      Because you are now including many more projects than you may want to (ie 
-      all intermediary directories), you quickly run into issues.
-   
-        Examples of such issues may be: 
-            - build speed slowly degrading before
-            - all of a sudden, you realise just how slow it is.
-            - Getting strange results when trying to import a project dependency that you SWORE  worked very recently (ie project(":list").
-   2. This has tripped me up several times now, and ultimately the wrong to assist in trying to not regress everything
-      is via a test suite. Gaining an understanding of the pain points is crucial, as it'll allow me configure everything
-        in a way which prevents me from having the same issue I've already had
-
-   More details can be found here: https://docs.gradle.org/current/userguide/fine_tuning_project_layout.html#sub:building_the_tree
-3. 
-
-## Useful commands
-
-### Remove any references (.build, .gradle, ~/.gradle, .idea) to gradle caches
-
-```
-./remove-gradle-cache.sh
+```mermaid
+sequenceDiagram
+ParallelProcessOne->>ParallelProcessTwo: Hello ParallelProcessTwo, how are you?
+loop 'LoopingTask'
+    ParallelProcessTwo-->>ParallelProcessTwo: Some task that is looping
+end
+Note right of ParallelProcessTwo: Note to the right of ParallelProcessTwo!
+ParallelProcessTwo-->>ParallelProcessOne: Great thanks ParallelProcessOne!
+ParallelProcessTwo->>ParallelProcessThree: How about you ParallelProcessThree?
+ParallelProcessThree-->>ParallelProcessTwo: Jolly good ParallelProcessTwo!
 ```
 
-### Running the gradle profiler
-
-```
-EPOCH_TIME=$(date +%s) &&
-gradle-profiler --benchmark --iterations 100 --scenario-file ./gradle-profiler/scenarios/performance.scenarios --output-dir "./gradle-profiler/results/$EPOCH_TIME" --gradle-user-home './gradle-profiler/gradle-user-home' performance_both &&
-unset EPOCH_TIME
-```
+## Random unrelated scripts
 
 ### Walking file tree
 
@@ -270,6 +89,7 @@ unset EPOCH_TIME
           }
       }
 ```
+
 
 ### Rename package structure
 
@@ -329,9 +149,6 @@ class FileUtilsTest {
 }
 ```
 
-## Random unrelated scripts
-
-
 ### Convert youtube video between two timestamps to mp3
 
 Example: This downloads the song 'glitter' from a tiny desk clip of Tyler the Creator
@@ -358,6 +175,6 @@ Example: This downloads the song 'glitter' from a tiny desk clip of Tyler the Cr
    id3v2 -t "Glitter" -a "Tyler the Creator" ~/Desktop/spotify-songs/glitter.mp3
    ```
 
-### Influence repositories I found along the way
-https://github.com/blundell/monorepo
-https://github.com/CXwudi/modern-gradle-template
+## Influence repositories I found along the way
+* https://github.com/blundell/monorepo
+* https://github.com/CXwudi/modern-gradle-template
