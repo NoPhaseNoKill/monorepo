@@ -42,20 +42,6 @@ val junitPropertiesCreationTask = tasks.register("junitPropertiesCreationTask") 
     val resourcesDir = file("src/test/resources")
     val propertiesFile = file(resourcesDir.toPath().toString() + "/junit-platform.properties")
 
-    val propertiesLines = listOf(
-        "junit.jupiter.execution.parallel.enabled" to "true",
-        "junit.jupiter.execution.parallel.config.strategy" to "dynamic",
-        "junit.jupiter.execution.parallel.mode.default" to "concurrent",
-        "junit.jupiter.execution.parallel.mode.classes.default" to "concurrent",
-    )
-
-    val content = propertiesLines.joinToString(separator = "\n") { "${it.first} = ${it.second}" }
-    val isNotExpectedContent = propertiesFile.readText().trim() != content
-
-    outputs.upToDateWhen {
-        !isNotExpectedContent
-    }
-
     doLast {
 
         val createdResourceDir = resourcesDir.mkdir()
@@ -69,6 +55,15 @@ val junitPropertiesCreationTask = tasks.register("junitPropertiesCreationTask") 
             logger.lifecycle("        - Created junit-platform.properties. Path was: ${propertiesFile.path}.")
         }
 
+        val propertiesLines = listOf(
+            "junit.jupiter.execution.parallel.enabled" to "true",
+            "junit.jupiter.execution.parallel.config.strategy" to "dynamic",
+            "junit.jupiter.execution.parallel.mode.default" to "concurrent",
+            "junit.jupiter.execution.parallel.mode.classes.default" to "concurrent",
+        )
+
+        val content = propertiesLines.joinToString(separator = "\n") { "${it.first} = ${it.second}" }
+        val isNotExpectedContent = propertiesFile.readText().trim() != content
 
         if(isNotExpectedContent) {
             logger.lifecycle("        - Expected content in junit-platform.properties was not matched. Attempting to create file contents now.")
