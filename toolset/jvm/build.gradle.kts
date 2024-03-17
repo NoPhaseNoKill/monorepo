@@ -1,9 +1,6 @@
 import java.util.*
 
-tasks.wrapper {
-    distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "8.6"
-}
+val currentConfigurationCacheValueTask = tasks.register<CurrentConfigurationCacheValueTask>("currentConfigurationCacheValueTask") {
 
 val currentConfigurationCacheValueTask = tasks.register<CurrentConfigurationCacheValueTask>("currentConfigurationCacheValue") {
     configurationCacheFromPropertiesValue.set(providers.gradleProperty("org.gradle.configuration-cache"))
