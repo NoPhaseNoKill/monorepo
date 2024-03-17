@@ -40,7 +40,7 @@ This was useful for two primary things:
 1. I could see whether I was adhering to gradle's configuration avoidance API's:
 
 ```
-./gradlew runAll -Dorg.gradle.internal.tasks.stats
+./gradlew testAll -Dorg.gradle.internal.tasks.stats
 
 271 actionable tasks: 34 executed, 237 up-to-date
 Task counts: Old API 0, New API 322, total 322

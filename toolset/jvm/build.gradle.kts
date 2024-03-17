@@ -2,8 +2,7 @@ import java.util.*
 
 val currentConfigurationCacheValueTask = tasks.register<CurrentConfigurationCacheValueTask>("currentConfigurationCacheValueTask") {
 
-val currentConfigurationCacheValueTask = tasks.register<CurrentConfigurationCacheValueTask>("currentConfigurationCacheValue") {
-    configurationCacheFromPropertiesValue.set(providers.gradleProperty("org.gradle.configuration-cache"))
+    configurationCacheFromPropertiesValue.set(providers.gradleProperty("org.gradle.configuration-cache").getOrElse("false"))
     configurationCacheInfoFile.set(layout.buildDirectory.file("generated-resources/configurationCacheFromPropertiesValue.properties"))
 
     outputs.upToDateWhen { false }
