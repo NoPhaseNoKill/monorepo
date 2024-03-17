@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/toolset/jvm/build-logic/platform" name="platform">
+                <projects>
+                  <project path="$PROJECT_DIR$/toolset/jvm/build-logic/platform" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/toolset/jvm" />
+        <option name="gradleJvm" value="21 (3)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/toolset/jvm" />
+            <option value="$PROJECT_DIR$/toolset/jvm/build-logic/platform" />
+            <option value="$PROJECT_DIR$/toolset/jvm/modules" />
+            <option value="$PROJECT_DIR$/toolset/jvm/modules/applications" />
+            <option value="$PROJECT_DIR$/toolset/jvm/modules/applications/app" />
+            <option value="$PROJECT_DIR$/toolset/jvm/modules/libraries" />
+            <option value="$PROJECT_DIR$/toolset/jvm/modules/libraries/list" />
+            <option value="$PROJECT_DIR$/toolset/jvm/modules/libraries/utilities" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

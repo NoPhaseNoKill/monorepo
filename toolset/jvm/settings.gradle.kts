@@ -1,31 +1,8 @@
+
 pluginManagement {
-    // includeBuild("build-logic/settings")
-    // includeBuild("build-logic/plugins")
     repositories {
         gradlePluginPortal()
     }
-
-    // include(":base-plugin")
-    // project(":base-plugin").projectDir = file("build-logic/plugins/base-plugin")
-    //
-    // include(":my-kotlin-plugin")
-    // project(":my-kotlin-plugin").projectDir = file("build-logic/plugins/my-kotlin-plugin")
-    //
-    //
-    // include(":library-plugin")
-    // project(":library-plugin").projectDir = file("build-logic/plugins/library-plugin")
-    // include(":application-plugin")
-    // project(":application-plugin").projectDir = file("build-logic/plugins/application-plugin")
-    //
-    // include(":junit-test-plugin")
-    // project(":junit-test-plugin").projectDir = file("build-logic/plugins/junit-test-plugin")
-}
-
-dependencyResolutionManagement {
-    repositories.gradlePluginPortal()
-
-    // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
-    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
 }
 
 plugins {
@@ -33,6 +10,16 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention")  version  "0.7.0"
     id("com.gradle.common-custom-user-data-gradle-plugin")  version "1.12.1"
 }
+
+dependencyResolutionManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+
+    // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
+}
+
 
 gradleEnterprise {
     buildScan {
@@ -70,6 +57,8 @@ buildCache {
 }
 
 includeBuild("build-logic/platform")
+
+include(":build-logic:plugins-new:plugin")
 include(":modules:libraries:list")
 include(":modules:libraries:utilities")
 include(":modules:applications:app")
