@@ -2,9 +2,6 @@ plugins {
     id("java-platform")
 }
 
-
-
-
 pluginManager.withPlugin("java-platform") {
 
     group = "com.nophasenokill.platform"

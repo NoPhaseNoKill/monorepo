@@ -14,6 +14,7 @@ plugins {
 dependencyResolutionManagement {
     repositories {
         gradlePluginPortal()
+        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
     }
 
     // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories

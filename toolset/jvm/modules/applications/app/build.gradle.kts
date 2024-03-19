@@ -3,6 +3,18 @@ plugins {
     application
 }
 
+
+
+
+
+dependencies {
+    implementation("org.gradle:gradle-tooling-api:8.7-rc-3")
+    // The tooling API need an SLF4J implementation available at runtime, replace this with any other implementation
+    runtimeOnly("org.slf4j:slf4j-simple:1.7.10")
+}
+
+
+
 tasks.withType(JavaCompile::class.java).configureEach {
     enabled = false
 }
