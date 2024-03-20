@@ -24,10 +24,11 @@ gradlePlugin {
 testing {
     suites {
         val test by getting(JvmTestSuite::class) {
-            useJUnitJupiter()
+            useJUnitJupiter(libs.versions.junit)
         }
 
         val functionalTestSuite = register<JvmTestSuite>("functionalTest") {
+            useJUnitJupiter(libs.versions.junit)
             dependencies {
                 implementation(project())
                 implementation(gradleTestKit())

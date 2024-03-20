@@ -18,12 +18,6 @@ tasks.test {
 dependencies {
     implementation(platform("com.nophasenokill.platform:platform"))
 
-
-    // // applies standard kotlin libs to projects
-    // implementation("org.jetbrains.kotlin:kotlin-stdlib") {
-    //     isTransitive = false
-    // }
-
     api(projects.modules.libraries.list) {
         isTransitive = false
     }

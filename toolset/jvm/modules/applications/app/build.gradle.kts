@@ -21,11 +21,6 @@ dependencies {
 
     implementation("org.gradle:gradle-tooling-api")
 
-    // // applies standard kotlin libs to projects
-    // implementation("org.jetbrains.kotlin:kotlin-stdlib") {
-    //     isTransitive = false
-    // }
-
     implementation(projects.modules.standalonePlugins.plugin) {
         isTransitive = false
     }
