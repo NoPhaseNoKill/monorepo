@@ -27,6 +27,7 @@ pluginManager.withPlugin("java-platform") {
             api("org.checkerframework:checker-qual:3.21.4")
             api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
 
+            api("org.jetbrains.kotlin:kotlin-test-junit5:${libs.versions.kotlin.get()}")
 
             api("org.slf4j:slf4j-simple:${libs.versions.slf4j.get()}")
             api("org.gradle:gradle-tooling-api:${libs.versions.gradle.get()}") {

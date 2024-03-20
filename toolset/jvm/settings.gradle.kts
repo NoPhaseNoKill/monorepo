@@ -61,7 +61,8 @@ rootProject.name = "jvm"
 
 includeBuild("build-logic/platform")
 
-include(":build-logic:plugins-new:plugin")
+include(":modules:standalone-plugins:plugin")
+
 include(":modules:libraries:list")
 include(":modules:libraries:utilities")
 include(":modules:applications:app")

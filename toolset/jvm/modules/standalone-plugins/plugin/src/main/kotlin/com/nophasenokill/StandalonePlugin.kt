@@ -4,11 +4,11 @@ import org.gradle.api.Project
 import org.gradle.api.Plugin
 
 
-class StandalonePluginPlugin: Plugin<Project> {
+class StandalonePlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.tasks.register("greeting") {
-            this.doLast {
-                println("Hello from plugin 'com.nophasenokill.plugins-new.plugin'")
+            it.doLast {
+                println("Hello from plugin 'standalone-plugin'")
             }
         }
     }

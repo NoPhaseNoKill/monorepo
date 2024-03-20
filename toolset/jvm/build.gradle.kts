@@ -49,17 +49,19 @@ abstract class CurrentConfigurationCacheValueTask : DefaultTask() {
     }
 }
 
-
-tasks.register("testAll") {
+tasks.register("checkAll") {
     group = "verification"
     description = "Runs all the tests for every module."
 
     dependsOn(
-        ":modules:libraries:list:test",
-        ":modules:libraries:utilities:test",
-        ":modules:applications:app:test",
-        ":build-logic:plugins-new:plugin:check"
+        ":modules:libraries:list:check",
+        ":modules:libraries:utilities:check",
+        ":modules:applications:app:check",
+        ":modules:standalone-plugins:plugin:check",
     )
 
+    /*
+        This ensures that it is output last, and most likely to be read
+     */
     finalizedBy(currentConfigurationCacheValueTask)
 }

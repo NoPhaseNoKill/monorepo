@@ -5,15 +5,13 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 
-class StandalonePluginPluginTest {
+class StandalonePluginTest {
 
     @Test
     fun `plugin registers task`() {
         val project = ProjectBuilder.builder().build()
-        project.plugins.apply("com.nophasenokill.plugins-new.plugin")
-
+        project.plugins.apply("standalone-plugin")
 
         Assertions.assertNotNull(project.tasks.findByName("greeting"))
-        println("Ohai")
     }
 }

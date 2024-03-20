@@ -1,12 +1,12 @@
 package com.nophasenokill
 
-import java.io.File
 import org.gradle.testkit.runner.GradleRunner
+import java.io.File
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 
-class StandalonePluginPluginFunctionalTest {
+class StandalonePluginFunctionalTest {
 
     @field:TempDir
     lateinit var projectDir: File
@@ -19,7 +19,7 @@ class StandalonePluginPluginFunctionalTest {
         settingsFile.writeText("")
         buildFile.writeText("""
             plugins {
-                id('com.nophasenokill.plugins-new.plugin')
+                id('standalone-plugin')
             }
         """.trimIndent())
 
@@ -31,6 +31,6 @@ class StandalonePluginPluginFunctionalTest {
         runner.withProjectDir(projectDir)
         val result = runner.build()
 
-        assertTrue(result.output.contains("Hello from plugin 'com.nophasenokill.plugins-new.plugin'"))
+        assertTrue(result.output.contains("Hello from plugin 'standalone-plugin'"))
     }
 }
