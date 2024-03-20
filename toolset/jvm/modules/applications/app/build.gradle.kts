@@ -4,17 +4,6 @@ plugins {
 }
 
 
-
-
-
-dependencies {
-    implementation("org.gradle:gradle-tooling-api:8.7-rc-3")
-    // The tooling API need an SLF4J implementation available at runtime, replace this with any other implementation
-    runtimeOnly("org.slf4j:slf4j-simple:1.7.10")
-}
-
-
-
 tasks.withType(JavaCompile::class.java).configureEach {
     enabled = false
 }
@@ -30,15 +19,17 @@ tasks.test {
 dependencies {
     implementation(platform("com.nophasenokill.platform:platform"))
 
+    implementation("org.gradle:gradle-tooling-api")
+
     // applies standard kotlin libs to projects
     implementation("org.jetbrains.kotlin:kotlin-stdlib") {
         isTransitive = false
     }
 
-    implementation(project(":modules:libraries:list")) {
+    implementation(projects.modules.libraries.list) {
         isTransitive = false
     }
-    implementation(project(":modules:libraries:utilities")) {
+    implementation(projects.modules.libraries.utilities) {
         isTransitive = false
     }
 
@@ -59,6 +50,8 @@ dependencies {
     // implementation("javax.activation:activation")
     implementation("jakarta.activation:jakarta.activation-api")
     implementation("org.apache.commons:commons-text")
+
+    runtimeOnly("org.slf4j:slf4j-simple")
 
     testImplementation(enforcedPlatform("org.junit:junit-bom"))
     testImplementation("org.junit.jupiter:junit-jupiter")

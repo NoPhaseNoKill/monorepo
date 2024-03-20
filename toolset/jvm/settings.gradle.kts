@@ -57,9 +57,14 @@ buildCache {
     }
 }
 
+rootProject.name = "jvm"
+
 includeBuild("build-logic/platform")
 
 include(":build-logic:plugins-new:plugin")
 include(":modules:libraries:list")
 include(":modules:libraries:utilities")
 include(":modules:applications:app")
+
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

@@ -24,7 +24,7 @@ dependencies {
         isTransitive = false
     }
 
-    api(project(":modules:libraries:list")) {
+    api(projects.modules.libraries.list) {
         isTransitive = false
     }
 
