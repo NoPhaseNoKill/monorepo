@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    testImplementation(enforcedPlatform("org.junit:junit-bom:${libs.versions.junit.get()}"))
+    testImplementation(platform("org.junit:junit-bom:${libs.versions.junit.get()}"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

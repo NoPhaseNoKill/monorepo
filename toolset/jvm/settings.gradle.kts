@@ -66,6 +66,7 @@ include(":modules:standalone-plugins:plugin")
 include(":modules:libraries:list")
 include(":modules:libraries:utilities")
 include(":modules:applications:app")
+include(":modules:applications:accelerated-test-suite-runnner")
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

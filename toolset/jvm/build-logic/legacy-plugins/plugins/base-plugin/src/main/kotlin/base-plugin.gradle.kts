@@ -101,7 +101,7 @@ java {
 // }
 //
 // dependencies {
-//     implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
+//     implementation(platform("com.nophasenokill.platform:platform"))
 //     // Annotation processor does not extend implementation. For more details see: https://docs.gradle.org/current/userguide/java_plugin.html#tab:configurations
-//     annotationProcessor(enforcedPlatform("com.nophasenokill.platform:platform"))
+//     annotationProcessor(platform("com.nophasenokill.platform:platform"))
 // }

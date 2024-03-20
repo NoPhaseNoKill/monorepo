@@ -58,6 +58,7 @@ tasks.register("checkAll") {
         ":modules:libraries:utilities:check",
         ":modules:applications:app:check",
         ":modules:standalone-plugins:plugin:check",
+        ":modules:applications:accelerated-test-suite-runnner:check",
     )
 
     /*

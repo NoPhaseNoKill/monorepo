@@ -22,7 +22,7 @@ dependencies {
         isTransitive = false
     }
 
-    testImplementation(enforcedPlatform("org.junit:junit-bom"))
+    testImplementation(platform("org.junit:junit-bom"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

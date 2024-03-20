@@ -4,8 +4,8 @@ plugins {
 
 dependencies {
     // // enforces that versions from each of the boms are used
-    // implementation(enforcedPlatform("com.nophasenokill.platform:platform"))
-    // implementation(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom"))
+    // implementation(platform("com.nophasenokill.platform:platform"))
+    // implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
     // applies standard kotlin libs to projects
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
