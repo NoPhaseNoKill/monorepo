@@ -1,6 +1,7 @@
 
 pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
     }
 }
@@ -17,7 +18,16 @@ dependencyResolutionManagement {
         maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
     }
 
-    // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
+
+    // Pulls this in for free
+
+    //     versionCatalogs {
+    //         create("libs") {
+    //             from(files("gradle/libs.versions.toml"))
+    //         }
+    //     }
+
+     // See: https://docs.gradle.org/current/userguide/declaring_repositories.html#ex-enforcing-settings-repositories
     repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
 }
 
@@ -59,14 +69,13 @@ buildCache {
 
 rootProject.name = "jvm"
 
-includeBuild("build-logic/platform")
-
-include(":modules:standalone-plugins:plugin")
-
+include(":modules:platform:generalised-platform")
+include(":modules:platform:junit-platform")
 include(":modules:libraries:list")
 include(":modules:libraries:utilities")
 include(":modules:applications:app")
 include(":modules:applications:accelerated-test-suite-runnner")
+include(":modules:standalone-plugins:plugin")
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

@@ -1,5 +1,9 @@
 import java.util.*
 
+plugins {
+    alias(libs.plugins.kotlinJvm)
+}
+
 val currentConfigurationCacheValueTask = tasks.register<CurrentConfigurationCacheValueTask>("currentConfigurationCacheValueTask") {
 
     configurationCacheFromPropertiesValue.set(providers.gradleProperty("org.gradle.configuration-cache").getOrElse("false"))
@@ -53,13 +57,15 @@ tasks.register("checkAll") {
     group = "verification"
     description = "Runs all the tests for every module."
 
-    dependsOn(
+    val allTasks = dependsOn(
         ":modules:libraries:list:check",
         ":modules:libraries:utilities:check",
         ":modules:applications:app:check",
-        ":modules:standalone-plugins:plugin:check",
+
         ":modules:applications:accelerated-test-suite-runnner:check",
     )
+
+    allTasks.mustRunAfter(":modules:standalone-plugins:plugin:publish")
 
     /*
         This ensures that it is output last, and most likely to be read

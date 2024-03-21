@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinJvm)
     application
+    id("org.example.greeting") version "0.1.local-dev"
 }
 
 application {
@@ -21,11 +22,11 @@ tasks.test {
 }
 
 dependencies {
-    implementation(platform("com.nophasenokill.platform:generalised-platform"))
-
-    implementation(projects.modules.standalonePlugins.plugin) {
-        isTransitive = false
-    }
+    implementation(platform(projects.modules.platform.generalisedPlatform))
+    implementation(projects.modules.standalonePlugins.plugin)
+    // implementation("com.nophasenokill.standalone-plugins:plugin:1.0.0") {
+    //     isTransitive = false
+    // }
 
     implementation(projects.modules.libraries.list) {
         isTransitive = false
@@ -52,7 +53,7 @@ dependencies {
     implementation("jakarta.activation:jakarta.activation-api")
     implementation("org.apache.commons:commons-text")
 
-    testImplementation(platform("org.junit:junit-bom"))
+    testImplementation(platform(projects.modules.platform.junitPlatform))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

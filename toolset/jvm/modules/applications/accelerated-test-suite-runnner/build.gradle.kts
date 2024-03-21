@@ -21,7 +21,7 @@ tasks.test {
 }
 
 dependencies {
-    implementation(platform("com.nophasenokill.platform:generalised-platform"))
+    implementation(platform(projects.modules.platform.generalisedPlatform))
 
     implementation("org.gradle:gradle-tooling-api")
     runtimeOnly("org.slf4j:slf4j-simple")
@@ -45,7 +45,7 @@ dependencies {
     implementation("jakarta.activation:jakarta.activation-api")
     implementation("org.apache.commons:commons-text")
 
-    testImplementation(platform("org.junit:junit-bom"))
+    testImplementation(platform(projects.modules.platform.junitPlatform))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

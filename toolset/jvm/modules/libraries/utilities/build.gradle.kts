@@ -16,13 +16,13 @@ tasks.test {
 }
 
 dependencies {
-    implementation(platform("com.nophasenokill.platform:generalised-platform"))
+    implementation(platform(projects.modules.platform.generalisedPlatform))
 
     api(projects.modules.libraries.list) {
         isTransitive = false
     }
 
-    testImplementation(platform("org.junit:junit-bom"))
+    testImplementation(platform(projects.modules.platform.junitPlatform))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
