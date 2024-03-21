@@ -2,9 +2,9 @@ plugins {
     id("java-platform")
 }
 
-pluginManager.withPlugin("java-platform") {
+group = "com.nophasenokill.platform"
 
-    group = "com.nophasenokill.platform"
+pluginManager.withPlugin("java-platform") {
 
     // Do not use this. This includes the dependencies
     // javaPlatform.allowDependencies()

@@ -14,5 +14,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "platform"
 
+include("generalised-platform")
+
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
