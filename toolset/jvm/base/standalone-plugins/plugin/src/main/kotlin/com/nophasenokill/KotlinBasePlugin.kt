@@ -5,8 +5,8 @@ import org.gradle.api.Project
 
 class KotlinBasePlugin : Plugin<Project> {
     override fun apply(project: Project) {
+        project.logger.lifecycle("Attempting to apply org.jetbrains.kotlin.jvm")
         if(!project.pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
-            project.logger.lifecycle("Applying org.jetbrains.kotlin.jvm")
             project.plugins.apply("org.jetbrains.kotlin.jvm")
         }
     }
