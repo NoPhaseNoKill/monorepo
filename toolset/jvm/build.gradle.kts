@@ -50,15 +50,26 @@ abstract class CurrentConfigurationCacheValueTask : DefaultTask() {
     }
 }
 
+val buildPluginsTask = tasks.register("buildPluginsTask") {
+    group = "verifications"
+    description = "Builds all plugins"
+
+    dependsOn(gradle.includedBuild("standalone-plugins").task(":plugin:build"))
+}
+
+val checkAllTask = tasks.register("checkAllTask") {
+    dependsOn(gradle.includedBuild("modules").task(":libraries:list:check"))
+    dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:check"))
+    dependsOn(gradle.includedBuild("modules").task(":applications:app:check"))
+    dependsOn(gradle.includedBuild("modules").task(":applications:accelerated-test-suite-runner:check"))
+}
+
 
 tasks.register("check") {
     group = "verification"
     description = "Run all checks"
 
-    dependsOn(gradle.includedBuild("modules").task(":libraries:list:check"))
-    dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:check"))
-    dependsOn(gradle.includedBuild("modules").task(":applications:app:check"))
-    dependsOn(gradle.includedBuild("modules").task(":applications:accelerated-test-suite-runner:check"))
-
+    dependsOn(buildPluginsTask)
+    dependsOn(checkAllTask)
     finalizedBy(currentConfigurationCacheValueTask)
 }
