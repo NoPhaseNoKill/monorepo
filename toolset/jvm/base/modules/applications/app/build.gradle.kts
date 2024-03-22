@@ -23,6 +23,7 @@ tasks.test {
 
 dependencies {
     implementation(platform(projects.platform.generalisedPlatform))
+    implementation("com.nophasenokill.standalone-plugins:plugin")
 
     // implementation("com.nophasenokill.standalone-plugins:plugin:1.0.0") {
     //     isTransitive = false

@@ -8,6 +8,8 @@ plugins {
     `java-gradle-plugin`
 }
 
+group = "com.nophasenokill.standalone-plugins"
+
 repositories {
     gradlePluginPortal()
 }
@@ -54,6 +56,14 @@ testing {
             }
         }
     }
+}
+
+/*
+    Ensures that tests are always run if anything requires the plugin
+ */
+tasks.jar {
+    dependsOn(tasks.test, tasks.named("validatePlugins"))
+    finalizedBy(testing.suites.named("functionalTest"))
 }
 
 gradlePlugin.testSourceSets.add(sourceSets["functionalTest"])

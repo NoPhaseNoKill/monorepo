@@ -21,6 +21,7 @@ tasks.test {
 
 dependencies {
     implementation(platform(projects.platform.generalisedPlatform))
+    implementation("com.nophasenokill.standalone-plugins:plugin")
 
     implementation("org.gradle:gradle-tooling-api")
     runtimeOnly("org.slf4j:slf4j-simple")
