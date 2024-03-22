@@ -71,10 +71,13 @@ rootProject.name = "jvm"
 
 include(":modules:platform:generalised-platform")
 include(":modules:platform:junit-platform")
+
 include(":modules:libraries:list")
 include(":modules:libraries:utilities")
+
 include(":modules:applications:app")
-include(":modules:applications:accelerated-test-suite-runnner")
+include(":modules:applications:accelerated-test-suite-runner")
+
 include(":modules:standalone-plugins:plugin")
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")

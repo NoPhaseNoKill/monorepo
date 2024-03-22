@@ -7,7 +7,6 @@ application {
     mainClass = "com.nophasenokill.app.AppKt"
 }
 
-
 tasks.withType(JavaCompile::class.java).configureEach {
     enabled = false
 }

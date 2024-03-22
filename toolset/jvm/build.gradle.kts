@@ -10,6 +10,7 @@ val currentConfigurationCacheValueTask = tasks.register<CurrentConfigurationCach
     configurationCacheInfoFile.set(layout.buildDirectory.file("generated-resources/configurationCacheFromPropertiesValue.properties"))
 
     outputs.upToDateWhen { false }
+    outputs.cacheIf { false }
 
     doLast {
 
@@ -53,22 +54,31 @@ abstract class CurrentConfigurationCacheValueTask : DefaultTask() {
     }
 }
 
+val checkAndPublishStandalonePluginsTask = tasks.register("checkAndPublishStandalonePluginsTask") {
+    dependsOn(
+        ":modules:standalone-plugins:plugin:check"
+    )
+
+    /*
+        Ensure publishing happens after all checks are done AND they are successful.
+    */
+    finalizedBy(":modules:standalone-plugins:plugin:publishToMavenLocal")
+}
+
 tasks.register("checkAll") {
     group = "verification"
-    description = "Runs all the tests for every module."
+    description = "Runs all the tests for every module and publishes standalone plugins if check are successful. Also outputs configuration cache config reminder"
 
-    val allTasks = dependsOn(
+    dependsOn(
         ":modules:libraries:list:check",
         ":modules:libraries:utilities:check",
         ":modules:applications:app:check",
-
-        ":modules:applications:accelerated-test-suite-runnner:check",
+        ":modules:applications:accelerated-test-suite-runner:check",
+        checkAndPublishStandalonePluginsTask
     )
-
-    allTasks.mustRunAfter(":modules:standalone-plugins:plugin:publish")
 
     /*
         This ensures that it is output last, and most likely to be read
-     */
+    */
     finalizedBy(currentConfigurationCacheValueTask)
 }

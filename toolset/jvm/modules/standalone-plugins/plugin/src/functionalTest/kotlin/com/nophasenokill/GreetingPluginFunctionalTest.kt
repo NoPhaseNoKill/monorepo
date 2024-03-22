@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 
-class StandalonePluginFunctionalTest {
+class GreetingPluginFunctionalTest {
 
     @field:TempDir
     lateinit var projectDir: File
@@ -16,10 +16,11 @@ class StandalonePluginFunctionalTest {
 
     @Test
     fun `can run task`() {
+        // Set up the test build
         settingsFile.writeText("")
         buildFile.writeText("""
             plugins {
-                id('standalone-plugin')
+                id('org.example.greeting')
             }
         """.trimIndent())
 
@@ -31,6 +32,7 @@ class StandalonePluginFunctionalTest {
         runner.withProjectDir(projectDir)
         val result = runner.build()
 
-        assertTrue(result.output.contains("Hello from plugin 'standalone-plugin'"))
+        // Verify the result
+        assertTrue(result.output.contains("Hello from plugin 'com.nophasenokill.greeting'"))
     }
 }
