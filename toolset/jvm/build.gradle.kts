@@ -8,7 +8,7 @@ val pluginTask = tasks.register("pluginTask") {
 tasks.register("checkAll") {
     group = "verification"
     description = "Run all checks"
-    
+
     dependsOn(pluginTask)
     dependsOn(gradle.includedBuild("modules").task(":libraries:list:check"))
     dependsOn(gradle.includedBuild("modules").task(":libraries:utilities:check"))
