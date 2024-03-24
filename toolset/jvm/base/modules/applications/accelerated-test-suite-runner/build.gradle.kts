@@ -1,5 +1,8 @@
+
+
 plugins {
     id("com.nophasenokill.kotlin-base-plugin")
+    alias(libs.plugins.kotlinJvm)
     id("application")
 }
 
@@ -12,7 +15,8 @@ tasks.test {
 }
 
 dependencies {
-    // implementation(platform("com.nophasenokill.platforms:generalised-platform"))
+    // implementation(platform(project(":platforms:generalised-platform")))
+    // testImplementation(platform(project(":platforms:junit-platform")))
     // testImplementation(platform("com.nophasenokill.platforms:junit-platform"))
     // implementation(platform(project(":platform:generalised-platform")))
 

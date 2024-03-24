@@ -1,9 +1,31 @@
 rootProject.name = "jvm"
 
+
+
+pluginManagement {
+
+    includeBuild("base/standalone-plugins/plugin")
+    repositories {
+        gradlePluginPortal()
+        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
+    }
+}
+
 plugins {
     id("com.gradle.enterprise") version "3.16.2"
     id("org.gradle.toolchains.foojay-resolver-convention")  version  "0.7.0"
     id("com.gradle.common-custom-user-data-gradle-plugin")  version "1.12.1"
+
+}
+
+
+
+
+dependencyResolutionManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
+    }
 }
 
 gradleEnterprise {
@@ -34,8 +56,26 @@ gradleEnterprise {
     }
 }
 
-includeBuild("base/standalone-plugins")
-includeBuild("base/modules")
+
+
+include(":platforms:generalised-platform")
+project(":platforms:generalised-platform").projectDir = file("base/platforms/generalised-platform")
+
+include(":platforms:junit-platform")
+project(":platforms:junit-platform").projectDir = file("base/platforms/junit-platform")
+
+include(":libraries:list")
+project(":libraries:list").projectDir = file("base/modules/libraries/list")
+
+include(":libraries:utilities")
+project(":libraries:utilities").projectDir = file("base/modules/libraries/utilities")
+
+include(":applications:app")
+project(":applications:app").projectDir = file("base/modules/applications/app")
+
+include(":applications:accelerated-test-suite-runner")
+project(":applications:accelerated-test-suite-runner").projectDir = file("base/modules/applications/accelerated-test-suite-runner")
+
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

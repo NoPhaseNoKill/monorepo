@@ -2,12 +2,8 @@ package com.nophasenokill
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Dependency
-import org.gradle.api.internal.artifacts.DefaultModuleIdentifier
-import org.gradle.api.internal.artifacts.dependencies.DefaultMinimalDependency
-import org.gradle.api.internal.artifacts.dependencies.DefaultMutableVersionConstraint
 import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.language.jvm.tasks.ProcessResources
+import org.gradle.jvm.tasks.Jar
 
 
 class KotlinBasePlugin : Plugin<Project> {
@@ -16,6 +12,14 @@ class KotlinBasePlugin : Plugin<Project> {
         project.logger.lifecycle("Attempting to apply org.jetbrains.kotlin.jvm")
         if(!project.pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
             project.plugins.apply("org.jetbrains.kotlin.jvm")
+            project.plugins.apply("com.github.johnrengelman.shadow")
+        }
+
+        project.tasks.withType(Jar::class.java).configureEach {
+            if(!it.name.contains("shadowJar")) {
+                it.dependsOn("shadowJar")
+            }
+
         }
 
         // To eventually move into own meta plugin. Duplicated with the build.gradle.kts of this plugin folder
@@ -43,18 +47,15 @@ class KotlinBasePlugin : Plugin<Project> {
 
         project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
             project.logger.lifecycle("Plugin org.jetbrains.kotlin.jvm was just applied")
-
-            project.addDependency("implementation", "com.nophasenokill.platforms", "generalised-platform")
-            project.addDependency("testImplementation", "com.nophasenokill.platforms", "junit-platform")
+            project.dependencies.add(
+                "implementation",
+                project.dependencies.platform(project.dependencies.project(mapOf("path" to ":platforms:${"generalised-platform"}")))
+            )
+            project.dependencies.add(
+                "testImplementation",
+                project.dependencies.platform(project.dependencies.project(mapOf("path" to ":platforms:${"junit-platform"}")))
+            )
 
         }
-    }
-
-    private fun Project.addDependency(configuration: String, group: String, name: String) {
-        val moduleId = DefaultModuleIdentifier.newId(group, name)
-        val versionConstraint = DefaultMutableVersionConstraint("")
-        val dependency: Dependency = DefaultMinimalDependency(moduleId, versionConstraint)
-
-        project.configurations.findByName(configuration)?.dependencies?.add(project.dependencies.platform(dependency))
     }
 }

@@ -4,28 +4,8 @@ plugins {
         its own meta-plugin folder to create complete independence/isolation and expose
         com.nophasenokill.kotlin-base-plugin solely
      */
-    alias(libs.plugins.kotlinJvm)
+    kotlin("jvm") version("1.9.23")
     `java-gradle-plugin`
-}
-
-// To eventually move into own meta plugin. Duplicated with the KotlinBasePlugin of this plugin folder
-project.tasks.withType(JavaCompile::class.java).configureEach {
-
-    val projectName = project.name
-    val taskName = this.name
-
-    this.logger.lifecycle("Disabling java compile task for: task name: ${taskName}, project: ${projectName}")
-
-    this.enabled = false
-}
-
-project.tasks.named("processResources") {
-    val projectName = project.name
-    val taskName = this.name
-
-    this.logger.lifecycle("Disabling process resources task for: task name: ${taskName}, project: ${projectName}")
-
-    this.enabled = false
 }
 
 group = "com.nophasenokill.standalone-plugins"
@@ -52,9 +32,10 @@ gradlePlugin {
 dependencies {
 
 
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.22")
+    implementation("com.github.johnrengelman:shadow:8.1.1")
 
-    testImplementation(platform("org.junit:junit-bom:${libs.versions.junit.get()}"))
+    testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -63,12 +44,12 @@ dependencies {
 testing {
     suites {
         val test by getting(JvmTestSuite::class) {
-            useJUnitJupiter(libs.versions.junit)
+            useJUnitJupiter("5.10.1")
         }
 
         // Create a new test suite
         val functionalTest by registering(JvmTestSuite::class) {
-            useJUnitJupiter(libs.versions.junit)
+            useJUnitJupiter("5.10.1")
 
             dependencies {
                 // functionalTest test suite depends on the production code in tests
