@@ -8,12 +8,12 @@ tasks.test {
 }
 
 dependencies {
-    implementation(platform(projects.platform.generalisedPlatform))
     implementation("com.nophasenokill.standalone-plugins:plugin")
+    // implementation(platform("com.nophasenokill.platforms:generalised-platform"))
+    // testImplementation(platform("com.nophasenokill.platforms:junit-platform"))
 
 
-
-    testImplementation(platform(projects.platform.junitPlatform))
+    // testImplementation(platform(project(":platforms:junit-platform")))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

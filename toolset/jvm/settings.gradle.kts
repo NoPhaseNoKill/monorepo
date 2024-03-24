@@ -36,6 +36,7 @@ gradleEnterprise {
 
 includeBuild("base/standalone-plugins")
 includeBuild("base/modules")
+includeBuild("base/platforms")
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

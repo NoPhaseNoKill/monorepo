@@ -21,8 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "modules"
 
-include(":platform:generalised-platform")
-include(":platform:junit-platform")
+includeBuild("../platforms")
 
 include(":libraries:list")
 include(":libraries:utilities")

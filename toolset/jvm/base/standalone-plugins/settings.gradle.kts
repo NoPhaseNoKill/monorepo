@@ -45,6 +45,8 @@ gradle.allprojects {
 rootProject.name = "standalone-plugins"
 
 include("plugin")
+includeBuild("../platforms")
+
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
