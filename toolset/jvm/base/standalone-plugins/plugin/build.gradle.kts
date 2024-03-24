@@ -8,6 +8,26 @@ plugins {
     `java-gradle-plugin`
 }
 
+// To eventually move into own meta plugin. Duplicated with the KotlinBasePlugin of this plugin folder
+project.tasks.withType(JavaCompile::class.java).configureEach {
+
+    val projectName = project.name
+    val taskName = this.name
+
+    this.logger.lifecycle("Disabling java compile task for: task name: ${taskName}, project: ${projectName}")
+
+    this.enabled = false
+}
+
+project.tasks.named("processResources") {
+    val projectName = project.name
+    val taskName = this.name
+
+    this.logger.lifecycle("Disabling process resources task for: task name: ${taskName}, project: ${projectName}")
+
+    this.enabled = false
+}
+
 group = "com.nophasenokill.standalone-plugins"
 
 repositories {

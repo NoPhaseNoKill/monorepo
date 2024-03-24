@@ -16,28 +16,30 @@ class KotlinBasePlugin : Plugin<Project> {
         project.logger.lifecycle("Attempting to apply org.jetbrains.kotlin.jvm")
         if(!project.pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
             project.plugins.apply("org.jetbrains.kotlin.jvm")
+        }
+
+        // To eventually move into own meta plugin. Duplicated with the build.gradle.kts of this plugin folder
+        project.gradle.taskGraph.whenReady {
 
             project.tasks.withType(JavaCompile::class.java).configureEach {
+
+                val projectName = project.name
+                val taskName = it.name
+
+                it.logger.lifecycle("Disabling java compile task for: task name: ${taskName}, project: ${projectName}")
+
                 it.enabled = false
             }
 
-            project.tasks.withType(ProcessResources::class.java).configureEach {
+            project.tasks.named("processResources") {
                 val projectName = project.name
                 val taskName = it.name
-                val logger = project.logger
 
-                project.gradle.taskGraph.whenReady {
-                    if(taskName === "processResources") {
-                        logger.lifecycle("Disabling process resources task for: task name: ${taskName}, project: ${projectName}")
-                    }
-                }
+                it.logger.lifecycle("Disabling process resources task for: task name: ${taskName}, project: ${projectName}")
 
-                if(taskName === "processResources") {
-                    it.enabled = false
-                }
+                it.enabled = false
             }
         }
-
 
         project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
             project.logger.lifecycle("Plugin org.jetbrains.kotlin.jvm was just applied")
