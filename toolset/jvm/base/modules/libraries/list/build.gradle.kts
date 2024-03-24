@@ -3,14 +3,6 @@ plugins {
     `java-library`
 }
 
-tasks.withType(JavaCompile::class.java).configureEach {
-    enabled = false
-}
-
-tasks.processResources {
-    enabled = false
-}
-
 tasks.test {
     useJUnitPlatform()
 }

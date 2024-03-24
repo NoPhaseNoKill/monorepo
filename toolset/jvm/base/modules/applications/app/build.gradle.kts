@@ -5,16 +5,7 @@ plugins {
 }
 
 application {
-    mainClass = "com.nophasenokill.app.AppKt"
-}
-
-
-tasks.withType(JavaCompile::class.java).configureEach {
-    enabled = false
-}
-
-tasks.processResources {
-    enabled = false
+    mainClass.set("com.nophasenokill.app.AppKt")
 }
 
 tasks.test {
@@ -29,12 +20,8 @@ dependencies {
     //     isTransitive = false
     // }
 
-    implementation(projects.libraries.list) {
-        isTransitive = false
-    }
-    implementation(projects.libraries.utilities) {
-        isTransitive = false
-    }
+    implementation(projects.libraries.list)
+    implementation(projects.libraries.utilities)
 
     /*
         This is used to test/confirm that the capability conflict plugin is working correctly.

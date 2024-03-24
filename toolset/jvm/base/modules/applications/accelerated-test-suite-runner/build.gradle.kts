@@ -4,15 +4,7 @@ plugins {
 }
 
 application {
-    mainClass = "com.nophasenokill.app.AppKt"
-}
-
-tasks.withType(JavaCompile::class.java).configureEach {
-    enabled = false
-}
-
-tasks.processResources {
-    enabled = false
+    mainClass.set("com.nophasenokill.app.AppKt")
 }
 
 tasks.test {
