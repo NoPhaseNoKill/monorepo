@@ -32,8 +32,8 @@ gradlePlugin {
 dependencies {
 
 
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.22")
-    implementation("com.github.johnrengelman:shadow:8.1.1")
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.23")
+    // implementation("com.github.johnrengelman:shadow:8.1.1")
 
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
@@ -60,6 +60,25 @@ testing {
 }
 
 gradlePlugin.testSourceSets.add(sourceSets["functionalTest"])
+
+project.tasks.withType(JavaCompile::class.java).configureEach {
+
+    val projectName = project.name
+    val taskName = this.name
+
+    this.logger.lifecycle("Disabling java compile task for: task name: ${taskName}, project: ${projectName}")
+
+    this.enabled = false
+}
+
+project.tasks.named("processResources") {
+    val projectName = project.name
+    val taskName = this.name
+
+    this.logger.lifecycle("Disabling process resources task for: task name: ${taskName}, project: ${projectName}")
+
+    this.enabled = false
+}
 
 tasks.named<Task>("check") {
     // Include functionalTest as part of the check lifecycle

@@ -23,8 +23,8 @@ dependencies {
     //     isTransitive = false
     // }
 
-    implementation(projects.libraries.list)
-    implementation(projects.libraries.utilities)
+    implementation(projects.base.modules.libraries.list)
+    implementation(projects.base.modules.libraries.utilities)
 
     /*
         This is used to test/confirm that the capability conflict plugin is working correctly.

@@ -22,7 +22,7 @@ dependencies {
     // implementation(platform("com.nophasenokill.platforms:generalised-platform"))
     // testImplementation(platform("com.nophasenokill.platforms:junit-platform"))
 
-    api(projects.libraries.list)
+    api(projects.base.modules.libraries.list)
 
 
     // testImplementation(platform(project(":platforms:junit-platform")))
