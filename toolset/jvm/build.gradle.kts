@@ -19,7 +19,7 @@ val standalonePlugins = setOf(
 
 tasks.register("buildAll") {
     group = "verification"
-    description = "Builds all projects, which include running assembling them and running all checks"
+    description = "Builds all projects, which includes assembling them and running all checks (tests/functional tests)"
 
     val standalonePluginsBuildDirs = standalonePlugins.map {
         val plugins = gradle.includedBuild(it)
