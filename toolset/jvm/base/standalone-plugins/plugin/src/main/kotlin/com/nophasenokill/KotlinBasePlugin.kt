@@ -3,7 +3,6 @@ package com.nophasenokill
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.jvm.tasks.Jar
 
 
 class KotlinBasePlugin : Plugin<Project> {
@@ -38,11 +37,11 @@ class KotlinBasePlugin : Plugin<Project> {
             project.logger.lifecycle("Plugin org.jetbrains.kotlin.jvm was just applied")
             project.dependencies.add(
                 "implementation",
-                project.dependencies.platform(project.dependencies.project(mapOf("path" to ":base:platforms:${"generalised-platform"}")))
+                project.dependencies.platform(project.dependencies.project(mapOf("path" to ":base:platforms:generalised-platform")))
             )
             project.dependencies.add(
                 "testImplementation",
-                project.dependencies.platform(project.dependencies.project(mapOf("path" to ":base:platforms:${"junit-platform"}")))
+                project.dependencies.platform(project.dependencies.project(mapOf("path" to ":base:platforms:junit-platform")))
             )
 
         }
