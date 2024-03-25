@@ -1,30 +1,29 @@
 rootProject.name = "jvm"
 
 
-
-pluginManagement {
-
-    includeBuild("base/standalone-plugins/plugin")
-    repositories {
-        gradlePluginPortal()
-        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
-    }
-}
-
+//
+// pluginManagement {
+//     includeBuild("base/standalone-plugins/plugin")
+//     repositories {
+//         gradlePluginPortal()
+//         maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
+//     }
+// }
+//
 plugins {
     id("com.gradle.enterprise") version "3.16.2"
     id("org.gradle.toolchains.foojay-resolver-convention")  version  "0.7.0"
     id("com.gradle.common-custom-user-data-gradle-plugin")  version "1.12.1"
 }
-
-
-dependencyResolutionManagement {
-    repositories {
-        gradlePluginPortal()
-        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
-    }
-}
-
+//
+//
+// dependencyResolutionManagement {
+//     repositories {
+//         gradlePluginPortal()
+//         maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
+//     }
+// }
+//
 gradleEnterprise {
     buildScan {
         isUploadInBackground = false
@@ -52,15 +51,22 @@ gradleEnterprise {
         }
     }
 }
+//
+//
 
+// include(":base:platforms:generalised-platform")
+// include(":base:platforms:junit-platform")
+// include(":base:modules:libraries:list")
+// include(":base:modules:libraries:utilities")
+// include(":base:modules:applications:app")
+// include(":base:modules:applications:accelerated-test-suite-runner")
 
+includeBuild("composite-build/meta-plugins")
+includeBuild("composite-build/libraries")
+includeBuild("composite-build/applications")
+includeBuild("composite-build/platforms")
+includeBuild("composite-build/standalone-plugins")
 
-include(":base:platforms:generalised-platform")
-include(":base:platforms:junit-platform")
-include(":base:modules:libraries:list")
-include(":base:modules:libraries:utilities")
-include(":base:modules:applications:app")
-include(":base:modules:applications:accelerated-test-suite-runner")
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
