@@ -12,15 +12,7 @@ class KotlinBasePlugin : Plugin<Project> {
         project.logger.lifecycle("Attempting to apply org.jetbrains.kotlin.jvm")
         if(!project.pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
             project.plugins.apply("org.jetbrains.kotlin.jvm")
-            // project.plugins.apply("com.github.johnrengelman.shadow")
         }
-
-        // project.tasks.withType(Jar::class.java).configureEach {
-        //     if(!it.name.contains("shadowJar")) {
-        //         it.dependsOn("shadowJar")
-        //     }
-        //
-        // }
 
         // To eventually move into own meta plugin. Duplicated with the build.gradle.kts of this plugin folder
         project.tasks.withType(JavaCompile::class.java).configureEach {
