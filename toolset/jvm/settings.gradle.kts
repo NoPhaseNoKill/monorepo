@@ -1,28 +1,7 @@
 rootProject.name = "jvm"
 
-
-
-pluginManagement {
-
-    includeBuild("base/standalone-plugins/plugin")
-    repositories {
-        gradlePluginPortal()
-        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
-    }
-}
-
 plugins {
     id("com.gradle.enterprise") version "3.16.2"
-    id("org.gradle.toolchains.foojay-resolver-convention")  version  "0.7.0"
-    id("com.gradle.common-custom-user-data-gradle-plugin")  version "1.12.1"
-}
-
-
-dependencyResolutionManagement {
-    repositories {
-        gradlePluginPortal()
-        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
-    }
 }
 
 gradleEnterprise {
@@ -53,14 +32,16 @@ gradleEnterprise {
     }
 }
 
+/*
+    https://scans.gradle.com/s/wtpk3zm6j4ejq/performance/execution
 
+    Serial execution factor 7.7x
+ */
+includeBuild("composite-build/libraries")
+includeBuild("composite-build/applications")
+includeBuild("composite-build/platforms")
+includeBuild("composite-build/standalone-plugins")
 
-include(":base:platforms:generalised-platform")
-include(":base:platforms:junit-platform")
-include(":base:modules:libraries:list")
-include(":base:modules:libraries:utilities")
-include(":base:modules:applications:app")
-include(":base:modules:applications:accelerated-test-suite-runner")
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
