@@ -7,9 +7,30 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/toolset/jvm/build-logic/platform" name="platform">
+              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/applications" name="applications">
                 <projects>
-                  <project path="$PROJECT_DIR$/toolset/jvm/build-logic/platform" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/applications" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/applications/application-one" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/libraries" name="libraries">
+                <projects>
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/libraries" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-one" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-two" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms" name="platforms">
+                <projects>
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/generalised-platform" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/junit-platform" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins" name="standalone-plugins">
+                <projects>
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins/standalone-plugin-one" />
                 </projects>
               </build>
             </builds>
@@ -20,13 +41,16 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/toolset/jvm" />
-            <option value="$PROJECT_DIR$/toolset/jvm/build-logic/platform" />
-            <option value="$PROJECT_DIR$/toolset/jvm/modules" />
-            <option value="$PROJECT_DIR$/toolset/jvm/modules/applications" />
-            <option value="$PROJECT_DIR$/toolset/jvm/modules/applications/app" />
-            <option value="$PROJECT_DIR$/toolset/jvm/modules/libraries" />
-            <option value="$PROJECT_DIR$/toolset/jvm/modules/libraries/list" />
-            <option value="$PROJECT_DIR$/toolset/jvm/modules/libraries/utilities" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/applications" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/applications/application-one" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/libraries" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-one" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-two" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/platforms" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/generalised-platform" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/junit-platform" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins/standalone-plugin-one" />
           </set>
         </option>
       </GradleProjectSettings>
