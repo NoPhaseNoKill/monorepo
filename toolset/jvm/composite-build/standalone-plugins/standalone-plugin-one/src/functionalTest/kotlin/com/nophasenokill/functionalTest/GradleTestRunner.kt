@@ -15,6 +15,7 @@ object GradleTestRunner {
 
     fun runTask(task: String, projectDir: File): BuildResult {
         return GradleRunner.create()
+            .forwardOutput() // required so that we can easily inside of our IDE what was output for each task
             .withProjectDir(projectDir)
             .withArguments(task, "--stacktrace")
             .withPluginClasspath()
@@ -23,6 +24,7 @@ object GradleTestRunner {
 
     fun runTaskWithFailure(task: String, projectDir: File): BuildResult {
         return GradleRunner.create()
+            .forwardOutput()
             .withProjectDir(projectDir)
             .withArguments(task, "--stacktrace")
             .withPluginClasspath()

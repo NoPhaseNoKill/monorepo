@@ -12,11 +12,10 @@ class KotlinBasePluginFunctionalTest: FunctionalTest() {
     fun `can run task`() {
 
         settingsFile.writeText("")
-        buildFile.writeText("""
-            plugins {
-                id("com.nophasenokill.kotlin-base-plugin")
-            }
-        """.trimIndent())
+
+        addPluginsById(
+            listOf("com.nophasenokill.kotlin-base-plugin")
+        )
 
         val result = GradleTestRunner.runTask("greeting", projectDir)
         assertTrue(result.output.contains("Hello from plugin 'com.nophasenokill.kotlin-base-plugin'"))
