@@ -1,11 +1,23 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.gradle.internal.impldep.org.junit.platform.engine.discovery.DiscoverySelectors
+import org.gradle.internal.impldep.org.junit.platform.engine.reporting.ReportEntry
+import org.gradle.internal.impldep.org.junit.platform.launcher.Launcher
+import org.gradle.internal.impldep.org.junit.platform.launcher.TestExecutionListener
+import org.gradle.internal.impldep.org.junit.platform.launcher.TestIdentifier
+import org.gradle.internal.impldep.org.junit.platform.launcher.TestPlan
+import org.gradle.internal.impldep.org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder
+import org.gradle.internal.impldep.org.junit.platform.launcher.core.LauncherFactory
+
 plugins {
     // id("java-gradle-plugin")
-    id("org.jetbrains.kotlin.jvm")
-    `java-gradle-plugin` // also known as id("com.gradle.plugin-publish") version "1.2.1"
+    `java-gradle-plugin`
+    id("org.jetbrains.kotlin.jvm") version "1.9.22"
+    // also known as id("com.gradle.plugin-publish") version "1.2.1"
 }
 
 
 group = "com.nophasenokill.standalone-plugins"
+version = "0.1.local-dev"
 
 repositories {
     gradlePluginPortal()
@@ -15,27 +27,30 @@ gradlePlugin {
     val javaBase by plugins.creating {
         id = "com.nophasenokill.java-base-plugin"
         implementationClass = "com.nophasenokill.JavaBasePlugin"
-        version = "0.1.local-dev"
     }
 
     val kotlinBase by plugins.creating {
         id = "com.nophasenokill.kotlin-base-plugin"
         implementationClass = "com.nophasenokill.KotlinBasePlugin"
-        version = "0.1.local-dev"
     }
 
     val kotlinApplication by plugins.creating {
         id = "com.nophasenokill.kotlin-application-plugin"
         implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
-        version = "0.1.local-dev"
     }
 }
 
 dependencies {
     implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.22")
+    testImplementation(gradleTestKit())
 }
 
+tasks.test {
+    useJUnitPlatform()
 
+    testLogging.setShowStandardStreams(true)
+    testLogging.minGranularity = 2
+}
 
 testing {
     suites {
