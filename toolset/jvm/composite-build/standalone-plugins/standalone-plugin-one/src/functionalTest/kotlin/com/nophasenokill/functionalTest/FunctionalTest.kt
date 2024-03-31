@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.io.CleanupMode
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
-import java.io.Serializable
 
 
 @ExtendWith(SharedTestSuiteExtension::class, TestInvocationListener::class)
@@ -34,5 +33,3 @@ open class FunctionalTest {
         return buildFile.writeText(text)
     }
 }
-
-
