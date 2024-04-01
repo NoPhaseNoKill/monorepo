@@ -14,7 +14,10 @@ class KotlinBasePluginFunctionalTest: FunctionalTest() {
         settingsFile.writeText("")
 
         addPluginsById(
-            listOf("com.nophasenokill.kotlin-base-plugin")
+            listOf(
+                "com.nophasenokill.kotlin-base-plugin"
+            ),
+            buildFile
         )
 
         val result = GradleTestRunner.runTask("greeting", projectDir)
@@ -24,11 +27,12 @@ class KotlinBasePluginFunctionalTest: FunctionalTest() {
     @Test
     fun `cannot run task that does not exist`() {
         settingsFile.writeText("")
-        buildFile.writeText("""
-            plugins {
-                id("com.nophasenokill.kotlin-base-plugin")
-            }
-        """.trimIndent())
+        addPluginsById(
+            listOf(
+                "com.nophasenokill.kotlin-base-plugin"
+            ),
+            buildFile
+        )
 
         val result = GradleTestRunner.runTaskWithFailure("someNonExistentTask", projectDir)
 

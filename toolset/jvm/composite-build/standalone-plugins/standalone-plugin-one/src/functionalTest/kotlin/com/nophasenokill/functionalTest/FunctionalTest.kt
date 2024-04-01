@@ -18,11 +18,11 @@ open class FunctionalTest {
 
     val settingsFile by lazy { projectDir.resolve("settings.gradle") }
 
-    fun addPluginsById(plugins: List<String>) {
+    fun addPluginsById(plugins: List<String>, buildFileToAddPluginsTo: File) {
 
-        val formattedPlugins = plugins.map {
+        val formattedPlugins = plugins.joinToString(prefix = "id(\"", postfix = "\")", separator = ",\n") {
             it
-        }.joinToString (prefix = "id(\"",  postfix = "\")", separator = ",\n")
+        }
 
         val text = """
             plugins {
@@ -30,6 +30,6 @@ open class FunctionalTest {
             }
         """.trimIndent()
 
-        return buildFile.writeText(text)
+        return buildFileToAddPluginsTo.writeText(text)
     }
 }
