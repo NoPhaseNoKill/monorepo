@@ -1,7 +1,6 @@
 package com.nophasenokill.plugins
 
 import com.nophasenokill.functionalTest.FunctionalTest
-import com.nophasenokill.functionalTest.GradleTestRunner
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -17,7 +16,7 @@ class KotlinApplicationPluginTest: FunctionalTest() {
             buildFile
         )
 
-        val result = GradleTestRunner.runTask("dependencies", projectDir)
+        val result = runExpectedSuccessTask("dependencies")
 
         val file = getResourceFile("dependencies/kotlin-application-expected-dependencies.txt")
         val expectedContent = file.readText()

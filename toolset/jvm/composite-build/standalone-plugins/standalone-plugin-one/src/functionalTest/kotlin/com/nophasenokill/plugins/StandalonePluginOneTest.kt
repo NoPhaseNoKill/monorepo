@@ -1,7 +1,6 @@
 package com.nophasenokill.plugins
 
 import com.nophasenokill.functionalTest.FunctionalTest
-import com.nophasenokill.functionalTest.GradleTestRunner
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -16,7 +15,7 @@ class StandalonePluginOneTest: FunctionalTest() {
 
         buildFile.writeText(standalonePluginOneBuildScript)
 
-        val result = GradleTestRunner.runTask("dependencies", projectDir)
+        val result = runExpectedSuccessTask("dependencies")
 
         val file = getResourceFile("dependencies/standalone-plugins-standalone-plugin-one-dependencies.txt")
         val expectedDependencies = file.readText()

@@ -1,6 +1,5 @@
 package com.nophasenokill
 
-import com.nophasenokill.functionalTest.GradleTestRunner
 import com.nophasenokill.functionalTest.FunctionalTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -20,7 +19,7 @@ class KotlinBasePluginFunctionalTest: FunctionalTest() {
             buildFile
         )
 
-        val result = GradleTestRunner.runTask("greeting", projectDir)
+        val result = runExpectedSuccessTask("greeting")
         assertTrue(result.output.contains("Hello from plugin 'com.nophasenokill.kotlin-base-plugin'"))
     }
 
@@ -34,7 +33,7 @@ class KotlinBasePluginFunctionalTest: FunctionalTest() {
             buildFile
         )
 
-        val result = GradleTestRunner.runTaskWithFailure("someNonExistentTask", projectDir)
+        val result = runExpectedFailureTask("someNonExistentTask")
 
         assertEquals(null, result.task(":someNonExistentTask")?.outcome)
         assertTrue(result.output.contains("Task 'someNonExistentTask' not found in root project '${projectDir.name}'"))

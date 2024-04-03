@@ -2,6 +2,8 @@ package com.nophasenokill.functionalTest
 
 import com.nophasenokill.extensions.SharedTestSuiteExtension
 import com.nophasenokill.extensions.TestInvocationListener
+import org.gradle.testkit.runner.BuildResult
+import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.io.CleanupMode
 import org.junit.jupiter.api.io.TempDir
@@ -13,6 +15,16 @@ open class FunctionalTest {
 
     @field:TempDir(factory = JunitTempDirFactory::class, cleanup = CleanupMode.ON_SUCCESS)
     lateinit var projectDir: File
+
+    /*
+        Consider adding these in the future if we need them:
+            .forwardOutput()
+            .forwardStdError()
+            .forwardStdOutput()
+     */
+    val runner: GradleRunner by lazy { GradleRunner.create()
+        .withProjectDir(projectDir)
+        .withPluginClasspath() }
 
     val buildFile by lazy { projectDir.resolve("build.gradle.kts") }
 
@@ -31,6 +43,16 @@ open class FunctionalTest {
         """.trimIndent()
 
         return buildFileToAddPluginsTo.writeText(text)
+    }
+
+    fun runExpectedSuccessTask(task: String): BuildResult {
+        println("Environment for runExpectedSuccessTask is :${runner.environment?.map {  "${it.key}:${it.value}" }}")
+        return runner.withArguments(task, "--stacktrace").build()
+    }
+
+    fun runExpectedFailureTask(task: String): BuildResult {
+        println("Environment for runExpectedFailureTask is :${runner.environment?.map {  "${it.key}:${it.value}" }}")
+        return runner.withArguments(task, "--stacktrace").buildAndFail()
     }
 
     /*
