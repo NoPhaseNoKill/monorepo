@@ -4,6 +4,7 @@ import com.nophasenokill.extensions.SharedTestSuiteExtension
 import com.nophasenokill.extensions.TestInvocationListener
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.io.CleanupMode
 import org.junit.jupiter.api.io.TempDir
@@ -53,9 +54,13 @@ open class FunctionalTest {
         return runner.withArguments(task, "--stacktrace").buildAndFail()
     }
 
-    fun getComparableBuildResultLines(result: BuildResult): List<String> {
-        val removeStartOfFile: List<String> =  result.output.lines().subList(5, result.output.lines().size)
-        return removeStartOfFile.subList(0, removeStartOfFile.size - 9)
+    fun getTaskOutcome(taskPath: String, result: BuildResult): TaskOutcome {
+        return requireNotNull(result.task(taskPath)?.outcome)
+    }
+
+    fun getComparableBuildResultLines(result: BuildResult, trimmedFromTop: Int, trimmedFromBottom: Int): List<String> {
+        val removeStartOfFile: List<String> =  result.output.lines().subList(trimmedFromTop, result.output.lines().size)
+        return removeStartOfFile.subList(0, removeStartOfFile.size - trimmedFromBottom)
     }
 
     /*

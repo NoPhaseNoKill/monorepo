@@ -40,7 +40,7 @@ class StandalonePluginOneTest: FunctionalTest() {
                 283 new      - \--- org.jetbrains.kotlin:kotlin-stdlib (n)
          */
 
-        val comparableLines = getComparableBuildResultLines(result)
+        val comparableLines = getComparableBuildResultLines(result, 5, 9)
 
         Assertions.assertLinesMatch(expectedDependencies.lines(), comparableLines)
     }
