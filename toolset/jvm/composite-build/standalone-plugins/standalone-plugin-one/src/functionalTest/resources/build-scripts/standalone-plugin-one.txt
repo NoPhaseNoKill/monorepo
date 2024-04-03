@@ -1,7 +1,5 @@
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-
 plugins {
-    `java-gradle-plugin`
+    id("java-gradle-plugin")
     id("org.jetbrains.kotlin.jvm") version "1.9.21"
 }
 
@@ -11,23 +9,6 @@ version = "0.1.local-dev"
 
 repositories {
     gradlePluginPortal()
-}
-
-gradlePlugin {
-    val javaBase by plugins.creating {
-        id = "com.nophasenokill.java-base-plugin"
-        implementationClass = "com.nophasenokill.JavaBasePlugin"
-    }
-
-    val kotlinBase by plugins.creating {
-        id = "com.nophasenokill.kotlin-base-plugin"
-        implementationClass = "com.nophasenokill.KotlinBasePlugin"
-    }
-
-    val kotlinApplication by plugins.creating {
-        id = "com.nophasenokill.kotlin-application-plugin"
-        implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
-    }
 }
 
 dependencies {
@@ -54,7 +35,6 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
                     this.testLogging {
-                        events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
                         showStandardStreams = true
                         minGranularity = 2
                     }
@@ -67,7 +47,6 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
                     this.testLogging {
-                        events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
                         showStandardStreams = true
                         minGranularity = 2
                     }
