@@ -10,6 +10,6 @@ group = "com.nophasenokill.platforms"
 
 dependencies {
     constraints {
-        api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.22")
+        api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21")
     }
 }

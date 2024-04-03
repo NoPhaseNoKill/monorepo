@@ -3,23 +3,21 @@ package com.nophasenokill
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalModuleDependency
-import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.api.plugins.JavaApplication
 import org.gradle.api.plugins.JavaPlugin
-import org.gradle.api.tasks.bundling.Tar
-import org.gradle.api.tasks.bundling.Zip
 
 class KotlinApplicationPlugin: Plugin<Project> {
     override fun apply(project: Project) {
 
-        project.pluginManager.apply("org.jetbrains.kotlin.jvm")
+        project.pluginManager.apply("com.nophasenokill.kotlin-base-plugin")
+        // project.pluginManager.apply("org.jetbrains.kotlin.jvm")
 
 
         /*
             This is reacting to the java plugin (created by org.jetbrains.kotlin.jvm) rather than eagerly applying
          */
 
-        project.plugins.withType(JavaPlugin::class.java) {
+        project.plugins.withType(JavaPlugin::class.java)  {
 
             project.pluginManager.apply("application")
 

@@ -5,8 +5,16 @@ plugins {
 group = "com.nophasenokill.platforms"
 
 
-javaPlatform.allowDependencies()
+/*
+    Do not use this. This includes the dependencies on the classpath.
+
+    This means the platform can be run as a test - which I'm not sure if we want at this stage
+ */
+
+// javaPlatform.allowDependencies()
 
 dependencies {
-    api(platform("org.junit:junit-bom:5.10.1"))
+    constraints {
+        api("org.junit:junit-bom:5.10.1")
+    }
 }

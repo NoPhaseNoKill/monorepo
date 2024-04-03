@@ -11,7 +11,8 @@ import org.gradle.internal.impldep.org.junit.platform.launcher.core.LauncherFact
 plugins {
     // id("java-gradle-plugin")
     `java-gradle-plugin`
-    id("org.jetbrains.kotlin.jvm") version "1.9.22"
+
+    id("org.jetbrains.kotlin.jvm") version "1.9.21"
     // also known as id("com.gradle.plugin-publish") version "1.2.1"
 }
 
@@ -41,49 +42,65 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.22")
+
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
+    implementation(platform("org.junit:junit-bom:5.10.1"))
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
+
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21") {
+        exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-core-jvm").because("It conflicts with coroutine BOM which expects 1.8.0 and this brings in 1.5.0")
+    }
+
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
     testImplementation(gradleTestKit())
-}
-
-tasks.test {
-    useJUnitPlatform()
-
-    testLogging.setShowStandardStreams(true)
-    testLogging.minGranularity = 2
 }
 
 testing {
     suites {
 
-        fun applySharedJvmTestDependencies(dependencies: JvmComponentDependencies) {
-            with(dependencies) {
-
-                implementation(platform("org.junit:junit-bom:5.10.1"))
-                implementation("org.junit.jupiter:junit-jupiter")
-                runtimeOnly("org.junit.platform:junit-platform-launcher")
-
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0")
-            }
-        }
-
-
         val test by getting(JvmTestSuite::class) {
             useJUnitJupiter("5.10.1")
 
-            dependencies {
-                applySharedJvmTestDependencies(this)
+            this.targets.configureEach {
+                this.testTask.configure {
+                    this.testLogging {
+                        showStandardStreams = true
+                        minGranularity = 2
+                    }
+                }
             }
         }
 
         val functionalTest by registering(JvmTestSuite::class) {
+
+            this.targets.configureEach {
+                this.testTask.configure {
+                    this.testLogging {
+                        showStandardStreams = true
+                        minGranularity = 2
+                    }
+                }
+            }
+
             useJUnitJupiter("5.10.1")
 
             dependencies {
                 // functionalTest test suite depends on the production code in tests
                 implementation(project())
-                applySharedJvmTestDependencies(this)
+                implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
+                implementation(platform("org.junit:junit-bom:5.10.1"))
+                implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
+                    exclude("org.jetbrains", "annotations")
+                }
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test") {
+                    exclude("org.jetbrains", "annotations")
+                }
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
+                    exclude("org.jetbrains", "annotations")
+                }
             }
         }
     }
