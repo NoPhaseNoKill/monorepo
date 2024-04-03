@@ -46,13 +46,16 @@ open class FunctionalTest {
     }
 
     fun runExpectedSuccessTask(task: String): BuildResult {
-        println("Environment for runExpectedSuccessTask is :${runner.environment?.map {  "${it.key}:${it.value}" }}")
         return runner.withArguments(task, "--stacktrace").build()
     }
 
     fun runExpectedFailureTask(task: String): BuildResult {
-        println("Environment for runExpectedFailureTask is :${runner.environment?.map {  "${it.key}:${it.value}" }}")
         return runner.withArguments(task, "--stacktrace").buildAndFail()
+    }
+
+    fun getComparableBuildResultLines(result: BuildResult): List<String> {
+        val removeStartOfFile: List<String> =  result.output.lines().subList(5, result.output.lines().size)
+        return removeStartOfFile.subList(0, removeStartOfFile.size - 9)
     }
 
     /*

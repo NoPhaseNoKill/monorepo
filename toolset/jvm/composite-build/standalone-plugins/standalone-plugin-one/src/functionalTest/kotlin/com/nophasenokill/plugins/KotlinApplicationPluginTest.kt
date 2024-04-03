@@ -27,7 +27,10 @@ class KotlinApplicationPluginTest: FunctionalTest() {
             Meaning: These lines should never change unless a configuration is updated or modified in a way
             that affects dependencies
          */
-        Assertions.assertTrue(result.output.contains(expectedContent))
+
+        val comparableLines = getComparableBuildResultLines(result)
+
+        Assertions.assertLinesMatch(expectedContent.lines(), comparableLines)
     }
 
 }

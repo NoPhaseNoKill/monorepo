@@ -40,8 +40,7 @@ class StandalonePluginOneTest: FunctionalTest() {
                 283 new      - \--- org.jetbrains.kotlin:kotlin-stdlib (n)
          */
 
-        val removeStartOfFile =  result.output.lines().subList(5, result.output.lines().size)
-        val comparableLines =removeStartOfFile.subList(0, removeStartOfFile.size - 9)
+        val comparableLines = getComparableBuildResultLines(result)
 
         Assertions.assertLinesMatch(expectedDependencies.lines(), comparableLines)
     }
