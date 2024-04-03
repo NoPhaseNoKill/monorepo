@@ -1,5 +1,5 @@
 plugins {
-    // id("com.nophasenokill.kotlin-application-plugin") // when this code is uncommented debugging does not work
+    id("com.nophasenokill.kotlin-application-plugin") // when this code is uncommented debugging does not work
 }
 
 group = "com.nophasenokill"
