@@ -28,6 +28,11 @@ gradlePlugin {
         id = "com.nophasenokill.kotlin-application-plugin"
         implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
     }
+
+    val quotesPlugin by plugins.creating {
+        id = "com.nophasenokill.wrap-text-with-quotes-plugin"
+        implementationClass = "com.nophasenokill.WrapTextWithQuotesPlugin"
+    }
 }
 
 dependencies {
@@ -57,6 +62,7 @@ testing {
                         events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
                         showStandardStreams = true
                         minGranularity = 2
+
                     }
                 }
             }

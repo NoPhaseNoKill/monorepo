@@ -31,15 +31,17 @@ open class FunctionalTest {
 
     val settingsFile by lazy { projectDir.resolve("settings.gradle.kts") }
 
+    private val INDENT = "                "
+
     fun addPluginsById(plugins: List<String>, buildFileToAddPluginsTo: File) {
 
-        val formattedPlugins = plugins.joinToString(prefix = "id(\"", postfix = "\")", separator = ",\n") {
-            it
+        val formattedPlugins = plugins.joinToString( prefix = INDENT, separator = "\n$INDENT") {
+            "id(\"$it\")"
         }
 
         val text = """
             plugins {
-                $formattedPlugins
+$formattedPlugins
             }
         """.trimIndent()
 
@@ -55,7 +57,12 @@ open class FunctionalTest {
     }
 
     fun getTaskOutcome(taskPath: String, result: BuildResult): TaskOutcome {
-        return requireNotNull(result.task(taskPath)?.outcome)
+        try {
+            return requireNotNull(result.task(taskPath)?.outcome)
+        } catch (e: Exception) {
+            TestLogger.LOGGER.error {"Task outcome could not be found for task path '${taskPath}'. Exception was ${e.message}" }
+            throw e
+        }
     }
 
     fun getComparableBuildResultLines(result: BuildResult, trimmedFromTop: Int, trimmedFromBottom: Int): List<String> {
