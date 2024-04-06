@@ -18,8 +18,8 @@ val buildApplicationsTask = tasks.register("buildApplicationsTask") {
     group = "build"
     description = "Build all applications, which includes assembling them and running all checks (tests/functional tests)"
 
-    val applicationOneBuild = gradle.includedBuild("standalone-plugins")
-    val applicationOneTask = applicationOneBuild.task(":standalone-plugin-one:build")
+    val applicationOneBuild = gradle.includedBuild("applications")
+    val applicationOneTask = applicationOneBuild.task(":application-one:build")
     val outputDir = file(applicationOneBuild.projectDir.path).resolve("build")
 
     inputs.property("application-one-path", applicationOneBuild.projectDir.path)
