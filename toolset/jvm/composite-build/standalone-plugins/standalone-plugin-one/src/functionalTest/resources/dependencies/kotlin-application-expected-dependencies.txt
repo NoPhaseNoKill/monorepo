@@ -18,7 +18,9 @@ No dependencies
 compileClasspath - Compile classpath for null/main.
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
 |    \--- org.jetbrains:annotations:13.0
-\--- org.slf4j:slf4j-api:2.0.12
++--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
+|    \--- org.slf4j:slf4j-api:2.0.12 (c)
+\--- org.slf4j:slf4j-api -> 2.0.12
 
 compileOnly - Compile only dependencies for null/main. (n)
 No dependencies
@@ -30,11 +32,14 @@ default - Configuration for default artifacts. (n)
 No dependencies
 
 implementation - Implementation only dependencies for null/main. (n)
-\--- org.slf4j:slf4j-api:2.0.12 (n)
++--- com.nophasenokill.platforms:generalised-platform (n)
+\--- org.slf4j:slf4j-api (n)
 
 implementationDependenciesMetadata
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
-\--- org.slf4j:slf4j-api:2.0.12
++--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
+|    \--- org.slf4j:slf4j-api:2.0.12 (c)
+\--- org.slf4j:slf4j-api -> 2.0.12
 
 intransitiveDependenciesMetadata
 No dependencies
@@ -120,8 +125,11 @@ No dependencies
 runtimeClasspath - Runtime classpath of null/main.
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
 |    \--- org.jetbrains:annotations:13.0
-+--- org.slf4j:slf4j-api:2.0.12
-\--- org.slf4j:slf4j-simple:2.0.12
++--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
+|    +--- org.slf4j:slf4j-api:2.0.12 (c)
+|    \--- org.slf4j:slf4j-simple:2.0.12 (c)
++--- org.slf4j:slf4j-api -> 2.0.12
+\--- org.slf4j:slf4j-simple -> 2.0.12
      \--- org.slf4j:slf4j-api:2.0.12
 
 runtimeElements - Runtime elements for the 'main' feature. (n)
@@ -131,7 +139,7 @@ runtimeElements-published (n)
 No dependencies
 
 runtimeOnly - Runtime only dependencies for null/main. (n)
-\--- org.slf4j:slf4j-simple:2.0.12 (n)
+\--- org.slf4j:slf4j-simple (n)
 
 testAnnotationProcessor - Annotation processors and their dependencies for source set 'test'.
 No dependencies
@@ -145,7 +153,9 @@ No dependencies
 testCompileClasspath - Compile classpath for null/test.
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
 |    \--- org.jetbrains:annotations:13.0
-\--- org.slf4j:slf4j-api:2.0.12
++--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
+|    \--- org.slf4j:slf4j-api:2.0.12 (c)
+\--- org.slf4j:slf4j-api -> 2.0.12
 
 testCompileOnly - Compile only dependencies for null/test. (n)
 No dependencies
@@ -158,7 +168,9 @@ No dependencies
 
 testImplementationDependenciesMetadata
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
-\--- org.slf4j:slf4j-api:2.0.12
++--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
+|    \--- org.slf4j:slf4j-api:2.0.12 (c)
+\--- org.slf4j:slf4j-api -> 2.0.12
 
 testIntransitiveDependenciesMetadata
 No dependencies
@@ -172,13 +184,17 @@ No dependencies
 testRuntimeClasspath - Runtime classpath of null/test.
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
 |    \--- org.jetbrains:annotations:13.0
-+--- org.slf4j:slf4j-api:2.0.12
-\--- org.slf4j:slf4j-simple:2.0.12
++--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
+|    +--- org.slf4j:slf4j-api:2.0.12 (c)
+|    \--- org.slf4j:slf4j-simple:2.0.12 (c)
++--- org.slf4j:slf4j-api -> 2.0.12
+\--- org.slf4j:slf4j-simple -> 2.0.12
      \--- org.slf4j:slf4j-api:2.0.12
 
 testRuntimeOnly - Runtime only dependencies for null/test. (n)
-\--- org.slf4j:slf4j-simple:2.0.12 (n)
+\--- org.slf4j:slf4j-simple (n)
 
+(c) - A dependency constraint, not a dependency. The dependency affected by the constraint occurs elsewhere in the tree.
 (*) - Indicates repeated occurrences of a transitive dependency subtree. Gradle expands transitive dependency subtrees only once per project; repeat occurrences only display the root of the subtree, followed by this annotation.
 
 (n) - A dependency or dependency configuration that cannot be resolved.

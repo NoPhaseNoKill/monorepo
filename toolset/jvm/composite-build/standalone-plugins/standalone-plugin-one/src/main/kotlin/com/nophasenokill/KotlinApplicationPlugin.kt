@@ -2,9 +2,12 @@ package com.nophasenokill
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalModuleDependency
+import org.gradle.api.internal.artifacts.DefaultModuleIdentifier
+import org.gradle.api.internal.artifacts.dependencies.DefaultMinimalDependency
+import org.gradle.api.internal.artifacts.dependencies.DefaultMutableVersionConstraint
 import org.gradle.api.plugins.JavaApplication
-import org.gradle.api.plugins.JavaPlugin
 
 class KotlinApplicationPlugin: Plugin<Project> {
     override fun apply(project: Project) {
@@ -13,23 +16,39 @@ class KotlinApplicationPlugin: Plugin<Project> {
 
         project.extensions.getByType(JavaApplication::class.java).mainClass.set("com.nophasenokill.App")
 
-        project.dependencies.add("implementation", "org.slf4j:slf4j-api:2.0.12").apply {
-            if(this is ExternalModuleDependency) {
-                val slf4jExclusion = mapOf(
-                    "group" to "org.slf4j",
-                    "module" to "slf4j-simple"
-                )
+        project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
 
-                this.exclude(
-                    slf4jExclusion
-                )
+            project.logger.lifecycle("Plugin org.jetbrains.kotlin.jvm was just applied")
+
+            project.addPlatformDependency("implementation", "com.nophasenokill.platforms", "generalised-platform")
+
+            project.dependencies.add("implementation", "org.slf4j:slf4j-api").apply {
+                if (this is ExternalModuleDependency) {
+                    val slf4jExclusion = mapOf(
+                        "group" to "org.slf4j",
+                        "module" to "slf4j-simple"
+                    )
+
+                    this.exclude(
+                        slf4jExclusion
+                    )
+                }
             }
+
+            project.dependencies.add("runtimeOnly", "org.slf4j:slf4j-simple")
+            project.dependencies.add("testRuntimeOnly", "org.slf4j:slf4j-simple")
+
+
+            project.repositories.gradlePluginPortal()
         }
-
-        project.dependencies.add("runtimeOnly", "org.slf4j:slf4j-simple:2.0.12")
-        project.dependencies.add("testRuntimeOnly", "org.slf4j:slf4j-simple:2.0.12")
+    }
 
 
-        project.repositories.gradlePluginPortal()
+    private fun Project.addPlatformDependency(configuration: String, group: String, name: String) {
+        val moduleId = DefaultModuleIdentifier.newId(group, name)
+        val versionConstraint = DefaultMutableVersionConstraint("")
+        val dependency: Dependency = DefaultMinimalDependency(moduleId, versionConstraint)
+
+        project.configurations.findByName(configuration)?.dependencies?.add(project.dependencies.platform(dependency))
     }
 }

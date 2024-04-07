@@ -1,6 +1,6 @@
 package com.nophasenokill.extensions
 
-import com.nophasenokill.functionalTest.FunctionalTest
+import com.nophasenokill.functionalTest.TestLogger
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.extension.ExtensionContext
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.InvocationInterceptor
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext
 import java.lang.reflect.Method
 import java.util.concurrent.atomic.AtomicReference
+import kotlin.system.measureTimeMillis
 
 /**
  * Wraps every test in runTest, to ensure you don't need
@@ -37,18 +38,21 @@ import java.util.concurrent.atomic.AtomicReference
  *      }
  */
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-class TestInvocationListener: InvocationInterceptor {
+class TestInvocationListener : InvocationInterceptor {
 
     @Throws(Throwable::class)
     override fun interceptTestMethod(
         invocation: InvocationInterceptor.Invocation<Void>,
         invocationContext: ReflectiveInvocationContext<Method>,
         extensionContext: ExtensionContext,
-    ) {
+    ) = runTest(StandardTestDispatcher()) {
         val throwable = AtomicReference<Throwable>()
+        val testName = AtomicReference<String>()
 
-        runTest(StandardTestDispatcher()) {
+        val time = measureTimeMillis {
+
             try {
+                testName.set(extensionContext.uniqueId)
                 invocation.proceed()
             } catch (t: Throwable) {
                 throwable.set(t)
@@ -60,5 +64,8 @@ class TestInvocationListener: InvocationInterceptor {
                 throw t
             }
         }
+
+        TestLogger.LOGGER.info { "Test took: ${time}ms for ${testName}" }
+
     }
 }

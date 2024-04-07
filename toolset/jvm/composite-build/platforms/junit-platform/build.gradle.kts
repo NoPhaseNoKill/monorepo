@@ -15,6 +15,6 @@ group = "com.nophasenokill.platforms"
 
 dependencies {
     constraints {
-        api("org.junit:junit-bom:5.10.1")
+        runtime("org.junit:junit-bom:5.10.1")
     }
 }

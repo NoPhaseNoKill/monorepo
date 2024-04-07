@@ -6,6 +6,7 @@ import org.junit.jupiter.api.io.TempDirFactory
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.system.measureTimeMillis
 
 object JunitTempDirFactory : TempDirFactory {
     @Throws(IOException::class)
@@ -13,6 +14,15 @@ object JunitTempDirFactory : TempDirFactory {
         elementContext: AnnotatedElementContext,
         extensionContext: ExtensionContext
     ): Path {
-        return Files.createTempDirectory("${extensionContext.displayName}-")
+        var tempDirFactory: Path? = null
+
+        val time = measureTimeMillis {
+            tempDirFactory = Files.createTempDirectory("${extensionContext.displayName}-")
+        }
+
+        TestLogger.LOGGER.info { "Time to create temp dir was: ${time}"}
+
+        return requireNotNull(tempDirFactory)
+
     }
 }

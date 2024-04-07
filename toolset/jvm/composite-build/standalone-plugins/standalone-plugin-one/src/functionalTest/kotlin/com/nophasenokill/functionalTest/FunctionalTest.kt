@@ -12,10 +12,10 @@ import java.io.File
 
 
 @ExtendWith(SharedTestSuiteExtension::class, TestInvocationListener::class)
-open class FunctionalTest {
+open class FunctionalTest: GradleTestCapabilities {
 
     @field:TempDir(factory = JunitTempDirFactory::class, cleanup = CleanupMode.ON_SUCCESS)
-    lateinit var projectDir: File
+    override lateinit var projectDir: File
 
     /*
         Consider adding these in the future if we need them:
@@ -23,17 +23,17 @@ open class FunctionalTest {
             .forwardStdError()
             .forwardStdOutput()
      */
-    val runner: GradleRunner by lazy { GradleRunner.create()
+    private val runner: GradleRunner by lazy { GradleRunner.create()
         .withProjectDir(projectDir)
         .withPluginClasspath() }
 
-    val buildFile by lazy { projectDir.resolve("build.gradle.kts") }
+    override val buildFile by lazy { projectDir.resolve("build.gradle.kts") }
 
-    val settingsFile by lazy { projectDir.resolve("settings.gradle.kts") }
+    override val settingsFile by lazy { projectDir.resolve("settings.gradle.kts") }
 
     private val INDENT = "                "
 
-    fun addPluginsById(plugins: List<String>, buildFileToAddPluginsTo: File) {
+    override fun addPluginsById(plugins: List<String>, buildFileToAddPluginsTo: File) {
 
         val formattedPlugins = plugins.joinToString( prefix = INDENT, separator = "\n$INDENT") {
             "id(\"$it\")"
@@ -45,18 +45,18 @@ $formattedPlugins
             }
         """.trimIndent()
 
-        return buildFileToAddPluginsTo.writeText(text)
+        buildFileToAddPluginsTo.writeText(text)
     }
 
-    fun runExpectedSuccessTask(task: String): BuildResult {
+    override fun runExpectedSuccessTask(task: String): BuildResult {
         return runner.withArguments(task, "--stacktrace").build()
     }
 
-    fun runExpectedFailureTask(task: String): BuildResult {
+    override fun runExpectedFailureTask(task: String): BuildResult {
         return runner.withArguments(task, "--stacktrace").buildAndFail()
     }
 
-    fun getTaskOutcome(taskPath: String, result: BuildResult): TaskOutcome {
+    override fun getTaskOutcome(taskPath: String, result: BuildResult): TaskOutcome {
         try {
             return requireNotNull(result.task(taskPath)?.outcome)
         } catch (e: Exception) {
@@ -65,7 +65,7 @@ $formattedPlugins
         }
     }
 
-    fun getComparableBuildResultLines(result: BuildResult, trimmedFromTop: Int, trimmedFromBottom: Int): List<String> {
+    override fun getComparableBuildResultLines(result: BuildResult, trimmedFromTop: Int, trimmedFromBottom: Int): List<String> {
         val removeStartOfFile: List<String> =  result.output.lines().subList(trimmedFromTop, result.output.lines().size)
         return removeStartOfFile.subList(0, removeStartOfFile.size - trimmedFromBottom)
     }
@@ -73,7 +73,7 @@ $formattedPlugins
     /*
         This ensures the test is relocatable for cache, as the file should always be relative
      */
-    fun getResourceFile(fileNamePath: String): File {
+    override fun getResourceFile(fileNamePath: String): File {
         val classLoader = Thread.currentThread().contextClassLoader
         val resourceURL = requireNotNull(
             classLoader.getResource(fileNamePath)
