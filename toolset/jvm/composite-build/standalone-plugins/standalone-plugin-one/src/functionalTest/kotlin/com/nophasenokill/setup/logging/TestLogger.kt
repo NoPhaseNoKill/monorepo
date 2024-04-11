@@ -1,17 +1,18 @@
-package com.nophasenokill.functionalTest
+package com.nophasenokill.setup.logging
 
+import com.nophasenokill.setup.junit.extensions.TestInvocationListener
 import org.junit.platform.commons.logging.Logger
 import org.junit.platform.commons.logging.LoggerFactory
 
 /*
-    Allows logging through stdout of info logs, due to weirdnesses'
+    Allows logging through stdout of info logs, due to weirdness's'
     in how gradle and junit manage their stdouts.
 
-    1. It prevents duplicate classloader warnings by delgating
+    1. It prevents duplicate classloader warnings by delegating
     to JUL
     2. It modifies logs to higher severity, which mean
     they're often flagged/in red in rich consoles - which
-    IMO is behaviour we want when putting logs in tests (visiblity
+    IMO is behaviour we want when putting logs in tests (visibility
     is good).
 
     There may be a better fix for this later, but for such a basic

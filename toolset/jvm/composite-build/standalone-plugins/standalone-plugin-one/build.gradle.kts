@@ -46,6 +46,7 @@ dependencies {
     }
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    testImplementation("commons-io:commons-io:2.16.0")
 
     testImplementation(gradleTestKit())
 }
@@ -62,7 +63,6 @@ testing {
                         events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
                         showStandardStreams = true
                         minGranularity = 2
-
                     }
                 }
             }
@@ -98,6 +98,8 @@ testing {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
                     exclude("org.jetbrains", "annotations")
                 }
+
+                implementation("commons-io:commons-io:2.16.0")
             }
         }
     }
@@ -105,7 +107,31 @@ testing {
 
 gradlePlugin.testSourceSets.add(sourceSets["functionalTest"])
 
+
+val functionalTestTask = tasks.register("functionalTestTask") {
+
+
+    inputs.files("src/functionalTest")
+    inputs.files(tasks.jar)
+    outputs.dirs(layout.buildDirectory.get().asFile.resolve("test-results/functionalTest"))
+    outputs.dirs(layout.buildDirectory.get().asFile.resolve("classes/functionalTest"))
+    outputs.dirs(layout.buildDirectory.get().asFile.resolve("kotlin/compileFunctionalTestKotlin"))
+
+    dependsOn(tasks.jar)
+    dependsOn(testing.suites.named("functionalTest"))
+}
+
+tasks.test {
+    inputs.files("src/test")
+    inputs.files(tasks.jar)
+    outputs.dirs(layout.buildDirectory.get().asFile.resolve("test-results/test"))
+    outputs.dirs(layout.buildDirectory.get().asFile.resolve("classes/test"))
+    outputs.dirs(layout.buildDirectory.get().asFile.resolve("kotlin/compileTestKotlin"))
+
+    dependsOn(tasks.jar)
+}
+
 tasks.named<Task>("check") {
     // Include functionalTest as part of the check which implicitly means build lifecycle
-    dependsOn(testing.suites.named("functionalTest"))
+    dependsOn(functionalTestTask)
 }

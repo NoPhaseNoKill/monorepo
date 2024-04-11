@@ -1,32 +1,20 @@
-package com.nophasenokill.plugins
+package com.nophasenokill.plugins.wrapTextWithQuotesPlugin
 
-import com.nophasenokill.functionalTest.FunctionalTest
+import com.nophasenokill.setup.variations.FunctionalTest
+import kotlinx.coroutines.test.runTest
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtensionContext
 
 class WrapTextWithQuotesPluginFunctionalTest: FunctionalTest() {
 
     @Test
-    fun `finds plugin`() {
-
-        settingsFile.writeText("")
-        addPluginsById(
-            listOf(
-                "com.nophasenokill.wrap-text-with-quotes-plugin",
-                "java"
-            ),
-            buildFile
-        )
-
-        val result = runExpectedSuccessTask("build")
-        val outcome = getTaskOutcome(":build", result)
-        Assertions.assertTrue(result.output.contains("BUILD SUCCESS"))
-        Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
-    }
-
-    @Test
-    fun `finds and runs addQuotationMarks task successfully`() {
+    fun `finds and runs addQuotationMarks task successfully`(context: ExtensionContext) = runTest {
+        val details = createGradleRunner(context)
+        val settingsFile = details.settingsFile
+        val buildFile = details.buildFile
+        val projectDir = details.projectDir
 
         settingsFile.writeText("")
         addPluginsById(
@@ -48,7 +36,7 @@ class WrapTextWithQuotesPluginFunctionalTest: FunctionalTest() {
         testQuotesFile.writeText(quotesFile.readText())
         testWithQuotationsFile.writeText(withQuotations.readText())
 
-        val result = runExpectedSuccessTask("addQuotationMarks")
+        val result = runExpectedSuccessTask(details, "addQuotationMarks")
         val outcome = getTaskOutcome(":addQuotationMarks", result)
         Assertions.assertTrue(result.output.contains("BUILD SUCCESS"))
         Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)

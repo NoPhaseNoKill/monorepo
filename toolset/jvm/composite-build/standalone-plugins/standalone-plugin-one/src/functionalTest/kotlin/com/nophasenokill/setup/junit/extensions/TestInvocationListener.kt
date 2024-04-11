@@ -1,6 +1,6 @@
-package com.nophasenokill.extensions
+package com.nophasenokill.setup.junit.extensions
 
-import com.nophasenokill.functionalTest.TestLogger
+import com.nophasenokill.setup.logging.TestLogger
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.extension.ExtensionContext
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.InvocationInterceptor
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext
 import java.lang.reflect.Method
 import java.util.concurrent.atomic.AtomicReference
+import java.util.function.Supplier
 import kotlin.system.measureTimeMillis
 
 /**
@@ -45,27 +46,26 @@ class TestInvocationListener : InvocationInterceptor {
         invocation: InvocationInterceptor.Invocation<Void>,
         invocationContext: ReflectiveInvocationContext<Method>,
         extensionContext: ExtensionContext,
-    ) = runTest(StandardTestDispatcher()) {
+    ) {
+
         val throwable = AtomicReference<Throwable>()
-        val testName = AtomicReference<String>()
 
         val time = measureTimeMillis {
+            runTest(StandardTestDispatcher()) {
+                try {
+                    println("Test starting")
+                    invocation.proceed()
+                } catch (t: Throwable) {
+                    throwable.set(t)
+                }
 
-            try {
-                testName.set(extensionContext.uniqueId)
-                invocation.proceed()
-            } catch (t: Throwable) {
-                throwable.set(t)
-            }
-
-            // caters for the behaviour where we need to re-throw the exception
-            val t = throwable.get()
-            if (t != null) {
-                throw t
+                // caters for the behaviour where we need to re-throw the exception
+                val t = throwable.get()
+                if (t != null) {
+                    throw t
+                }
             }
         }
-
-        TestLogger.LOGGER.info { "Test took: ${time}ms for ${testName}" }
-
+        println("Test took: ${time}ms")
     }
 }

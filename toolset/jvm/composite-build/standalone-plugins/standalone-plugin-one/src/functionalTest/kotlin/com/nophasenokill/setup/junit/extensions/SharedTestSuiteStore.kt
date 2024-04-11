@@ -1,4 +1,4 @@
-package com.nophasenokill.extensions
+package com.nophasenokill.setup.junit.extensions
 
 import org.junit.jupiter.api.extension.ExtensionContext
 

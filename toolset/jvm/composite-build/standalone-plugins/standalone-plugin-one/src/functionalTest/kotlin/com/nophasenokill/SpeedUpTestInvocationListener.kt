@@ -1,15 +1,13 @@
 package com.nophasenokill
 
-import com.nophasenokill.functionalTest.FunctionalTest
-import com.nophasenokill.functionalTest.TestLogger
+import com.nophasenokill.setup.logging.TestLogger
+import com.nophasenokill.setup.variations.FunctionalTest
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.slf4j.Logger.ROOT_LOGGER_NAME
-import org.slf4j.LoggerFactory
 import kotlin.system.measureTimeMillis
 import kotlin.time.Duration.Companion.seconds
 
@@ -34,7 +32,6 @@ class SpeedUpTestInvocationListener: FunctionalTest() {
             Assertions.assertEquals("bob", result)
         }
 
-        TestLogger.LOGGER.error { "Ohai" }
         TestLogger.LOGGER.info { "Ohai as info" }
 
         Assertions.assertTrue(time <= 6000)

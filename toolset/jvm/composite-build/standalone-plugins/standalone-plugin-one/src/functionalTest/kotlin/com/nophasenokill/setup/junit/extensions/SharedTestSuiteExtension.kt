@@ -1,7 +1,6 @@
-package com.nophasenokill.extensions
+package com.nophasenokill.setup.junit.extensions
 
 
-import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.extension.*
 
 
@@ -12,10 +11,8 @@ import org.junit.jupiter.api.extension.*
  */
 class SharedTestSuiteExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, ParameterResolver, ExtensionContext.Store.CloseableResource {
 
-
-    override fun beforeAll(context: ExtensionContext) = runTest {
-        val value = SharedTestSuiteStore
-            .getRoot(context)
+    override fun beforeAll(context: ExtensionContext) {
+        val value = SharedTestSuiteStore.getRoot(context)
             .get(SharedTestSuiteContextKey.TESTS_STARTED)
 
         if (value == null) {
@@ -35,7 +32,7 @@ class SharedTestSuiteExtension: BeforeAllCallback, BeforeEachCallback, AfterAllC
      * This should only be called at the start of all the project tests
      */
 
-    fun setupGlobalTestSuite() = runTest {
+    fun setupGlobalTestSuite() {
 
     }
 
@@ -43,27 +40,27 @@ class SharedTestSuiteExtension: BeforeAllCallback, BeforeEachCallback, AfterAllC
     /**
      * This should only be called at the start of each test class (file)
      */
-    fun setupTestClass() = runTest {
+    fun setupTestClass()  {
 
     }
 
 
-    override fun beforeEach(context: ExtensionContext) = runTest {
-        println("Unique id for test is: ${context.uniqueId}")
-    }
-
-    override fun afterEach(context: ExtensionContext) = runTest {
+    override fun beforeEach(context: ExtensionContext) {
 
     }
 
-    override fun afterAll(context: ExtensionContext) = runTest {
+    override fun afterEach(context: ExtensionContext) {
+
+    }
+
+    override fun afterAll(context: ExtensionContext) {
 
     }
 
     /**
      * This should only be called at the end of all the project tests
      */
-    override fun close() = runTest {
+    override fun close() {
 
     }
 
