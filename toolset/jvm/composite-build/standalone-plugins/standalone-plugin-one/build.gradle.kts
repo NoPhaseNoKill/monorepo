@@ -98,8 +98,6 @@ testing {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
                     exclude("org.jetbrains", "annotations")
                 }
-
-                implementation("commons-io:commons-io:2.16.0")
             }
         }
     }

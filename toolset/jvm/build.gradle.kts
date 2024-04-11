@@ -32,11 +32,11 @@ tasks.register("buildAllComposite") {
     group = "verification"
     description = "Builds all projects, which includes assembling them and running all checks (tests/functional tests)"
 
-    inputs.dir(buildPluginsTask.get().inputs)
-    inputs.dir(buildApplicationsTask.get().inputs)
+    inputs.files(buildPluginsTask.get().inputs.files)
+    inputs.files(buildApplicationsTask.get().inputs.files)
 
-    outputs.dir(buildPluginsTask.get().outputs)
-    outputs.dir(buildApplicationsTask.get().outputs)
+    outputs.files(buildPluginsTask.get().outputs.files)
+    outputs.files(buildApplicationsTask.get().outputs.files)
 
     dependsOn(gradle.includedBuild("applications").task(":application-one:build"))
     dependsOn(gradle.includedBuild("standalone-plugins").task(":standalone-plugin-one:build"))
