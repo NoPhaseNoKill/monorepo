@@ -37,10 +37,18 @@ gradleEnterprise {
 
     Serial execution factor 7.7x
  */
-includeBuild("composite-build/libraries")
-includeBuild("composite-build/applications")
-includeBuild("composite-build/platforms")
-includeBuild("composite-build/standalone-plugins")
+includeBuild("composite-build/libraries") {
+    name = "libraries"
+}
+includeBuild("composite-build/applications") {
+    name = "applications"
+}
+includeBuild("composite-build/platforms") {
+    name = "platforms"
+}
+includeBuild("composite-build/standalone-plugins") {
+    name = "standalone-plugins"
+}
 
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
