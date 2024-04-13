@@ -13,6 +13,9 @@ class KotlinApplicationPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.pluginManager.apply("org.jetbrains.kotlin.jvm")
         project.pluginManager.apply("application")
+        project.pluginManager.apply("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin")
+
+
 
         project.extensions.getByType(JavaApplication::class.java).mainClass.set("com.nophasenokill.App")
 
@@ -20,6 +23,7 @@ class KotlinApplicationPlugin: Plugin<Project> {
 
             project.logger.lifecycle("Plugin org.jetbrains.kotlin.jvm was just applied")
 
+            project.addMetaPluginDependency("meta-plugin-one")
             project.addPlatformDependency("implementation", "com.nophasenokill.platforms", "generalised-platform")
 
             project.dependencies.add("implementation", "org.slf4j:slf4j-api").apply {
@@ -41,6 +45,14 @@ class KotlinApplicationPlugin: Plugin<Project> {
 
             project.repositories.gradlePluginPortal()
         }
+    }
+
+    private fun Project.addMetaPluginDependency(plugin: String) {
+        val moduleId = DefaultModuleIdentifier.newId("com.nophasenokill.meta-plugins", plugin)
+        val versionConstraint = DefaultMutableVersionConstraint("")
+        val dependency: Dependency = DefaultMinimalDependency(moduleId, versionConstraint)
+
+        project.configurations.findByName("implementation")?.dependencies?.add(dependency)
     }
 
 

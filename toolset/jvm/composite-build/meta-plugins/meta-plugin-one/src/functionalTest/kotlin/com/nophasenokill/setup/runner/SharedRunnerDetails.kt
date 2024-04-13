@@ -14,9 +14,12 @@ data class SharedRunnerDetails(
 ) {
     object SharedRunner {
         fun getRunner(sharedRunnerDir: File, ): GradleRunner {
+
             return  DefaultGradleRunner()
                     .withProjectDir(sharedRunnerDir)
                     .withPluginClasspath()
+
+
         }
     }
 }

@@ -18,6 +18,7 @@ No dependencies
 compileClasspath - Compile classpath for null/main.
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
 |    \--- org.jetbrains:annotations:13.0
++--- com.nophasenokill.meta-plugins:meta-plugin-one -> project :meta-plugins:meta-plugin-one
 +--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
 |    \--- org.slf4j:slf4j-api:2.0.12 (c)
 \--- org.slf4j:slf4j-api -> 2.0.12
@@ -32,11 +33,13 @@ default - Configuration for default artifacts. (n)
 No dependencies
 
 implementation - Implementation only dependencies for null/main. (n)
++--- com.nophasenokill.meta-plugins:meta-plugin-one (n)
 +--- com.nophasenokill.platforms:generalised-platform (n)
 \--- org.slf4j:slf4j-api (n)
 
 implementationDependenciesMetadata
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
++--- com.nophasenokill.meta-plugins:meta-plugin-one -> project :meta-plugins:meta-plugin-one
 +--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
 |    \--- org.slf4j:slf4j-api:2.0.12 (c)
 \--- org.slf4j:slf4j-api -> 2.0.12
@@ -125,9 +128,65 @@ No dependencies
 runtimeClasspath - Runtime classpath of null/main.
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
 |    \--- org.jetbrains:annotations:13.0
++--- com.nophasenokill.meta-plugins:meta-plugin-one -> project :meta-plugins:meta-plugin-one
+|    +--- org.jetbrains.kotlin:kotlin-bom:1.9.21
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 (c)
+|    |    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21 (c)
+|    |    +--- org.jetbrains.kotlin:kotlin-daemon-client:1.9.21 (c)
+|    |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.21 (c)
+|    |    \--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.21 (c)
+|    +--- org.junit:junit-bom:5.10.1
+|    +--- org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0
+|    +--- org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21
+|    |    \--- org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugins-bom:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.9.21 (c)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-model:1.9.21 (c)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21 (c)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-annotations:1.9.21 (c)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-native-utils:1.9.21 (c)
+|    |         |    \--- org.jetbrains.kotlin:kotlin-tooling-core:1.9.21 (c)
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugins-bom:1.9.21 (*)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-annotations:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-native-utils:1.9.21
+|    |         |    |    +--- org.jetbrains.kotlin:kotlin-util-io:1.9.21
+|    |         |    |    \--- org.jetbrains.kotlin:kotlin-util-klib:1.9.21
+|    |         |    |         \--- org.jetbrains.kotlin:kotlin-util-io:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-project-model:1.9.21
+|    |         |    |    \--- org.jetbrains.kotlin:kotlin-tooling-core:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-tooling-core:1.9.21
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugin-model:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.9.21 (*)
+|    |         |    \--- org.jetbrains.kotlin:kotlin-gradle-plugins-bom:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugin-idea:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-tooling-core:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-gradle-plugin-annotations:1.9.21
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugin-idea-proto:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-gradle-plugin-idea:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-util-klib:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-klib-commonizer-api:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-native-utils:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-build-tools-api:1.9.21
+|    |         +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.21
+|    |         |    \--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
+|    |         +--- org.jetbrains.kotlin:kotlin-android-extensions:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-compiler-runner:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-daemon-client:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.9.21
+|    |         |         +--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.21
+|    |         |         \--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.21
+|    |         |              \--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.21
+|    |         \--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.9.21 (*)
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 (*)
 +--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
 |    +--- org.slf4j:slf4j-api:2.0.12 (c)
-|    \--- org.slf4j:slf4j-simple:2.0.12 (c)
+|    +--- org.slf4j:slf4j-simple:2.0.12 (c)
+|    \--- org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21 (c)
 +--- org.slf4j:slf4j-api -> 2.0.12
 \--- org.slf4j:slf4j-simple -> 2.0.12
      \--- org.slf4j:slf4j-api:2.0.12
@@ -153,6 +212,7 @@ No dependencies
 testCompileClasspath - Compile classpath for null/test.
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
 |    \--- org.jetbrains:annotations:13.0
++--- com.nophasenokill.meta-plugins:meta-plugin-one -> project :meta-plugins:meta-plugin-one
 +--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
 |    \--- org.slf4j:slf4j-api:2.0.12 (c)
 \--- org.slf4j:slf4j-api -> 2.0.12
@@ -168,6 +228,7 @@ No dependencies
 
 testImplementationDependenciesMetadata
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
++--- com.nophasenokill.meta-plugins:meta-plugin-one -> project :meta-plugins:meta-plugin-one
 +--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
 |    \--- org.slf4j:slf4j-api:2.0.12 (c)
 \--- org.slf4j:slf4j-api -> 2.0.12
@@ -184,19 +245,68 @@ No dependencies
 testRuntimeClasspath - Runtime classpath of null/test.
 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
 |    \--- org.jetbrains:annotations:13.0
++--- com.nophasenokill.meta-plugins:meta-plugin-one -> project :meta-plugins:meta-plugin-one
+|    +--- org.jetbrains.kotlin:kotlin-bom:1.9.21
+|    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 (c)
+|    |    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21 (c)
+|    |    +--- org.jetbrains.kotlin:kotlin-daemon-client:1.9.21 (c)
+|    |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.21 (c)
+|    |    \--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.21 (c)
+|    +--- org.junit:junit-bom:5.10.1
+|    +--- org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0
+|    +--- org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21
+|    |    \--- org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugins-bom:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.9.21 (c)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-model:1.9.21 (c)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21 (c)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-annotations:1.9.21 (c)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-native-utils:1.9.21 (c)
+|    |         |    \--- org.jetbrains.kotlin:kotlin-tooling-core:1.9.21 (c)
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugins-bom:1.9.21 (*)
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-annotations:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-native-utils:1.9.21
+|    |         |    |    +--- org.jetbrains.kotlin:kotlin-util-io:1.9.21
+|    |         |    |    \--- org.jetbrains.kotlin:kotlin-util-klib:1.9.21
+|    |         |    |         \--- org.jetbrains.kotlin:kotlin-util-io:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-project-model:1.9.21
+|    |         |    |    \--- org.jetbrains.kotlin:kotlin-tooling-core:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-tooling-core:1.9.21
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugin-model:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.9.21 (*)
+|    |         |    \--- org.jetbrains.kotlin:kotlin-gradle-plugins-bom:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugin-idea:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-tooling-core:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-gradle-plugin-annotations:1.9.21
+|    |         +--- org.jetbrains.kotlin:kotlin-gradle-plugin-idea-proto:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-gradle-plugin-idea:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-util-klib:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-klib-commonizer-api:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-native-utils:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-build-tools-api:1.9.21
+|    |         +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.21
+|    |         |    \--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
+|    |         +--- org.jetbrains.kotlin:kotlin-android-extensions:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-compiler-runner:1.9.21
+|    |         |    +--- org.jetbrains.kotlin:kotlin-daemon-client:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21 (*)
+|    |         +--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.9.21
+|    |         |    \--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.9.21
+|    |         |         +--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.21
+|    |         |         \--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.21
+|    |         |              \--- org.jetbrains.kotlin:kotlin-scripting-common:1.9.21
+|    |         \--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.9.21 (*)
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 (*)
 +--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
 |    +--- org.slf4j:slf4j-api:2.0.12 (c)
-|    \--- org.slf4j:slf4j-simple:2.0.12 (c)
+|    +--- org.slf4j:slf4j-simple:2.0.12 (c)
+|    \--- org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21 (c)
 +--- org.slf4j:slf4j-api -> 2.0.12
 \--- org.slf4j:slf4j-simple -> 2.0.12
      \--- org.slf4j:slf4j-api:2.0.12
 
 testRuntimeOnly - Runtime only dependencies for null/test. (n)
 \--- org.slf4j:slf4j-simple (n)
-
-(c) - A dependency constraint, not a dependency. The dependency affected by the constraint occurs elsewhere in the tree.
-(*) - Indicates repeated occurrences of a transitive dependency subtree. Gradle expands transitive dependency subtrees only once per project; repeat occurrences only display the root of the subtree, followed by this annotation.
-
-(n) - A dependency or dependency configuration that cannot be resolved.
-
-A web-based, searchable dependency report is available by adding the --scan option.

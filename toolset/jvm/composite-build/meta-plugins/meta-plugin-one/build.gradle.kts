@@ -3,11 +3,10 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     `java-gradle-plugin`
     id("org.jetbrains.kotlin.jvm") version "1.9.21"
-    id("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin") // Only applies it project standalone-plugins
 }
 
 
-group = "com.nophasenokill.standalone-plugins"
+group = "com.nophasenokill.meta-plugins"
 version = "0.1.local-dev"
 
 repositories {
@@ -15,30 +14,45 @@ repositories {
 }
 
 gradlePlugin {
-    val javaBase by plugins.creating {
-        id = "com.nophasenokill.java-base-plugin"
-        implementationClass = "com.nophasenokill.JavaBasePlugin"
+    val checkKotlinBuildServiceFixPlugin by plugins.creating {
+        id = "com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin"
+        implementationClass = "com.nophasenokill.CheckKotlinBuildServiceFixPlugin"
     }
+}
 
-    val kotlinBase by plugins.creating {
-        id = "com.nophasenokill.kotlin-base-plugin"
-        implementationClass = "com.nophasenokill.KotlinBasePlugin"
-    }
+/*
+     Fixes undeclared build service usage when using: enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+     Known issue to be fixed here: https://youtrack.jetbrains.com/issue/KT-63165
 
-    val kotlinApplication by plugins.creating {
-        id = "com.nophasenokill.kotlin-application-plugin"
-        implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
-    }
+     Note: Because of the structure of the whole root jvm project, this ALSO needs to be applied directly
+     to this level too, as well as exposing a re-usable plugin to fix the SAME issue for other included builds
+     or projects.
+ */
 
-    val quotesPlugin by plugins.creating {
-        id = "com.nophasenokill.wrap-text-with-quotes-plugin"
-        implementationClass = "com.nophasenokill.WrapTextWithQuotesPlugin"
+gradle.taskGraph.whenReady {
+    val allTasks = gradle.taskGraph.allTasks
+    allTasks.forEach {
+        gradle.sharedServices.registrations.all {
+            val buildServiceProvider = this.service
+            val buildService = buildServiceProvider.get()
+
+            val kotlinCollectorSearchString = "org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnosticsCollector"
+            val isCollectorService = buildService.toString().contains(kotlinCollectorSearchString)
+
+            if (isCollectorService) {
+                project.logger.debug(
+                    "Applying checkKotlinGradlePluginConfigurationErrors workaround to task: {} for project: {}",
+                    it,
+                    project.name
+                )
+                it.usesService(buildServiceProvider)
+            }
+        }
     }
 }
 
 dependencies {
-    implementation("com.nophasenokill.meta-plugins:meta-plugin-one")
-    // implementation("com.nophasenokill.meta-plugins:check-kotlin-build-service-fix-plugin")
+
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
     implementation(platform("org.junit:junit-bom:5.10.1"))
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))

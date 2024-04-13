@@ -3,7 +3,7 @@ package com.nophasenokill
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class ExampleTest {
+class StandalonePluginExampleTest {
     @Test
     fun doSomething() {
         val bob = "bob"

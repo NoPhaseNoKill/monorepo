@@ -65,5 +65,17 @@ tasks.register("buildAllComposite") {
         of the app/lib, but the plugin's build task result is required for us to build the whole
         composite and confirm we haven't borked anything. We should look at changing this at a later date.
      */
-    dependsOn(gradle.includedBuild("standalone-plugins").task(":standalone-plugin-one:build"))
+
+    dependsOn(
+        gradle.includedBuild("meta-plugins").task(":meta-plugin-one:build")
+        // gradle.includedBuild("standalone-plugins").task(":standalone-plugin-one:build")
+    ).dependsOn(
+        gradle.includedBuild("standalone-plugins").task(":standalone-plugin-one:build")
+        // gradle.includedBuild("meta-plugins").task(":build")
+    )
+    //
+    // dependsOn(
+    //     gradle.includedBuild("standalone-plugins").task(":standalone-plugin-one:build")
+    //     // gradle.includedBuild("meta-plugins").task(":build")
+    // )
 }

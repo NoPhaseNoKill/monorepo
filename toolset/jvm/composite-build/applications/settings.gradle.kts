@@ -1,6 +1,17 @@
 
 rootProject.name = "applications"
 
+pluginManagement {
+    includeBuild("../meta-plugins") {
+        name = "meta-plugins"
+    }
+    repositories.gradlePluginPortal()
+}
+
+dependencyResolutionManagement {
+    repositories.gradlePluginPortal()
+}
+
 include("application-one")
 includeBuild("../standalone-plugins")
 
