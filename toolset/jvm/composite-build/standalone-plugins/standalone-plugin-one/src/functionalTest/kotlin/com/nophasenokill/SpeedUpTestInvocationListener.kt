@@ -15,26 +15,26 @@ import kotlin.time.Duration.Companion.seconds
 
 class SpeedUpTestInvocationListener: FunctionalTest() {
 
-    // @Test
-    // fun `should finish test almost immediately even though there normally would be delay of 60 seconds`()  {
-    //
-    //     val time = measureTimeMillis {
-    //         val deferred: Deferred<String> = async {
-    //
-    //             delay(30.seconds)
-    //
-    //             async {
-    //                 delay(30.seconds)
-    //             }.await()
-    //
-    //             return@async "bob"
-    //         }
-    //         val result = deferred.await() // result available immediately
-    //         Assertions.assertEquals("bob", result)
-    //     }
-    //
-    //     TestLogger.LOGGER.info { "Ohai as info" }
-    //
-    //     Assertions.assertTrue(time <= 6000)
-    // }
+    @Test
+    fun `should finish test almost immediately even though there normally would be delay of 60 seconds`() = runTest {
+
+        val time = measureTimeMillis {
+            val deferred: Deferred<String> = async {
+
+                delay(30.seconds)
+
+                async {
+                    delay(30.seconds)
+                }.await()
+
+                return@async "bob"
+            }
+            val result = deferred.await() // result available immediately
+            Assertions.assertEquals("bob", result)
+        }
+
+        TestLogger.LOGGER.info { "Ohai as info" }
+
+        Assertions.assertTrue(time <= 6000)
+    }
 }

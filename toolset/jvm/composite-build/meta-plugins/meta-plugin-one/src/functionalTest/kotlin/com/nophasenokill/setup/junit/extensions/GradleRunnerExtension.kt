@@ -1,16 +1,9 @@
 package com.nophasenokill.setup.junit.extensions
 
-import com.nophasenokill.setup.junit.JunitTempDirFactory
 import com.nophasenokill.setup.variations.TestDirectory
-import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.extension.BeforeAllCallback
-import org.junit.jupiter.api.extension.BeforeEachCallback
-import org.junit.jupiter.api.extension.ExtensionContext
-import org.junit.jupiter.api.extension.ParameterContext
-import org.junit.jupiter.api.extension.ParameterResolver
+import org.junit.jupiter.api.extension.*
 import org.junit.jupiter.api.io.CleanupMode
 import org.junit.jupiter.api.io.TempDir
-import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.Path

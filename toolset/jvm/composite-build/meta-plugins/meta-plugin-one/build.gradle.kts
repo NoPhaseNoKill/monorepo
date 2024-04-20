@@ -52,7 +52,6 @@ gradle.taskGraph.whenReady {
 }
 
 dependencies {
-
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
     implementation(platform("org.junit:junit-bom:5.10.1"))
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
@@ -130,29 +129,10 @@ gradlePlugin.testSourceSets.add(sourceSets["functionalTest"])
 
 
 val functionalTestTask = tasks.register("functionalTestTask") {
-
-
-    inputs.files("src/functionalTest")
-    inputs.files(tasks.jar)
-    outputs.dirs(layout.buildDirectory.get().asFile.resolve("test-results/functionalTest"))
-    outputs.dirs(layout.buildDirectory.get().asFile.resolve("classes/functionalTest"))
-    outputs.dirs(layout.buildDirectory.get().asFile.resolve("kotlin/compileFunctionalTestKotlin"))
-
-    dependsOn(tasks.jar)
     dependsOn(testing.suites.named("functionalTest"))
 }
 
-tasks.test {
-    inputs.files("src/test")
-    inputs.files(tasks.jar)
-    outputs.dirs(layout.buildDirectory.get().asFile.resolve("test-results/test"))
-    outputs.dirs(layout.buildDirectory.get().asFile.resolve("classes/test"))
-    outputs.dirs(layout.buildDirectory.get().asFile.resolve("kotlin/compileTestKotlin"))
-
-    dependsOn(tasks.jar)
-}
-
-tasks.named<Task>("check") {
+tasks.check {
     // Include functionalTest as part of the check which implicitly means build lifecycle
     dependsOn(functionalTestTask)
 }

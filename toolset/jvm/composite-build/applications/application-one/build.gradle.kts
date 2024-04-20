@@ -31,31 +31,29 @@ dependencies {
         :applications:application-one:distZip
          Started After 4.463s Duration After 7.840s	Not cacheable: Caching not enabled for work unit
 
+   In future consider something like:
+
+         class CustomTask extends DefaultTask {
+            @Input
+            File inputFile
+
+            @OutputFile
+            File outputFile
+
+            @TaskAction
+            void perform() {
+                outputFile.text = inputFile.text.reverse()
+            }
+
+            outputs.upToDateWhen {
+                // Custom logic to determine if the task is up-to-date
+                outputFile.exists() && outputFile.text == inputFile.text.reverse()
+            }
+        }
+
    Important note: The thread also mentions that gradle may not track inputs such as
    renaming of files, so to ensure that these are tracked, this task includes the
    classes as outputs, but does NOT include them as a dependency.
- */
-
-/*
-    TODO MAYBE SOMETHING LIKE THIS:
-
-     class CustomTask extends DefaultTask {
-        @Input
-        File inputFile
-
-        @OutputFile
-        File outputFile
-
-        @TaskAction
-        void perform() {
-            outputFile.text = inputFile.text.reverse()
-        }
-
-        outputs.upToDateWhen {
-            // Custom logic to determine if the task is up-to-date
-            outputFile.exists() && outputFile.text == inputFile.text.reverse()
-        }
-    }
  */
 
 tasks.distZip {

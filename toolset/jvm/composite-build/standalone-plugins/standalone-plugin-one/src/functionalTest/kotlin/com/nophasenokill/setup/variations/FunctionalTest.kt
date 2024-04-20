@@ -15,7 +15,7 @@ import kotlin.io.path.createFile
 
 // @ExtendWith(SharedTestSuiteExtension::class, TestInvocationListener::class)
 // @ExtendWith(SharedTestSuiteExtension::class)
-// @ResourceLock("gradleFunctionalTest") // Required due to gradle file locking
+
 open class FunctionalTest {
 
     val INDENT: String
