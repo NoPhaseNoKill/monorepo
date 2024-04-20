@@ -1,7 +1,9 @@
 package com.nophasenokill.plugins.checkKotlinBuildServiceFixPlugin
 
 import com.nophasenokill.setup.junit.extensions.GradleRunnerExtension
+import com.nophasenokill.setup.junit.extensions.SharedTestSuiteStore
 import com.nophasenokill.setup.variations.FunctionalTest
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -12,8 +14,8 @@ import java.io.File
 class DummyCheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
 
     @Test
-    fun `should fine build service warning without plugin, and should not receive build service warning when plugin is applied`(context: ExtensionContext)  {
-        val details = createGradleRunner(context)
+    fun `should fine build service warning without plugin, and should not receive build service warning when plugin is applied`(context: ExtensionContext) = runTest {
+        val details = SharedTestSuiteStore.getSharedGradleRunnerDetails(context)
         val settingsFile = details.settingsFile
         val buildFile = details.buildFile
         val projectDir = details.projectDir
@@ -29,18 +31,19 @@ class DummyCheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
 
         println("Build file hashcode for DummyCheckKotlinBuildServiceFixPluginFunctionalTest: ${buildFile.hashCode()}")
 
-        buildFile.writeText("""
+        writeText(buildFile) {
+            """
             tasks.register("buildAllComposite") {
                 group = "verification"
                 description = "Builds all projects, which includes assembling them and running all checks (tests/functional tests)"
-    
+
                 dependsOn(gradle.includedBuild("$someProjectName").task(":${someProjectSubProjectName}:build"))
                 dependsOn(gradle.includedBuild("$someProject2Name").task(":${someProject2SubProjectName}:build"))
             }
-        """.trimIndent())
+        """.trimIndent()
+        }
 
-
-        settingsFile.writeText(
+        writeText(settingsFile) {
             """
             rootProject.name = "some-name"
             includeBuild("$someProjectName")
@@ -54,33 +57,36 @@ class DummyCheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
                 repositories.gradlePluginPortal()
             }
         """.trimIndent()
-        )
-
+        }
 
         // Assert they exist without plugin
         val result = runExpectedSuccessTask(details, "buildComposite")
-        val warningsLines = result.output.lines().filter { it.contains("Build service 'KotlinToolingDiagnosticsCollector") }
+        val warningsLines = readLines(result).filter { it.contains("Build service 'KotlinToolingDiagnosticsCollector") }
 
         Assertions.assertTrue(result.output.contains("BUILD SUCCESS"))
         Assertions.assertEquals(2, warningsLines.size)
 
         // Assert they don't exist with plugin
-        someProject.subProjects.first().buildFile.writeText("""
+        writeText(someProject.subProjects.first().buildFile) {
+            """
             plugins {
                 kotlin("jvm") version("1.9.21")
                 id("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin")
             }
-        """.trimIndent())
+        """.trimIndent()
+        }
 
-        someProject2.subProjects.first().buildFile.writeText("""
+        writeText(someProject2.subProjects.first().buildFile) {
+            """
             plugins {
                 kotlin("jvm") version("1.9.21")
                 id("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin")
             }
-        """.trimIndent())
+        """.trimIndent()
+        }
 
         val resultWithPlugin = runExpectedSuccessTask(details, "buildAllComposite")
-        val warningLinesWithPlugin = resultWithPlugin.output.lines().filter { it.contains("Build service 'KotlinToolingDiagnosticsCollector") }
+        val warningLinesWithPlugin = readLines(resultWithPlugin).filter { it.contains("Build service 'KotlinToolingDiagnosticsCollector") }
 
         Assertions.assertTrue(resultWithPlugin.output.contains("BUILD SUCCESS"))
         Assertions.assertEquals(0, warningLinesWithPlugin.size)
@@ -103,10 +109,15 @@ class DummyCheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
     )
 
 
-    private fun createIncludedBuildWithSubproject(includedBuildName: String, projectDir: File, subProjectName: String): BasicIncludedBuild {
+    private suspend fun createIncludedBuildWithSubproject(
+        includedBuildName: String,
+        projectDir: File,
+        subProjectName: String
+    ): BasicIncludedBuild {
 
         val includedBuild = createBasicIncludedBuild(includedBuildName, projectDir)
-        includedBuild.settingsFile.appendText("""
+        appendText(includedBuild.settingsFile) {
+            """
             include("$subProjectName")
 
             pluginManagement {
@@ -116,17 +127,20 @@ class DummyCheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
             dependencyResolutionManagement {
                 repositories.gradlePluginPortal()
             }
-        """.trimIndent())
+        """.trimIndent()
+        }
         val subProjectDir = includedBuild.directory.resolve(subProjectName)
         subProjectDir.mkdirs()
         val subProjectBuildFile = File(subProjectDir.path + "/build.gradle.kts")
-        subProjectBuildFile.createNewFile()
+        createFile(subProjectBuildFile)
 
-        subProjectBuildFile.writeText("""
+        writeText(subProjectBuildFile) {
+            """
             plugins {
                 kotlin("jvm") version("1.9.21")
             }
-        """.trimIndent())
+        """.trimIndent()
+        }
 
         val subProject = BasicSubProject(subProjectDir, subProjectBuildFile)
 
@@ -134,20 +148,22 @@ class DummyCheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
 
     }
 
-    private fun createBasicIncludedBuild(includedBuildName: String, projectDir: File): InitialIncludedBuild {
+    private suspend fun createBasicIncludedBuild(includedBuildName: String, projectDir: File): InitialIncludedBuild {
         val dir = File(projectDir.path).resolve(includedBuildName)
         dir.mkdirs()
         val settingsFile = File(dir.path + "/settings.gradle.kts")
         val buildFile = File(dir.path + "/build.gradle.kts")
-        buildFile.createNewFile()
+        createFile(buildFile)
 
-        settingsFile.writeText("""
+        writeText(settingsFile) {
+            """
             rootProject.name = "$includedBuildName"
 
             enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
             enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-        """.trimIndent())
+        """.trimIndent()
+        }
 
         return InitialIncludedBuild(dir, buildFile, settingsFile)
     }

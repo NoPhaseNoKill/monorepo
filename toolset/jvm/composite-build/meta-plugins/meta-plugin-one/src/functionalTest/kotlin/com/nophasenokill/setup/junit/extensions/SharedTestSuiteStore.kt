@@ -1,5 +1,6 @@
 package com.nophasenokill.setup.junit.extensions
 
+import com.nophasenokill.setup.runner.SharedRunnerDetails
 import com.nophasenokill.setup.variations.TestDirectory
 import org.junit.jupiter.api.extension.ExtensionContext
 
@@ -12,6 +13,10 @@ object SharedTestSuiteStore {
 
     fun putObjectIntoGlobalStore(context: ExtensionContext, uniqueKey: Any, value: Any) {
         context.root.getStore(GLOBAL_NAMESPACE).put(uniqueKey, value)
+    }
+
+    fun getSharedGradleRunnerDetails(context: ExtensionContext): SharedRunnerDetails {
+        return context.root.getStore(GLOBAL_NAMESPACE).get(SharedTestSuiteContextKey.SHARED_GRADLE_RUNNER_DETAILS) as SharedRunnerDetails
     }
 
     fun getTestGradleDirectory(context: ExtensionContext, uniqueKey: Any): TestDirectory {

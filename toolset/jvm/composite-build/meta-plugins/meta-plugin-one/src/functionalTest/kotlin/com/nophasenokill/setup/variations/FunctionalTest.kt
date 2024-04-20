@@ -3,9 +3,12 @@ package com.nophasenokill.setup.variations
 import com.nophasenokill.setup.junit.extensions.SharedTestSuiteContextKey
 import com.nophasenokill.setup.junit.extensions.SharedTestSuiteStore
 import com.nophasenokill.setup.runner.SharedRunnerDetails
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 import org.gradle.testkit.runner.BuildResult
 import org.junit.jupiter.api.extension.ExtensionContext
+import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.createFile
 
@@ -14,29 +17,42 @@ import kotlin.io.path.createFile
 
 open class FunctionalTest {
 
-    fun runExpectedSuccessTask(details: SharedRunnerDetails, task: String): BuildResult  {
+    fun runExpectedSuccessTask(details: SharedRunnerDetails, task: String): BuildResult {
         return details.gradleRunner.withArguments(task, "--warning-mode=all").build()
     }
 
-    fun createGradleRunner(context: ExtensionContext): SharedRunnerDetails  {
+    suspend fun createFile(file: File) {
+        withContext(Dispatchers.IO) {
+            file.createNewFile()
+        }
+    }
 
-        val testDirectory =  SharedTestSuiteStore.getTestGradleDirectory(context, SharedTestSuiteContextKey.TEST_DIRECTORIES)
-        val baseDir = testDirectory.mainDirectory
-        val projectDir  = baseDir.resolve(context.displayName)
-        projectDir.toFile().mkdirs()
+    suspend fun writeText(file: File, textBlock:() -> String) {
+        /*
+            Putting this outside of the IO context ensures that if the text block
+            is computationally expensive we avoid putting this on the IO thread
+         */
+        val text = textBlock()
+        withContext(Dispatchers.IO) {
+            file.writeText(text)
+        }
+    }
 
-        val buildFile = projectDir.resolve("build.gradle.kts")
-        buildFile.createFile()
-        val settingsFile = projectDir.resolve("settings.gradle.kts")
+    suspend fun appendText(file: File, textBlock:() -> String) {
+        /*
+            Putting this outside of the IO context ensures that if the text block
+            is computationally expensive we avoid putting this on the IO thread
+         */
+        val text = textBlock()
+        withContext(Dispatchers.IO) {
+            file.appendText(text)
+        }
+    }
 
-        return SharedRunnerDetails(
-            projectDir.toFile(),
-            buildFile.toFile(),
-            settingsFile.toFile(),
-            SharedRunnerDetails.SharedRunner.getRunner(testDirectory)
-                .withProjectDir(projectDir.toFile())
-                .withPluginClasspath()
-        )
+    suspend fun readLines(buildResult: BuildResult): List<String> {
+        return withContext(Dispatchers.IO) {
+            return@withContext buildResult.output.lines()
+        }
     }
 
 }
@@ -44,6 +60,5 @@ open class FunctionalTest {
 data class TestDirectory(
     val name: String,
     val mainDirectory: Path,
-    val testKitDir: Path
 )
 
