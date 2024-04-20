@@ -10,8 +10,8 @@ import org.junit.jupiter.api.extension.ExtensionContext
 class KotlinBasePluginFoundTaskFunctionalTest: FunctionalTest() {
 
     @Test
-    fun `can run task`(context: ExtensionContext) = runTest {
-        val details = createGradleRunner(context)
+    fun `can run task`()  {
+        val details = createGradleRunner()
         val settingsFile = details.settingsFile
         val buildFile = details.buildFile
 

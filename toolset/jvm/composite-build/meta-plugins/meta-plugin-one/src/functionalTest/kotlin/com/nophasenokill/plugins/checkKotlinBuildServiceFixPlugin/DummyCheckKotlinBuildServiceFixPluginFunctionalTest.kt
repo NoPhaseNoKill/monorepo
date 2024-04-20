@@ -11,7 +11,7 @@ import java.io.File
 import kotlin.system.measureTimeMillis
 
 @ExtendWith(GradleRunnerExtension::class)
-class CheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
+class DummyCheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
 
     @Test
     fun `should fine build service warning without plugin, and should not receive build service warning when plugin is applied`(context: ExtensionContext)  {
@@ -29,18 +29,18 @@ class CheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
         val someProject = createIncludedBuildWithSubproject(someProjectName, projectDir, someProjectSubProjectName)
         val someProject2 = createIncludedBuildWithSubproject(someProject2Name, projectDir, someProject2SubProjectName)
 
-        println("Build file hashcode for CheckKotlinBuildServiceFixPluginFunctionalTest: ${buildFile.hashCode()}")
+        println("Build file hashcode for DummyCheckKotlinBuildServiceFixPluginFunctionalTest: ${buildFile.hashCode()}")
 
         buildFile.writeText("""
             tasks.register("buildAllComposite") {
                 group = "verification"
                 description = "Builds all projects, which includes assembling them and running all checks (tests/functional tests)"
-
+    
                 dependsOn(gradle.includedBuild("$someProjectName").task(":${someProjectSubProjectName}:build"))
                 dependsOn(gradle.includedBuild("$someProject2Name").task(":${someProject2SubProjectName}:build"))
             }
-        """.trimIndent()
-        )
+        """.trimIndent())
+
 
         settingsFile.writeText(
             """
@@ -57,6 +57,7 @@ class CheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
             }
         """.trimIndent()
         )
+
 
         // Assert they exist without plugin
         val result = runExpectedSuccessTask(details, "buildComposite")

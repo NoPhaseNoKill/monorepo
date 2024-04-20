@@ -3,7 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     `java-gradle-plugin`
     id("org.jetbrains.kotlin.jvm") version "1.9.21"
-    id("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin") // Only applies it project standalone-plugins
+    id("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin") // Only applies it to project standalone-plugins (aka this one)
 }
 
 
@@ -61,6 +61,9 @@ testing {
 
             this.targets.configureEach {
                 this.testTask.configure {
+
+                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+
                     this.testLogging {
                         events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
                         showStandardStreams = true
@@ -74,6 +77,10 @@ testing {
 
             this.targets.configureEach {
                 this.testTask.configure {
+
+                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    forkEvery = 1
+
                     this.testLogging {
                         events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
                         showStandardStreams = true
@@ -134,4 +141,8 @@ tasks.test {
 tasks.named<Task>("check") {
     // Include functionalTest as part of the check which implicitly means build lifecycle
     dependsOn(functionalTestTask)
+}
+
+tasks.build {
+    dependsOn(gradle.includedBuild("meta-plugins").task(":meta-plugin-one:jar"))
 }

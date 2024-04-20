@@ -75,6 +75,9 @@ testing {
 
             this.targets.configureEach {
                 this.testTask.configure {
+
+                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+
                     this.testLogging {
                         events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
                         showStandardStreams = true
@@ -88,6 +91,10 @@ testing {
 
             this.targets.configureEach {
                 this.testTask.configure {
+
+                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    forkEvery = 1
+
                     this.testLogging {
                         events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
                         showStandardStreams = true

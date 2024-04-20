@@ -1,6 +1,6 @@
 package com.nophasenokill.setup.logging
 
-import com.nophasenokill.setup.junit.extensions.TestInvocationListener
+import kotlinx.coroutines.runBlocking
 import org.junit.platform.commons.logging.Logger
 import org.junit.platform.commons.logging.LoggerFactory
 
@@ -25,5 +25,5 @@ object TestLogger {
         otherwise the resulting log will be an anonymous function
         name which isn't useful for logging.
      */
-    val LOGGER: Logger = lazy { LoggerFactory.getLogger(this::class.java) }.value
+    val LOGGER: Logger = runBlocking { lazy { LoggerFactory.getLogger(this::class.java) }.value }
 }

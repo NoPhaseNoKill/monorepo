@@ -1,6 +1,7 @@
 package com.nophasenokill.setup.junit.extensions
 
 
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.extension.*
 
 
@@ -11,9 +12,11 @@ import org.junit.jupiter.api.extension.*
  */
 class SharedTestSuiteExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCallback, AfterEachCallback, ParameterResolver, ExtensionContext.Store.CloseableResource {
 
-    override fun beforeAll(context: ExtensionContext) {
+    override fun beforeAll(context: ExtensionContext) = runBlocking {
         val value = SharedTestSuiteStore.getRoot(context)
             .get(SharedTestSuiteContextKey.TESTS_STARTED)
+
+        println("COMING INTO STANDALONE PLUGINS SharedTestSuiteExtension beforeAll. Value is: $value")
 
         if (value == null) {
             /*
@@ -21,7 +24,9 @@ class SharedTestSuiteExtension: BeforeAllCallback, BeforeEachCallback, AfterAllC
                 so that setupGlobalTestSuite and close are only applied once for the whole test run
                 of the project
              */
-            SharedTestSuiteStore.putObjectIntoGlobalStore(context, SharedTestSuiteContextKey.TESTS_STARTED, this)
+            println("SETTING STANDALONE PLUGINS VALUE TO: ${this}")
+            println("STANDALONE PLUGINS this@SharedTestSuiteExtension: ${this@SharedTestSuiteExtension}")
+            SharedTestSuiteStore.putObjectIntoGlobalStore(context, SharedTestSuiteContextKey.TESTS_STARTED, this@SharedTestSuiteExtension)
             setupGlobalTestSuite()
         }
 
@@ -32,7 +37,7 @@ class SharedTestSuiteExtension: BeforeAllCallback, BeforeEachCallback, AfterAllC
      * This should only be called at the start of all the project tests
      */
 
-    fun setupGlobalTestSuite() {
+    fun setupGlobalTestSuite()  = runBlocking {
 
     }
 
@@ -40,35 +45,35 @@ class SharedTestSuiteExtension: BeforeAllCallback, BeforeEachCallback, AfterAllC
     /**
      * This should only be called at the start of each test class (file)
      */
-    fun setupTestClass()  {
+    fun setupTestClass()  = runBlocking  {
 
     }
 
 
-    override fun beforeEach(context: ExtensionContext) {
+    override fun beforeEach(context: ExtensionContext)  = runBlocking {
 
     }
 
-    override fun afterEach(context: ExtensionContext) {
+    override fun afterEach(context: ExtensionContext)  = runBlocking {
 
     }
 
-    override fun afterAll(context: ExtensionContext) {
+    override fun afterAll(context: ExtensionContext)  = runBlocking {
 
     }
 
     /**
      * This should only be called at the end of all the project tests
      */
-    override fun close() {
+    override fun close()  = runBlocking {
 
     }
 
-    override fun supportsParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Boolean {
-        return parameterContext.parameter.type == ExtensionContext::class.java
+    override fun supportsParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Boolean  = runBlocking {
+        return@runBlocking parameterContext.parameter.type == ExtensionContext::class.java
     }
 
-    override fun resolveParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Any {
-        return extensionContext
+    override fun resolveParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Any  = runBlocking {
+        return@runBlocking extensionContext
     }
 }

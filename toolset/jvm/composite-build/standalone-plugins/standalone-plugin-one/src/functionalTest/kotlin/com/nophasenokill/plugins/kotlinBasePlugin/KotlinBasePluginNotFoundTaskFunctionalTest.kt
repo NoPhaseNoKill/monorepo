@@ -10,8 +10,8 @@ import org.junit.jupiter.api.extension.ExtensionContext
 class KotlinBasePluginNotFoundTaskFunctionalTest: FunctionalTest() {
 
     @Test
-    fun `cannot run task that does not exist`(context: ExtensionContext) = runTest {
-        val details = createGradleRunner(context)
+    fun `cannot run task that does not exist`()  {
+        val details = createGradleRunner()
         val settingsFile = details.settingsFile
         val buildFile = details.buildFile
 

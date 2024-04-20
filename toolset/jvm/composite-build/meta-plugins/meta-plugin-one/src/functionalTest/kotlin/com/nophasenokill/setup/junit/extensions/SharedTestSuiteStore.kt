@@ -1,5 +1,6 @@
 package com.nophasenokill.setup.junit.extensions
 
+import com.nophasenokill.setup.variations.TestDirectory
 import org.junit.jupiter.api.extension.ExtensionContext
 
 object SharedTestSuiteStore {
@@ -11,5 +12,9 @@ object SharedTestSuiteStore {
 
     fun putObjectIntoGlobalStore(context: ExtensionContext, uniqueKey: Any, value: Any) {
         context.root.getStore(GLOBAL_NAMESPACE).put(uniqueKey, value)
+    }
+
+    fun getTestGradleDirectory(context: ExtensionContext, uniqueKey: Any): TestDirectory {
+        return context.root.getStore(GLOBAL_NAMESPACE).get(uniqueKey) as TestDirectory
     }
 }

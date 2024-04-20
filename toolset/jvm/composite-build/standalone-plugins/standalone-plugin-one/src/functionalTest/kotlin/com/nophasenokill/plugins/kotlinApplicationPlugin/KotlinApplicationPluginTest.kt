@@ -12,8 +12,8 @@ import java.io.File
 class KotlinApplicationPluginTest: FunctionalTest() {
 
     @Test
-    fun `should be able to run an application, and maintain same dependencies, when the applications settings file includes the meta-plugins and generalised platform`(context: ExtensionContext) = runTest {
-        val details = createGradleRunner(context)
+    fun `should be able to run an application, and maintain same dependencies, when the applications settings file includes the meta-plugins and generalised platform`()  {
+        val details = createGradleRunner()
         val settingsFile = details.settingsFile
         val buildFile = details.buildFile
         val projectDir = details.projectDir

@@ -10,8 +10,8 @@ import org.junit.jupiter.api.extension.ExtensionContext
 class WrapTextWithQuotesPluginFunctionalTest: FunctionalTest() {
 
     @Test
-    fun `finds and runs addQuotationMarks task successfully`(context: ExtensionContext) = runTest {
-        val details = createGradleRunner(context)
+    fun `finds and runs addQuotationMarks task successfully`()  {
+        val details = createGradleRunner()
         val settingsFile = details.settingsFile
         val buildFile = details.buildFile
         val projectDir = details.projectDir
