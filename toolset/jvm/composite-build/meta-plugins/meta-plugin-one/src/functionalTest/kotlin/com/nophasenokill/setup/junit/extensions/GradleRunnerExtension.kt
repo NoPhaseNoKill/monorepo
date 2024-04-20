@@ -1,7 +1,7 @@
 package com.nophasenokill.setup.junit.extensions
 
+import TestDirectory
 import com.nophasenokill.setup.runner.SharedRunnerDetails
-import com.nophasenokill.setup.variations.TestDirectory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
