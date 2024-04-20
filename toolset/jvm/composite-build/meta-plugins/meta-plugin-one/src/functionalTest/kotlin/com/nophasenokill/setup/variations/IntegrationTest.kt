@@ -10,94 +10,21 @@ import org.gradle.testkit.runner.BuildResult
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.*
 import org.junit.jupiter.api.extension.ExtensionContext.Store
+import org.junit.jupiter.api.extension.ExtensionContext.Store.CloseableResource
 import org.junit.jupiter.api.io.CleanupMode
 import org.junit.jupiter.api.io.TempDir
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.RandomAccessFile
+import java.nio.channels.ClosedChannelException
 import java.nio.channels.FileLock
 import java.nio.channels.OverlappingFileLockException
 import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.properties.Delegates
-
-@ExtendWith(SharedAppExtension::class)
-
-object SingletonTest
-object SingletonWithContext {
-    @JvmStatic
-    lateinit var context: ExtensionContext
-
-    @JvmStatic
-    lateinit var store: Store
-
-    fun start(extensionContext: ExtensionContext): SingletonWithContext {
-        context = extensionContext
-        store = SharedAppStore.getRoot(context)
-        return this
-    }
-
-    fun getContextSingleton(): ExtensionContext {
-        return this.context
-    }
-}
-object SingletonIntegrationTest {
-
-    val mutex = Mutex()
-    var hasStarted = false
-
-    suspend fun setStarted() {
-        mutex.withLock {
-            hasStarted = true
-        }
-    }
-
-    suspend fun checkIfStarted(): Boolean {
-        return mutex.withLock {
-            hasStarted
-        }
-    }
-
-    var started by Delegates.notNull<Boolean>()
-
-    init {
-        started = false
-    }
-
-    suspend fun start(): SingletonIntegrationTest {
-        setStarted()
-        started = true
-        return this
-    }
-}
 
 @ExtendWith(SharedAppExtension::class)
 open class IntegrationTest(context: ExtensionContext) {
-
-    val storeRoot = SharedAppStore.getRoot(context)
-
-
-    val startedWithContext = SingletonWithContext.start(context)
-    val context2 = SingletonWithContext.start(context).context
-
-    init {
-        println("SingletonIntegrationTest.started: ${SingletonIntegrationTest.started}")
-        runTest {
-            val started = SingletonIntegrationTest.start()
-            println("Initiatialising IntegrationTest. This is: $this")
-            println("Initiatialising IntegrationTest. store root: ${storeRoot}")
-            println("Initiatialising IntegrationTest. SingletonIntegrationTest: ${started}")
-            println("Initiatialising IntegrationTest. SingletonIntegrationTest started: ${started.started}")
-            println("Initiatialising IntegrationTest. SingletonIntegrationTest.started: ${SingletonIntegrationTest.started}")
-            println("Initiatialising IntegrationTest. SingletonWithContext: ${startedWithContext}")
-            println("Initiatialising IntegrationTest. SingletonWithContext context: ${startedWithContext.context}")
-            println("Initiatialising IntegrationTest. SingletonWithContext getContextSingleton: ${startedWithContext.getContextSingleton()}")
-            println("Initiatialising IntegrationTest. SingletonWithContext hashcode: ${startedWithContext.hashCode()}")
-            println("Initiatialising IntegrationTest. SingletonWithContext store: ${SingletonWithContext.store}")
-            println("Initiatialising IntegrationTest. context2: ${context2}")
-        }
-    }
 
     fun runExpectedSuccessTask(details: SharedRunnerDetails, task: String): BuildResult {
         return details.gradleRunner.withArguments(task, "--warning-mode=all").build()
@@ -150,39 +77,19 @@ object SharedAppStore {
     }
 }
 
-object SingletonIntegrationTestNew {
-    private val mutex = Mutex()
-    @Volatile
-    private var started = false
-
-    suspend fun checkIfStarted(): Boolean {
-        mutex.withLock {
-            return started
-        }
-    }
-
-    suspend fun setStarted() {
-        mutex.withLock {
-            if (!started) {
-                started = true
-                // Perform initialization here
-                println("Initializing the test suite...")
-            }
-        }
-    }
-}
-
-object GlobalLock {
+object GlobalLock: CloseableResource {
     // Needs to be something static, otherwise different temp directories may be created which initializes it multiple times
     private val lockFilePath = "/tmp/test-suite.lock"
     private val lockFile = RandomAccessFile(lockFilePath, "rw")
-    private val fileChannel = lockFile.channel
     private var lock: FileLock? = null
 
+    /*
+        Need to be very careful in that we close this, as it's open for the whole suite
+     */
     fun acquireLock(): Boolean {
         try {
             println("File lock path is: ${lockFilePath}")
-            lock = fileChannel.tryLock()
+            lock = lockFile.channel.tryLock()
             return lock != null
         } catch (e: OverlappingFileLockException) {
             // ignore and do nothing
@@ -192,6 +99,30 @@ object GlobalLock {
 
     fun releaseLock() {
         lock?.release()
+    }
+
+    override fun close() {
+        try {
+            lock?.close()
+            lockFile.channel.close()
+            File(lockFilePath).delete()
+        } catch (e: Exception) {
+            println("Exception while attempting to close lock: ${e.message}")
+        }
+
+        println("Lock file channel is open: ${lockFile.channel.isOpen}")
+        println("Lock file exists: ${File(lockFilePath).exists()}")
+
+        var hasLockBeenReleased = false
+
+        try {
+            lock?.release()
+        } catch(e: ClosedChannelException) {
+            hasLockBeenReleased = true
+
+        }
+
+        println("Lock has been released: $hasLockBeenReleased")
     }
 }
 
@@ -204,13 +135,11 @@ class SharedAppExtension:
     ExtensionContext.Store.CloseableResource {
 
     override fun beforeAll(context: ExtensionContext) = runTest {
-        if (GlobalLock.acquireLock()) {
-            try {
-                // Perform initialization only if the lock was acquired
-                println("Test suite initialization completed.")
-            } finally {
 
-            }
+        if (GlobalLock.acquireLock()) {
+            // Perform initialization only if the lock was acquired
+            SharedAppStore.putObjectIntoGlobalStore(context, SharedAppContextKey.TESTS_STARTED, this@SharedAppExtension)
+            println("Test suite initialization completed.")
         }
     }
 
@@ -232,7 +161,8 @@ class SharedAppExtension:
      */
     override fun close() {
         GlobalLock.releaseLock()
-        println("Finishing integration tests")
+        GlobalLock.close()
+        println("Finishing integration tests.")
     }
 
     override fun supportsParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Boolean {
