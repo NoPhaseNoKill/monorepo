@@ -2,13 +2,11 @@ package com.nophasenokill.plugins.checkKotlinBuildServiceFixPlugin
 
 import com.nophasenokill.setup.junit.extensions.GradleRunnerExtension
 import com.nophasenokill.setup.variations.FunctionalTest
-import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
 import java.io.File
-import kotlin.system.measureTimeMillis
 
 @ExtendWith(GradleRunnerExtension::class)
 class CheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {

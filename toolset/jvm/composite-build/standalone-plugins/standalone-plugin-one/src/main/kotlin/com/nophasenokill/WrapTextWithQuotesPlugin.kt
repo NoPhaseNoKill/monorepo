@@ -3,7 +3,6 @@ package com.nophasenokill
 import com.nophasenokill.tasks.AddQuotationMarks
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.tasks.TaskProvider
 
 
 internal class WrapTextWithQuotesPlugin : Plugin<Project> {

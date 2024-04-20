@@ -3,7 +3,6 @@ package com.nophasenokill
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.api.tasks.testing.Test
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 class JavaBasePlugin : Plugin<Project> {

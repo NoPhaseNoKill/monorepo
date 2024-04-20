@@ -4,7 +4,6 @@ import com.nophasenokill.setup.logging.TestLogger
 import com.nophasenokill.setup.variations.FunctionalTest
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions

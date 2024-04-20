@@ -2,11 +2,9 @@ package com.nophasenokill.plugins.kotlinApplicationPlugin
 
 import com.nophasenokill.setup.runner.SharedRunnerDetails
 import com.nophasenokill.setup.variations.FunctionalTest
-import kotlinx.coroutines.test.runTest
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtensionContext
 import java.io.File
 
 class KotlinApplicationPluginTest: FunctionalTest() {
