@@ -92,7 +92,7 @@ testing {
                 this.testTask.configure {
 
                     maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
-                    forkEvery = 1
+                    // forkEvery = 1
 
                     this.testLogging {
                         events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)

@@ -5,13 +5,19 @@ import com.nophasenokill.setup.junit.extensions.SharedTestSuiteStore
 import com.nophasenokill.setup.variations.FunctionalTest
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
 import java.io.File
 
-@ExtendWith(GradleRunnerExtension::class)
 class DummyCheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
+
+    @BeforeEach
+    fun recordTime() {
+        Thread.sleep(10000)
+        println("Starting DummyCheckKotlinBuildServiceFixPluginFunctionalTest at: ${System.currentTimeMillis()}")
+    }
 
     @Test
     fun `should fine build service warning without plugin, and should not receive build service warning when plugin is applied`(context: ExtensionContext) = runTest {

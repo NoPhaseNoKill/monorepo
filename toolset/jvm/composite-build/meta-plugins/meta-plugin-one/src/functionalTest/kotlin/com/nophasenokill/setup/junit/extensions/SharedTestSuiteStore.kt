@@ -19,6 +19,10 @@ object SharedTestSuiteStore {
         return context.root.getStore(GLOBAL_NAMESPACE).get(SharedTestSuiteContextKey.SHARED_GRADLE_RUNNER_DETAILS) as SharedRunnerDetails
     }
 
+    fun getGradleCreationState(context: ExtensionContext): GradleCreationState {
+        return context.root.getStore(GLOBAL_NAMESPACE).get(SharedTestSuiteContextKey.GRADLE_CREATION_STATE) as GradleCreationState
+    }
+
     fun getTestGradleDirectory(context: ExtensionContext, uniqueKey: Any): TestDirectory {
         return context.root.getStore(GLOBAL_NAMESPACE).get(uniqueKey) as TestDirectory
     }

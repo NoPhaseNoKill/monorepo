@@ -1,5 +1,6 @@
 package com.nophasenokill.setup.variations
 
+import com.nophasenokill.setup.junit.extensions.GradleRunnerExtension
 import com.nophasenokill.setup.junit.extensions.SharedTestSuiteContextKey
 import com.nophasenokill.setup.junit.extensions.SharedTestSuiteStore
 import com.nophasenokill.setup.runner.SharedRunnerDetails
@@ -7,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 import org.gradle.testkit.runner.BuildResult
+import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
 import java.io.File
 import java.nio.file.Path
@@ -15,6 +17,7 @@ import kotlin.io.path.createFile
 // @ExtendWith(SharedTestSuiteExtension::class, TestInvocationListener::class)
 // @ExtendWith(SharedTestSuiteExtension::class)
 
+@ExtendWith(GradleRunnerExtension::class)
 open class FunctionalTest {
 
     fun runExpectedSuccessTask(details: SharedRunnerDetails, task: String): BuildResult {

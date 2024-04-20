@@ -122,7 +122,3 @@ tasks.check {
     // Include functionalTest as part of the check which implicitly means build lifecycle
     dependsOn(functionalTestTask)
 }
-
-tasks.build {
-    dependsOn(gradle.includedBuild("meta-plugins").task(":meta-plugin-one:jar"))
-}
