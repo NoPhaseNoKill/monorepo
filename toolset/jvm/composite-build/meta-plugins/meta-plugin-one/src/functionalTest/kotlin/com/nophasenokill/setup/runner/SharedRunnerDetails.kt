@@ -1,7 +1,7 @@
 package com.nophasenokill.setup.runner
 
 import com.nophasenokill.setup.variations.TestDirectory
-import kotlinx.coroutines.runBlocking
+
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.internal.DefaultGradleRunner
 import java.io.File

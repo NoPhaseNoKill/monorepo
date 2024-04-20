@@ -3,7 +3,7 @@ package com.nophasenokill.setup.variations
 import com.nophasenokill.setup.junit.extensions.SharedTestSuiteContextKey
 import com.nophasenokill.setup.junit.extensions.SharedTestSuiteStore
 import com.nophasenokill.setup.runner.SharedRunnerDetails
-import kotlinx.coroutines.runBlocking
+
 import org.gradle.testkit.runner.BuildResult
 import org.junit.jupiter.api.extension.ExtensionContext
 import java.nio.file.Path

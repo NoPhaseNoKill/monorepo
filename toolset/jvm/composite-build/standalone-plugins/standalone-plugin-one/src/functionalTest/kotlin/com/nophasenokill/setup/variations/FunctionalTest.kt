@@ -3,7 +3,7 @@ package com.nophasenokill.setup.variations
 import com.nophasenokill.setup.junit.JunitTempDirFactory
 import com.nophasenokill.setup.logging.TestLogger
 import com.nophasenokill.setup.runner.SharedRunnerDetails
-import kotlinx.coroutines.runBlocking
+
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.io.CleanupMode
@@ -21,8 +21,8 @@ open class FunctionalTest {
     val INDENT: String
         get() = "                "
 
-    fun runExpectedSuccessTask(details: SharedRunnerDetails, task: String): BuildResult  = runBlocking {
-        return@runBlocking details.gradleRunner
+    fun runExpectedSuccessTask(details: SharedRunnerDetails, task: String): BuildResult  {
+        return details.gradleRunner
             .withArguments(
                 task,
                 "--warning-mode=all",
@@ -30,37 +30,37 @@ open class FunctionalTest {
             .build()
     }
 
-    fun runExpectedFailureTask(details: SharedRunnerDetails, task: String): BuildResult  = runBlocking {
-        return@runBlocking details.gradleRunner.withArguments(task, "--warning-mode=all").buildAndFail()
+    fun runExpectedFailureTask(details: SharedRunnerDetails, task: String): BuildResult  {
+        return details.gradleRunner.withArguments(task, "--warning-mode=all").buildAndFail()
     }
 
-    fun getTaskOutcome(taskPath: String, result: BuildResult): TaskOutcome  = runBlocking {
+    fun getTaskOutcome(taskPath: String, result: BuildResult): TaskOutcome  {
         try {
-            return@runBlocking requireNotNull(result.task(taskPath)?.outcome)
+            return requireNotNull(result.task(taskPath)?.outcome)
         } catch (e: Exception) {
             TestLogger.LOGGER.error {"Task outcome could not be found for task path '${taskPath}'. Exception was ${e.message}" }
             throw e
         }
     }
 
-    fun getComparableBuildResultLines(result: BuildResult, trimmedFromTop: Int, trimmedFromBottom: Int): List<String>  = runBlocking {
+    fun getComparableBuildResultLines(result: BuildResult, trimmedFromTop: Int, trimmedFromBottom: Int): List<String> {
         val removeStartOfFile: List<String> =  result.output.lines().subList(trimmedFromTop, result.output.lines().size)
-        return@runBlocking removeStartOfFile.subList(0, removeStartOfFile.size - trimmedFromBottom)
+        return removeStartOfFile.subList(0, removeStartOfFile.size - trimmedFromBottom)
     }
 
 
     /*
         This ensures the test is relocatable for cache, as the file should always be relative
      */
-    fun getResourceFile(fileNamePath: String): File  = runBlocking {
+    fun getResourceFile(fileNamePath: String): File {
         val classLoader = Thread.currentThread().contextClassLoader
         val resourceURL = requireNotNull(
             classLoader.getResource(fileNamePath)
         )
-        return@runBlocking File(resourceURL.toURI())
+        return File(resourceURL.toURI())
     }
 
-    fun addPluginsById(plugins: List<String>, buildFileToAddPluginsTo: File)  = runBlocking {
+    fun addPluginsById(plugins: List<String>, buildFileToAddPluginsTo: File) {
 
         val formattedPlugins = plugins.joinToString( prefix = INDENT, separator = "\n$INDENT") {
             "id(\"$it\")"
@@ -75,7 +75,7 @@ $formattedPlugins
         buildFileToAddPluginsTo.writeText(text)
     }
 
-    fun createGradleRunner(): SharedRunnerDetails  = runBlocking {
+    fun createGradleRunner(): SharedRunnerDetails {
 
 
         val projectDir  = Files.createTempDirectory(UUID.randomUUID().toString())
@@ -84,7 +84,7 @@ $formattedPlugins
         buildFile.createFile()
         val settingsFile = projectDir.resolve("settings.gradle.kts")
 
-        return@runBlocking SharedRunnerDetails(
+        return SharedRunnerDetails(
             projectDir.toFile(),
             buildFile.toFile(),
             settingsFile.toFile(),

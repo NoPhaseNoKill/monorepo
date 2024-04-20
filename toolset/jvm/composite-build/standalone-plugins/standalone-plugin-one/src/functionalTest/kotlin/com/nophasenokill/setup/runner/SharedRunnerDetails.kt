@@ -1,6 +1,6 @@
 package com.nophasenokill.setup.runner
 
-import kotlinx.coroutines.runBlocking
+
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.internal.DefaultGradleRunner
 import java.io.File
@@ -12,8 +12,8 @@ data class SharedRunnerDetails(
     val gradleRunner: GradleRunner
 ) {
     object SharedRunner {
-        fun getRunner(sharedRunnerDir: File, ): GradleRunner = runBlocking {
-            return@runBlocking DefaultGradleRunner()
+        fun getRunner(sharedRunnerDir: File, ): GradleRunner {
+            return DefaultGradleRunner()
                 .withJvmArguments("-Xmx2g", "-XX:MaxMetaspaceSize=384m")
                 .withProjectDir(sharedRunnerDir)
                 .withPluginClasspath()

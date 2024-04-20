@@ -1,6 +1,6 @@
 package com.nophasenokill.setup.junit
 
-import kotlinx.coroutines.runBlocking
+
 import org.junit.jupiter.api.extension.AnnotatedElementContext
 import org.junit.jupiter.api.extension.ExtensionContext
 import org.junit.jupiter.api.io.TempDirFactory
@@ -13,7 +13,7 @@ object JunitTempDirFactory : TempDirFactory {
     override fun createTempDirectory(
         elementContext: AnnotatedElementContext,
         extensionContext: ExtensionContext
-    ): Path  = runBlocking {
-        return@runBlocking Files.createTempDirectory("${extensionContext.displayName}-")
+    ): Path {
+        return Files.createTempDirectory("${extensionContext.displayName}-")
     }
 }
