@@ -77,7 +77,7 @@ object SharedAppStore {
     }
 }
 
-object GlobalLock: CloseableResource {
+object GlobalLock {
     // Needs to be something static, otherwise different temp directories may be created which initializes it multiple times
     private val lockFilePath = "/tmp/test-suite.lock"
     private val lockFile = RandomAccessFile(lockFilePath, "rw")
@@ -101,28 +101,16 @@ object GlobalLock: CloseableResource {
         lock?.release()
     }
 
-    override fun close() {
-        try {
-            lock?.close()
-            lockFile.channel.close()
-            File(lockFilePath).delete()
-        } catch (e: Exception) {
-            println("Exception while attempting to close lock: ${e.message}")
-        }
+    fun getLock(): FileLock? {
+        return lock
+    }
 
-        println("Lock file channel is open: ${lockFile.channel.isOpen}")
-        println("Lock file exists: ${File(lockFilePath).exists()}")
+    fun getLockFilePath(): String {
+        return lockFilePath
+    }
 
-        var hasLockBeenReleased = false
-
-        try {
-            lock?.release()
-        } catch(e: ClosedChannelException) {
-            hasLockBeenReleased = true
-
-        }
-
-        println("Lock has been released: $hasLockBeenReleased")
+    fun getLockFile(): RandomAccessFile {
+        return lockFile
     }
 }
 
@@ -143,15 +131,15 @@ class SharedAppExtension:
         }
     }
 
-    override fun beforeEach(context: ExtensionContext) {
+    override fun beforeEach(context: ExtensionContext) = runTest {
         println("beforeEach SharedAppExtension (integration tests) for test: ${context.displayName}")
     }
 
-    override fun afterEach(context: ExtensionContext) {
+    override fun afterEach(context: ExtensionContext) = runTest {
         println("afterEach SharedAppExtension (integration tests) test: ${context.displayName}")
     }
 
-    override fun afterAll(context: ExtensionContext) {
+    override fun afterAll(context: ExtensionContext) = runTest {
         println("afterAll SharedAppExtension (integration tests) test: ${context.displayName}")
         println("Temp dir is: $sharedRunnerDir for ${context.displayName}")
     }
@@ -159,9 +147,27 @@ class SharedAppExtension:
     /**
      * This should only be called at the end of all the project tests
      */
-    override fun close() {
-        GlobalLock.releaseLock()
-        GlobalLock.close()
+    override fun close() = runTest {
+        try {
+            GlobalLock.getLock()?.close()
+            GlobalLock.getLockFile().channel.close()
+            File(GlobalLock.getLockFilePath()).delete()
+        } catch (e: Exception) {
+            LOGGER.info("Exception while attempting to close lock: ${e.message}")
+        }
+
+        println("Lock file channel is open: ${GlobalLock.getLockFile().channel.isOpen}")
+        println("Lock file exists: ${File(GlobalLock.getLockFilePath()).exists()}")
+
+        var hasLockBeenReleased = false
+
+        try {
+            GlobalLock.getLock()?.release()
+        } catch(e: ClosedChannelException) {
+            hasLockBeenReleased = true
+        }
+
+        println("Lock has been released: $hasLockBeenReleased")
         println("Finishing integration tests.")
     }
 
