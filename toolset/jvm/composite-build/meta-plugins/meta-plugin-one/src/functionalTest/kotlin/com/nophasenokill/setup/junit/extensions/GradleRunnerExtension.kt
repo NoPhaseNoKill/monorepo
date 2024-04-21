@@ -1,11 +1,12 @@
 package com.nophasenokill.setup.junit.extensions
 
 import TestDirectory
+import com.nophasenokill.plugins.checkKotlinBuildServiceFixPlugin.someNewDir2.CoroutineTest2
+import com.nophasenokill.plugins.checkKotlinBuildServiceFixPlugin.someNewDir2.CoroutineTestExtension
+import com.nophasenokill.plugins.checkKotlinBuildServiceFixPlugin.someNewDir2.EnhancedRunTestScope
 import com.nophasenokill.setup.runner.SharedRunnerDetails
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.withContext
 import org.junit.jupiter.api.extension.*
 import org.junit.jupiter.api.extension.ExtensionContext.Store.CloseableResource
 import org.junit.jupiter.api.io.CleanupMode
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.io.TempDir
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.atomic.AtomicReference
 import kotlin.io.path.Path
 import kotlin.io.path.createFile
 
@@ -24,6 +24,7 @@ enum class GradleCreationState {
 }
 
 class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCallback, ParameterResolver, CloseableResource {
+
 
     @field:TempDir(cleanup = CleanupMode.ON_SUCCESS)
     val sharedRunnerDir: Path = Files.createTempDirectory("shared-runner-dir")
@@ -85,11 +86,10 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
                         SharedTestSuiteContextKey.GRADLE_CREATION_STATE,
                         GradleCreationState.CREATING_RUNNER
                     )
+
                     val sharedRunnerDetails = createGradleRunner(context)
 
-                    withContext(Dispatchers.IO) {
-                        sharedRunnerDetails.gradleRunner.withArguments("build", "--warning-mode=all").build()
-                    }
+                    sharedRunnerDetails.gradleRunner.withArguments("build", "--warning-mode=all").build()
 
                     SharedTestSuiteStore.putObjectIntoGlobalStore(
                         context,
@@ -123,7 +123,7 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
     }
 
     private suspend fun createGradleRunner(context: ExtensionContext): SharedRunnerDetails {
-        return withContext(Dispatchers.IO) {
+        return coroutineScope {
             val tempDir = Files.createDirectory(Path("$sharedRunnerDir/${context.displayName}-"))
             SharedTestSuiteStore.putObjectIntoGlobalStore(context, SharedTestSuiteContextKey.TEST_DIRECTORIES, TestDirectory(context.displayName, tempDir))
 
@@ -140,7 +140,7 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
                 .withProjectDir(projectDir.toFile())
                 .withPluginClasspath()
 
-            return@withContext SharedRunnerDetails(
+            return@coroutineScope SharedRunnerDetails(
                 projectDir.toFile(),
                 buildFile.toFile(),
                 settingsFile.toFile(),
@@ -167,4 +167,6 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
         val timeTaken = finishTime - startTime
         println("Tests for class: $name took total wall clock time of: $timeTaken ms. Start time was: ${startTime}, end time was: $finishTime")
     }
+
+
 }

@@ -1,9 +1,16 @@
 package com.nophasenokill.setup.variations
 
+import com.nophasenokill.plugins.checkKotlinBuildServiceFixPlugin.someNewDir2.CoroutineTest2
+import com.nophasenokill.plugins.checkKotlinBuildServiceFixPlugin.someNewDir2.EnhancedRunTestScope
+import com.nophasenokill.plugins.checkKotlinBuildServiceFixPlugin.someNewDir2.EnhancedTestScope
+import com.nophasenokill.setup.junit.extensions.GradleRunnerExtension
+import com.nophasenokill.setup.junit.extensions.SharedTestSuiteStore
 import com.nophasenokill.setup.runner.SharedRunnerDetails
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withContext
 import org.gradle.testkit.runner.BuildResult
@@ -23,17 +30,26 @@ import java.nio.channels.OverlappingFileLockException
 import java.nio.file.Files
 import java.nio.file.Path
 
-@ExtendWith(SharedAppExtension::class)
-open class IntegrationTest(context: ExtensionContext) {
+
+@ExperimentalCoroutinesApi
+open class IntegrationTest: CoroutineTest2 {
+
+    override lateinit var runTestScope: EnhancedRunTestScope
+
+    fun getRunTestScope(context: ExtensionContext): EnhancedRunTestScope {
+        return SharedTestSuiteStore.getRunTestScope(context)
+    }
 
     fun runExpectedSuccessTask(details: SharedRunnerDetails, task: String): BuildResult {
         return details.gradleRunner.withArguments(task, "--warning-mode=all").build()
     }
 
+    fun EnhancedTestScope.createFile(file: File) {
+        file.createNewFile()
+    }
+
     suspend fun createFile(file: File) {
-        withContext(Dispatchers.IO) {
-            file.createNewFile()
-        }
+        file.createNewFile()
     }
 
     suspend fun writeText(file: File, textBlock:() -> String) {
@@ -42,9 +58,9 @@ open class IntegrationTest(context: ExtensionContext) {
             is computationally expensive we avoid putting this on the IO thread
          */
         val text = textBlock()
-        withContext(Dispatchers.IO) {
+
             file.writeText(text)
-        }
+
     }
 
     suspend fun appendText(file: File, textBlock:() -> String) {
@@ -53,15 +69,13 @@ open class IntegrationTest(context: ExtensionContext) {
             is computationally expensive we avoid putting this on the IO thread
          */
         val text = textBlock()
-        withContext(Dispatchers.IO) {
+
             file.appendText(text)
-        }
+
     }
 
     suspend fun readLines(buildResult: BuildResult): List<String> {
-        return withContext(Dispatchers.IO) {
-            return@withContext buildResult.output.lines()
-        }
+        return buildResult.output.lines()
     }
 }
 
