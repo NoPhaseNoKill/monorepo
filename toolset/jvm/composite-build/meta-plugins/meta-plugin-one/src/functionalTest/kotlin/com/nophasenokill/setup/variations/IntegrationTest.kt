@@ -1,9 +1,12 @@
 package com.nophasenokill.setup.variations
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.extension.*
 import org.junit.jupiter.api.extension.ExtensionContext.Store
 import org.junit.jupiter.api.io.CleanupMode
@@ -13,15 +16,17 @@ import java.nio.channels.FileLock
 import java.nio.channels.OverlappingFileLockException
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 @ExtendWith(SharedAppExtension::class)
 open class IntegrationTest {
 
-    fun getGlobalNamespace(): ExtensionContext.Namespace = runBlocking  {
+    fun getGlobalNamespace(): ExtensionContext.Namespace = runBlocking {
         return@runBlocking ExtensionContext.Namespace.GLOBAL
     }
 
-    fun getStoreRoot(context: ExtensionContext): Store = runBlocking  {
+    fun getStoreRoot(context: ExtensionContext): Store = runBlocking {
         return@runBlocking SharedAppStore.getRoot(context)
     }
 
@@ -38,7 +43,11 @@ object SharedAppStore {
         return extensionContext.root.getStore(GLOBAL_NAMESPACE)
     }
 
-    fun putObjectIntoGlobalStore(context: ExtensionContext, uniqueKey: Any, value: Any) = runBlocking  {
+    fun getIOResult(context: ExtensionContext): String? {
+        return getRoot(context).getOrDefault(SharedAppContextKey.IO_RESULT, String::class.java, null)
+    }
+
+    fun putObjectIntoGlobalStore(context: ExtensionContext, uniqueKey: Any, value: Any) = runBlocking {
         context.root.getStore(GLOBAL_NAMESPACE).put(uniqueKey, value)
     }
 }
@@ -67,7 +76,8 @@ object GlobalLock {
     }
 }
 
-class SharedAppExtension:
+@OptIn(ExperimentalCoroutinesApi::class, InternalCoroutinesApi::class)
+class SharedAppExtension :
     BeforeAllCallback,
     BeforeEachCallback,
     AfterAllCallback,
@@ -76,36 +86,181 @@ class SharedAppExtension:
     Store.CloseableResource {
 
 
+    private val testDispatcher = lazy { UnconfinedTestDispatcher() }
+    private val scope = lazy { TestScope(testDispatcher.value) }
+    private lateinit var globalCoroutineScope: CoroutineScope
 
-    override fun beforeAll(context: ExtensionContext) = runBlocking  {
+    init {
+        val testScope = scope.value
+        testScope.runTest {
+            globalCoroutineScope = this.backgroundScope
+        }
+    }
 
-        val value = SharedAppStore.getRoot(context).get(SharedAppContextKey.TESTS_STARTED)
+    sealed class AsyncTaskType
+    object IOTask : AsyncTaskType()
+    object NonIOTask : AsyncTaskType()
 
-        if(value == null) {
-            if (GlobalLock.acquireLock(IntegrationTest.LOGGER)) {
-                try {
-                    // Perform initialization only if the lock was acquired
-                    SharedAppStore.putObjectIntoGlobalStore(context, SharedAppContextKey.TESTS_STARTED, this@SharedAppExtension)
 
-                    IntegrationTest.LOGGER.lifecycle("Test suite initialization completed.")
-                } finally {
-                    GlobalLock.releaseLock()
+    suspend fun doAsyncTask(type: AsyncTaskType, block: suspend () -> Unit) {
+        when (type) {
+            IOTask -> {
+                globalCoroutineScope.launch(Dispatchers.IO) {
+                    block()
+                }
+            }
+
+            NonIOTask -> {
+                globalCoroutineScope.launch(globalCoroutineScope.coroutineContext) {
+                    block()
                 }
             }
         }
     }
 
-    override fun beforeEach(context: ExtensionContext) = runBlocking  {
-        IntegrationTest.LOGGER.lifecycle("beforeEach SharedAppExtension (integration tests) for test: {}", context.displayName)
+    suspend fun <T> getAsyncTaskResult(type: AsyncTaskType, block: suspend () -> T): T {
+        return try {
+            val deferred = when (type) {
+                IOTask -> {
+                    globalCoroutineScope.async(Dispatchers.IO) {
+                        block()
+                    }
+                }
+
+                NonIOTask -> {
+                    globalCoroutineScope.async(globalCoroutineScope.coroutineContext) {
+                        block()
+                    }
+                }
+            }
+            deferred.await()
+            deferred.getCompleted()
+        } catch (e: CancellationException) {
+            currentCoroutineContext().ensureActive() // throws if the current coroutine was cancelled
+            IntegrationTest.LOGGER.lifecycle(e.message) // if this line executes, the exception is the result of `await` itself
+            throw (e)
+        }
+    }
+
+
+    suspend fun simulateIO(value: String, duration: Duration = 5.seconds): String {
+        return try {
+            withContext(Dispatchers.IO) {
+                val result = globalCoroutineScope.async {
+                    delay(duration)
+                    value
+                }
+                result.await()
+                result.getCompleted()
+            }
+
+        } catch (e: CancellationException) {
+            currentCoroutineContext().ensureActive() // throws if the current coroutine was cancelled
+            IntegrationTest.LOGGER.lifecycle(e.message) // if this line executes, the exception is the result of `await` itself
+            throw (e)
+        }
+    }
+
+    override fun beforeAll(context: ExtensionContext) {
+
+        globalCoroutineScope.launch {
+            try {
+                val something = globalCoroutineScope.async {
+                    val value = SharedAppStore.getRoot(context).get(SharedAppContextKey.TESTS_STARTED)
+                    val isFirstMethodForTestClass = value == null
+
+                    if (isFirstMethodForTestClass && GlobalLock.acquireLock(IntegrationTest.LOGGER)) {
+
+                        // TODO FIX THIS
+                        val ioResult = getAsyncTaskResult(IOTask) {
+                            delay(5000) // Simulating blocking thread but time will be advanced properly
+                            "someResult"
+                        }
+
+                        IntegrationTest.LOGGER.lifecycle("IOResult length: ${ioResult.length}")
+                        return@async ioResult
+
+                    } else {
+                        IntegrationTest.LOGGER.lifecycle("Does it get Should be about 5 seconds")
+
+                        // TODO FIX THIS
+
+                        val deferred = getAsyncTaskResult(IOTask) {
+                            delay(5000)
+                            "polledValue"
+                        }
+
+                        try {
+                            IntegrationTest.LOGGER.lifecycle("Should be about 5 seconds") // about five seconds
+                            Assertions.assertEquals("polledValue", deferred )
+
+                        } catch (e: CancellationException) {
+                            currentCoroutineContext().ensureActive() // throws if the current coroutine was cancelled
+                            IntegrationTest.LOGGER.lifecycle(e.message) // if this line executes, the exception is the result of `await` itself
+                        }
+
+                        // Poll until first gradle invocation finished
+                        return@async checkIOResult(context)
+                    }
+                }.await()
+            } catch (e: Exception) {
+
+            } finally {
+                GlobalLock.releaseLock()
+            }
+        }.onJoin
+    }
+
+    suspend fun checkIOResult(context: ExtensionContext) = coroutineScope {
+        var value: String? = null
+        var attempt = 0
+        val maxAttempts = 10
+
+        val deferred = async(Dispatchers.IO) {
+
+            while (value == null && attempt < maxAttempts) {
+                value = SharedAppStore.getIOResult(context) // Replace with actual implementation
+                attempt++
+                if (value == null) {
+                    delay(5.seconds)
+                }
+            }
+
+            return@async value
+        }
+
+        try {
+            deferred.await()
+            IntegrationTest.LOGGER.lifecycle("Should be about 5 seconds") // about five seconds
+        } catch (e: CancellationException) {
+            currentCoroutineContext().ensureActive() // throws if the current coroutine was cancelled
+            IntegrationTest.LOGGER.lifecycle(e.message) // if this line executes, the exception is the result of `await` itself
+
+        }
+
+    }
+
+    override fun beforeEach(context: ExtensionContext) = runBlocking {
+        IntegrationTest.LOGGER.lifecycle(
+            "beforeEach SharedAppExtension (integration tests) for test: {}",
+            context.displayName
+        )
     }
 
     override fun afterEach(context: ExtensionContext) = runBlocking {
-        IntegrationTest.LOGGER.lifecycle("afterEach SharedAppExtension (integration tests) test: {}", context.displayName)
+        IntegrationTest.LOGGER.lifecycle(
+            "afterEach SharedAppExtension (integration tests) test: {}",
+            context.displayName
+        )
     }
 
-    override fun afterAll(context: ExtensionContext) = runBlocking  {
-        IntegrationTest.LOGGER.lifecycle("afterAll SharedAppExtension (integration tests) test: {}", context.displayName)
-        IntegrationTest.LOGGER.lifecycle("Temp dir is:{} for {}", sharedRunnerDir.toString(), context.displayName)
+    override fun afterAll(context: ExtensionContext) = runBlocking {
+        IntegrationTest.LOGGER.lifecycle(
+            """
+            afterAll SharedAppExtension (integration tests) test: {}
+            Temp dir is: {}
+        """.trimIndent(), context.displayName, sharedRunnerDir.toString()
+        )
     }
 
     /**
@@ -119,7 +274,7 @@ class SharedAppExtension:
             reads in a way of which is an accurate reflection
             of the test executions.
          */
-        when(val logger = IntegrationTest.LOGGER as org.slf4j.Logger) {
+        when (val logger = IntegrationTest.LOGGER as org.slf4j.Logger) {
             is Logger -> logger.lifecycle("Finishing integration tests")
             else -> {
                 val delegate = Logging.getLogger(LOGGER_NAME)
@@ -137,7 +292,6 @@ class SharedAppExtension:
     }
 
 
-
     companion object {
         val LOGGER_NAME = "SharedAppExtension"
 
@@ -148,4 +302,7 @@ class SharedAppExtension:
 
 enum class SharedAppContextKey {
     TESTS_STARTED,
+    TESTS_INITIALIZED,
+    IO_RESULT,
+    TEST_SUITE_SCOPE
 }

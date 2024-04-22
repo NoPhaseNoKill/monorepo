@@ -16,5 +16,8 @@ class SomeFileTest3: IntegrationTest() {
         val namespace = getGlobalNamespace()
         LOGGER.lifecycle("Root is: {}, for {}", root, context.displayName)
         LOGGER.lifecycle("GLOBAL_NAMESPACE is: {}, for {}", namespace, context.displayName)
+
+        Assertions.assertEquals(2 + 2, 4)
+        LOGGER.lifecycle("This should always occur after test 1 and 2", namespace, context.displayName)
     }
 }

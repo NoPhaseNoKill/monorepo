@@ -62,7 +62,8 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
 
-                    // maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    // forkEvery = 1
 
                     this.testLogging {
 
@@ -96,7 +97,7 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
 
-                    // maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
                     // forkEvery = 1
 
                     this.testLogging {

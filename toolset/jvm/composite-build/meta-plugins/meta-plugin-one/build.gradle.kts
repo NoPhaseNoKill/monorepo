@@ -89,6 +89,7 @@ testing {
                     }
 
                     // maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    // forkEvery = 1
 
                     this.testLogging {
                         // Log events we care about, show exception as short
@@ -134,6 +135,9 @@ testing {
 
             this.targets.configureEach {
                 this.testTask.configure {
+
+                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    // forkEvery = 1
 
                     this.doFirst {
                         testLogging {
