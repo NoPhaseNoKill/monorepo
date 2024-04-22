@@ -1,3 +1,4 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
@@ -75,50 +76,92 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
 
-                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    // maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
 
                     this.testLogging {
-                        events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
-                        showStandardStreams = true
-                        minGranularity = 2
+
+                        // Log events we care about, show exception as short
+                        events = setOf(TestLogEvent.STANDARD_OUT, TestLogEvent.FAILED)
+                        exceptionFormat = TestExceptionFormat.SHORT
+                        displayGranularity = -1
+
+                        // Log everything
+                        info {
+                            events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
+                            exceptionFormat = TestExceptionFormat.FULL
+                            displayGranularity = -1
+                        }
+
+                        // Log everything
+                        debug {
+                            events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
+                            exceptionFormat = TestExceptionFormat.FULL
+                            displayGranularity = -1
+                        }
+                    }
+                }
+                dependencies {
+                    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
+                    implementation(platform("org.junit:junit-bom:5.10.1"))
+                    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
+                        exclude("org.jetbrains", "annotations")
+                    }
+
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test") {
+                        exclude("org.jetbrains", "annotations")
+                    }
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
+                        exclude("org.jetbrains", "annotations")
                     }
                 }
             }
         }
 
         val functionalTest by registering(JvmTestSuite::class) {
+            useJUnitJupiter("5.10.1")
 
             this.targets.configureEach {
                 this.testTask.configure {
 
-                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
-                    // forkEvery = 1
+                    // maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
 
                     this.testLogging {
-                        events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
-                        showStandardStreams = true
-                        minGranularity = 2
+
+                        // Log events we care about, show exception as short
+                        events = setOf(TestLogEvent.STANDARD_OUT, TestLogEvent.FAILED)
+                        exceptionFormat = TestExceptionFormat.SHORT
+                        displayGranularity = -1
+
+                        // Log everything
+                        info {
+                            events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
+                            exceptionFormat = TestExceptionFormat.FULL
+                            displayGranularity = -1
+                        }
+
+                        // Log everything
+                        debug {
+                            events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
+                            exceptionFormat = TestExceptionFormat.FULL
+                            displayGranularity = -1
+                        }
                     }
                 }
-            }
+                dependencies {
+                    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
+                    implementation(platform("org.junit:junit-bom:5.10.1"))
+                    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
+                        exclude("org.jetbrains", "annotations")
+                    }
 
-            useJUnitJupiter("5.10.1")
-
-            dependencies {
-                // functionalTest test suite depends on the production code in tests
-                implementation(project())
-                implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
-                implementation(platform("org.junit:junit-bom:5.10.1"))
-                implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
-                    exclude("org.jetbrains", "annotations")
-                }
-
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test") {
-                    exclude("org.jetbrains", "annotations")
-                }
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
-                    exclude("org.jetbrains", "annotations")
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test") {
+                        exclude("org.jetbrains", "annotations")
+                    }
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
+                        exclude("org.jetbrains", "annotations")
+                    }
                 }
             }
         }

@@ -1,15 +1,25 @@
 package com.nophasenokill
 
+import kotlinx.coroutines.test.runTest
+import org.gradle.api.logging.Logging
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class MetaPluginExampleTest {
+
     @Test
-    fun doSomething() {
-        val bob = "bob"
+    fun something() {
+       val result = runTest {
+                val bob = "bob"
 
-        println("Should be debuggable: $bob")
+                Logging.getLogger("SharedAppExtension").lifecycle("Should be debuggable: $bob")
 
-        Assertions.assertEquals(2 + 2, 4)
+                Assertions.assertEquals(2 + 2, 4)
+        }
+
+        Logging.getLogger("SharedAppExtension").lifecycle("Result is: ${result.toString()}")
     }
+    // fun doSomething() = runTest {
+
+    // }
 }

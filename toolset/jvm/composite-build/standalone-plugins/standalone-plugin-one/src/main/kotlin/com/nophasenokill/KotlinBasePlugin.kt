@@ -2,6 +2,7 @@ package com.nophasenokill
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.logging.Logging
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 
 
@@ -14,7 +15,7 @@ class KotlinBasePlugin : Plugin<Project> {
 
         project.tasks.register("greeting") {
             it.doLast {
-                println("Hello from plugin 'com.nophasenokill.kotlin-base-plugin'")
+                Logging.getLogger("SharedAppExtension").lifecycle("Hello from plugin 'com.nophasenokill.kotlin-base-plugin'")
             }
         }
 

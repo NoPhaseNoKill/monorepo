@@ -2,17 +2,19 @@ package com.nophasenokill.plugins.checkKotlinBuildServiceFixPlugin.someNewDir
 
 import com.nophasenokill.setup.variations.IntegrationTest
 import com.nophasenokill.setup.variations.SharedAppExtension
+import kotlinx.coroutines.test.runTest
+import org.gradle.api.logging.Logging
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtensionContext
 
-class SomeFileTest2(private val context: ExtensionContext): IntegrationTest(context) {
+class SomeFileTest2: IntegrationTest() {
 
     @Test
-    fun someFileTest2DoSomething() {
+    fun someFileTest2DoSomething(context: ExtensionContext) = runTest {
         Assertions.assertEquals(2 + 2, 4)
-        val root = SharedAppExtension.storeRoot(context)
-        println("Root is: $root for ${context.displayName}")
-        println("GLOBAL_NAMESPACE is: ${SharedAppExtension.GLOBAL_NAMESPACE} for ${context.displayName}")
-    }
+        val root = getStoreRoot(context)
+        val namespace = getGlobalNamespace()
+        Logging.getLogger("SharedAppExtension").lifecycle("Root is: {}, for {}", root, context.displayName)
+        Logging.getLogger("SharedAppExtension").lifecycle("GLOBAL_NAMESPACE is: {}, for {}", namespace, context.displayName)}
 }

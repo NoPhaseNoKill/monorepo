@@ -17,7 +17,7 @@ class TestListenerExample {
         override fun reportingEntryPublished(testIdentifier: TestIdentifier, entry: ReportEntry) {
             val entryMap = entry.keyValuePairs
             if (testIdentifier.isTest) {
-                println("Captured: " + testIdentifier.displayName +
+                Logging.getLogger("SharedAppExtension").lifecycle("Captured: " + testIdentifier.displayName +
                         ", stdout: " + entryMap["stdout"]!!.trim { it <= ' ' } +
                         ", stderr: " + entryMap["stderr"]!!.trim { it <= ' ' })
             }
@@ -26,14 +26,14 @@ class TestListenerExample {
 
     @Test
     fun test1() {
-        println("System.out.println: test1()")
-        System.err.println("System.err.println: test1()")
+        Logging.getLogger("SharedAppExtension").lifecycle("System.out.println: test1()")
+        System.err.Logging.getLogger("SharedAppExtension").lifecycle("System.err.println: test1()")
     }
 
     @Test
     fun test2() {
-        println("System.out.println: test2()")
-        System.err.println("System.err.println: test2()")
+        Logging.getLogger("SharedAppExtension").lifecycle("System.out.println: test2()")
+        System.err.Logging.getLogger("SharedAppExtension").lifecycle("System.err.println: test2()")
 
         val logger = LoggerFactory.getLogger(this::class.java)
         logger.info("LoggerFactory.getLogger(this::class.java) logger.info")

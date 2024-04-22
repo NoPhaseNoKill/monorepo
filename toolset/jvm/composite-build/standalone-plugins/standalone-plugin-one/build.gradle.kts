@@ -1,3 +1,4 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
@@ -61,12 +62,30 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
 
-                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    // maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
 
                     this.testLogging {
-                        events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
-                        showStandardStreams = true
-                        minGranularity = 2
+
+                        logger.isEnabled(LogLevel.LIFECYCLE)
+
+                        // Log events we care about, show exception as short
+                        events = setOf(TestLogEvent.STANDARD_OUT, TestLogEvent.FAILED)
+                        exceptionFormat = TestExceptionFormat.SHORT
+                        displayGranularity = -1
+
+                        // Log everything
+                        info {
+                            events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
+                            exceptionFormat = TestExceptionFormat.FULL
+                            displayGranularity = -1
+                        }
+
+                        // Log everything
+                        debug {
+                            events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
+                            exceptionFormat = TestExceptionFormat.FULL
+                            displayGranularity = -1
+                        }
                     }
                 }
             }
@@ -77,13 +96,31 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
 
-                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
-                    forkEvery = 1
+                    // maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
+                    // forkEvery = 1
 
                     this.testLogging {
-                        events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
-                        showStandardStreams = true
-                        minGranularity = 2
+
+                        logger.isEnabled(LogLevel.LIFECYCLE)
+
+                        // Log events we care about, show exception as short
+                        events = setOf(TestLogEvent.STANDARD_OUT, TestLogEvent.FAILED)
+                        exceptionFormat = TestExceptionFormat.SHORT
+                        displayGranularity = -1
+
+                        // Log everything
+                        info {
+                            events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
+                            exceptionFormat = TestExceptionFormat.FULL
+                            displayGranularity = -1
+                        }
+
+                        // Log everything
+                        debug {
+                            events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
+                            exceptionFormat = TestExceptionFormat.FULL
+                            displayGranularity = -1
+                        }
                     }
                 }
             }

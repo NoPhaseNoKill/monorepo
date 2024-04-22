@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withContext
+import org.gradle.api.logging.Logging
 import org.junit.jupiter.api.extension.*
 import org.junit.jupiter.api.extension.ExtensionContext.Store.CloseableResource
 import org.junit.jupiter.api.io.CleanupMode
@@ -35,7 +36,7 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
         val value = SharedTestSuiteStore.getRoot(context).get(SharedTestSuiteContextKey.TESTS_STARTED)
         if (value == null) {
             testClassTimes["${context.displayName} + start"] = System.currentTimeMillis()
-            println("All times are now: $testClassTimes")
+            Logging.getLogger("SharedAppExtension").lifecycle("All times are now: $testClassTimes")
 
             SharedTestSuiteStore.putObjectIntoGlobalStore(
                 context,
@@ -62,7 +63,7 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
 
         val ready= SharedTestSuiteStore.getRoot(context).get(SharedTestSuiteContextKey.INITIAL_GRADLE_RUNNER_BUILT) !== null
 
-        println("Shared gradle runner details are ready: $ready")
+        Logging.getLogger("SharedAppExtension").lifecycle("Shared gradle runner details are ready: $ready")
     }
 
     override fun supportsParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Boolean {
@@ -76,7 +77,7 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
     private fun setupGlobalTestSuite(context: ExtensionContext) = runTest {
 
             val creationState = SharedTestSuiteStore.getGradleCreationState(context)
-            println("Creation state for: ${context.displayName} is $creationState")
+            Logging.getLogger("SharedAppExtension").lifecycle("Creation state for: ${context.displayName} is $creationState")
 
             when(creationState) {
                 GradleCreationState.INITIAL -> {
@@ -110,7 +111,7 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
                 GradleCreationState.CREATING_RUNNER -> {
                     // Poll every 50ms to see when runner becomes fully operational
                     while (SharedTestSuiteStore.getGradleCreationState(context) == GradleCreationState.CREATING_RUNNER) {
-                        println("Polling..")
+                        Logging.getLogger("SharedAppExtension").lifecycle("Polling..")
                         delay(50)
                     }
                 }
@@ -152,9 +153,9 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
     override fun afterAll(context: ExtensionContext) {
         val endTime =  System.currentTimeMillis()
         testClassTimes["${context.displayName} + end"] = System.currentTimeMillis()
-        println("End time of: ${context.displayName} was: $endTime")
+        Logging.getLogger("SharedAppExtension").lifecycle("End time of: ${context.displayName} was: $endTime")
         name = context.displayName
-        println("All times are now: $testClassTimes for $name")
+        Logging.getLogger("SharedAppExtension").lifecycle("All times are now: $testClassTimes for $name")
     }
 
     override fun close() {
@@ -165,6 +166,6 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
         val finishTime = finishTimes.map { it.value }.maxOf { it }
 
         val timeTaken = finishTime - startTime
-        println("Tests for class: $name took total wall clock time of: $timeTaken ms. Start time was: ${startTime}, end time was: $finishTime")
+        Logging.getLogger("SharedAppExtension").lifecycle("Tests for class: $name took total wall clock time of: $timeTaken ms. Start time was: ${startTime}, end time was: $finishTime")
     }
 }

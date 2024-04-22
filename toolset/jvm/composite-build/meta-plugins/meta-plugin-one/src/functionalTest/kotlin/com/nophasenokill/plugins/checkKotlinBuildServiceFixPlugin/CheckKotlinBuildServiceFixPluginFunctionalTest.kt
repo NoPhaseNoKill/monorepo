@@ -16,7 +16,7 @@
 //
 //     @BeforeEach
 //     fun recordTime() {
-//         println("Starting CheckKotlinBuildServiceFixPluginFunctionalTest at: ${System.currentTimeMillis()}")
+//         Logging.getLogger("SharedAppExtension").lifecycle("Starting CheckKotlinBuildServiceFixPluginFunctionalTest at: ${System.currentTimeMillis()}")
 //     }
 //
 //     @Test
@@ -36,7 +36,7 @@
 //         val someProject = createIncludedBuildWithSubproject(someProjectName, projectDir, someProjectSubProjectName)
 //         val someProject2 = createIncludedBuildWithSubproject(someProject2Name, projectDir, someProject2SubProjectName)
 //
-//         println("Build file hashcode for CheckKotlinBuildServiceFixPluginFunctionalTest: ${buildFile.hashCode()}")
+//         Logging.getLogger("SharedAppExtension").lifecycle("Build file hashcode for CheckKotlinBuildServiceFixPluginFunctionalTest: ${buildFile.hashCode()}")
 //
 //         writeText(buildFile) {
 //             """

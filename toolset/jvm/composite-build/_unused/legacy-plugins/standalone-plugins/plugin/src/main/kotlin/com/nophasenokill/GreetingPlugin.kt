@@ -9,7 +9,7 @@ class GreetingPlugin : Plugin<Project> {
         
         project.tasks.register("greeting") { task ->
             task.doLast {
-                println("Hello from plugin 'com.nophasenokill.greeting'")
+                Logging.getLogger("SharedAppExtension").lifecycle("Hello from plugin 'com.nophasenokill.greeting'")
             }
         }
     }

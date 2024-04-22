@@ -23,7 +23,7 @@ abstract class GenerateClasspathCollisionOutputs : WorkAction<ClasspathCollision
     override fun execute() {
         try {
             val stream: InputStream = FileInputStream(artifactFile)
-            // println("Generating classpath collision output for " + artifactFile.name + "...")
+            // Logging.getLogger("SharedAppExtension").lifecycle("Generating classpath collision output for " + artifactFile.name + "...")
             // Artificially make this task slower.
             Thread.sleep(3000)
             FileUtils.writeStringToFile(artifactOutputFile, DigestUtils.md5Hex(stream), null as String?)

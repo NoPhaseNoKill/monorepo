@@ -75,7 +75,7 @@ plugins {
 //       |           """
 //
 //             outputFile.get().asFile.writeText(outputText)
-//             println(outputText)
+//             Logging.getLogger("SharedAppExtension").lifecycle(outputText)
 //         }
 //     }
 // }

@@ -23,7 +23,7 @@ import javax.inject.Inject
             for (sourceFile in source.files) {
                 try {
                     val stream: InputStream = FileInputStream(sourceFile)
-                    println("Generating MD5 for " + sourceFile.name + "...")
+                    Logging.getLogger("SharedAppExtension").lifecycle("Generating MD5 for " + sourceFile.name + "...")
                     // Artificially make this task slower.
                     Thread.sleep(3000)
                     val md5File = destinationDirectory.file(sourceFile.name + ".md5")
