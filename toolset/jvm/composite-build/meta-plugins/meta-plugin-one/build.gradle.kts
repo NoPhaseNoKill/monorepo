@@ -76,10 +76,21 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
 
+                    this.doFirst {
+                        testLogging {
+                            standardOutputCapture.start()
+                        }
+                    }
+
+                    this.doLast {
+                        testLogging {
+                            standardOutputCapture.stop()
+                        }
+                    }
+
                     // maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
 
                     this.testLogging {
-
                         // Log events we care about, show exception as short
                         events = setOf(TestLogEvent.STANDARD_OUT, TestLogEvent.FAILED)
                         exceptionFormat = TestExceptionFormat.SHORT
@@ -123,6 +134,18 @@ testing {
 
             this.targets.configureEach {
                 this.testTask.configure {
+
+                    this.doFirst {
+                        testLogging {
+                            standardOutputCapture.start()
+                        }
+                    }
+
+                    this.doLast {
+                        testLogging {
+                            standardOutputCapture.stop()
+                        }
+                    }
 
                     // maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
 
