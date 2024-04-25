@@ -13,6 +13,7 @@ dependencyResolutionManagement {
 }
 
 include("application-one")
+includeBuild("../meta-plugins")
 includeBuild("../standalone-plugins")
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")

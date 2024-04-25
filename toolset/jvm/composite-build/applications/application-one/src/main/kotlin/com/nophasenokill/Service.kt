@@ -1,5 +1,6 @@
 package com.nophasenokill;
 
+import org.gradle.api.logging.Logging
 import org.slf4j.LoggerFactory;
 
 object Service {

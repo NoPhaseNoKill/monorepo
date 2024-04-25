@@ -2,8 +2,8 @@ plugins {
     id("com.nophasenokill.kotlin-application-plugin")
 }
 
-group = "com.nophasenokill"
-version = "1.0-SNAPSHOT"
+group = "com.nophasenokill.applications"
+version = "0.1.local-dev"
 
 dependencies {
     
@@ -59,4 +59,8 @@ tasks.distZip {
 tasks.distTar {
     outputs.files(getLayout().buildDirectory.asFile.map { it.resolve("distributions/application-one-1.0-SNAPSHOT.tar") })
     outputs.files(tasks.classes.map { it.outputs })
+}
+
+tasks.test {
+
 }

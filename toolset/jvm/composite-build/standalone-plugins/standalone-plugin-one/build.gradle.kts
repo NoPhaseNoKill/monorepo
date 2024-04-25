@@ -35,6 +35,11 @@ gradlePlugin {
         id = "com.nophasenokill.wrap-text-with-quotes-plugin"
         implementationClass = "com.nophasenokill.WrapTextWithQuotesPlugin"
     }
+
+    val dependencyReportsPlugin by plugins.creating {
+        id = "com.nophasenokill.dependency-report-plugin"
+        implementationClass = "com.nophasenokill.DependencyReportPlugin"
+    }
 }
 
 dependencies {
