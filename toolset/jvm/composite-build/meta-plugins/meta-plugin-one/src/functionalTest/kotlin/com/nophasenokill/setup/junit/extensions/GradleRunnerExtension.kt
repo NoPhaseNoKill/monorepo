@@ -2,9 +2,8 @@ package com.nophasenokill.setup.junit.extensions
 
 import com.nophasenokill.setup.runner.SharedRunnerDetails
 import com.nophasenokill.setup.variations.TestDirectory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.extension.*
 import org.junit.jupiter.api.extension.ExtensionContext.Store.CloseableResource
 import org.junit.jupiter.api.io.CleanupMode
@@ -28,7 +27,7 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
     private val testClassTimes: ConcurrentHashMap<String, Long> = ConcurrentHashMap()
     private var name: String? = null
 
-    override fun beforeAll(context: ExtensionContext) {
+    override fun beforeAll(context: ExtensionContext) = runBlocking {
 
         val value = SharedTestSuiteStore.getRoot(context).get(SharedTestSuiteContextKey.TESTS_STARTED)
         if (value == null) {
@@ -57,8 +56,6 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
 
     override fun beforeEach(context: ExtensionContext) {
 
-        val ready= SharedTestSuiteStore.getRoot(context).get(SharedTestSuiteContextKey.INITIAL_GRADLE_RUNNER_BUILT) !== null
-
     }
 
     override fun supportsParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Boolean {
@@ -69,7 +66,7 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
         return extensionContext
     }
 
-    private fun setupGlobalTestSuite(context: ExtensionContext) = runTest {
+    private suspend fun setupGlobalTestSuite(context: ExtensionContext) = coroutineScope {
 
             val creationState = SharedTestSuiteStore.getGradleCreationState(context)
 
@@ -82,9 +79,9 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
                     )
                     val sharedRunnerDetails = createGradleRunner(context)
 
-                    withContext(Dispatchers.IO) {
+
                         sharedRunnerDetails.gradleRunner.withArguments("build", "--warning-mode=all").build()
-                    }
+
 
                     SharedTestSuiteStore.putObjectIntoGlobalStore(
                         context,
@@ -113,8 +110,8 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
 
     }
 
-    private suspend fun createGradleRunner(context: ExtensionContext): SharedRunnerDetails {
-        return withContext(Dispatchers.IO) {
+    private suspend fun createGradleRunner(context: ExtensionContext): SharedRunnerDetails = coroutineScope{
+
             val tempDir = Files.createDirectory(Path("$sharedRunnerDir/${context.displayName}-"))
             SharedTestSuiteStore.putObjectIntoGlobalStore(context, SharedTestSuiteContextKey.TEST_DIRECTORIES, TestDirectory(context.displayName, tempDir))
 
@@ -131,13 +128,12 @@ class GradleRunnerExtension: BeforeAllCallback, BeforeEachCallback, AfterAllCall
                 .withProjectDir(projectDir.toFile())
                 .withPluginClasspath()
 
-            return@withContext SharedRunnerDetails(
-                projectDir.toFile(),
-                buildFile.toFile(),
-                settingsFile.toFile(),
-                gradleRunner
-            )
-        }
+        return@coroutineScope SharedRunnerDetails(
+            projectDir.toFile(),
+            buildFile.toFile(),
+            settingsFile.toFile(),
+            gradleRunner
+        )
     }
 
     override fun afterAll(context: ExtensionContext) {

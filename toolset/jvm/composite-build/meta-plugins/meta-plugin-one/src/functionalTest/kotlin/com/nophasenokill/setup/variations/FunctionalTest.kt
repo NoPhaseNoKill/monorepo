@@ -4,8 +4,6 @@ package com.nophasenokill.setup.variations
 
 import com.nophasenokill.setup.junit.extensions.GradleRunnerExtension
 import com.nophasenokill.setup.runner.SharedRunnerDetails
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.gradle.testkit.runner.BuildResult
 import org.junit.jupiter.api.extension.ExtendWith
 import java.io.File
@@ -18,40 +16,31 @@ open class FunctionalTest {
         return details.gradleRunner.withArguments(task, "--warning-mode=all").build()
     }
 
-    suspend fun createFile(file: File) {
-        withContext(Dispatchers.IO) {
-            file.createNewFile()
-        }
+    fun createFile(file: File) {
+        file.createNewFile()
     }
 
-    suspend fun writeText(file: File, textBlock:() -> String) {
+    fun writeText(file: File, textBlock:() -> String) {
         /*
             Putting this outside of the IO context ensures that if the text block
             is computationally expensive we avoid putting this on the IO thread
          */
         val text = textBlock()
-        withContext(Dispatchers.IO) {
-            file.writeText(text)
-        }
+        file.writeText(text)
     }
 
-    suspend fun appendText(file: File, textBlock:() -> String) {
+    fun appendText(file: File, textBlock:() -> String) {
         /*
             Putting this outside of the IO context ensures that if the text block
             is computationally expensive we avoid putting this on the IO thread
          */
         val text = textBlock()
-        withContext(Dispatchers.IO) {
-            file.appendText(text)
-        }
+        file.appendText(text)
     }
 
-    suspend fun readLines(buildResult: BuildResult): List<String> {
-        return withContext(Dispatchers.IO) {
-            return@withContext buildResult.output.lines()
-        }
+    fun readLines(buildResult: BuildResult): List<String> {
+        return buildResult.output.lines()
     }
-
 }
 
 data class TestDirectory(
