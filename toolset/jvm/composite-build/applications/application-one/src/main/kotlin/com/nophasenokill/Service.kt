@@ -1,12 +1,10 @@
 package com.nophasenokill;
 
-import org.gradle.api.logging.Logging
-import org.slf4j.LoggerFactory;
+import org.slf4j.LoggerFactory
 
 object Service {
     fun printMessage(messageModel: MessageModel): String {
         val messageToPrint: String = messageModel.message
-        Logging.getLogger("SharedAppExtension").lifecycle(messageToPrint)
         LoggerFactory.getLogger(Service::class.java).info("Message printed")
         return messageToPrint
     }

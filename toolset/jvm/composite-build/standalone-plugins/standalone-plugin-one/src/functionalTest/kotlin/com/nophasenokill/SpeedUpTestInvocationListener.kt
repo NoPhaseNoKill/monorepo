@@ -1,6 +1,5 @@
 package com.nophasenokill
 
-import com.nophasenokill.setup.logging.TestLogger
 import com.nophasenokill.setup.variations.FunctionalTest
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -31,8 +30,6 @@ class SpeedUpTestInvocationListener: FunctionalTest() {
             val result = deferred.await() // result available immediately
             Assertions.assertEquals("bob", result)
         }
-
-        TestLogger.LOGGER.info { "Ohai as info" }
 
         Assertions.assertTrue(time <= 6000)
     }

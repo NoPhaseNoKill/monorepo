@@ -21,8 +21,6 @@ class KotlinApplicationPlugin: Plugin<Project> {
 
         project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
 
-            project.logger.lifecycle("Plugin org.jetbrains.kotlin.jvm was just applied")
-
             project.addMetaPluginDependency("meta-plugin-one")
             project.addPlatformDependency("implementation", "com.nophasenokill.platforms", "generalised-platform")
 

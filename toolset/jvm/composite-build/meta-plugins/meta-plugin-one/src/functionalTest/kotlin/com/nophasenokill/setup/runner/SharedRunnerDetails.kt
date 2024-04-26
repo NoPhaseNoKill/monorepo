@@ -1,7 +1,6 @@
 package com.nophasenokill.setup.runner
 
-import TestDirectory
-
+import com.nophasenokill.setup.variations.TestDirectory
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.internal.DefaultGradleRunner
 import java.io.File

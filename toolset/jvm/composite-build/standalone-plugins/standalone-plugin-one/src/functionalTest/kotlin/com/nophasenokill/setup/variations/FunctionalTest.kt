@@ -1,8 +1,8 @@
 package com.nophasenokill.setup.variations
 
 import com.nophasenokill.setup.junit.JunitTempDirFactory
-import com.nophasenokill.setup.logging.TestLogger
 import com.nophasenokill.setup.runner.SharedRunnerDetails
+import org.gradle.api.logging.Logging
 
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.TaskOutcome
@@ -38,7 +38,7 @@ open class FunctionalTest {
         try {
             return requireNotNull(result.task(taskPath)?.outcome)
         } catch (e: Exception) {
-            TestLogger.LOGGER.error {"Task outcome could not be found for task path '${taskPath}'. Exception was ${e.message}" }
+            Logging.getLogger("SharedAppExtension").debug("Task outcome could not be found for task path '${taskPath}'. Exception was ${e.message}")
             throw e
         }
     }

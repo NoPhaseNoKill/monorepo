@@ -1,7 +1,7 @@
 package com.nophasenokill.setup.junit.extensions
 
-import TestDirectory
 import com.nophasenokill.setup.runner.SharedRunnerDetails
+import com.nophasenokill.setup.variations.TestDirectory
 import org.junit.jupiter.api.extension.ExtensionContext
 
 object SharedTestSuiteStore {

@@ -35,11 +35,6 @@ gradlePlugin {
         id = "com.nophasenokill.wrap-text-with-quotes-plugin"
         implementationClass = "com.nophasenokill.WrapTextWithQuotesPlugin"
     }
-
-    val dependencyReportsPlugin by plugins.creating {
-        id = "com.nophasenokill.dependency-report-plugin"
-        implementationClass = "com.nophasenokill.DependencyReportPlugin"
-    }
 }
 
 dependencies {
@@ -72,7 +67,6 @@ testing {
 
                     this.testLogging {
 
-                        logger.isEnabled(LogLevel.LIFECYCLE)
 
                         // Log events we care about, show exception as short
                         events = setOf(TestLogEvent.STANDARD_OUT, TestLogEvent.FAILED)
@@ -107,7 +101,6 @@ testing {
 
                     this.testLogging {
 
-                        logger.isEnabled(LogLevel.LIFECYCLE)
 
                         // Log events we care about, show exception as short
                         events = setOf(TestLogEvent.STANDARD_OUT, TestLogEvent.FAILED)

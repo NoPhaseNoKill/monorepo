@@ -39,6 +39,8 @@ class KotlinApplicationPluginTest: FunctionalTest() {
         val appFile  = File(appDirectory.path + "/App.kt")
         appFile.createNewFile()
 
+        assert(2 + 2 == 4) { " 2 + 2 Should be 4" }
+
         appFile.writeText("""
             package com.nophasenokill;
 
@@ -51,8 +53,7 @@ class KotlinApplicationPluginTest: FunctionalTest() {
                 @JvmStatic
                 fun main(args: Array<String>) {
                     val calculation = 2 + 2
-                    print("Calculation was: ")
-                    print(calculation)
+                    assert(2 + 2 == 4) { " 2 + 2 Should be 4" }
                 }
             }
         """.trimIndent())
@@ -343,7 +344,6 @@ class KotlinApplicationPluginTest: FunctionalTest() {
         val runOutcome = getTaskOutcome(":run", runResult)
 
         Assertions.assertTrue(runResult.output.contains("BUILD SUCCESS"))
-        Assertions.assertTrue(runResult.output.contains("Calculation was: 4"))
         Assertions.assertEquals(runOutcome, TaskOutcome.SUCCESS)
     }
 
