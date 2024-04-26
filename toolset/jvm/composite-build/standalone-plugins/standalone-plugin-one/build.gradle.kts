@@ -62,29 +62,24 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
 
-                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
-                    // forkEvery = 1
-
                     this.testLogging {
 
-
-                        // Log events we care about, show exception as short
-                        events = setOf(TestLogEvent.STANDARD_OUT, TestLogEvent.FAILED)
-                        exceptionFormat = TestExceptionFormat.SHORT
-                        displayGranularity = -1
+                        // Log events we care about
+                        events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
+                        displayGranularity = 1
 
                         // Log everything
                         info {
                             events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
                             exceptionFormat = TestExceptionFormat.FULL
-                            displayGranularity = -1
+                            displayGranularity = 2
                         }
 
                         // Log everything
                         debug {
                             events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
                             exceptionFormat = TestExceptionFormat.FULL
-                            displayGranularity = -1
+                            displayGranularity = 2
                         }
                     }
                 }
@@ -96,29 +91,24 @@ testing {
             this.targets.configureEach {
                 this.testTask.configure {
 
-                    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2)
-                    // forkEvery = 1
-
                     this.testLogging {
 
-
-                        // Log events we care about, show exception as short
-                        events = setOf(TestLogEvent.STANDARD_OUT, TestLogEvent.FAILED)
-                        exceptionFormat = TestExceptionFormat.SHORT
-                        displayGranularity = -1
+                        // Log events we care about
+                        events = setOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
+                        displayGranularity = 1
 
                         // Log everything
                         info {
                             events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
                             exceptionFormat = TestExceptionFormat.FULL
-                            displayGranularity = -1
+                            displayGranularity = 2
                         }
 
                         // Log everything
                         debug {
                             events = setOf(TestLogEvent.STANDARD_ERROR, TestLogEvent.STARTED,TestLogEvent.FAILED, TestLogEvent.SKIPPED, TestLogEvent.STANDARD_OUT, TestLogEvent.PASSED)
                             exceptionFormat = TestExceptionFormat.FULL
-                            displayGranularity = -1
+                            displayGranularity = 2
                         }
                     }
                 }
