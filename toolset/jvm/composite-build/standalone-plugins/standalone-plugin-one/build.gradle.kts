@@ -84,6 +84,21 @@ testing {
                     }
                 }
             }
+            dependencies {
+                implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
+                implementation(platform("org.junit:junit-bom:5.10.1"))
+                implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
+                    exclude("org.jetbrains", "annotations")
+                }
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test") {
+                    exclude("org.jetbrains", "annotations")
+                }
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
+                    exclude("org.jetbrains", "annotations")
+                }
+            }
         }
 
         val functionalTest by registering(JvmTestSuite::class) {

@@ -1,44 +1,78 @@
 package com.nophasenokill.plugins.wrapTextWithQuotesPlugin
 
-import com.nophasenokill.setup.variations.FunctionalTest
+import com.nophasenokill.setup.runner.SharedRunnerDetails
+import com.nophasenokill.setup.variations.*
+import kotlinx.coroutines.test.runTest
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class WrapTextWithQuotesPluginFunctionalTest: FunctionalTest() {
+class WrapTextWithQuotesPluginFunctionalTest : FunctionalTest() {
 
     @Test
-    fun `finds and runs addQuotationMarks task successfully`()  {
-        val details = createGradleRunner()
-        val settingsFile = details.settingsFile
-        val buildFile = details.buildFile
-        val projectDir = details.projectDir
+    fun `finds and runs addQuotationMarks task successfully`() = runTest {
 
-        settingsFile.writeText("")
-        addPluginsById(
+        val details = getAsyncResult(NonBlockingType) {
+            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy.value)
+            createGradleRunner(runner)
+        }
+
+
+        val projectDir = lazyProvider(details.projectDir)
+        val settingsFile = lazyOf(details.settingsFile)
+        val buildFile = lazyOf(details.buildFile)
+
+        val plugins = lazyOf(
             listOf(
                 "com.nophasenokill.wrap-text-with-quotes-plugin"
-            ),
-            buildFile
+            )
         )
 
-        val quotesFile = getResourceFile("wrap-text-with-quotes-plugin-files/example-text.txt")
-        val withQuotations = getResourceFile("wrap-text-with-quotes-plugin-files/example-text-output-pre-quote-adding.txt")
+        val formattedPlugins = lazyOf(plugins.value.joinToString(prefix = INDENT, separator = "\n$INDENT") {
+            "id(\"$it\")"
+        })
 
-        // Should have no quotes to start
-        Assertions.assertEquals("Bond. James Bond.", withQuotations.readText())
+        val buildFileText = lazyOf(
+            """
+            plugins {
+$formattedPlugins
+            }
+        """.trimIndent()
+        )
 
-        val testQuotesFile = projectDir.resolve("example-text.txt")
-        val testWithQuotationsFile = projectDir.resolve("example-text-output-pre-quote-adding.txt")
+        val input = projectDir.get().resolve("example-text.txt")
+        val output = projectDir.get().resolve("example-text-output-pre-quote-adding.txt")
 
-        testQuotesFile.writeText(quotesFile.readText())
-        testWithQuotationsFile.writeText(withQuotations.readText())
+        val baseFileText = getAsyncResult(BlockingType) {
+            getResourceFile("wrap-text-with-quotes-plugin-files/example-text.txt").readText()
+        }
 
-        val result = runExpectedSuccessTask(details, "addQuotationMarks")
-        val outcome = getTaskOutcome(":addQuotationMarks", result)
-        Assertions.assertTrue(result.output.contains("BUILD SUCCESS"))
+
+
+        launchAsyncWork(BlockingType) {
+            // Should have no quotes to start
+            Assertions.assertEquals("Bond. James Bond.", baseFileText)
+
+            settingsFile.value.writeText("")
+            buildFile.value.writeText(buildFileText.value)
+
+            input.writeText(baseFileText)
+            output.writeText(baseFileText)
+        }
+
+        val result = getAsyncResult(BlockingType) {
+            runExpectedSuccessTask(
+                details.gradleRunner,
+                "addQuotationMarks"
+            )
+        }
+
+        val outcome = getAsyncResult(BlockingType) {
+            getTaskOutcome(":addQuotationMarks", result)
+        }
+
         Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
-        Assertions.assertEquals("\"Bond. James Bond.\"", testWithQuotationsFile.readText())
-    }
+        Assertions.assertEquals("\"Bond. James Bond.\"", output.readText())
 
+    }
 }

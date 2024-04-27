@@ -2,39 +2,80 @@ package com.nophasenokill.setup.variations
 
 import com.nophasenokill.setup.junit.JunitTempDirFactory
 import com.nophasenokill.setup.runner.SharedRunnerDetails
+import kotlinx.coroutines.*
 import org.gradle.api.logging.Logging
-
 import org.gradle.testkit.runner.BuildResult
+import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.io.CleanupMode
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import java.nio.file.Files
-import java.util.*
 import kotlin.io.path.createFile
 
-// @ExtendWith(SharedTestSuiteExtension::class, TestInvocationListener::class)
-// @ExtendWith(SharedTestSuiteExtension::class)
-
 open class FunctionalTest {
+
+    @field:TempDir(factory = JunitTempDirFactory::class, cleanup = CleanupMode.ON_SUCCESS)
+    lateinit var sharedRunnerDir: File
+
+    var sharedRunnerDirLazy: Lazy<File> = lazy { sharedRunnerDir }
 
     val INDENT: String
         get() = "                "
 
-    fun runExpectedSuccessTask(details: SharedRunnerDetails, task: String): BuildResult  {
-        return details.gradleRunner
-            .withArguments(
-                task,
-                "--warning-mode=all",
-            )
-            .build()
+
+    @OptIn(InternalCoroutinesApi::class)
+    suspend fun<T> launchAsyncWork(type: CoroutineType, block: suspend () -> T): Unit = coroutineScope {
+        when(type) {
+            is BlockingType -> {
+                withContext(context = coroutineContext.newCoroutineContext(Dispatchers.IO)) {
+                    block()
+                }
+            }
+            is NonBlockingType -> {
+                withContext(context = coroutineContext.newCoroutineContext(Dispatchers.Unconfined)) {
+                    block()
+                }
+            }
+        }
     }
 
-    fun runExpectedFailureTask(details: SharedRunnerDetails, task: String): BuildResult  {
-        return details.gradleRunner.withArguments(task, "--warning-mode=all").buildAndFail()
+
+    @OptIn(InternalCoroutinesApi::class)
+    suspend fun<T> getAsyncResult(type: CoroutineType, block: suspend () -> T): T = coroutineScope {
+        when(type) {
+            is BlockingType -> {
+                withContext(context = coroutineContext.newCoroutineContext(Dispatchers.IO)) {
+                     block()
+                }
+            }
+            is NonBlockingType -> {
+                withContext(context = coroutineContext.newCoroutineContext(Dispatchers.Unconfined)) {
+                    block()
+                }
+            }
+
+        }
     }
 
-    fun getTaskOutcome(taskPath: String, result: BuildResult): TaskOutcome  {
+
+    suspend fun runExpectedSuccessTask(runner: GradleRunner, task: String): BuildResult {
+        return getAsyncResult(BlockingType) {
+            runner
+                .withArguments(
+                    task,
+                    "--warning-mode=all",
+                ).build()
+        }
+    }
+
+    suspend fun runExpectedFailureTask(details: SharedRunnerDetails, task: String): BuildResult  {
+        return getAsyncResult(BlockingType) {
+            details.gradleRunner.withArguments(task, "--warning-mode=all").buildAndFail()
+        }
+    }
+
+    fun getTaskOutcome(taskPath: String, result: BuildResult): TaskOutcome {
         try {
             return requireNotNull(result.task(taskPath)?.outcome)
         } catch (e: Exception) {
@@ -52,17 +93,22 @@ open class FunctionalTest {
     /*
         This ensures the test is relocatable for cache, as the file should always be relative
      */
-    fun getResourceFile(fileNamePath: String): File {
-        val classLoader = Thread.currentThread().contextClassLoader
-        val resourceURL = requireNotNull(
-            classLoader.getResource(fileNamePath)
-        )
-        return File(resourceURL.toURI())
+
+    suspend fun getResourceFile(fileNamePath: String): File {
+        return getAsyncResult(BlockingType) {
+            val classLoader = Thread.currentThread().contextClassLoader
+            val resourceURL = requireNotNull(
+                classLoader.getResource(fileNamePath)
+            )
+            val file = File(resourceURL.toURI())
+            file.useLines {  }
+            file
+        }
     }
 
     fun addPluginsById(plugins: List<String>, buildFileToAddPluginsTo: File) {
 
-        val formattedPlugins = plugins.joinToString( prefix = INDENT, separator = "\n$INDENT") {
+        val formattedPlugins = plugins.joinToString(prefix = INDENT, separator = "\n$INDENT") {
             "id(\"$it\")"
         }
 
@@ -75,29 +121,55 @@ $formattedPlugins
         buildFileToAddPluginsTo.writeText(text)
     }
 
-    fun createGradleRunner(): SharedRunnerDetails {
+    suspend fun createGradleRunner(runner: GradleRunner): SharedRunnerDetails {
+        return getAsyncResult(BlockingType) {
+            val projectDir  = Files.createTempDirectory("shared-runner-dir")
 
+            val buildFile = projectDir.resolve("build.gradle.kts")
+            buildFile.createFile()
+            val settingsFile = projectDir.resolve("settings.gradle.kts")
 
-        val projectDir  = Files.createTempDirectory(UUID.randomUUID().toString())
+            SharedRunnerDetails(
+                projectDir.toFile(),
+                buildFile.toFile(),
+                settingsFile.toFile(),
+                runner
+                    .withProjectDir(projectDir.toFile())
+                    .withPluginClasspath()
+            )
+        }
 
-        val buildFile = projectDir.resolve("build.gradle.kts")
-        buildFile.createFile()
-        val settingsFile = projectDir.resolve("settings.gradle.kts")
-
-        return SharedRunnerDetails(
-            projectDir.toFile(),
-            buildFile.toFile(),
-            settingsFile.toFile(),
-            SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDir)
-                .withProjectDir(projectDir.toFile())
-                .withPluginClasspath()
-        )
     }
 
     companion object {
 
-        @field:TempDir(factory = JunitTempDirFactory::class, cleanup = CleanupMode.ON_SUCCESS)
-        lateinit var sharedRunnerDir: File
+        val LOGGER = Logging.getLogger(FunctionalTest::class.java)
     }
+}
+
+
+sealed class CoroutineType
+data object BlockingType: CoroutineType()
+data object NonBlockingType: CoroutineType()
+
+interface Provider<T> {
+    fun get(): T
+}
+
+class LazyProvider<T>(private val lazyValue: () -> Lazy<T>) : Provider<T> {
+    private var value: T? = null
+    private var isComputed = false
+
+    override fun get(): T {
+        if(!isComputed) {
+            value = lazyValue().value
+            isComputed = true
+        }
+        return requireNotNull(value)
+    }
+}
+
+fun <T> lazyProvider(initializer: T): LazyProvider<T> {
+    return LazyProvider { lazyOf(initializer) }
 }
 

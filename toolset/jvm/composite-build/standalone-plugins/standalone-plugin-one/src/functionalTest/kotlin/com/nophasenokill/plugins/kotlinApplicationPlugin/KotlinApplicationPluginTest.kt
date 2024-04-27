@@ -1,7 +1,12 @@
 package com.nophasenokill.plugins.kotlinApplicationPlugin
 
 import com.nophasenokill.setup.runner.SharedRunnerDetails
+import com.nophasenokill.setup.variations.BlockingType
 import com.nophasenokill.setup.variations.FunctionalTest
+import com.nophasenokill.setup.variations.NonBlockingType
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.test.runTest
+import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -10,38 +15,51 @@ import java.io.File
 class KotlinApplicationPluginTest: FunctionalTest() {
 
     @Test
-    fun `should be able to run an application, and maintain same dependencies, when the applications settings file includes the meta-plugins and generalised platform`()  {
-        val details = createGradleRunner()
+    fun `should be able to run an application, and maintain same dependencies, when the applications settings file includes the meta-plugins and generalised platform`() = runTest {
+
+        val details = getAsyncResult(BlockingType) {
+            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy.value)
+            val details = createGradleRunner(runner)
+            details
+        }
+
         val settingsFile = details.settingsFile
         val buildFile = details.buildFile
         val projectDir = details.projectDir
 
-        settingsFile.writeText("""
+        launchAsyncWork(BlockingType) {
+            settingsFile.writeText("""
             rootProject.name = "some-name"
             includeBuild("platforms")
             includeBuild("meta-plugins")
         """.trimIndent())
-        addPluginsById(
-            listOf(
-                "com.nophasenokill.kotlin-application-plugin"
-            ),
-            buildFile
-        )
+            addPluginsById(
+                listOf(
+                    "com.nophasenokill.kotlin-application-plugin"
+                ),
+                buildFile
+            )
+        }
 
-        createMetaPluginsIncludedBuild(projectDir)
-        createPlatformsIncludedBuild(projectDir)
+        launchAsyncWork(BlockingType) {
+            createMetaPluginsIncludedBuild(projectDir)
+        }
 
+        launchAsyncWork(BlockingType) {
+            createPlatformsIncludedBuild(projectDir)
+        }
 
-        val directoryPath = "src/main/kotlin/com/nophasenokill"
-        val appDirectory = File(projectDir.path).resolve(directoryPath)
-        appDirectory.mkdirs()
+        launchAsyncWork(BlockingType) {
+            val directoryPath = "src/main/kotlin/com/nophasenokill"
+            val appDirectory = File(projectDir.path).resolve(directoryPath)
+            appDirectory.mkdirs()
 
-        val appFile  = File(appDirectory.path + "/App.kt")
-        appFile.createNewFile()
+            val appFile  = File(appDirectory.path + "/App.kt")
+            appFile.createNewFile()
 
-        assert(2 + 2 == 4) { " 2 + 2 Should be 4" }
+            assert(2 + 2 == 4) { " 2 + 2 Should be 4" }
 
-        appFile.writeText("""
+            appFile.writeText("""
             package com.nophasenokill;
 
             object App {
@@ -57,12 +75,20 @@ class KotlinApplicationPluginTest: FunctionalTest() {
                 }
             }
         """.trimIndent())
+        }
 
-        verifyRunTask(details)
-        verifyDependencies(details)
+
+        launchAsyncWork(BlockingType) {
+            verifyRunTask(details.gradleRunner)
+            verifyDependencies(details)
+        }
+        //
+        // launchAsyncWork(BlockingType) {
+        //
+        // }
     }
 
-    private fun createMetaPluginsIncludedBuild(projectDir: File) {
+    private suspend fun createMetaPluginsIncludedBuild(projectDir: File) = coroutineScope {
         val metaPluginsDir = File(projectDir.path).resolve("meta-plugins")
         metaPluginsDir.mkdirs()
         val metaPluginsSettingsFile = File(metaPluginsDir.path + "/settings.gradle.kts")
@@ -92,46 +118,46 @@ class KotlinApplicationPluginTest: FunctionalTest() {
 
         metaPluginOneBuildFile.writeText("""
             import org.gradle.api.tasks.testing.logging.TestLogEvent
-            
+
             plugins {
                 `java-gradle-plugin`
                 id("org.jetbrains.kotlin.jvm") version "1.9.21"
             }
-            
-            
+
+
             group = "com.nophasenokill.meta-plugins"
             version = "0.1.local-dev"
-            
+
             repositories {
                 gradlePluginPortal()
             }
-            
+
             gradlePlugin {
                 val checkKotlinBuildServiceFixPlugin by plugins.creating {
                     id = "com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin"
                     implementationClass = "com.nophasenokill.CheckKotlinBuildServiceFixPlugin"
                 }
             }
-            
+
             /*
                  Fixes undeclared build service usage when using: enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
                  Known issue to be fixed here: https://youtrack.jetbrains.com/issue/KT-63165
-            
+
                  Note: Because of the structure of the whole root jvm project, this ALSO needs to be applied directly
                  to this level too, as well as exposing a re-usable plugin to fix the SAME issue for other included builds
                  or projects.
              */
-            
+
             gradle.taskGraph.whenReady {
                 val allTasks = gradle.taskGraph.allTasks
                 allTasks.forEach {
                     gradle.sharedServices.registrations.all {
                         val buildServiceProvider = this.service
                         val buildService = buildServiceProvider.get()
-            
+
                         val kotlinCollectorSearchString = "org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnosticsCollector"
                         val isCollectorService = buildService.toString().contains(kotlinCollectorSearchString)
-            
+
                         if (isCollectorService) {
                             project.logger.debug(
                                 "Applying checkKotlinGradlePluginConfigurationErrors workaround to task: {} for project: {}",
@@ -143,29 +169,29 @@ class KotlinApplicationPluginTest: FunctionalTest() {
                     }
                 }
             }
-            
+
             dependencies {
-            
+
                 implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
                 implementation(platform("org.junit:junit-bom:5.10.1"))
                 implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
-            
+
                 implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21") {
                     exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-core-jvm").because("It conflicts with coroutine BOM which expects 1.8.0 and this brings in 1.5.0")
                 }
-            
+
                 implementation("org.jetbrains.kotlin:kotlin-stdlib")
                 testImplementation("commons-io:commons-io:2.16.0")
-            
+
                 testImplementation(gradleTestKit())
             }
-            
+
             testing {
                 suites {
-            
+
                     val test by getting(JvmTestSuite::class) {
                         useJUnitJupiter("5.10.1")
-            
+
                         this.targets.configureEach {
                             this.testTask.configure {
                                 this.testLogging {
@@ -176,9 +202,9 @@ class KotlinApplicationPluginTest: FunctionalTest() {
                             }
                         }
                     }
-            
+
                     val functionalTest by registering(JvmTestSuite::class) {
-            
+
                         this.targets.configureEach {
                             this.testTask.configure {
                                 this.testLogging {
@@ -188,9 +214,9 @@ class KotlinApplicationPluginTest: FunctionalTest() {
                                 }
                             }
                         }
-            
+
                         useJUnitJupiter("5.10.1")
-            
+
                         dependencies {
                             // functionalTest test suite depends on the production code in tests
                             implementation(project())
@@ -199,7 +225,7 @@ class KotlinApplicationPluginTest: FunctionalTest() {
                             implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
                                 exclude("org.jetbrains", "annotations")
                             }
-            
+
                             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
                             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test") {
                                 exclude("org.jetbrains", "annotations")
@@ -211,33 +237,33 @@ class KotlinApplicationPluginTest: FunctionalTest() {
                     }
                 }
             }
-            
+
             gradlePlugin.testSourceSets.add(sourceSets["functionalTest"])
-            
-            
+
+
             val functionalTestTask = tasks.register("functionalTestTask") {
-            
-            
+
+
                 inputs.files("src/functionalTest")
                 inputs.files(tasks.jar)
                 outputs.dirs(layout.buildDirectory.get().asFile.resolve("test-results/functionalTest"))
                 outputs.dirs(layout.buildDirectory.get().asFile.resolve("classes/functionalTest"))
                 outputs.dirs(layout.buildDirectory.get().asFile.resolve("kotlin/compileFunctionalTestKotlin"))
-            
+
                 dependsOn(tasks.jar)
                 dependsOn(testing.suites.named("functionalTest"))
             }
-            
+
             tasks.test {
                 inputs.files("src/test")
                 inputs.files(tasks.jar)
                 outputs.dirs(layout.buildDirectory.get().asFile.resolve("test-results/test"))
                 outputs.dirs(layout.buildDirectory.get().asFile.resolve("classes/test"))
                 outputs.dirs(layout.buildDirectory.get().asFile.resolve("kotlin/compileTestKotlin"))
-            
+
                 dependsOn(tasks.jar)
             }
-            
+
             tasks.named<Task>("check") {
                 // Include functionalTest as part of the check which implicitly means build lifecycle
                 dependsOn(functionalTestTask)
@@ -289,7 +315,7 @@ class KotlinApplicationPluginTest: FunctionalTest() {
 
     }
 
-    private fun createPlatformsIncludedBuild(projectDir: File) {
+    private suspend fun createPlatformsIncludedBuild(projectDir: File)  = coroutineScope {
         val platformDir = File(projectDir.path).resolve("platforms")
         platformDir.mkdirs()
         val platformSettingsFile = File(platformDir.path + "/settings.gradle.kts")
@@ -298,17 +324,17 @@ class KotlinApplicationPluginTest: FunctionalTest() {
         platformSettingsFile.writeText(
             """
                 rootProject.name = "platforms"
-    
+
                 pluginManagement {
                     repositories.gradlePluginPortal()
                 }
-    
+
                 dependencyResolutionManagement {
                     repositories.gradlePluginPortal()
                 }
-    
+
                 include("generalised-platform")
-    
+
                 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
                 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
             """.trimIndent()
@@ -325,9 +351,9 @@ class KotlinApplicationPluginTest: FunctionalTest() {
                     plugins {
                         id("java-platform")
                     }
-    
+
                     group = "com.nophasenokill.platforms"
-    
+
                     dependencies {
                         constraints {
                             api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21")
@@ -339,15 +365,16 @@ class KotlinApplicationPluginTest: FunctionalTest() {
         )
     }
 
-    private fun verifyRunTask(details: SharedRunnerDetails) {
-        val runResult = runExpectedSuccessTask(details, "run")
-        val runOutcome = getTaskOutcome(":run", runResult)
-
-        Assertions.assertTrue(runResult.output.contains("BUILD SUCCESS"))
-        Assertions.assertEquals(runOutcome, TaskOutcome.SUCCESS)
+    private suspend fun verifyRunTask(runner: GradleRunner) {
+        launchAsyncWork(BlockingType) {
+            val result = runExpectedSuccessTask(runner, "run")
+            Assertions.assertTrue(result.output.contains("BUILD SUCCESS"))
+            val outcome = getTaskOutcome(":run", result)
+            Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
+        }
     }
 
-    private fun verifyDependencies(details: SharedRunnerDetails) {
+    private suspend fun verifyDependencies(details: SharedRunnerDetails) = coroutineScope {
         /*
             The contents of this file don't include shifting behaviour.
 
@@ -386,15 +413,23 @@ class KotlinApplicationPluginTest: FunctionalTest() {
 
          */
 
-        val dependenciesResult = runExpectedSuccessTask(details, "dependencies")
-        val dependenciesOutcome = getTaskOutcome(":dependencies", dependenciesResult)
+        getAsyncResult(BlockingType) {
+            val dependenciesResult = runExpectedSuccessTask(details.gradleRunner, "dependencies")
+            val file = getResourceFile("dependencies/kotlin-application-expected-dependencies.txt")
+            val expectedContent = file.readText().lines()
+            val comparableLines = getComparableBuildResultLines(dependenciesResult, 10, 10)
 
-        val file = getResourceFile("dependencies/kotlin-application-expected-dependencies.txt")
-        val expectedContent = file.readText()
-        val comparableLines = getComparableBuildResultLines(dependenciesResult, 10, 10)
 
-        Assertions.assertLinesMatch(expectedContent.lines(), comparableLines)
-        Assertions.assertEquals(dependenciesOutcome, TaskOutcome.SUCCESS)
+            launchAsyncWork(NonBlockingType) {
+                val outcome = getTaskOutcome(":dependencies", dependenciesResult)
+                Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
+            }
+
+            Assertions.assertLinesMatch(expectedContent, comparableLines)
+
+        }
+
+
     }
 
 }
