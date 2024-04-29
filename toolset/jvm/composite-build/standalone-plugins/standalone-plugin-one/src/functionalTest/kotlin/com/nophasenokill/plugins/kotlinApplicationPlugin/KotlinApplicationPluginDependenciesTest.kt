@@ -1,24 +1,29 @@
 package com.nophasenokill.plugins.kotlinApplicationPlugin
 
 import com.nophasenokill.setup.runner.SharedRunnerDetails
-import com.nophasenokill.setup.variations.BlockingType
-import com.nophasenokill.setup.variations.FunctionalTest
-import com.nophasenokill.setup.variations.NonBlockingType
+import com.nophasenokill.setup.variations.FunctionalTest.addPluginsById
+import com.nophasenokill.setup.variations.FunctionalTest.createGradleRunner
+import com.nophasenokill.setup.variations.FunctionalTest.getAsyncResult
+import com.nophasenokill.setup.variations.FunctionalTest.getComparableBuildResultLines
+import com.nophasenokill.setup.variations.FunctionalTest.getResourceFile
+import com.nophasenokill.setup.variations.FunctionalTest.getTaskOutcome
+import com.nophasenokill.setup.variations.FunctionalTest.launchAsyncWork
+import com.nophasenokill.setup.variations.FunctionalTest.runExpectedSuccessTask
+import com.nophasenokill.setup.variations.sharedRunnerDirLazy
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.test.runTest
-import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.io.File
 
-class KotlinApplicationPluginTest: FunctionalTest() {
+class KotlinApplicationPluginDependenciesTest {
 
     @Test
-    fun `should be able to run an application, and maintain same dependencies, when the applications settings file includes the meta-plugins and generalised platform`() = runTest {
+    fun `should be able to maintain same dependencies, when the applications settings file includes the meta-plugins and generalised platform`() = runTest {
 
-        val details = getAsyncResult(BlockingType) {
-            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy.value)
+        val details = getAsyncResult {
+            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy().value)
             val details = createGradleRunner(runner)
             details
         }
@@ -27,7 +32,7 @@ class KotlinApplicationPluginTest: FunctionalTest() {
         val buildFile = details.buildFile
         val projectDir = details.projectDir
 
-        launchAsyncWork(BlockingType) {
+        launchAsyncWork {
             settingsFile.writeText("""
             rootProject.name = "some-name"
             includeBuild("platforms")
@@ -41,51 +46,68 @@ class KotlinApplicationPluginTest: FunctionalTest() {
             )
         }
 
-        launchAsyncWork(BlockingType) {
+        launchAsyncWork {
             createMetaPluginsIncludedBuild(projectDir)
         }
 
-        launchAsyncWork(BlockingType) {
+        launchAsyncWork {
             createPlatformsIncludedBuild(projectDir)
         }
 
-        launchAsyncWork(BlockingType) {
-            val directoryPath = "src/main/kotlin/com/nophasenokill"
-            val appDirectory = File(projectDir.path).resolve(directoryPath)
-            appDirectory.mkdirs()
 
-            val appFile  = File(appDirectory.path + "/App.kt")
-            appFile.createNewFile()
+        /*
+            The contents of this file don't include shifting behaviour.
 
-            assert(2 + 2 == 4) { " 2 + 2 Should be 4" }
+            Meaning: These lines should never change unless a configuration is updated or modified in a way
+            that affects dependencies
 
-            appFile.writeText("""
-            package com.nophasenokill;
+            Note: These are effectively the same thing - it's just now picking the version from the constraint.
 
-            object App {
-                /**
-                 * Run the application.
-                 *
-                 * @param args command line arguments are ignored
-                 */
-                @JvmStatic
-                fun main(args: Array<String>) {
-                    val calculation = 2 + 2
-                    assert(2 + 2 == 4) { " 2 + 2 Should be 4" }
-                }
+                Using no platform example:
+
+                    \--- org.slf4j:slf4j-api:2.0.12
+
+                Using platform example:
+
+                    +--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
+                    |    \--- org.slf4j:slf4j-api:2.0.12 (c)
+                    \--- org.slf4j:slf4j-api -> 2.0.12
+
+
+            To verify this: You can run ./gradlew :applications:application-one:dependencyInsight --configuration testCompileClasspath --dependency slf4j --scan
+
+                > Task :applications:application-one:dependencyInsight
+                org.slf4j:slf4j-api:2.0.12 (by constraint) <------------------------****THIS IS THE IMPORTANT PART****
+                  Variant compile:
+                    | Attribute Name                     | Provided | Requested    |
+                    |------------------------------------|----------|--------------|
+                    | org.gradle.status                  | release  |              |
+                    | org.gradle.category                | library  | library      |
+                    | org.gradle.libraryelements         | jar      | classes      |
+                    | org.gradle.usage                   | java-api | java-api     |
+                    | org.gradle.dependency.bundling     |          | external     |
+                    | org.gradle.jvm.environment         |          | standard-jvm |
+                    | org.gradle.jvm.version             |          | 21           |
+                    | org.jetbrains.kotlin.platform.type |          | jvm          |
+
+
+         */
+
+        getAsyncResult {
+            val dependenciesResult = runExpectedSuccessTask(details.gradleRunner, "dependencies")
+            val file = getResourceFile("dependencies/kotlin-application-expected-dependencies.txt")
+            val expectedContent = file.readText().lines()
+            val comparableLines = getComparableBuildResultLines(dependenciesResult, 10, 10)
+
+
+            launchAsyncWork {
+                val outcome = getTaskOutcome(":dependencies", dependenciesResult)
+                Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
             }
-        """.trimIndent())
-        }
 
+            Assertions.assertLinesMatch(expectedContent, comparableLines)
 
-        launchAsyncWork(BlockingType) {
-            verifyRunTask(details.gradleRunner)
-            verifyDependencies(details)
         }
-        //
-        // launchAsyncWork(BlockingType) {
-        //
-        // }
     }
 
     private suspend fun createMetaPluginsIncludedBuild(projectDir: File) = coroutineScope {
@@ -365,69 +387,8 @@ class KotlinApplicationPluginTest: FunctionalTest() {
         )
     }
 
-    private suspend fun verifyRunTask(runner: GradleRunner) {
-        launchAsyncWork(BlockingType) {
-            val result = runExpectedSuccessTask(runner, "run")
-            Assertions.assertTrue(result.output.contains("BUILD SUCCESS"))
-            val outcome = getTaskOutcome(":run", result)
-            Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
-        }
-    }
-
     private suspend fun verifyDependencies(details: SharedRunnerDetails) = coroutineScope {
-        /*
-            The contents of this file don't include shifting behaviour.
 
-            Meaning: These lines should never change unless a configuration is updated or modified in a way
-            that affects dependencies
-
-            Note: These are effectively the same thing - it's just now picking the version from the constraint.
-
-                Using no platform example:
-
-                    \--- org.slf4j:slf4j-api:2.0.12
-
-                Using platform example:
-
-                    +--- com.nophasenokill.platforms:generalised-platform -> project :platforms:generalised-platform
-                    |    \--- org.slf4j:slf4j-api:2.0.12 (c)
-                    \--- org.slf4j:slf4j-api -> 2.0.12
-
-
-            To verify this: You can run ./gradlew :applications:application-one:dependencyInsight --configuration testCompileClasspath --dependency slf4j --scan
-
-                > Task :applications:application-one:dependencyInsight
-                org.slf4j:slf4j-api:2.0.12 (by constraint) <------------------------****THIS IS THE IMPORTANT PART****
-                  Variant compile:
-                    | Attribute Name                     | Provided | Requested    |
-                    |------------------------------------|----------|--------------|
-                    | org.gradle.status                  | release  |              |
-                    | org.gradle.category                | library  | library      |
-                    | org.gradle.libraryelements         | jar      | classes      |
-                    | org.gradle.usage                   | java-api | java-api     |
-                    | org.gradle.dependency.bundling     |          | external     |
-                    | org.gradle.jvm.environment         |          | standard-jvm |
-                    | org.gradle.jvm.version             |          | 21           |
-                    | org.jetbrains.kotlin.platform.type |          | jvm          |
-
-
-         */
-
-        getAsyncResult(BlockingType) {
-            val dependenciesResult = runExpectedSuccessTask(details.gradleRunner, "dependencies")
-            val file = getResourceFile("dependencies/kotlin-application-expected-dependencies.txt")
-            val expectedContent = file.readText().lines()
-            val comparableLines = getComparableBuildResultLines(dependenciesResult, 10, 10)
-
-
-            launchAsyncWork(NonBlockingType) {
-                val outcome = getTaskOutcome(":dependencies", dependenciesResult)
-                Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
-            }
-
-            Assertions.assertLinesMatch(expectedContent, comparableLines)
-
-        }
 
 
     }

@@ -1,22 +1,25 @@
 package com.nophasenokill.plugins.kotlinBasePlugin
 
+
 import com.nophasenokill.setup.runner.SharedRunnerDetails
-import com.nophasenokill.setup.variations.BlockingType
-import com.nophasenokill.setup.variations.FunctionalTest
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import com.nophasenokill.setup.variations.FunctionalTest.INDENT
+import com.nophasenokill.setup.variations.FunctionalTest.createGradleRunner
+import com.nophasenokill.setup.variations.FunctionalTest.getAsyncResult
+import com.nophasenokill.setup.variations.FunctionalTest.launchAsyncWork
+import com.nophasenokill.setup.variations.FunctionalTest.runExpectedFailureTask
+import com.nophasenokill.setup.variations.sharedRunnerDirLazy
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-class KotlinBasePluginNotFoundTaskFunctionalTest: FunctionalTest() {
+class KotlinBasePluginNotFoundTaskFunctionalTest {
 
     @Test
     fun `cannot run task that does not exist`()  = runTest  {
 
-        val details = getAsyncResult(BlockingType) {
-            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy.value)
+        val details = getAsyncResult {
+            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy().value)
             createGradleRunner(runner)
         }
 
@@ -24,7 +27,7 @@ class KotlinBasePluginNotFoundTaskFunctionalTest: FunctionalTest() {
         val buildFile = details.buildFile
         val projectDir = details.projectDir
 
-        launchAsyncWork(BlockingType) {
+        launchAsyncWork {
             settingsFile.writeText("")
             val plugins =  listOf(
                 "com.nophasenokill.kotlin-base-plugin"
@@ -44,7 +47,7 @@ $formattedPlugins
         }
 
 
-        val result = getAsyncResult(BlockingType) {
+        val result = getAsyncResult {
             runExpectedFailureTask(details, "someNonExistentTask")
         }
 

@@ -1,28 +1,22 @@
 package com.nophasenokill.plugins.kotlinBasePlugin
 
-import com.nophasenokill.setup.junit.JunitTempDirFactory
 import com.nophasenokill.setup.runner.SharedRunnerDetails
-import com.nophasenokill.setup.variations.BlockingType
-import com.nophasenokill.setup.variations.FunctionalTest
-import kotlinx.coroutines.coroutineScope
+import com.nophasenokill.setup.variations.FunctionalTest.INDENT
+import com.nophasenokill.setup.variations.FunctionalTest.createGradleRunner
+import com.nophasenokill.setup.variations.FunctionalTest.getAsyncResult
+import com.nophasenokill.setup.variations.FunctionalTest.launchAsyncWork
+import com.nophasenokill.setup.variations.sharedRunnerDirLazy
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.BeforeEachCallback
-import org.junit.jupiter.api.extension.ExtensionContext
-import org.junit.jupiter.api.io.CleanupMode
-import org.junit.jupiter.api.io.TempDir
-import java.io.File
 
-class KotlinBasePluginFoundTaskFunctionalTest: FunctionalTest() {
+class KotlinBasePluginFoundTaskFunctionalTest {
 
 
     @Test
     fun `can run task`()  = runTest  {
-        val details = getAsyncResult(BlockingType) {
-            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy.value)
+        val details = getAsyncResult {
+            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy().value)
             createGradleRunner(runner)
         }
 
@@ -30,7 +24,7 @@ class KotlinBasePluginFoundTaskFunctionalTest: FunctionalTest() {
         val buildFile = details.buildFile
         val runner = details.gradleRunner
 
-        launchAsyncWork(BlockingType) {
+        launchAsyncWork {
             settingsFile.writeText("")
             val plugins =  listOf(
                 "com.nophasenokill.kotlin-base-plugin"
@@ -49,7 +43,7 @@ $formattedPlugins
             buildFile.writeText(text)
         }
 
-        val result = getAsyncResult(BlockingType) {
+        val result = getAsyncResult {
             runner.withArguments("greeting", "--warning-mode=all").build()
         }
 
