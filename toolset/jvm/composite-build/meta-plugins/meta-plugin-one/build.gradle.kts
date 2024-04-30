@@ -19,6 +19,11 @@ gradlePlugin {
         id = "com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin"
         implementationClass = "com.nophasenokill.CheckKotlinBuildServiceFixPlugin"
     }
+
+    val kotlinMetaPlugin by plugins.creating {
+        id = "com.nophasenokill.meta-plugins.pin-kotlin-dependency-versions-plugin"
+        implementationClass = "com.nophasenokill.PinKotlinDependencyVersionsPlugin"
+    }
 }
 
 /*
@@ -53,9 +58,11 @@ gradle.taskGraph.whenReady {
 }
 
 dependencies {
+    implementation(platform("com.nophasenokill.platforms:generalised-platform"))
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
     implementation(platform("org.junit:junit-bom:5.10.1"))
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.21")
 
     implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21") {
         exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-core-jvm").because("It conflicts with coroutine BOM which expects 1.8.0 and this brings in 1.5.0")

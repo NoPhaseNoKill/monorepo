@@ -45,6 +45,14 @@ intransitiveDependenciesMetadata
 No dependencies
 
 kotlinBuildToolsApiClasspath
++--- org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0
+|    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.0 (c)
++--- org.jetbrains.kotlin:kotlin-bom:1.9.21
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 (c)
+|    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21 (c)
+|    +--- org.jetbrains.kotlin:kotlin-daemon-client:1.9.21 (c)
+|    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.21 (c)
+|    \--- org.jetbrains.kotlin:kotlin-reflect:1.9.21 (c)
 \--- org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.21
      +--- org.jetbrains.kotlin:kotlin-build-tools-api:1.9.21
      +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
@@ -52,13 +60,13 @@ kotlinBuildToolsApiClasspath
      +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21
      |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 (*)
      |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.21
-     |    +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
+     |    +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10 -> 1.9.21
      |    +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.21
      |    \--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
      \--- org.jetbrains.kotlin:kotlin-compiler-runner:1.9.21
           +--- org.jetbrains.kotlin:kotlin-build-common:1.9.21
           +--- org.jetbrains.kotlin:kotlin-daemon-client:1.9.21
-          +--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.0
+          +--- org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.0 -> 1.8.0
           \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21 (*)
 
 kotlinCompilerClasspath
@@ -100,13 +108,18 @@ kotlinCompilerPluginClasspathTest - Kotlin compiler plugins for compilation
      \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 (*)
 
 kotlinKlibCommonizerClasspath
++--- org.jetbrains.kotlin:kotlin-bom:1.9.21
+|    +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 (c)
+|    +--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21 (c)
+|    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.21 (c)
+|    \--- org.jetbrains.kotlin:kotlin-reflect:1.9.21 (c)
 \--- org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.21
      +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21
      |    \--- org.jetbrains:annotations:13.0
      \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.21
           +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 (*)
           +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.21
-          +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
+          +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10 -> 1.9.21
           +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.21
           \--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
 

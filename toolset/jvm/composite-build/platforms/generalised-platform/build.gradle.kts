@@ -10,8 +10,39 @@ group = "com.nophasenokill.platforms"
 
 dependencies {
     constraints {
-        api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21")
-        api("org.slf4j:slf4j-api:2.0.12")
-        runtime("org.slf4j:slf4j-simple:2.0.12")
+        api("org.jetbrains.kotlin:kotlin-bom") {
+            version {
+                strictly("1.9.21")
+            }
+        }
+
+        api("org.jetbrains.kotlin:kotlin-reflect") {
+            version {
+                strictly("1.9.21")
+            }
+        }
+
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
+            version {
+                strictly("1.8.0")
+            }
+        }
+
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-bom") {
+            version {
+                strictly("1.8.0")
+            }
+        }
+
+        api("org.slf4j:slf4j-api") {
+            version {
+                strictly("2.0.12")
+            }
+        }
+        api("org.slf4j:slf4j-simple") {
+            version {
+                strictly("2.0.12")
+            }
+        }
     }
 }

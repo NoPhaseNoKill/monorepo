@@ -11,9 +11,11 @@ import org.gradle.api.plugins.JavaApplication
 
 class KotlinApplicationPlugin: Plugin<Project> {
     override fun apply(project: Project) {
+        project.pluginManager.apply("com.nophasenokill.meta-plugins.pin-kotlin-dependency-versions-plugin")
         project.pluginManager.apply("org.jetbrains.kotlin.jvm")
         project.pluginManager.apply("application")
         project.pluginManager.apply("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin")
+
 
 
 
