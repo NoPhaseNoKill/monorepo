@@ -2,6 +2,7 @@ rootProject.name = "jvm"
 
 plugins {
     id("com.gradle.enterprise") version "3.16.2"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
 }
 
 gradleEnterprise {
@@ -42,15 +43,20 @@ includeBuild("composite-build/meta-plugins/meta-plugin-one") {
     name = "meta-plugin-one"
 }
 
+includeBuild("composite-build/platforms/generalised-platform") {
+    name = "generalised-platform"
+}
+includeBuild("composite-build/platforms/junit-platform") {
+    name = "junit-platform"
+}
+
 includeBuild("composite-build/libraries") {
     name = "libraries"
 }
 includeBuild("composite-build/applications") {
     name = "applications"
 }
-includeBuild("composite-build/platforms") {
-    name = "platforms"
-}
+
 includeBuild("composite-build/standalone-plugins") {
     name = "standalone-plugins"
 }
