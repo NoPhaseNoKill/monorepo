@@ -58,8 +58,9 @@ includeBuild("composite-build/standalone-plugins/standalone-plugin-one") {
 includeBuild("composite-build/libraries") {
     name = "libraries"
 }
-includeBuild("composite-build/applications") {
-    name = "applications"
+
+includeBuild("composite-build/applications/application-one") {
+    name = "application-one"
 }
 
 
