@@ -2,9 +2,6 @@
 rootProject.name = "standalone-plugins"
 
 pluginManagement {
-    includeBuild("../meta-plugins") {
-        name = "meta-plugins"
-    }
     repositories.gradlePluginPortal()
 }
 

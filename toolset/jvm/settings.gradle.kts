@@ -38,9 +38,10 @@ gradleEnterprise {
     Serial execution factor 7.7x
  */
 
-includeBuild("composite-build/meta-plugins") {
-    name = "meta-plugins"
+includeBuild("composite-build/meta-plugins/meta-plugin-one") {
+    name = "meta-plugin-one"
 }
+
 includeBuild("composite-build/libraries") {
     name = "libraries"
 }
