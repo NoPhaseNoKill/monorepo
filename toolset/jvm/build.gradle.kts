@@ -9,11 +9,7 @@ repositories {
 }
 
 dependencies {
-    testReportAggregation(platform("com.nophasenokill.platforms:generalised-platform"))
-    testReportAggregation("com.nophasenokill.standalone-plugins:standalone-plugin-one")
-    testReportAggregation("com.nophasenokill.meta-plugins:meta-plugin-one")
     testReportAggregation("com.nophasenokill.applications:application-one")
-    testReportAggregation("com.nophasenokill.platforms:generalised-platform")
 }
 
 reporting {

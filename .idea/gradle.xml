@@ -7,6 +7,11 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
+              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/applications/application-one" name="application-one">
+                <projects>
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/applications/application-one" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/generalised-platform" name="generalised-platform">
                 <projects>
                   <project path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/generalised-platform" />
@@ -29,6 +34,11 @@
                   <project path="$PROJECT_DIR$/toolset/jvm/composite-build/meta-plugins/meta-plugin-one" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins/standalone-plugin-one" name="standalone-plugin-one">
+                <projects>
+                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins/standalone-plugin-one" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -36,12 +46,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/toolset/jvm" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/applications/application-one" />
             <option value="$PROJECT_DIR$/toolset/jvm/composite-build/libraries" />
             <option value="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-one" />
             <option value="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-two" />
             <option value="$PROJECT_DIR$/toolset/jvm/composite-build/meta-plugins/meta-plugin-one" />
             <option value="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/generalised-platform" />
             <option value="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/junit-platform" />
+            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins/standalone-plugin-one" />
           </set>
         </option>
       </GradleProjectSettings>
