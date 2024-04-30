@@ -46,8 +46,13 @@ includeBuild("composite-build/meta-plugins/meta-plugin-one") {
 includeBuild("composite-build/platforms/generalised-platform") {
     name = "generalised-platform"
 }
+
 includeBuild("composite-build/platforms/junit-platform") {
     name = "junit-platform"
+}
+
+includeBuild("composite-build/standalone-plugins/standalone-plugin-one") {
+    name = "standalone-plugin-one"
 }
 
 includeBuild("composite-build/libraries") {
@@ -55,10 +60,6 @@ includeBuild("composite-build/libraries") {
 }
 includeBuild("composite-build/applications") {
     name = "applications"
-}
-
-includeBuild("composite-build/standalone-plugins") {
-    name = "standalone-plugins"
 }
 
 
