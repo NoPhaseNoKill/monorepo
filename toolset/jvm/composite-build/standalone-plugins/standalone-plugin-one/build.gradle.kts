@@ -103,6 +103,11 @@ testing {
 
         val functionalTest by registering(JvmTestSuite::class) {
 
+            /*
+                Without this, the top-level test report aggregation will not work, possibly a bug.
+             */
+            this.testType = TestSuiteType.FUNCTIONAL_TEST
+
             this.targets.configureEach {
                 this.testTask.configure {
 

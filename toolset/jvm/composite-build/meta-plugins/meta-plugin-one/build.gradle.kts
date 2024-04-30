@@ -118,6 +118,11 @@ testing {
         val functionalTest by registering(JvmTestSuite::class) {
             useJUnitJupiter("5.10.1")
 
+            /*
+               Without this, the top-level test report aggregation will not work, possibly a bug.
+             */
+            this.testType = TestSuiteType.FUNCTIONAL_TEST
+
             this.targets.configureEach {
                 this.testTask.configure {
 
