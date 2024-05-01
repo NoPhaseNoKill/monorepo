@@ -13,7 +13,7 @@ import java.io.File
 class PinKotlinDependencyVersionsPluginFunctionalTest : FunctionalTest() {
 
     @Test
-    fun `should patch the kotlin kotlinBuildToolsApiClasspath and kotlinKlibCommonizerClasspath configurations to the kotlin bom version and coroutines bom version`(context: ExtensionContext) = runTest {
+    fun `should patch the kotlin kotlinBuildToolsApiClasspath and kotlinKlibCommonizerClasspath configurations to the kotlin bom version and coroutines bom version` (context: ExtensionContext) = runTest {
 
         val details = SharedTestSuiteStore.getSharedGradleRunnerDetails(context)
 

@@ -12,7 +12,7 @@ import java.io.File
 class CheckKotlinBuildServiceFixPluginFunctionalTest: FunctionalTest() {
 
     @Test
-    fun `should fine build service warning without plugin, and should not receive build service warning when plugin is applied`(context: ExtensionContext) = runTest {
+    fun `should fine build service warning without plugin, and should not receive build service warning when plugin is applied` (context: ExtensionContext) = runTest {
 
         val details = SharedTestSuiteStore.getSharedGradleRunnerDetails(context)
         val settingsFile = details.settingsFile
