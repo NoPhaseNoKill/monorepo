@@ -1,10 +1,16 @@
 [versions]
 ## BOM's/frequently updated
-kotlin = "1.9.21"
-kotlinDsl = "4.3.0"
-gradle = "8.7-rc-3"
-junit = "5.10.1"
+kotlin = "1.9.23"
+coroutines = "1.8.0"
 slf4j = "2.0.12"
+gradle = "8.7"
+junit = "5.10.1"
+commonsIo = "2.16.0"
+
+#kotlinDsl = "4.3.0"
+
+
+
 #springBootDependencies = "3.2.0"
 #talaiot = "2.0.3"
 #
@@ -26,4 +32,4 @@ slf4j = "2.0.12"
 #
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }
+#kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }

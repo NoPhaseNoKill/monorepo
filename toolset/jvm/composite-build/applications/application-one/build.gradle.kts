@@ -3,7 +3,7 @@ group = "com.nophasenokill.applications"
 version = "0.1.local-dev"
 
 plugins {
-    kotlin("jvm") version("1.9.21")
+    alias(libs.plugins.kotlinJvm)
     id("com.nophasenokill.meta-plugins.pin-kotlin-dependency-versions-plugin")
     id("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin")
 }

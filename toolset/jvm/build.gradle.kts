@@ -3,11 +3,6 @@ plugins {
     id("test-report-aggregation")
 }
 
-repositories {
-    mavenCentral()
-    gradlePluginPortal()
-}
-
 dependencies {
     testReportAggregation("com.nophasenokill.applications:application-one")
 }

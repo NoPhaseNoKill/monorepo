@@ -3,13 +3,28 @@ package com.nophasenokill
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.api.internal.artifacts.DefaultModuleIdentifier
 import org.gradle.api.internal.artifacts.dependencies.DefaultMinimalDependency
 import org.gradle.api.internal.artifacts.dependencies.DefaultMutableVersionConstraint
 
 class PinKotlinDependencyVersionsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
+
+        target.pluginManager.apply("org.jetbrains.kotlin.jvm")
+
         target.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+
+            if(target.configurations.findByName("implementation") != null) {
+                val implementation = target.configurations.findByName("implementation")
+                implementation?.dependencies?.add(target.dependencies.add("implementation", target.dependencies.platform("com.nophasenokill.platforms:generalised-platform")))
+            }
+
+            if(target.configurations.findByName("runtimeOnly") != null) {
+                val runtimeOnlyConfig = target.configurations.findByName("runtimeOnly")
+                runtimeOnlyConfig?.dependencies?.add(target.dependencies.add("runtimeOnly", "org.slf4j:slf4j-simple"))
+            }
+
 
             target.repositories.mavenCentral()
             /*

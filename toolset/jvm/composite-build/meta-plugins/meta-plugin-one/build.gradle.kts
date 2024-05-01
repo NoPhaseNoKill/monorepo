@@ -3,7 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     `java-gradle-plugin`
-    id("org.jetbrains.kotlin.jvm") version "1.9.21"
+    alias(libs.plugins.kotlinJvm)
 }
 
 
@@ -59,17 +59,15 @@ gradle.taskGraph.whenReady {
 
 dependencies {
     implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
-    implementation(platform("org.junit:junit-bom:5.10.1"))
-    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.21")
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    implementation(platform("org.junit:junit-bom"))
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
 
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21") {
-        exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-core-jvm").because("It conflicts with coroutine BOM which expects 1.8.0 and this brings in 1.5.0")
-    }
-
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    testImplementation("commons-io:commons-io:2.16.0")
+
+    testImplementation("commons-io:commons-io")
 
     testImplementation(gradleTestKit())
 }
@@ -105,19 +103,14 @@ testing {
                     }
                 }
                 dependencies {
-                    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
-                    implementation(platform("org.junit:junit-bom:5.10.1"))
-                    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
-                        exclude("org.jetbrains", "annotations")
-                    }
+                    implementation(platform("com.nophasenokill.platforms:generalised-platform"))
+                    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+                    implementation(platform("org.junit:junit-bom"))
+                    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
 
                     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test") {
-                        exclude("org.jetbrains", "annotations")
-                    }
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
-                        exclude("org.jetbrains", "annotations")
-                    }
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
                 }
             }
         }
@@ -155,19 +148,15 @@ testing {
                     }
                 }
                 dependencies {
-                    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
-                    implementation(platform("org.junit:junit-bom:5.10.1"))
-                    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
-                        exclude("org.jetbrains", "annotations")
-                    }
+                    implementation(project()) // functionalTest test suite depends on the production code in tests
+                    implementation(platform("com.nophasenokill.platforms:generalised-platform"))
+                    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+                    implementation(platform("org.junit:junit-bom"))
+                    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
 
                     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test") {
-                        exclude("org.jetbrains", "annotations")
-                    }
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
-                        exclude("org.jetbrains", "annotations")
-                    }
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
                 }
             }
         }

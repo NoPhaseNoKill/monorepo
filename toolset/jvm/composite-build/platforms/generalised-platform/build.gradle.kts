@@ -10,39 +10,23 @@ group = "com.nophasenokill.platforms"
 
 dependencies {
     constraints {
-        api("org.jetbrains.kotlin:kotlin-bom") {
-            version {
-                strictly("1.9.21")
-            }
+        api("org.jetbrains.kotlin:kotlin-bom:${libs.versions.kotlin.get()}")
+        api("org.jetbrains.kotlin:kotlin-reflect:${libs.versions.kotlin.get()}")
+        api("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
+        api("org.jetbrains.kotlin:kotlin-stdlib:${libs.versions.kotlin.get()}")
+
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${libs.versions.coroutines.get()}")
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-bom:${libs.versions.coroutines.get()}")
+
+        api("org.slf4j:slf4j-api:${libs.versions.slf4j.get()}")
+        api("org.slf4j:slf4j-simple:${libs.versions.slf4j.get()}")
+
+        api("org.gradle:gradle-tooling-api:${libs.versions.gradle.get()}") {
+            because("It matches version of gradle being used at root")
         }
 
-        api("org.jetbrains.kotlin:kotlin-reflect") {
-            version {
-                strictly("1.9.21")
-            }
-        }
+        api("commons-io:commons-io:${libs.versions.commonsIo.get()}")
 
-        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
-            version {
-                strictly("1.8.0")
-            }
-        }
-
-        api("org.jetbrains.kotlinx:kotlinx-coroutines-bom") {
-            version {
-                strictly("1.8.0")
-            }
-        }
-
-        api("org.slf4j:slf4j-api") {
-            version {
-                strictly("2.0.12")
-            }
-        }
-        api("org.slf4j:slf4j-simple") {
-            version {
-                strictly("2.0.12")
-            }
-        }
+        api("org.junit:junit-bom:${libs.versions.junit.get()}")
     }
 }

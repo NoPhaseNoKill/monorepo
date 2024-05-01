@@ -1,8 +1,17 @@
 rootProject.name = "jvm"
 
+pluginManagement {
+    repositories.gradlePluginPortal()
+}
+
 plugins {
     id("com.gradle.enterprise") version "3.16.2"
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
+}
+
+dependencyResolutionManagement {
+    repositories.mavenCentral()
+    repositories.gradlePluginPortal()
 }
 
 gradleEnterprise {
@@ -39,12 +48,12 @@ gradleEnterprise {
     Serial execution factor 7.7x
  */
 
-includeBuild("composite-build/meta-plugins/meta-plugin-one") {
-    name = "meta-plugin-one"
-}
-
 includeBuild("composite-build/platforms/generalised-platform") {
     name = "generalised-platform"
+}
+
+includeBuild("composite-build/meta-plugins/meta-plugin-one") {
+    name = "meta-plugin-one"
 }
 
 includeBuild("composite-build/platforms/junit-platform") {

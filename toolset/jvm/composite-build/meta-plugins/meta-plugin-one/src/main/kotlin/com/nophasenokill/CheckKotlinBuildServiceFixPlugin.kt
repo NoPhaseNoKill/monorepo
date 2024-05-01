@@ -2,6 +2,7 @@ package com.nophasenokill
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.libsDirectory
 
 class CheckKotlinBuildServiceFixPlugin: Plugin<Project> {
     override fun apply(project: Project) {

@@ -2,8 +2,9 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
+    id("com.nophasenokill.meta-plugins.pin-kotlin-dependency-versions-plugin")
     `java-gradle-plugin`
-    id("org.jetbrains.kotlin.jvm") version "1.9.21"
+    alias(libs.plugins.kotlinJvm)
     id("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin") // Only applies it to project standalone-plugins (aka this one)
 }
 
@@ -38,17 +39,17 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation("com.nophasenokill.meta-plugins:meta-plugin-one")
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
-    implementation(platform("org.junit:junit-bom:5.10.1"))
-    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
+    implementation(platform("com.nophasenokill.platforms:generalised-platform"))
+    // implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    implementation(platform("org.junit:junit-bom"))
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
 
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21") {
-        exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-core-jvm").because("It conflicts with coroutine BOM which expects 1.8.0 and this brings in 1.5.0")
-    }
+    implementation("com.nophasenokill.meta-plugins:meta-plugin-one")
+
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    testImplementation("commons-io:commons-io:2.16.0")
+    testImplementation("commons-io:commons-io")
 
     testImplementation(gradleTestKit())
 }
@@ -85,9 +86,10 @@ testing {
                 }
             }
             dependencies {
-                implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
-                implementation(platform("org.junit:junit-bom:5.10.1"))
-                implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
+                implementation(platform("com.nophasenokill.platforms:generalised-platform"))
+                // implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+                implementation(platform("org.junit:junit-bom"))
+                implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom")) {
                     exclude("org.jetbrains", "annotations")
                 }
 
@@ -137,21 +139,14 @@ testing {
             useJUnitJupiter("5.10.1")
 
             dependencies {
-                // functionalTest test suite depends on the production code in tests
-                implementation(project())
-                implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
-                implementation(platform("org.junit:junit-bom:5.10.1"))
-                implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0")) {
-                    exclude("org.jetbrains", "annotations")
-                }
-
+                implementation(project()) // functionalTest test suite depends on the production code in tests
+                implementation(platform("com.nophasenokill.platforms:generalised-platform"))
+                // implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+                implementation(platform("org.junit:junit-bom"))
+                implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test") {
-                    exclude("org.jetbrains", "annotations")
-                }
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm") {
-                    exclude("org.jetbrains", "annotations")
-                }
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
             }
         }
     }
