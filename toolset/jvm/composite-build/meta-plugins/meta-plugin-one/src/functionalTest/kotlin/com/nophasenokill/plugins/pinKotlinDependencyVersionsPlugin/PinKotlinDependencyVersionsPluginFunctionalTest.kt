@@ -1,58 +1,128 @@
-package com.nophasenokill.plugins.kotlinApplicationPlugin
+package com.nophasenokill.plugins.pinKotlinDependencyVersionsPlugin
 
-import com.nophasenokill.setup.runner.SharedRunnerDetails
-import com.nophasenokill.setup.variations.FunctionalTest.addPluginsById
-import com.nophasenokill.setup.variations.FunctionalTest.createGradleRunner
-import com.nophasenokill.setup.variations.FunctionalTest.getAsyncResult
-import com.nophasenokill.setup.variations.FunctionalTest.getComparableBuildResultLines
-import com.nophasenokill.setup.variations.FunctionalTest.getResourceFile
-import com.nophasenokill.setup.variations.FunctionalTest.getTaskOutcome
-import com.nophasenokill.setup.variations.FunctionalTest.launchAsyncWork
-import com.nophasenokill.setup.variations.FunctionalTest.runExpectedSuccessTask
-import com.nophasenokill.setup.variations.sharedRunnerDirLazy
+import com.nophasenokill.setup.junit.extensions.SharedTestSuiteStore
+import com.nophasenokill.setup.variations.FunctionalTest
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.test.runTest
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtensionContext
 import java.io.File
 
-class KotlinApplicationPluginDependenciesTest {
+class PinKotlinDependencyVersionsPluginFunctionalTest : FunctionalTest() {
 
     @Test
-    fun `should be able to maintain same dependencies, when the applications settings file includes the meta-plugins and generalised platform`() = runTest {
+    fun `should patch the kotlin kotlinBuildToolsApiClasspath and kotlinKlibCommonizerClasspath configurations to the kotlin bom version and coroutines bom version`(context: ExtensionContext) = runTest {
 
-        val details = getAsyncResult {
-            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy().value)
-            val details = createGradleRunner(runner)
-            details
-        }
+        val details = SharedTestSuiteStore.getSharedGradleRunnerDetails(context)
 
         val settingsFile = details.settingsFile
         val buildFile = details.buildFile
         val projectDir = details.projectDir
 
-        launchAsyncWork {
-            settingsFile.writeText("""
+
+        settingsFile.writeText("""
             rootProject.name = "some-name"
             includeBuild("platforms")
             includeBuild("meta-plugins")
         """.trimIndent())
-            addPluginsById(
-                listOf(
-                    "com.nophasenokill.kotlin-application-plugin"
-                ),
-                buildFile
-            )
-        }
 
-        launchAsyncWork {
+        buildFile.writeText("""
+            
+            import org.gradle.api.Plugin
+            import org.gradle.api.Project
+            import org.gradle.api.artifacts.Dependency
+            import org.gradle.api.artifacts.ExternalModuleDependency
+            import org.gradle.api.internal.artifacts.DefaultModuleIdentifier
+            import org.gradle.api.internal.artifacts.dependencies.DefaultMinimalDependency
+            import org.gradle.api.internal.artifacts.dependencies.DefaultMutableVersionConstraint
+            import org.gradle.api.plugins.JavaApplication
+            
+            plugins {
+               `java-gradle-plugin`
+                id("org.jetbrains.kotlin.jvm") version "1.9.21"
+            }
+            
+            dependencies {
+                implementation("com.nophasenokill.platforms:generalised-platform")
+                implementation("com.nophasenokill.meta-plugins:meta-plugin-one")
+                
+                implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.21"))
+                implementation(platform("org.junit:junit-bom:5.10.1"))
+                implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.0"))
+
+                implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.21") {
+                    exclude("org.jetbrains.kotlinx", "kotlinx-coroutines-core-jvm").because("It conflicts with coroutine BOM which expects 1.8.0 and this brings in 1.5.0")
+                }
+
+                implementation("org.jetbrains.kotlin:kotlin-stdlib")
+                testImplementation("commons-io:commons-io:2.16.0")
+
+                testImplementation(gradleTestKit())
+            }
+            
+            class KotlinApplicationPlugin: Plugin<Project> {
+                override fun apply(project: Project) {
+                    project.pluginManager.apply("com.nophasenokill.meta-plugins.pin-kotlin-dependency-versions-plugin")
+                    project.pluginManager.apply("org.jetbrains.kotlin.jvm")
+                    project.pluginManager.apply("application")
+                    project.pluginManager.apply("com.nophasenokill.meta-plugins.check-kotlin-build-service-fix-plugin")
+
+
+                    project.extensions.getByType(JavaApplication::class.java).mainClass.set("com.nophasenokill.App")
+
+                    project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+
+                        project.addMetaPluginDependency("meta-plugin-one")
+                        project.addPlatformDependency("implementation", "com.nophasenokill.platforms", "generalised-platform")
+
+                        project.dependencies.add("implementation", "org.slf4j:slf4j-api").apply {
+                            if (this is ExternalModuleDependency) {
+                                val slf4jExclusion = mapOf(
+                                    "group" to "org.slf4j",
+                                    "module" to "slf4j-simple"
+                                )
+
+                                this.exclude(
+                                    slf4jExclusion
+                                )
+                            }
+                        }
+
+                        project.dependencies.add("runtimeOnly", "org.slf4j:slf4j-simple")
+                        project.dependencies.add("testRuntimeOnly", "org.slf4j:slf4j-simple")
+
+
+                        project.repositories.gradlePluginPortal()
+                    }
+                }
+
+                private fun Project.addMetaPluginDependency(plugin: String) {
+                    val moduleId = DefaultModuleIdentifier.newId("com.nophasenokill.meta-plugins", plugin)
+                    val versionConstraint = DefaultMutableVersionConstraint("")
+                    val dependency: Dependency = DefaultMinimalDependency(moduleId, versionConstraint)
+
+                    project.configurations.findByName("implementation")?.dependencies?.add(dependency)
+                }
+
+
+                private fun Project.addPlatformDependency(configuration: String, group: String, name: String) {
+                    val moduleId = DefaultModuleIdentifier.newId(group, name)
+                    val versionConstraint = DefaultMutableVersionConstraint("")
+                    val dependency: Dependency = DefaultMinimalDependency(moduleId, versionConstraint)
+
+                    project.configurations.findByName(configuration)?.dependencies?.add(project.dependencies.platform(dependency))
+                }
+            }
+            
+            plugins.apply(KotlinApplicationPlugin::class.java)
+        """.trimIndent())
+
+
             createMetaPluginsIncludedBuild(projectDir)
-        }
-
-        launchAsyncWork {
             createPlatformsIncludedBuild(projectDir)
-        }
+
 
 
         /*
@@ -93,21 +163,35 @@ class KotlinApplicationPluginDependenciesTest {
 
          */
 
-        getAsyncResult {
-            val dependenciesResult = runExpectedSuccessTask(details.gradleRunner, "dependencies")
+
+        /*
+            Current versions this is applying to is for configurations
+            1. kotlinBuildToolsApiClasspath and
+            2. kotlinKlibCommonizerClasspath
+
+            It fixes:
+
+                - org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm 1.5.0 -> 1.8.0
+                - org.jetbrains.kotlin:kotlin-reflect 1.6.0 -> 1.9.21
+
+            Remaining dependency we can't touch is: kotlinCompilerClasspath which appears to have a direct
+            need for reflect 1.6.10
+
+                kotlinCompilerClasspath
+                \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23
+                 +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+                 |    \--- org.jetbrains:annotations:13.0
+                 +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+                 +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
+         */
+
+            val dependenciesResult = runExpectedSuccessTask(details, "dependencies")
             val file = getResourceFile("dependencies/kotlin-application-expected-dependencies.txt")
             val expectedContent = file.readText().lines()
             val comparableLines = getComparableBuildResultLines(dependenciesResult, 10, 10)
-
-
-            launchAsyncWork {
-                val outcome = getTaskOutcome(":dependencies", dependenciesResult)
-                Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
-            }
-
+            val outcome = getTaskOutcome(":dependencies", dependenciesResult)
+            Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
             Assertions.assertLinesMatch(expectedContent, comparableLines)
-
-        }
     }
 
     private suspend fun createMetaPluginsIncludedBuild(projectDir: File) = coroutineScope {
@@ -386,5 +470,4 @@ class KotlinApplicationPluginDependenciesTest {
             """.trimIndent()
         )
     }
-
 }

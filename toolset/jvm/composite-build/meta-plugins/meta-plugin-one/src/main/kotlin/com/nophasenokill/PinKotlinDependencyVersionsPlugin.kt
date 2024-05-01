@@ -19,6 +19,16 @@ class PinKotlinDependencyVersionsPlugin : Plugin<Project> {
                 Current versions this is applying to is:
                     - org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm 1.5.0 -> 1.8.0
                     - org.jetbrains.kotlin:kotlin-reflect 1.6.0 -> 1.9.21
+
+                Remaining dependency we can't touch is: kotlinCompilerClasspath which appears to have a direct
+                need for reflect 1.6.10
+
+                    kotlinCompilerClasspath
+                    \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23
+                     +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
+                     |    \--- org.jetbrains:annotations:13.0
+                     +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
+                     +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
              */
 
             if(target.configurations.findByName("kotlinBuildToolsApiClasspath") != null) {
@@ -39,28 +49,6 @@ class PinKotlinDependencyVersionsPlugin : Plugin<Project> {
 
             }
         }
-
-        /*
-            Remaining dependency we can't touch is: kotlinCompilerClasspath which appears to have a direct
-            need for reflect 1.6.10
-
-            kotlinCompilerClasspath
-            \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.23
-             +--- org.jetbrains.kotlin:kotlin-stdlib:1.9.23
-             |    \--- org.jetbrains:annotations:13.0
-             +--- org.jetbrains.kotlin:kotlin-script-runtime:1.9.23
-             +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
-         */
-
-
-    }
-
-    private fun Project.addPlatformDependency(configuration: String, group: String, name: String) {
-        val moduleId = DefaultModuleIdentifier.newId(group, name)
-        val versionConstraint = DefaultMutableVersionConstraint("")
-        val dependency: Dependency = DefaultMinimalDependency(moduleId, versionConstraint)
-
-        project.configurations.findByName(configuration)?.dependencies?.add(project.dependencies.platform(dependency))
     }
 }
 

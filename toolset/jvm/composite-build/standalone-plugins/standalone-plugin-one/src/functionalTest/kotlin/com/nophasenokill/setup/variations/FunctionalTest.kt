@@ -65,17 +65,13 @@ object FunctionalTest {
     /*
         This ensures the test is relocatable for cache, as the file should always be relative
      */
+    fun getResourceFile(fileNamePath: String): File {
+        val classLoader = Thread.currentThread().contextClassLoader
+        val resourceURL = requireNotNull(
+            classLoader.getResource(fileNamePath)
+        )
+        return File(resourceURL.toURI())
 
-    suspend fun getResourceFile(fileNamePath: String): File {
-        return getAsyncResult {
-            val classLoader = Thread.currentThread().contextClassLoader
-            val resourceURL = requireNotNull(
-                classLoader.getResource(fileNamePath)
-            )
-            val file = File(resourceURL.toURI())
-            file.useLines {  }
-            file
-        }
     }
 
     fun addPluginsById(plugins: List<String>, buildFileToAddPluginsTo: File) {
