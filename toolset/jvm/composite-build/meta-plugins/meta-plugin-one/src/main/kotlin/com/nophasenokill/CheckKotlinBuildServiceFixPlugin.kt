@@ -1,5 +1,6 @@
 package com.nophasenokill
 
+import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -9,7 +10,7 @@ class CheckKotlinBuildServiceFixPlugin: Plugin<Project> {
              Fixes undeclared build service usage when using: enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
              Known issue to be fixed here: https://youtrack.jetbrains.com/issue/KT-63165
          */
-        project.gradle.taskGraph.whenReady {
+        project.afterEvaluate {
             project.tasks.named("checkKotlinGradlePluginConfigurationErrors").configure { task ->
                 val kotlinCollectorSearchString = "org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnosticsCollector"
                 project.gradle.sharedServices.registrations.all { buildServiceRegistration ->

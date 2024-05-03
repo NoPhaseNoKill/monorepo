@@ -35,27 +35,29 @@ gradlePlugin {
      or projects.
  */
 
-gradle.taskGraph.whenReady {
-    val allTasks = gradle.taskGraph.allTasks
-    allTasks.forEach {
-        gradle.sharedServices.registrations.all {
+project.afterEvaluate {
+    // Iterate over specific tasks or use a pattern to select tasks
+    val tasksOfInterest = project.tasks.withType(DefaultTask::class.java)
+
+    tasksOfInterest.configureEach {
+        // Directly interact with the service registrations relevant to Kotlin compilation tasks
+        project.gradle.sharedServices.registrations.all {
             val buildServiceProvider = this.service
             val buildService = buildServiceProvider.get()
 
             val kotlinCollectorSearchString = "org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnosticsCollector"
-            val isCollectorService = buildService.toString().contains(kotlinCollectorSearchString)
-
-            if (isCollectorService) {
+            if (buildService.toString().contains(kotlinCollectorSearchString)) {
                 project.logger.debug(
                     "Applying checkKotlinGradlePluginConfigurationErrors workaround to task: {} for project: {}",
-                    it,
+                    this@configureEach.name,
                     project.name
                 )
-                it.usesService(buildServiceProvider)
+                this@configureEach.usesService(buildServiceProvider)
             }
         }
     }
 }
+
 
 dependencies {
     implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
