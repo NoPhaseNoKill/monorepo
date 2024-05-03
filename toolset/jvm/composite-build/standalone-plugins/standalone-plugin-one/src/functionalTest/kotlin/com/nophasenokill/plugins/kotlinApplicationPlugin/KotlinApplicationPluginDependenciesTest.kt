@@ -32,11 +32,31 @@ class KotlinApplicationPluginDependenciesTest {
         val buildFile = details.buildFile
         val projectDir = details.projectDir
 
+
+        val gradleDir = File(projectDir.path).resolve("gradle")
+        gradleDir.mkdirs()
+        val libs = File(gradleDir.path + "/libs.versions.toml")
+        libs.createNewFile()
+        libs.writeText("""
+            [versions]
+            ## BOM's/frequently updated
+            kotlin = "1.9.23"
+            coroutines = "1.8.0"
+            slf4j = "2.0.12"
+            gradle = "8.7"
+            junit = "5.10.1"
+            commonsIo = "2.16.0"
+
+            [plugins]
+            kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+            #kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }
+        """.trimIndent())
+
         launchAsyncWork {
             settingsFile.writeText("""
             rootProject.name = "some-name"
             includeBuild("platforms")
-            includeBuild("meta-plugins")
+            includeBuild("meta-plugins") 
         """.trimIndent())
             addPluginsById(
                 listOf(
@@ -388,24 +408,14 @@ class KotlinApplicationPluginDependenciesTest {
             """.trimIndent()
         )
 
+
         val generalisedPlatformDir = File(projectDir.path).resolve("platforms/generalised-platform")
         generalisedPlatformDir.mkdirs()
 
 
         val generalisedPlatformBuildFile = File(generalisedPlatformDir.path + "/build.gradle.kts")
-        val generalisedPlatformSettingsFile = File(generalisedPlatformDir.path + "/settings.gradle.kts")
         generalisedPlatformBuildFile.createNewFile()
-        generalisedPlatformSettingsFile.createNewFile()
 
-        generalisedPlatformSettingsFile.writeText("""
-            dependencyResolutionManagement {
-                versionCatalogs {
-                    create(defaultLibrariesExtensionName.get()) {
-                        from(files("../../../gradle/libs.versions.toml"))
-                    }
-                }
-            }
-        """.trimIndent())
         generalisedPlatformBuildFile.writeText(
             """
                     plugins {

@@ -7,9 +7,11 @@ gradle = "8.7"
 junit = "5.10.1"
 commonsIo = "2.16.0"
 
+[plugins]
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+#kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }
+
 #kotlinDsl = "4.3.0"
-
-
 
 #springBootDependencies = "3.2.0"
 #talaiot = "2.0.3"
@@ -30,6 +32,3 @@ commonsIo = "2.16.0"
 #jakartaActivationApi = "1.2.2"
 #javaxActivation = "1.1.1"
 #
-[plugins]
-kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-#kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }
