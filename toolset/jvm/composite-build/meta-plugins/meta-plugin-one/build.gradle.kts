@@ -58,24 +58,14 @@ gradle.taskGraph.whenReady {
 }
 
 dependencies {
-    implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-    implementation(platform("org.junit:junit-bom"))
-    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
-
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
-
-    testImplementation("commons-io:commons-io")
-
-    testImplementation(gradleTestKit())
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
 }
 
 testing {
     suites {
 
         val test by getting(JvmTestSuite::class) {
-            useJUnitJupiter("5.10.1")
+            useJUnitJupiter(libs.versions.junit.get())
 
             this.targets.configureEach {
                 this.testTask.configure {
@@ -101,20 +91,11 @@ testing {
                         }
                     }
                 }
-                dependencies {
-                    implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-                    implementation(platform("org.junit:junit-bom"))
-                    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
-
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
-                }
             }
         }
 
         val functionalTest by registering(JvmTestSuite::class) {
-            useJUnitJupiter("5.10.1")
+            useJUnitJupiter(libs.versions.junit.get())
 
             /*
                Without this, the top-level test report aggregation will not work, possibly a bug.
@@ -147,27 +128,18 @@ testing {
                 }
                 dependencies {
                     implementation(project()) // functionalTest test suite depends on the production code in tests
-                    implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-                    implementation(platform("org.junit:junit-bom"))
-                    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
-
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${libs.versions.coroutines.get()}")
+                    runtimeOnly("org.junit.platform:junit-platform-launcher")
                 }
             }
         }
     }
 }
 
-gradlePlugin.testSourceSets.add(sourceSets["functionalTest"])
-
-
-val functionalTestTask = tasks.register("functionalTestTask") {
+tasks.check {
     dependsOn(testing.suites.named("functionalTest"))
 }
 
-tasks.check {
-    // Include functionalTest as part of the check which implicitly means build lifecycle
-    dependsOn(functionalTestTask)
+gradlePlugin {
+    testSourceSets(sourceSets["functionalTest"])
 }
