@@ -59,7 +59,6 @@ gradle.taskGraph.whenReady {
 
 dependencies {
     implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation(platform("org.junit:junit-bom"))
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
 
@@ -104,7 +103,6 @@ testing {
                 }
                 dependencies {
                     implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-                    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
                     implementation(platform("org.junit:junit-bom"))
                     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
 
@@ -150,7 +148,6 @@ testing {
                 dependencies {
                     implementation(project()) // functionalTest test suite depends on the production code in tests
                     implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-                    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
                     implementation(platform("org.junit:junit-bom"))
                     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
 

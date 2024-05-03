@@ -39,8 +39,12 @@ gradlePlugin {
 }
 
 dependencies {
+    /*
+        Kotlin-bom is not required, as the versions are taken of by a mixture of:
+            1. id("com.nophasenokill.meta-plugins.pin-kotlin-dependency-versions-plugin")
+            2. alias(libs.plugins.kotlinJvm)
+     */
     implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-    // implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation(platform("org.junit:junit-bom"))
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
 
@@ -86,8 +90,11 @@ testing {
                 }
             }
             dependencies {
+                /*
+                   Kotlin-bom is not required, as the versions are taken of by individual test
+                   runs and whatever they choose to set it to.
+                */
                 implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-                // implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
                 implementation(platform("org.junit:junit-bom"))
                 implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom")) {
                     exclude("org.jetbrains", "annotations")
@@ -141,7 +148,6 @@ testing {
             dependencies {
                 implementation(project()) // functionalTest test suite depends on the production code in tests
                 implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-                // implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
                 implementation(platform("org.junit:junit-bom"))
                 implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")

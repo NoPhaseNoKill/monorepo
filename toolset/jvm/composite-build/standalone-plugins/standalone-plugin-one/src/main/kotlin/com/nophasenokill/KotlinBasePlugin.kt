@@ -21,7 +21,7 @@ class KotlinBasePlugin : Plugin<Project> {
 
         project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
 
-            project.dependencies.add("implementation", project.dependencies.platform("org.jetbrains.kotlin:kotlin-bom"))
+            // project.dependencies.add("implementation", project.dependencies.platform("org.jetbrains.kotlin:kotlin-bom"))
             /*
                 Adds gradle api, as well as the test kit.
 
