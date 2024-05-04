@@ -2,20 +2,41 @@ package com.nophasenokill
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.DependencySet
 import org.gradle.api.artifacts.VersionCatalogsExtension
+import kotlin.apply as kotlinApply
 
 class PinKotlinDependencyVersionsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
+        doIt(target)
+    }
 
-        target.pluginManager.apply("org.jetbrains.kotlin.jvm")
+    // Need a separate fn since (kotlin)Apply returns a value, changing the method signature and breaking override
+    private fun doIt(target: Project) = target.kotlinApply {
+        pluginManager.apply("org.jetbrains.kotlin.jvm")
 
-        target.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
-            val catalogsExtension = requireNotNull(target.extensions.findByType(VersionCatalogsExtension::class.java))
+        // is `withPlugin` necessary given you applied that plugin on the previous line?
+        // The doco would indicate that execution of this block is NOT delayed since the plugin
+        // has already been applied ...
+        pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+            // Using a 'provider':
+            //   1. avoids all the explicit not null checks (has impact on WHEN error is reported if something IS null)
+            //   2. links the provider source (and the error IF null) with usage, adding context (addresses #1?)
+            //   3. simplifies use of value as Gradle provides API for adding dependencies with a provider
+            val coroutinesVersion = provider {
+                extensions
+                    .getByType(VersionCatalogsExtension::class.java)
+                    .find("libs")
+                    .map { it.findVersion("coroutines") }
+            }
 
-            val libs = requireNotNull(catalogsExtension.find("libs").get())
-            val coroutinesVersion = requireNotNull(libs.findVersion("coroutines").get())
 
-            target.repositories.mavenCentral()
+            // Nice idea but I think this will cause more problems than solve because:
+            //   1. it might not be accessible (think Corporate firewall ...) stopping the build
+            //   2. repositories are applied in the order they are registered, which could give inconsistent
+            //      behaviour if this plugin is added before/after another plugin that also registers a repository
+            //      and/or a repository is added directly in a build/settings script.
+            repositories.mavenCentral()
             /*
                 Used to pin specific dependencies for transitive dependencies pulled in due
                 to kotlin plugin.
@@ -35,34 +56,33 @@ class PinKotlinDependencyVersionsPlugin : Plugin<Project> {
                      +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
              */
 
-            if(target.configurations.findByName("kotlinKlibCommonizerClasspath") != null) {
-                val buildToolConfig = target.configurations.findByName("kotlinKlibCommonizerClasspath")
-
-                buildToolConfig?.dependencies?.add(target.dependencies.add("kotlinKlibCommonizerClasspath", target.dependencies.platform("org.jetbrains.kotlin:kotlin-bom")))
-                buildToolConfig?.dependencies?.add(target.dependencies.add("kotlinKlibCommonizerClasspath", "org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable"))
-
+            fun DependencySet.addDependency(dependencyNotation: String) {
+                add(dependencies.create(dependencyNotation))
             }
 
-            if(target.configurations.findByName("kotlinBuildToolsApiClasspath") != null) {
-                val buildToolConfig = target.configurations.findByName("kotlinBuildToolsApiClasspath")
-
-                buildToolConfig?.dependencies?.add(
-                    target.dependencies.add("kotlinBuildToolsApiClasspath",
-                        target.dependencies.platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:${coroutinesVersion}")
-                    )
-                )
-                buildToolConfig?.dependencies?.add(target.dependencies.add("kotlinBuildToolsApiClasspath", target.dependencies.platform("org.jetbrains.kotlin:kotlin-bom")))
-                buildToolConfig?.dependencies?.add(target.dependencies.add("kotlinBuildToolsApiClasspath", "org.jetbrains.kotlin:kotlin-build-tools-impl"))
+            fun DependencySet.addPlatform(dependencyNotation: String) {
+                add(dependencies.platform(dependencyNotation))
             }
 
-            if(target.configurations.findByName("implementation") != null) {
-                val implementation = target.configurations.findByName("implementation")
-                implementation?.dependencies?.add(target.dependencies.add("implementation", target.dependencies.platform("com.nophasenokill.platforms:generalised-platform")))
+            configurations.findByName("kotlinKlibCommonizerClasspath")?.withDependencies {
+                it.addPlatform("org.jetbrains.kotlin:kotlin-bom")
+                it.addDependency("org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable")
             }
 
-            if(target.configurations.findByName("runtimeOnly") != null) {
-                val runtimeOnlyConfig = target.configurations.findByName("runtimeOnly")
-                runtimeOnlyConfig?.dependencies?.add(target.dependencies.add("runtimeOnly", "org.slf4j:slf4j-simple"))
+            configurations.findByName("kotlinBuildToolsApiClasspath")?.withDependencies {
+                it.addLater(coroutinesVersion.map { version ->
+                    dependencies.platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:$version")
+                })
+                it.addPlatform("org.jetbrains.kotlin:kotlin-bom")
+                it.addDependency("org.jetbrains.kotlin:kotlin-build-tools-impl")
+            }
+
+            configurations.findByName("implementation")?.withDependencies {
+                it.addPlatform("com.nophasenokill.platforms:generalised-platform")
+            }
+
+            configurations.findByName("runtimeOnly")?.withDependencies {
+                it.addDependency("org.slf4j:slf4j-simple")
             }
         }
     }
