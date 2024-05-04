@@ -1,0 +1,73 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.nophasenokill",
+    "module": "consumerPlugin",
+    "version": "1.0.0-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.7"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "consumerPlugin-1.0.0-SNAPSHOT.jar",
+          "url": "consumerPlugin-1.0.0-SNAPSHOT.jar",
+          "size": 3290,
+          "sha512": "ab535fb134be11486ff0756e8717a34320ca1e1cfa5b4bf4cb2fc04b653b4398f888902783f06e240fcd820bddf9d2d6142d8e0b01fef527259fb093d1101466",
+          "sha256": "6b11c29ac0227ae04593e50fc0730a4043b05c9acc7400117d2845829e772bce",
+          "sha1": "08a5d0f80b334c806879d2eba765d170fbd2a815",
+          "md5": "63225063a2dfc6588a4b88e6e35a866f"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.nophasenokill",
+          "module": "producerPlugin",
+          "version": {
+            "requires": "1.0.0-SNAPSHOT"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "consumerPlugin-1.0.0-SNAPSHOT.jar",
+          "url": "consumerPlugin-1.0.0-SNAPSHOT.jar",
+          "size": 3290,
+          "sha512": "ab535fb134be11486ff0756e8717a34320ca1e1cfa5b4bf4cb2fc04b653b4398f888902783f06e240fcd820bddf9d2d6142d8e0b01fef527259fb093d1101466",
+          "sha256": "6b11c29ac0227ae04593e50fc0730a4043b05c9acc7400117d2845829e772bce",
+          "sha1": "08a5d0f80b334c806879d2eba765d170fbd2a815",
+          "md5": "63225063a2dfc6588a4b88e6e35a866f"
+        }
+      ]
+    }
+  ]
+}

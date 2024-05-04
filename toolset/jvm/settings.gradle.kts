@@ -72,5 +72,9 @@ includeBuild("composite-build/applications/application-one") {
     name = "application-one"
 }
 
+includeBuild("test-composite-build") {
+    name = "test-composite-build"
+}
+
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
