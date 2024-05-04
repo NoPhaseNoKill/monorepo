@@ -89,6 +89,26 @@ $formattedPlugins
         buildFileToAddPluginsTo.writeText(text)
     }
 
+    suspend fun createGradleRunner2(runner: GradleRunner, withClasspath: List<File> ): SharedRunnerDetails {
+        return getAsyncResult {
+            val projectDir  = Files.createTempDirectory("shared-runner-dir")
+
+            val buildFile = projectDir.resolve("build.gradle.kts")
+            buildFile.createFile()
+            val settingsFile = projectDir.resolve("settings.gradle.kts")
+
+            SharedRunnerDetails(
+                projectDir.toFile(),
+                buildFile.toFile(),
+                settingsFile.toFile(),
+                runner
+                    .withProjectDir(projectDir.toFile())
+                    .withPluginClasspath(withClasspath)
+            )
+        }
+
+    }
+
     suspend fun createGradleRunner(runner: GradleRunner): SharedRunnerDetails {
         return getAsyncResult {
             val projectDir  = Files.createTempDirectory("shared-runner-dir")

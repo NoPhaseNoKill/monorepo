@@ -32,6 +32,11 @@ gradlePlugin {
         implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
     }
 
+    val kotlinLibrary by plugins.creating {
+        id = "com.nophasenokill.kotlin-library-plugin"
+        implementationClass = "com.nophasenokill.KotlinLibraryPlugin"
+    }
+
     val quotesPlugin by plugins.creating {
         id = "com.nophasenokill.wrap-text-with-quotes-plugin"
         implementationClass = "com.nophasenokill.WrapTextWithQuotesPlugin"

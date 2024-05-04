@@ -18,5 +18,12 @@ data class SharedRunnerDetails(
                 .withProjectDir(sharedRunnerDir)
                 .withPluginClasspath()
         }
+
+        fun getRunner2(sharedRunnerDir: File, withPluginClasspath: List<File> ): GradleRunner {
+            return DefaultGradleRunner()
+                .withJvmArguments("-Xmx2g", "-XX:MaxMetaspaceSize=384m")
+                .withProjectDir(sharedRunnerDir)
+                .withPluginClasspath(withPluginClasspath)
+        }
     }
 }
