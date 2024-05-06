@@ -1,3 +1,4 @@
+
 plugins {
     `java-gradle-plugin`
     `maven-publish`
@@ -13,39 +14,39 @@ gradlePlugin {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url = uri("${rootProject.projectDir}/local-repo")
-    }
-}
+// repositories {
+//     // maven {
+//     //     url = uri("${rootProject.projectDir}/local-repo")
+//     // }
+//     mavenCentral()
+// }
 
 dependencies {
-    implementation("com.nophasenokill:producerPlugin:1.0.0-SNAPSHOT")
+    /*
+        Equivalent of: implementation(project(":producerPlugin"))
+     */
+
+    // project.dependencies.add(
+    //     "implementation",
+    //     project.dependencies.project(mapOf("path" to ":producerPlugin"))
+    // )
+
+    /*
+        Equivalent of: implementation("com.nophasenokill:producerPlugin:1.0.0-local-dev")
+     */
+
+    project.dependencies.add(
+        "implementation",
+        project.dependencies.create("com.nophasenokill","producerPlugin", "1.0.0-local-dev")
+    )
+
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
-version = "1.0.0-SNAPSHOT"
+version = "1.0.0-local-dev"
 group = "com.nophasenokill"
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-        }
-    }
-    repositories {
-        maven {
-            url = uri("${rootProject.projectDir}/local-repo")
-        }
-    }
-}
 
 tasks.test {
     useJUnitPlatform()
-    dependsOn(":producerPlugin:publishMavenJavaPublicationToMavenRepository")
-}
-
-tasks.build {
-    finalizedBy("publishMavenJavaPublicationToMavenRepository")
 }

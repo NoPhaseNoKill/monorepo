@@ -1,7 +1,5 @@
-rootProject.name = "test-composite-build"
 
-includeBuild("consumerPlugin")
-includeBuild("producerPlugin")
+rootProject.name = "producerPlugin"
 
 dependencyResolutionManagement {
     repositories.mavenCentral()

@@ -72,8 +72,12 @@ includeBuild("composite-build/applications/application-one") {
     name = "application-one"
 }
 
-includeBuild("test-composite-build") {
-    name = "test-composite-build"
+includeBuild("test-composite-build/consumerPlugin") {
+    name = "consumerPlugin"
+}
+
+includeBuild("test-composite-build/producerPlugin") {
+    name = "producerPlugin"
 }
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")

@@ -13,37 +13,14 @@ gradlePlugin {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url = uri("${rootProject.projectDir}/local-repo")
-    }
-}
-
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
-version = "1.0.0-SNAPSHOT"
+version = "1.0.0-local-dev"
 group = "com.nophasenokill"
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-        }
-    }
-    repositories {
-        maven {
-            url = uri("${rootProject.projectDir}/local-repo")
-        }
-    }
-}
 
 tasks.test {
     useJUnitPlatform()
-}
-
-tasks.build {
-    finalizedBy("publishMavenJavaPublicationToMavenRepository")
 }
