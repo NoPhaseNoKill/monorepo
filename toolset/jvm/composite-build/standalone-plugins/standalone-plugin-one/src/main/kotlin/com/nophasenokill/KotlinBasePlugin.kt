@@ -9,13 +9,13 @@ import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 class KotlinBasePlugin : Plugin<Project> {
     override fun apply(project: Project) {
 
-        if(!project.pluginManager.hasPlugin("com.nophasenokill.java-base-plugin")) {
-            project.pluginManager.apply("com.nophasenokill.java-base-plugin")
+        if(!project.pluginManager.hasPlugin("com.nophasenokill.standalone-plugins.java-base-plugin")) {
+            project.pluginManager.apply("com.nophasenokill.standalone-plugins.java-base-plugin")
         }
 
         project.tasks.register("greeting") {
             it.doLast {
-                Logging.getLogger("SharedAppExtension").quiet("Hello from plugin 'com.nophasenokill.kotlin-base-plugin'")
+                Logging.getLogger("SharedAppExtension").quiet("Hello from plugin 'com.nophasenokill.standalone-plugins.kotlin-base-plugin'")
             }
         }
 

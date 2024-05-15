@@ -30,7 +30,7 @@ class KotlinBasePluginNotFoundTaskFunctionalTest {
         launchAsyncWork {
             settingsFile.writeText("")
             val plugins =  listOf(
-                "com.nophasenokill.kotlin-base-plugin"
+                "com.nophasenokill.standalone-plugins.kotlin-base-plugin"
             )
 
             val formattedPlugins = plugins.joinToString(prefix = INDENT, separator = "\n$INDENT") {

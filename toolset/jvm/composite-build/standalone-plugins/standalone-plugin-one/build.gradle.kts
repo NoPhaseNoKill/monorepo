@@ -18,27 +18,27 @@ repositories {
 
 gradlePlugin {
     val javaBase by plugins.creating {
-        id = "com.nophasenokill.java-base-plugin"
+        id = "com.nophasenokill.standalone-plugins.java-base-plugin"
         implementationClass = "com.nophasenokill.JavaBasePlugin"
     }
 
     val kotlinBase by plugins.creating {
-        id = "com.nophasenokill.kotlin-base-plugin"
+        id = "com.nophasenokill.standalone-plugins.kotlin-base-plugin"
         implementationClass = "com.nophasenokill.KotlinBasePlugin"
     }
 
     val kotlinApplication by plugins.creating {
-        id = "com.nophasenokill.kotlin-application-plugin"
+        id = "com.nophasenokill.standalone-plugins.kotlin-application-plugin"
         implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
     }
 
     val kotlinLibrary by plugins.creating {
-        id = "com.nophasenokill.kotlin-library-plugin"
+        id = "com.nophasenokill.standalone-plugins.kotlin-library-plugin"
         implementationClass = "com.nophasenokill.KotlinLibraryPlugin"
     }
 
     val quotesPlugin by plugins.creating {
-        id = "com.nophasenokill.wrap-text-with-quotes-plugin"
+        id = "com.nophasenokill.standalone-plugins.wrap-text-with-quotes-plugin"
         implementationClass = "com.nophasenokill.WrapTextWithQuotesPlugin"
     }
 }

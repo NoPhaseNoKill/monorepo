@@ -27,7 +27,7 @@ class KotlinBasePluginFoundTaskFunctionalTest {
         launchAsyncWork {
             settingsFile.writeText("")
             val plugins =  listOf(
-                "com.nophasenokill.kotlin-base-plugin"
+                "com.nophasenokill.standalone-plugins.kotlin-base-plugin"
             )
 
             val formattedPlugins = plugins.joinToString(prefix = INDENT, separator = "\n$INDENT") {
@@ -47,6 +47,6 @@ $formattedPlugins
             runner.withArguments("greeting", "--warning-mode=all").build()
         }
 
-        assertTrue(result.output.contains("Hello from plugin 'com.nophasenokill.kotlin-base-plugin'"))
+        assertTrue(result.output.contains("Hello from plugin 'com.nophasenokill.standalone-plugins.kotlin-base-plugin'"))
     }
 }

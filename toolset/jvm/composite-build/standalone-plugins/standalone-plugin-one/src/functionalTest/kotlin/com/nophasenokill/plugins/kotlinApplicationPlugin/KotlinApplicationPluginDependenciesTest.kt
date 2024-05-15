@@ -60,7 +60,7 @@ class KotlinApplicationPluginDependenciesTest {
         """.trimIndent())
             addPluginsById(
                 listOf(
-                    "com.nophasenokill.kotlin-application-plugin"
+                    "com.nophasenokill.standalone-plugins.kotlin-application-plugin"
                 ),
                 buildFile
             )

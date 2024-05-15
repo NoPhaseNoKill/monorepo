@@ -31,7 +31,7 @@ class WrapTextWithQuotesPluginFunctionalTest {
 
         val plugins = lazyOf(
             listOf(
-                "com.nophasenokill.wrap-text-with-quotes-plugin"
+                "com.nophasenokill.standalone-plugins.wrap-text-with-quotes-plugin"
             )
         )
 
