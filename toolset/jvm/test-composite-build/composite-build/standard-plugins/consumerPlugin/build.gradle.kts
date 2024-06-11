@@ -1,57 +1,63 @@
+import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
 
 plugins {
     `java-gradle-plugin`
-    `kotlin-dsl`
+    `maven-publish`
+    kotlin("jvm") version "1.9.23"
+}
+
+gradlePlugin {
+    plugins {
+        create("consumerPlugin") {
+            id = "com.nophasenokill.consumer"
+            implementationClass = "com.nophasenokill.ConsumerPlugin"
+        }
+    }
 }
 
 repositories {
     mavenCentral()
-    gradlePluginPortal()
-}
-
-dependencies {
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.23"))
-    implementation(project(":producerPlugin"))
-
-    configurations.all {
-        isTransitive = false
+    maven {
+        url = uri("${rootProject.projectDir}/local-repo")
     }
 }
 
-/*
+dependencies {
+    implementation(project(":producerPlugin"))
 
-    This highlights the non-transitive dependencies of the consumer/producer.
+    testImplementation(project(path = ":producerPlugin", configuration = "testDependencyImplementationConfiguration"))
+    testRuntimeOnly(project(path = ":producerPlugin", configuration = "testDependencyRuntimeOnlyConfiguration"))
 
-    Please note that the only difference (and rightly so), is that the consumer
-    plugin has a single, individual added dependency: the producer plugin.
+    // implementation(DefaultExternalModuleDependency("com.nophasenokill", "producerPlugin", "1.0.0-SNAPSHOT"))
+    // implementation(DefaultExternalModuleDependency("com.nophasenokill", "producerPlugin", "1.0.0-SNAPSHOT", "testDependencyConfiguration"))
+    // testImplementation("org.jetbrains.kotlin:kotlin-test")
+    // testImplementation(DefaultExternalModuleDependency("com.nophasenokill", "producerPlugin", "1.0.0-SNAPSHOT", "testImplementation"))
+    // implementation("com.nophasenokill:producerPlugin:1.0.0-SNAPSHOT")
+    // compileOnly("com.nophasenokill:producerPlugin:1.0.0-SNAPSHOT")
+    // testImplementation("com.nophasenokill:producerPlugin:1.0.0-SNAPSHOT")
+}
 
-    producerPlugin dependencies:
+version = "1.0.0-SNAPSHOT"
+group = "com.nophasenokill"
 
-        org.jetbrains.kotlin:kotlin-assignment-compiler-plugin-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-bom:1.9.23
-        org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.22
-        org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23
-        org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-reflect:1.9.22
-        org.jetbrains.kotlin:kotlin-sam-with-receiver-compiler-plugin-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-stdlib:1.9.22
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            url = uri("${rootProject.projectDir}/local-repo")
+        }
+    }
+}
 
+tasks.test {
+    useJUnitPlatform()
+    dependsOn(":producerPlugin:publishMavenJavaPublicationToMavenRepository")
+}
 
-    consumerPlugin dependencies:
-
-        producerPlugin <---- ****Notice this here***
-        org.jetbrains.kotlin:kotlin-assignment-compiler-plugin-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-bom:1.9.23
-        org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.22
-        org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-reflect:1.9.22
-        org.jetbrains.kotlin:kotlin-sam-with-receiver-compiler-plugin-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.9.22
-        org.jetbrains.kotlin:kotlin-stdlib:1.9.22
- */
-
-
-
+tasks.build {
+    finalizedBy("publishMavenJavaPublicationToMavenRepository")
+}
