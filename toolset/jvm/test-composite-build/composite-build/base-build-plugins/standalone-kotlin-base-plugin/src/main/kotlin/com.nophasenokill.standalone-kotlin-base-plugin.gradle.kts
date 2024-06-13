@@ -18,7 +18,7 @@ project.apply {
     version = "1.0.0-local-dev"
 }
 
-project.dependencies {
+dependencies {
     implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${embeddedKotlinVersion}")
     implementation(gradleApi())
     testImplementation(gradleTestKit())
@@ -29,7 +29,7 @@ project.dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-project.publishing {
+publishing {
     repositories {
         maven {
             url = uri("${rootProject.projectDir}/local-repo")

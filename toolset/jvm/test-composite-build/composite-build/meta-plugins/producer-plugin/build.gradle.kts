@@ -1,5 +1,5 @@
 plugins {
-    id("com.nophasenokill.standalone-kotlin-base-plugin")
+    id("com.nophasenokill.standalone-kotlin-base-plugin") version("1.0.0-local-dev")
     `kotlin-dsl`
 }
 
@@ -13,5 +13,5 @@ gradlePlugin {
 }
 
 dependencies {
-
+    implementation(project(":standalone-kotlin-base-plugin"))
 }

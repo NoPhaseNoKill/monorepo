@@ -1,0 +1,73 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.nophasenokill",
+    "module": "standalone-kotlin-base-plugin",
+    "version": "1.0.0-local-dev",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.8"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "standalone-kotlin-base-plugin-1.0.0-local-dev.jar",
+          "url": "standalone-kotlin-base-plugin-1.0.0-local-dev.jar",
+          "size": 323659,
+          "sha512": "ac931c4d4f6a26076d37037cb756e78acd094ba9bcc959c2e872540dc044b2c00eae2a3aecf7f250571678ddf2554975b57530d91d4241980b10e38d4c9dcd5d",
+          "sha256": "11b93d3ee2f2b3e07a19d77811edcad72c1168229dd50933ecffe1ec699ecaff",
+          "sha1": "4e5ebb73305dd71dc37c77d6b39e4cff818b112c",
+          "md5": "11bc077bb7a3145ee3d6c459d636b46f"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin.jvm",
+          "module": "org.jetbrains.kotlin.jvm.gradle.plugin",
+          "version": {
+            "requires": "1.9.22"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "standalone-kotlin-base-plugin-1.0.0-local-dev.jar",
+          "url": "standalone-kotlin-base-plugin-1.0.0-local-dev.jar",
+          "size": 323659,
+          "sha512": "ac931c4d4f6a26076d37037cb756e78acd094ba9bcc959c2e872540dc044b2c00eae2a3aecf7f250571678ddf2554975b57530d91d4241980b10e38d4c9dcd5d",
+          "sha256": "11b93d3ee2f2b3e07a19d77811edcad72c1168229dd50933ecffe1ec699ecaff",
+          "sha1": "4e5ebb73305dd71dc37c77d6b39e4cff818b112c",
+          "md5": "11bc077bb7a3145ee3d6c459d636b46f"
+        }
+      ]
+    }
+  ]
+}
