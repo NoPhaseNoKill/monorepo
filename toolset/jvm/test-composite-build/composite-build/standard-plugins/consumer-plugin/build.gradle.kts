@@ -1,5 +1,3 @@
-import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
-
 plugins {
     `maven-publish`
     `kotlin-dsl`
@@ -12,13 +10,6 @@ gradlePlugin {
             id = "com.nophasenokill.consumer-plugin"
             implementationClass = "com.nophasenokill.ConsumerPlugin"
         }
-    }
-}
-
-repositories {
-    mavenCentral()
-    maven {
-        url = uri("${rootProject.projectDir}/local-repo")
     }
 }
 

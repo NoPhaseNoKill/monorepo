@@ -8,7 +8,6 @@ class ProducerPlugin: Plugin<Project> {
     override fun apply(target: Project) {
 
         target.run {
-
             pluginManager.withPlugin("java") {
                 dependencies {
                     add("implementation", dependencies.platform("org.jetbrains.kotlin:kotlin-bom:1.9.23"))
