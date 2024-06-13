@@ -1,4 +1,5 @@
 plugins {
+    id("com.nophasenokill.standalone-kotlin-base-plugin")
     `maven-publish`
     `kotlin-dsl`
     id("com.nophasenokill.producer-plugin") version("1.0.0-local-dev")
@@ -15,13 +16,7 @@ gradlePlugin {
 
 dependencies {
     implementation("com.nophasenokill:producer-plugin:1.0.0-local-dev")
-    // implementation(project(":producer-plugin"))
-    // testImplementation(project(path = ":producer-plugin", configuration = "testDependencyImplementationConfiguration"))
-    // testRuntimeOnly(project(path = ":producer-plugin", configuration = "testDependencyRuntimeOnlyConfiguration"))
 }
-
-version = "1.0.0-local-dev"
-group = "com.nophasenokill"
 
 publishing {
     repositories {

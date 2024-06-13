@@ -6,6 +6,7 @@ pluginManagement {
         Loads repositories and basic settings in a generalised manner.
      */
     includeBuild("composite-build/base-plugins/root-settings-plugin")
+    includeBuild("composite-build/base-build-plugins/standalone-kotlin-base-plugin")
 }
 
 plugins {

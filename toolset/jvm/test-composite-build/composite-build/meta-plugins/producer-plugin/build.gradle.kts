@@ -1,4 +1,5 @@
 plugins {
+    id("com.nophasenokill.standalone-kotlin-base-plugin")
     `maven-publish`
     `kotlin-dsl`
 }
@@ -15,9 +16,6 @@ gradlePlugin {
 dependencies {
 
 }
-
-version = "1.0.0-local-dev"
-group = "com.nophasenokill"
 
 publishing {
     repositories {
