@@ -25,10 +25,6 @@ publishing {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 tasks.build {
     finalizedBy("publish")
 }

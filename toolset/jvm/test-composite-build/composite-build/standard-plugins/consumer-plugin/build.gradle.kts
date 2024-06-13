@@ -26,12 +26,10 @@ publishing {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.build {
     dependsOn(":producer-plugin:build")
     mustRunAfter(":producer-plugin:build")
-}
 
-tasks.build {
     finalizedBy("publish")
 }
+

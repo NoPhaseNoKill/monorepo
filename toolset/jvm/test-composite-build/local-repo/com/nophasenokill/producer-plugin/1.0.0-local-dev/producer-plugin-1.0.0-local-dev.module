@@ -48,6 +48,15 @@
         "org.gradle.usage": "java-runtime",
         "org.jetbrains.kotlin.platform.type": "jvm"
       },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin.jvm",
+          "module": "org.jetbrains.kotlin.jvm.gradle.plugin",
+          "version": {
+            "requires": "1.9.22"
+          }
+        }
+      ],
       "files": [
         {
           "name": "producer-plugin-1.0.0-local-dev.jar",
