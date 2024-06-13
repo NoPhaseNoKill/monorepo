@@ -3,6 +3,9 @@ plugins {
     `kotlin-dsl`
 }
 
+project.group = "com.nophasenokill"
+project.version = "1.0.0-local-dev"
+
 gradlePlugin {
     plugins {
         create("producer-plugin") {
