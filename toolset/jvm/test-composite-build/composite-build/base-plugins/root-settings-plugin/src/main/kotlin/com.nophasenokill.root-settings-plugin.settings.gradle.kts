@@ -5,6 +5,9 @@ plugins {
 
 pluginManagement {
     repositories {
+        maven {
+            url = uri("${rootProject.projectDir}/local-repo/com/nophasenokill/producer-plugin")
+        }
         gradlePluginPortal()
         mavenCentral()
     }
