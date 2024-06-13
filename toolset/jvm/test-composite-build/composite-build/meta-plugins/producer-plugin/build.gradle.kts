@@ -1,6 +1,5 @@
 plugins {
     id("com.nophasenokill.standalone-kotlin-base-plugin")
-    `maven-publish`
     `kotlin-dsl`
 }
 
@@ -15,16 +14,4 @@ gradlePlugin {
 
 dependencies {
 
-}
-
-publishing {
-    repositories {
-        maven {
-            url = uri("${rootProject.projectDir}/local-repo")
-        }
-    }
-}
-
-tasks.build {
-    finalizedBy("publish")
 }

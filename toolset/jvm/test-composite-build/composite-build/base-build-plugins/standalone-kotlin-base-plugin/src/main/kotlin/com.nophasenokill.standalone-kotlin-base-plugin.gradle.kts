@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    `maven-publish`
 }
 
 /*
@@ -28,6 +29,18 @@ project.dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
+project.publishing {
+    repositories {
+        maven {
+            url = uri("${rootProject.projectDir}/local-repo")
+        }
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.build {
+    finalizedBy("publish")
 }
