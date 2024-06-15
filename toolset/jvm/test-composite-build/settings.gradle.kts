@@ -2,23 +2,28 @@
 rootProject.name = "test-composite-build"
 
 pluginManagement {
-    /*
-        Loads repositories and basic settings in a generalised manner.
-     */
-    includeBuild("composite-build/base-plugins/root-settings-plugin")
+    repositories {
+     /*
+         We need the both of these to be able to load the initial root settings
+         from a another build/binary.
+      */
+        maven {
+            url = uri("${rootProject.projectDir}/local-repo")
+        }
+        gradlePluginPortal()
+    }
 }
+/*
+    Do NOT declare dependency management here - it is being
+    managed inside of the root-settings-plugin
+ */
 
 
 plugins {
-    id("com.nophasenokill.root-settings-plugin")
+    id("com.nophasenokill.root-settings-plugin") version("1.0.0-local-dev")
 }
 
-include(":standalone-kotlin-base-plugin")
-project(":standalone-kotlin-base-plugin").projectDir = file("composite-build/base-build-plugins/standalone-kotlin-base-plugin")
-
-include(":producer-plugin")
-project(":producer-plugin").projectDir = file("composite-build/meta-plugins/producer-plugin")
-
-
-include(":consumer-plugin")
-project(":consumer-plugin").projectDir = file("composite-build/standard-plugins/consumer-plugin")
+include("composite-build:base-plugins:root-settings-plugin")
+include("composite-build:base-build-plugins:standalone-kotlin-base-plugin")
+include("composite-build:meta-plugins:producer-plugin")
+include("composite-build:standard-plugins:consumer-plugin")

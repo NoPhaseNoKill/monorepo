@@ -16,5 +16,5 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation(project(":standalone-kotlin-base-plugin"))
+    implementation(project(":composite-build:base-build-plugins:standalone-kotlin-base-plugin"))
 }

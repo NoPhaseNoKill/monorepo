@@ -16,6 +16,6 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation(project(":producer-plugin"))
-    implementation(project(":standalone-kotlin-base-plugin"))
+    implementation(project(":composite-build:meta-plugins:producer-plugin"))
+    implementation(project(":composite-build:base-build-plugins:standalone-kotlin-base-plugin"))
 }

@@ -1,6 +1,7 @@
 
 plugins {
     `kotlin-dsl`
+    `maven-publish`
 }
 
 group = "com.nophasenokill"
@@ -17,4 +18,12 @@ dependencies {
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("${rootProject.projectDir}/local-repo")
+        }
+    }
 }
