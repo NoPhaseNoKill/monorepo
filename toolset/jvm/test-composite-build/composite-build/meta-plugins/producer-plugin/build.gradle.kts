@@ -18,3 +18,15 @@ gradlePlugin {
 dependencies {
     implementation(project(":composite-build:base-build-plugins:standalone-kotlin-base-plugin"))
 }
+
+val instrumentedJars: Configuration by configurations.creating {
+    isCanBeConsumed = true
+    isCanBeResolved = false
+    attributes {
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_RUNTIME))
+        attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+        attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, JavaVersion.current().majorVersion.toInt())
+        attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named("instrumented-jar"))
+    }
+}

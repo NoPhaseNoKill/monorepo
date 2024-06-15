@@ -1,6 +1,6 @@
 
 plugins {
-    `kotlin-dsl`
+    `kotlin-dsl` apply(true)
     `maven-publish`
 }
 
