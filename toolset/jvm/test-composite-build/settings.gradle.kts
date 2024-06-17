@@ -50,7 +50,10 @@ plugins {
     id("com.nophasenokill.root-settings-plugin") version("1.0.0-local-dev")
 }
 
+includeBuild("composite-build/root")
+
 include("composite-build:base-plugins:root-settings-plugin")
+
 include("composite-build:base-build-plugins:standalone-kotlin-base-plugin")
 include("composite-build:meta-plugins:producer-plugin")
 include("composite-build:standard-plugins:consumer-plugin")
