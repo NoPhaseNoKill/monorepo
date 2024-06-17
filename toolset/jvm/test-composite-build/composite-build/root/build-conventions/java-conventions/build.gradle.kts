@@ -1,7 +1,15 @@
 plugins {
-
     `java-gradle-plugin`
     `kotlin-dsl`
+}
+
+gradlePlugin {
+    plugins {
+        create("java-conventions") {
+            id = "com.nophasenokill.java-conventions"
+            implementationClass = "com.nophasenokill.JavaConventionsPlugin"
+        }
+    }
 }
 
 repositories {
@@ -10,7 +18,8 @@ repositories {
 }
 
 dependencies {
-    implementation("my:common-conventions")
+    implementation("com.nophasenokill:common-conventions")
 }
 
-group = "my"
+group = "com.nophasenokill"
+version = "1.0.0-local-dev"
