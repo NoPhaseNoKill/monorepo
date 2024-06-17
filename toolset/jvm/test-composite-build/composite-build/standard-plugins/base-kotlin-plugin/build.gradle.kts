@@ -21,5 +21,4 @@ dependencies {
     implementation("com.nophasenokill:group-and-version-plugin")
     implementation("com.nophasenokill:publishing-plugin")
     implementation("com.nophasenokill:java-gradle-applier-plugin")
-    implementation("com.nophasenokill:root-settings-plugin")
 }

@@ -8,7 +8,6 @@ include("java-gradle-applier-plugin")
 include("base-kotlin-plugin")
 
 pluginManagement {
-    includeBuild("../root-plugins")
     repositories {
         gradlePluginPortal()
         mavenCentral()

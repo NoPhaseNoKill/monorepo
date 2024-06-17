@@ -1,4 +1,6 @@
 
 rootProject.name = "test-composite-build"
-includeBuild("composite-build/kotlin-plugins/standard-plugins")
-include("composite-build:consumer-kotlin-plugin")
+
+includeBuild("composite-build/standard-plugins")
+
+include("composite-build:libraries:consumer-kotlin-plugin")
