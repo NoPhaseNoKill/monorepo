@@ -2,7 +2,7 @@ package com.nophasenokill
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.tasks.testing.Test
+
 
 class BaseKotlinPlugin : Plugin<Project> {
     override fun apply(target: Project) {
