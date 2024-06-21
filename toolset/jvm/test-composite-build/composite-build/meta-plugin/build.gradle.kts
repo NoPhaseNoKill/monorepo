@@ -3,6 +3,8 @@ plugins {
     `maven-publish`
     `kotlin-dsl` // allows for actually writing the kotlin code in the src/main/kotlin folder
     id("com.nophasenokill.library") version("1.0.0")
+    id("com.nophasenokill.consumer") version("1.0.0")
+    id("com.nophasenokill.producer") version("1.0.0")
 }
 
 group = "com.nophasenokill"
@@ -11,10 +13,6 @@ version = "1.0.0"
 repositories {
     gradlePluginPortal()
     mavenCentral()
-}
-
-dependencies {
-    implementation("com.nophasenokill:standalone-plugin")
 }
 
 gradlePlugin {
@@ -26,10 +24,6 @@ gradlePlugin {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            url = uri(layout.buildDirectory.dir("maven-repo"))
-        }
-    }
+dependencies {
+    implementation("com.nophasenokill:standalone-plugin")
 }

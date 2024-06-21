@@ -5,9 +5,17 @@ buildscript {
             url = uri(layout.buildDirectory.dir("maven-repo"))
         }
         gradlePluginPortal()
+        mavenCentral()
     }
-    dependencies {
-        classpath("com.nophasenokill.library:com.nophasenokill.library.gradle.plugin:1.0.0")
+
+    /*
+        Using settingsEvaluated here ensures that if it is not yet published to your local build folder,
+        it does so first
+     */
+    gradle.settingsEvaluated {
+        dependencies {
+            classpath("com.nophasenokill.library:com.nophasenokill.library.gradle.plugin:1.0.0")
+        }
     }
 }
 
@@ -15,13 +23,18 @@ buildscript {
     This applies the plugin at for this project.
     Requires the above buildscript to be added, AND also the plugin to be published first,
     otherwise you will get random failures.
+
+    Using settingsEvaluated here ensures that if it is not yet published to your local build folder,
+    it does so first
  */
-apply(plugin = "com.nophasenokill.library")
+gradle.settingsEvaluated {
+    apply(plugin = "com.nophasenokill.library")
+}
 
 plugins {
     `java-gradle-plugin`
     `maven-publish`
-    `kotlin-dsl` // allows for actually writing the kotlin code in the src/main/kotlin folder
+    `kotlin-dsl`
 }
 
 group = "com.nophasenokill"
@@ -30,6 +43,10 @@ version = "1.0.0"
 repositories {
     gradlePluginPortal()
     mavenCentral()
+}
+
+dependencies {
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.22")
 }
 
 gradlePlugin {
@@ -42,13 +59,15 @@ gradlePlugin {
             id = "com.nophasenokill.library"
             implementationClass = "com.nophasenokill.LibraryPlugin"
         }
-    }
-}
 
-publishing {
-    repositories {
-        maven {
-            url = uri(layout.buildDirectory.dir("maven-repo"))
+        create("producerConfigurationPlugin") {
+            id = "com.nophasenokill.producer"
+            implementationClass = "com.nophasenokill.ProducerConfigurationPlugin"
+        }
+
+        create("consumerConfigurationPlugin") {
+            id = "com.nophasenokill.consumer"
+            implementationClass = "com.nophasenokill.ConsumerConfigurationPlugin"
         }
     }
 }

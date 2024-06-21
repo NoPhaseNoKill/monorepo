@@ -9,5 +9,8 @@ class MetaPlugin: Plugin<Project> {
 
 
         target.plugins.apply("com.nophasenokill.application")
+        target.plugins.apply("com.nophasenokill.library")
+        target.plugins.apply("com.nophasenokill.producer")
+        target.plugins.apply("com.nophasenokill.consumer")
     }
 }
