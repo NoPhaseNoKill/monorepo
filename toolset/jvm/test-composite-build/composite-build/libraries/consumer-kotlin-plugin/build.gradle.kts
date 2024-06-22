@@ -1,6 +1,6 @@
 plugins {
     id("com.nophasenokill.base-kotlin-plugin")
-
+    id("java-library")
 }
 
 gradlePlugin {

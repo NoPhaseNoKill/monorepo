@@ -56,6 +56,29 @@ class PublishingPlugin : Plugin<Project> {
                 publications {
                     create("mavenJava", MavenPublication::class.java) {
                         from(target.components["java"])
+
+                        /*
+                            This mean that versions included in the publication are the actual,
+                            resolved dependency version used at the time of publishing. Gradle
+                            defines this as:
+
+                            "This strategy publishes the versions that were resolved during the build,
+                            possibly by applying resolution rules and automatic conflict resolution. This
+                            has the advantage that the published versions correspond to the ones the published
+                            artifact was tested against."
+
+                            See: https://docs.gradle.org/current/userguide/publishing_maven.html for more
+                            details.
+                         */
+
+                        versionMapping {
+                            usage("java-api") {
+                                fromResolutionOf("runtimeClasspath")
+                            }
+                            usage("java-runtime") {
+                                fromResolutionResult()
+                            }
+                        }
                     }
                 }
 

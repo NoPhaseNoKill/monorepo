@@ -1,11 +1,18 @@
 
 rootProject.name = "test-composite-build"
 
-includeBuild("composite-build/standard-plugins")
 
-include("composite-build:libraries:consumer-kotlin-plugin")
+/*
+    The ordering of these is important. Because of how they are realised,
+    we need to ensure that all of the common dependencies are realised ASAP -
+    otherwise the dependency graph/tree will not be as optimized as it can be.
+ */
+
 includeBuild("composite-build/standalone-plugin")
 includeBuild("composite-build/meta-plugin")
+includeBuild("composite-build/standard-plugins")
+includeBuild("composite-build/libraries")
+
 
 /*
     Binary plugins published as external jar files can be added
