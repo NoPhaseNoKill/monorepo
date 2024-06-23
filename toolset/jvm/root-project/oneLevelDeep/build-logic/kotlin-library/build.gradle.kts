@@ -1,13 +1,14 @@
 plugins {
     `kotlin-dsl`
-    `java-gradle-plugin`
-    publishing
+    // `java-gradle-plugin`
+    // publishing
 }
 
 dependencies {
     implementation(platform("com.nophasenokill.platform:plugins-platform"))
 
-    implementation("com.nophasenokill:commons")
+    // implementation(project(":commons"))
+    // implementation("com.nophasenokill:commons")
     implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin")
 }
 

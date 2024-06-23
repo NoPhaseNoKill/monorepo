@@ -1,5 +1,5 @@
 plugins {
-    id("com.nophasenokill.commons")
+    // id("com.nophasenokill.commons")
     id("org.jetbrains.kotlin.jvm")
     id("application")
 }

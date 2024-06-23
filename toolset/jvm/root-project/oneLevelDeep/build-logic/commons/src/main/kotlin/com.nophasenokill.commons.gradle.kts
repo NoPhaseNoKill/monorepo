@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("com.nophasenokill.jacoco")
+    // id("com.nophasenokill.jacoco")
 }
 
 group = "com.nophasenokill.sensibledefaults"
