@@ -20,6 +20,65 @@ import java.io.File
 class KotlinApplicationPluginDependenciesTest {
 
     @Test
+    fun `when plugin is configured correctly with its dependencies, we should get the dependencies for free inside of our test`() = runTest {
+        val details = getAsyncResult {
+            val runner = SharedRunnerDetails.SharedRunner.getRunner(sharedRunnerDirLazy().value)
+            val details = createGradleRunner(runner)
+            details
+        }
+
+        val settingsFile = details.settingsFile
+        val buildFile = details.buildFile
+        val projectDir = details.projectDir
+
+
+        val gradleDir = File(projectDir.path).resolve("gradle")
+        gradleDir.mkdirs()
+        val libs = File(gradleDir.path + "/libs.versions.toml")
+        libs.createNewFile()
+        libs.writeText(
+            """
+            [versions]
+            ## BOM's/frequently updated
+            kotlin = "1.9.23"
+            coroutines = "1.8.0"
+            slf4j = "2.0.12"
+            gradle = "8.7"
+            junit = "5.10.1"
+            commonsIo = "2.16.0"
+
+            [plugins]
+            kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+            #kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }
+        """.trimIndent()
+        )
+
+        launchAsyncWork {
+            settingsFile.writeText(
+                """
+            rootProject.name = "some-name"
+        """.trimIndent()
+            )
+            addPluginsById(
+                listOf(
+                    "com.nophasenokill.standalone-plugins.kotlin-application-plugin",
+                    "com.nophasenokill.meta-plugins.pin-kotlin-dependency-versions-plugin" // this should apply even though we didn't explicitly pull it in
+                ),
+                buildFile
+            )
+        }
+
+        getAsyncResult {
+            val dependenciesResult = runExpectedSuccessTask(details.gradleRunner, "dependencies")
+
+            launchAsyncWork {
+                val outcome = getTaskOutcome(":dependencies", dependenciesResult)
+                Assertions.assertEquals(outcome, TaskOutcome.SUCCESS)
+            }
+        }
+    }
+
+    @Test
     fun `should be able to maintain same dependencies, when the applications settings file includes the meta-plugins and generalised platform`() = runTest {
 
         val details = getAsyncResult {
