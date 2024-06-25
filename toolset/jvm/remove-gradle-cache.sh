@@ -15,7 +15,7 @@ delete_intellij_cache() {
 }
 
 # Check if script is run from the root of a Gradle project
-if [[ -f "build.gradle" ]] || [[ -f "build.gradle.kts" ]]; then
+if [[ -f "build.gradle" ]] || [[ -f "build.gradle.kts" ]] || [[ -f "settings.gradle.kts" ]] || [[ -f "settings.gradle" ]]; then
     # Call the function with the current directory
     delete_gradle_cache "$(pwd)"
 

@@ -15,8 +15,8 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("com.nophasenokill.platforms:generalised-platform"))
-    implementation("com.nophasenokill.standalone-plugins:standalone-plugin-one")
-    implementation("com.nophasenokill.meta-plugins:meta-plugin-one")
-    implementation("com.nophasenokill.libraries:library-one")
+    // implementation(platform(":generalised-platform"))
+    // implementation("com.nophasenokill.standalone-plugins:standalone-plugin-one")
+    implementation(project(":composite-build:meta-plugins:meta-plugin-one"))
+    // implementation("com.nophasenokill.libraries:library-one")
 }
