@@ -25,7 +25,7 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    id("com.nophasenokill.root-settings-plugin") version("4.3.1")
+    id("com.nophasenokill.root-settings-plugin")
 }
 
 include("known-to-be-working-examples:plugins:basic-plugin")
