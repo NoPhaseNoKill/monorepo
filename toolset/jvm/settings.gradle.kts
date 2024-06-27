@@ -15,6 +15,10 @@ pluginManagement {
 dependencyResolutionManagement {
     rulesMode = RulesMode.FAIL_ON_PROJECT_RULES
     repositories {
+        /*
+            Allows us to declare dependency on the plugin at the project level
+         */
+        includeBuild("known-to-be-working-examples/plugins/hash-source-plugin")
         mavenCentral()
         gradlePluginPortal()
     }
