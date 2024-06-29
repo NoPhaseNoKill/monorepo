@@ -12,16 +12,9 @@ class ExtendedPlugin: Plugin<Project> {
                 - domain:account (relative to root)
          */
         project.apply {
+            plugin("org.gradle.kotlin.kotlin-dsl")
+            plugin("org.gradle.java-gradle-plugin")
             plugin("com.nophasenokill.hash-source-plugin")
         }
-
-        project.tasks.named("printSharedConfiguration") {
-
-            val sharedConfig = project.configurations.findByName("sharedConfiguration")
-
-            project.logger.quiet(sharedConfig.toString())
-
-        }
-
     }
 }

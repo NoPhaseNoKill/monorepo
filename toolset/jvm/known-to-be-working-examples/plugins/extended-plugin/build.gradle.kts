@@ -44,8 +44,36 @@ val multiFileConfiguration: Configuration by configurations.creating {
 }
 
 dependencies {
+    implementation("org.gradle.kotlin:gradle-kotlin-dsl-plugins:4.3.0") // Allows the plugin to apply `kotlin-dsl` inside of a test
+
     singleFileConfiguration(project(path = ":known-to-be-working-examples:plugins:basic-plugin", configuration = "sharedConfiguration"))
     multiFileConfiguration("com.nophasenokill.hash-source-plugin:hash-source-plugin:0.1.local-dev")
+
+    project.dependencies.add("testImplementation", project.dependencies.platform("org.junit:junit-bom:5.10.1"))
+    project.dependencies.add("testImplementation", "org.junit.jupiter:junit-jupiter")
+    project.dependencies.add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
+
+    /*
+        Note: The below may not be required, due to the java-gradle-plugin pulling this in for automatically.
+
+            project.dependencies.add("testImplementation", gradleTestKit()) - don't need
+
+        However, if you require this on a different configuration - ie a custom one, you will still want the same
+        behaviour. Custom configurations may include things like a functionalTest one - where your source sets are
+        different. The easiest way to do this is via the gradle plugin, which also applies the kotlin bom so you can
+        further aligned versions for the custom config:
+
+            gradlePlugin {
+                testSourceSets(functionalTestConfiguration)
+            }
+
+        I'm not 100% sure, but this is most likely the equivalent:
+
+            project.dependencies.add("functionalTestConfiguration", project.dependencies.platform("org.jetbrains.kotlin:kotlin-bom")) - will need if you want to control transitives that testKit may pull in
+            project.dependencies.add("functionalTestConfiguration", gradleTestKit()) - will need
+
+            testSourceSets(functionalTestConfiguration)
+     */
 }
 
 tasks.register("showFile") {
@@ -74,4 +102,8 @@ tasks.register<DirHashTask>("getHashForAllDependencies") {
     contents.from(multiFileConfiguration, singleFileConfiguration)
     hashMethod.set("MD5")
     outputDir.set(project.layout.buildDirectory.dir("hash-of-all-dependencies"))
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
