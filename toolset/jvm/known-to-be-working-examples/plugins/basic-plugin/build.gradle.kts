@@ -1,4 +1,5 @@
 plugins {
+    `kotlin-dsl`
     `java-gradle-plugin`
 }
 
@@ -13,7 +14,7 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation("org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:4.3.1")
+    implementation("org.gradle.kotlin:gradle-kotlin-dsl-plugins:4.3.0")
     implementation(gradleApi())
     testImplementation(gradleTestKit())
 }
