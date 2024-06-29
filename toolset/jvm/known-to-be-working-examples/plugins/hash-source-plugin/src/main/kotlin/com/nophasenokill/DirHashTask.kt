@@ -1,6 +1,7 @@
 package com.nophasenokill
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
@@ -19,11 +20,11 @@ import java.security.MessageDigest
  */
 
 @CacheableTask
-abstract class DirHashTask: DefaultTask() {
+abstract class DirHashTask : DefaultTask() {
 
-    @get:InputDirectory
+    @get:InputFiles
     @get:PathSensitive(PathSensitivity.RELATIVE)
-    abstract val contents: DirectoryProperty
+    abstract val contents: ConfigurableFileCollection
 
     @get:Input
     abstract val hashMethod: Property<String>
@@ -36,13 +37,17 @@ abstract class DirHashTask: DefaultTask() {
         var md5 = ""
         val md = MessageDigest.getInstance(hashMethod.get())
 
-        val path: String = contents.asFile.get().path
-        File(path).walkTopDown()
-            .filter { item -> Files.isRegularFile(item.toPath()) }
-            .forEach {
-                val digest = md.digest(it.readBytes())
-                md5 += BigInteger(1, digest).toString(16)
-            }
+        logger.quiet("The directories being included in DirHashTask are: ${contents.map { it.path }}")
+
+        contents.forEach { directory ->
+
+            directory.walkTopDown()
+                .filter { it.isFile }
+                .forEach {
+                    val digest = md.digest(it.readBytes())
+                    md5 += BigInteger(1, digest).toString(16)
+                }
+        }
 
         outputDir.asFile.get().mkdirs()
         val hashFile = Paths.get(outputDir.asFile.get().absolutePath, "hash.txt")

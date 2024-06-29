@@ -12,7 +12,7 @@ class HashSourcePlugin: Plugin<Project> {
                 Makes the assumption we have src folder always - but this
                 may not be accurate
              */
-            contents = project.layout.projectDirectory.dir("src")
+            contents = project.files(project.layout.projectDirectory.dir("src"))
             hashMethod = "MD5"
             outputDir = project.layout.buildDirectory.dir("src-hash")
         }
