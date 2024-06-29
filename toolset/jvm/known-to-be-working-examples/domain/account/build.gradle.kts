@@ -3,6 +3,7 @@ plugins {
     kotlin("jvm")
     id("java-library")
     `maven-publish`
+    id("com.nophasenokill.build-service-warning-fix-plugin")
 }
 
 group = "com.nophasenokill.domain"

@@ -4,6 +4,7 @@ plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
     `maven-publish`
+    id("com.nophasenokill.build-service-warning-fix-plugin")
 }
 
 group = "com.nophasenokill.hash-source-plugin"

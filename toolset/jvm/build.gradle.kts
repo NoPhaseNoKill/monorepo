@@ -1,6 +1,7 @@
 
 plugins {
     `kotlin-dsl` apply false
+    id("com.nophasenokill.build-service-warning-fix-plugin")
     id("com.nophasenokill.hash-source-plugin")
 }
 

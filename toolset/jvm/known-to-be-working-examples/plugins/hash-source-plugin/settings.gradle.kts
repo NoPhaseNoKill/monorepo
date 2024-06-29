@@ -9,6 +9,7 @@ pluginManagement {
             }
      */
     includeBuild("../root-settings-plugin")
+    includeBuild("../build-service-warning-fix-plugin")
 }
 
 plugins {

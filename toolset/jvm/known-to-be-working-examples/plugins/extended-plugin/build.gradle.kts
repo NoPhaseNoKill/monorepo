@@ -3,8 +3,9 @@ import com.nophasenokill.DirHashTask
 plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
-    id("com.nophasenokill.hash-source-plugin")
     `maven-publish`
+    id("com.nophasenokill.hash-source-plugin")
+    id("com.nophasenokill.build-service-warning-fix-plugin")
 }
 
 group = "com.nophasenokill.extended-plugin"
