@@ -1,5 +1,5 @@
 
-rootProject.name = "hash-source-plugin"
+rootProject.name = "domain"
 
 pluginManagement {
     /*
@@ -8,11 +8,12 @@ pluginManagement {
                id("org.jetbrains.kotlin.jvm") version("1.9.22")
             }
      */
-    includeBuild("../root-settings-plugin")
+    includeBuild("../plugins/root-settings-plugin")
 }
 
 plugins {
     id("com.nophasenokill.root-settings-plugin")
 }
 
-includeBuild("../../domain")
+include("account")
+include("person")

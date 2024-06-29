@@ -1,0 +1,80 @@
+
+
+1. Use a plugin which is a dedicated root-settings file from within the build itself - CHECK
+
+2. Use plugins from within our root build file - CHECK
+
+3. Separate folder structures to allow each logical module to go wherever I think necessary - CHECK
+
+4. Separate folder structures, where at least one one can have multiple projects inside of a single folder
+ (ie a composite with multiple sub-projects) - CHECK
+
+5. Ensure test functionality between plugins is being put on the classpath so that tests don't need to worry
+ about loading/configuring the e2e tests each time- CHECK, TODO (but need to confirm that this actually stills works as intended)
+
+6. Have a plugin extend another plugin, where a configuration was being shared - CHECK
+
+7. Have a plugin extend another plugin's dependencies - CHECK
+
+8. Ensure all plugins being built were/are binarys (due to gradle's recommendation for speed) - CHECK
+
+9. Ensure the libs.versions.toml file was able to be used in subprojects-other composite builds - CHECK
+
+10. Reliably run with configuration daemon turned on - CHECK
+
+11. Reliably run with caching turned on - CHECK
+
+12. Reliably run with parallel turned on - CHECK
+
+13. Reliably run with console 'rich' (to show you run tasks) turned on - CHECK
+
+14. Reliably run with configuration cache turned on (which also enforces no errors and max problems = 0 - CHECK
+
+15. Have top level commands that will run the whole suite ie (ie build or buildAll which trigger everything else) - CHECK
+
+16. Use latest version of java/kotlin that work
+
+17. Have a build with no deprecation warnings/errors
+
+18. Allow plugins to include code from a kotlin library we maintain ourselves as a part of another composite-build (maybe
+    things like useful extension functions, or domain classes etc) - CHECK
+
+19. Combine both composite builds, and projects in the same directory 'tree'
+
+    Notice how some of these only have a build file (projects) and other have a settings.gradle.kts plus build.gradle.kts
+    (composite)
+
+├── plugins
+│ ├── basic-plugin
+│ │\ ├── build.gradle.kts
+│ │\ └── src
+│ │\     └── main
+│ │\         └── kotlin
+│ │\             └── com
+│ │\                 └── nophasenokill
+│ │\                     └── BasicPlugin.kt
+│ ├── extended-plugin
+│ │ ├── build.gradle.kts
+│ │ └── src
+│ │     └── main
+│ │         └── kotlin
+│ │             └── com
+│ │                 └── nophasenokill
+│ │                     └── ExtendedPlugin.kt
+│ ├── hash-source-plugin
+│ │ ├── build.gradle.kts
+│ │ ├── settings.gradle.kts
+│ │ └── src
+│ │     └── main
+│ │         └── kotlin
+│ │             └── com
+│ │                 └── nophasenokill
+│ │                     ├── DirHashTask.kt
+│ │                     └── HashSourcePlugin.kt
+│ └── root-settings-plugin
+│     ├── build.gradle.kts
+│     ├── settings.gradle.kts
+│     └── src
+│         └── main
+│             └── kotlin
+│                 └── com.nophasenokill.root-settings-plugin.settings.gradle.kts

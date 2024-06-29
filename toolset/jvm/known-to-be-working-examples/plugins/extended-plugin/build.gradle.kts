@@ -1,5 +1,4 @@
 plugins {
-    `kotlin-dsl`
     `java-gradle-plugin`
     id("com.nophasenokill.hash-source-plugin")
 }
