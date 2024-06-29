@@ -4,6 +4,7 @@
 # 1. The local gradle cache directories ('build' and '.gradle') recursively
 # 2. The gradle user home directory aka ~/.gradle
 # 3. Any stored .idea folders in the sub-tree recursively
+# 4. The local-repo folders in the sub-tree recursively, which were created as a part of local publishing
 # Use this when you want to be absolutely certain there's nothing being cached locally for the project
 
 delete_gradle_cache() {
@@ -14,12 +15,21 @@ delete_intellij_cache() {
      find "$1" -type d -name '.idea' -exec rm -rf {} +
 }
 
+delete_local_repo_cache() {
+     find "$1" -type d -name 'local-repo' -exec rm -rf {} +
+}
+
 # Check if script is run from the root of a Gradle project
 if [[ -f "build.gradle" ]] || [[ -f "build.gradle.kts" ]] || [[ -f "settings.gradle.kts" ]] || [[ -f "settings.gradle" ]]; then
     # Call the function with the current directory
     delete_gradle_cache "$(pwd)"
 
     echo "Local Gradle cache directories have been removed."
+
+    # Call the function with the current directory
+    delete_local_repo_cache "$(pwd)"
+
+    echo "Local published repo directories have been removed."
 
     rm -rf ~/.gradle
     echo "Gradle user home folder has been removed"

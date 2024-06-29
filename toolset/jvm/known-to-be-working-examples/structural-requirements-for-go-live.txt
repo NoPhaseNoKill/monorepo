@@ -39,7 +39,11 @@
 18. Allow plugins to include code from a kotlin library we maintain ourselves as a part of another composite-build (maybe
     things like useful extension functions, or domain classes etc) - CHECK
 
-19. Combine both composite builds, and projects in the same directory 'tree'
+19. Have a task at the root project used to publish dependencies to troubleshoot/ensure they're in correct 'shape' - CHECK
+
+20. Have a buildAll task at the root project used to build all composite builds/projects - CHECK
+
+21. Combine both composite builds, and projects in the same directory 'tree' - CHECK
 
     Notice how some of these only have a build file (projects) and other have a settings.gradle.kts plus build.gradle.kts
     (composite)

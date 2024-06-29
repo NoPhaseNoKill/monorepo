@@ -4,6 +4,7 @@ plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
     id("com.nophasenokill.hash-source-plugin")
+    `maven-publish`
 }
 
 group = "com.nophasenokill.extended-plugin"
@@ -106,4 +107,15 @@ tasks.register<DirHashTask>("getHashForAllDependencies") {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+publishing {
+    repositories {
+        maven {
+            setUrl(file("../../../local-repo"))
+        }
+    }
+    publications {
+        create<MavenPublication>("maven") { from(components["java"]) }
+    }
 }

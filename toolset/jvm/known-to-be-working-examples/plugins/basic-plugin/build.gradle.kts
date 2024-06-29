@@ -1,6 +1,7 @@
 plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
+    `maven-publish`
 }
 
 group = "com.nophasenokill.basic-plugin"
@@ -33,4 +34,15 @@ val sharedConfiguration by configurations.creating {
 
 artifacts {
     add(sharedConfiguration.name, makeFile)
+}
+
+publishing {
+    repositories {
+        maven {
+            setUrl(file("../../../local-repo"))
+        }
+    }
+    publications {
+        create<MavenPublication>("maven") { from(components["java"]) }
+    }
 }
