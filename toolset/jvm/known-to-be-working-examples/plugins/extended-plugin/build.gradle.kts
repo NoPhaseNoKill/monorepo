@@ -46,12 +46,12 @@ val multiFileConfiguration: Configuration by configurations.creating {
 }
 
 dependencies {
-    implementation("org.gradle.kotlin:gradle-kotlin-dsl-plugins:4.3.0") // Allows the plugin to apply `kotlin-dsl` inside of a test
+    implementation("org.gradle.kotlin:gradle-kotlin-dsl-plugins:${libs.versions.kotlinDsl.get()}") // Allows the plugin to apply `kotlin-dsl` inside of a test
 
     singleFileConfiguration(project(path = ":known-to-be-working-examples:plugins:basic-plugin", configuration = "sharedConfiguration"))
     multiFileConfiguration("com.nophasenokill.hash-source-plugin:hash-source-plugin:0.1.local-dev")
 
-    project.dependencies.add("testImplementation", project.dependencies.platform("org.junit:junit-bom:5.10.1"))
+    project.dependencies.add("testImplementation", project.dependencies.platform("org.junit:junit-bom:${libs.versions.junit.get()}"))
     project.dependencies.add("testImplementation", "org.junit.jupiter:junit-jupiter")
     project.dependencies.add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
 

@@ -16,7 +16,7 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation("org.gradle.kotlin:gradle-kotlin-dsl-plugins:4.3.0")
+    implementation("org.gradle.kotlin:gradle-kotlin-dsl-plugins:${libs.versions.kotlinDsl.get()}")
     implementation(gradleApi())
     testImplementation(gradleTestKit())
 }
