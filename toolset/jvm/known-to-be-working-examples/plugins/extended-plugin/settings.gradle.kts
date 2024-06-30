@@ -27,5 +27,4 @@ dependencyResolutionManagement {
 /*
     Used to allow getting shared configuration
  */
-include("basic-plugin")
-project(":basic-plugin").projectDir = file("../basic-plugin")
+includeBuild("../basic-plugin")

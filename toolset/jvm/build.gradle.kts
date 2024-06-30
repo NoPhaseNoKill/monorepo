@@ -1,23 +1,37 @@
 
 plugins {
     `kotlin-dsl` apply false
-    // id("com.nophasenokill.build-service-warning-fix-plugin")
-    // id("com.nophasenokill.hash-source-plugin")
 }
 
-val publishDeps = tasks.register("publishDeps") {
-    gradle.includedBuilds.map {
-        dependsOn(it.task(":publishMavenPublicationToMavenRepository"))
-    }
-    dependsOn("known-to-be-working-examples:plugins:basic-plugin:publishMavenPublicationToMavenRepository")
-    dependsOn("known-to-be-working-examples:plugins:extended-plugin:publishMavenPublicationToMavenRepository")
-}
 
 tasks.register("buildAll") {
     mustRunAfter(publishDeps)
-
     gradle.includedBuilds.map { dependsOn(it.task(":build")) }
+}
 
-    dependsOn("known-to-be-working-examples:plugins:basic-plugin:build")
-    dependsOn("known-to-be-working-examples:plugins:extended-plugin:build")
+tasks.register("buildAllStandalone") {
+    dependsOn(gradle.includedBuild("standalone-projects").task(":buildAll"))
+}
+
+tasks.register("testAllStandalone") {
+    dependsOn(gradle.includedBuild("standalone-projects").task(":testAll"))
+}
+
+/*
+    Task used to troubleshoot how the published plugins, and any local dependencies they have, will look
+ */
+val publishDeps = tasks.register("publishDeps") {
+    gradle.includedBuilds
+        .map {
+            if(it.name == "standalone-projects") {
+                //do nothing
+            } else {
+                /*
+                    publish anything that our applications/libraries may need for their plugins
+
+                    ie any plugin, any library that a plugin relies on
+                 */
+                dependsOn(it.task(":publishMavenPublicationToMavenRepository"))
+            }
+    }
 }
