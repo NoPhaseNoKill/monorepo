@@ -8,8 +8,8 @@ pluginManagement {
                id("org.jetbrains.kotlin.jvm") version("1.9.22")
             }
      */
-    includeBuild("../plugins/root-settings-plugin")
     includeBuild("../plugins/build-service-warning-fix-plugin")
+    includeBuild("../plugins/root-settings-plugin")
 }
 
 plugins {

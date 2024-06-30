@@ -2,13 +2,24 @@ rootProject.name = "root-settings-plugin"
 
 pluginManagement {
     includeBuild("../build-service-warning-fix-plugin")
-    repositories.mavenCentral()
-    repositories.gradlePluginPortal()
+
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
 }
 
 dependencyResolutionManagement {
-    repositories.mavenCentral()
-    repositories.gradlePluginPortal()
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    versionCatalogs {
+        create(defaultLibrariesExtensionName.get()) {
+            from(files("../../../gradle/libs.versions.toml"))
+        }
+    }
 }
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")

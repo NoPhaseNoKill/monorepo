@@ -51,6 +51,9 @@ dependencies {
     singleFileConfiguration(project(path = ":known-to-be-working-examples:plugins:basic-plugin", configuration = "sharedConfiguration"))
     multiFileConfiguration("com.nophasenokill.hash-source-plugin:hash-source-plugin:0.1.local-dev")
 
+    /*
+        Example of the actual methods that get called under the covers
+     */
     project.dependencies.add("testImplementation", project.dependencies.platform("org.junit:junit-bom:${libs.versions.junit.get()}"))
     project.dependencies.add("testImplementation", "org.junit.jupiter:junit-jupiter")
     project.dependencies.add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")

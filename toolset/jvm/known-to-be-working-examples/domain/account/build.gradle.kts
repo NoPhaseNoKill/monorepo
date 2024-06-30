@@ -9,8 +9,23 @@ plugins {
 group = "com.nophasenokill.domain"
 version = "0.1.local-dev"
 
+/*
+    If you need access to the libs you need to do:
+
+    afterEvaluate {
+
+            val versionCatalog = extensions.findByType(VersionCatalogsExtension::class.java)?.named("libs")
+            val kotlinVersion = requireNotNull(versionCatalog?.findVersion("kotlin")?.get())
+
+            dependencies {
+                implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${kotlinVersion}")
+            }
+
+    }
+ */
+
 dependencies {
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.22")
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${embeddedKotlinVersion}")
 }
 
 publishing {
