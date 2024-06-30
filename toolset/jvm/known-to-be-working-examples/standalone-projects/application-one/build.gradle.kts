@@ -14,12 +14,12 @@ java {
 dependencies {
     implementation(projects.libraryOne)
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1") // for assertions and libraries during tests
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}") // for assertions and libraries during tests
 
     /*
         To not implicitly load test framework. https://docs.gradle.org/8.7/userguide/upgrading_version_8.html#test_framework_implementation_dependencies
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:${libs.versions.junit.get()}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
