@@ -1,4 +1,4 @@
-rootProject.name = "basic-plugin"
+rootProject.name = "basic-kotlin-plugin"
 
 pluginManagement {
     /*

@@ -10,11 +10,11 @@ tasks.register("buildAll") {
 }
 
 tasks.register("buildAllStandalone") {
-    dependsOn(gradle.includedBuild("standalone-projects").task(":buildAll"))
+    dependsOn(gradle.includedBuild("standalone-projects").task(":build"))
 }
 
 tasks.register("testAllStandalone") {
-    dependsOn(gradle.includedBuild("standalone-projects").task(":testAll"))
+    dependsOn(gradle.includedBuild("standalone-projects").task(":test"))
 }
 
 /*

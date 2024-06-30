@@ -5,12 +5,12 @@ plugins {
     id("com.nophasenokill.build-service-warning-fix-plugin")
 }
 
-group = "com.nophasenokill.basic-plugin"
+group = "com.nophasenokill.basic-kotlin-plugin"
 version = "0.1.local-dev"
 
 gradlePlugin {
     val pluginBuildPlugin by plugins.creating {
-        id = "com.nophasenokill.basic-plugin"
+        id = "com.nophasenokill.basic-kotlin-plugin"
         implementationClass = "com.nophasenokill.BasicPlugin"
     }
 }

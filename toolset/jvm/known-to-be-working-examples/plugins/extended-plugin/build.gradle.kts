@@ -48,7 +48,7 @@ val multiFileConfiguration: Configuration by configurations.creating {
 dependencies {
     implementation("org.gradle.kotlin:gradle-kotlin-dsl-plugins:${libs.versions.kotlinDsl.get()}") // Allows the plugin to apply `kotlin-dsl` inside of a test
 
-    // singleFileConfiguration(project(path = ":basic-plugin", configuration = "sharedConfiguration"))
+    // singleFileConfiguration(project(path = ":basic-kotlin-plugin", configuration = "sharedConfiguration"))
     multiFileConfiguration("com.nophasenokill.hash-source-plugin:hash-source-plugin:0.1.local-dev")
 
     /*

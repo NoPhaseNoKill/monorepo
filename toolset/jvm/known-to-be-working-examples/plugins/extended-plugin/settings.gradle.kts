@@ -27,4 +27,4 @@ dependencyResolutionManagement {
 /*
     Used to allow getting shared configuration
  */
-includeBuild("../basic-plugin")
+includeBuild("../basic-kotlin-plugin")

@@ -3,11 +3,11 @@ plugins {
     `java-gradle-plugin`
 }
 
-group = "com.nophasenokill.basic-plugin"
+group = "com.nophasenokill.basic-kotlin-plugin"
 
 gradlePlugin {
     val pluginBuildPlugin by plugins.creating {
-        id = "com.nophasenokill.basic-plugin"
+        id = "com.nophasenokill.basic-kotlin-plugin"
         implementationClass = "com.nophasenokill.PluginBuildPlugin"
     }
 }

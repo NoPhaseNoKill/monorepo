@@ -1,7 +1,7 @@
 rootProject.name = "jvm"
 
 includeBuild("known-to-be-working-examples/plugins/root-settings-plugin")
-includeBuild("known-to-be-working-examples/plugins/basic-plugin")
+includeBuild("known-to-be-working-examples/plugins/basic-kotlin-plugin")
 includeBuild("known-to-be-working-examples/plugins/extended-plugin")
 includeBuild("known-to-be-working-examples/plugins/hash-source-plugin")
 includeBuild("known-to-be-working-examples/plugins/build-service-warning-fix-plugin")

@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-includeBuild("../plugins/basic-plugin")
+includeBuild("../plugins/basic-kotlin-plugin")
 
-include("application-one")
 include("library-one")
+include("application-one")

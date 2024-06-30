@@ -1,14 +1,10 @@
 
-plugins {
-    `kotlin-dsl`
-}
-
-tasks.register("buildAll") {
+tasks.register("build") {
     dependsOn(":application-one:build")
     dependsOn(":library-one:build")
 }
 
-tasks.register("testAll") {
+tasks.register("test") {
     dependsOn(":application-one:test")
     dependsOn(":library-one:test")
 }
