@@ -1,9 +1,13 @@
 rootProject.name = "jvm"
 
-includeBuild("known-to-be-working-examples/plugins/root-settings-plugin")
-includeBuild("known-to-be-working-examples/plugins/basic-kotlin-plugin")
-includeBuild("known-to-be-working-examples/plugins/extended-plugin")
-includeBuild("known-to-be-working-examples/plugins/hash-source-plugin")
-includeBuild("known-to-be-working-examples/plugins/build-service-warning-fix-plugin")
-includeBuild("known-to-be-working-examples/domain")
-includeBuild("known-to-be-working-examples/standalone-projects")
+pluginManagement {
+    includeBuild("../build-logic")
+}
+/*
+    DO not use dependency management here. If you need to add more repositories,
+    add them to: com.nophasenokill.component-plugin.settings.gradle.kts
+ */
+
+plugins {
+    id("com.nophasenokill.component-plugin")
+}
