@@ -1,5 +1,4 @@
-import gradle.kotlin.dsl.accessors._6ebf0b5d05ec1eff67605a516c5db18b.application
-import gradle.kotlin.dsl.accessors._6ebf0b5d05ec1eff67605a516c5db18b.kotlin
+
 import java.util.*
 
 plugins {

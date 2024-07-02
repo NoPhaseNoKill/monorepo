@@ -13,4 +13,20 @@ class LibraryOneCalculatorTest {
 
         Assertions.assertEquals(expected, result)
     }
+
+    @Test
+    fun `should subtract one number from another`() {
+        val result = LibraryOneCalculator.subtract(2, 2)
+        val expected = 0
+
+        Assertions.assertEquals(expected, result)
+    }
+
+    // @Test
+    // fun `should multiply one number with another`() {
+    //     val result = LibraryOneCalculator.multiply(2, 2)
+    //     val expected = 4
+    //
+    //     Assertions.assertEquals(expected, result)
+    // }
 }

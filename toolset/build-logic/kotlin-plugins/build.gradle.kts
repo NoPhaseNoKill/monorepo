@@ -1,5 +1,5 @@
 plugins {
-    `kotlin-dsl`
+    `kotlin-dsl` // This is required to be able to load the plugin in our library/app projects
 }
 
 /*
@@ -35,7 +35,8 @@ afterEvaluate {
 }
 
 dependencies {
-    implementation("org.gradle.kotlin:gradle-kotlin-dsl-plugins:${libs.versions.kotlinDsl.get()}")
+
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
 
