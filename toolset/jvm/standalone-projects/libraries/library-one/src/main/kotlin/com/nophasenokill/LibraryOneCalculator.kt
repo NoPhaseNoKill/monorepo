@@ -98,7 +98,7 @@ object LibraryOneCalculator {
                 LibraryOneCalculator.subtract was hit during test execution
 
         5. And hence for the given inputs (the test source classes, and the side effects of their execution), we
-            would have the same given outputs (the test execution file)
+            would have the same given outputs (the test execution file) which would NOT re-trigger a test run
 
  */
 private object Log {
