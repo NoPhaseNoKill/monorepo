@@ -96,11 +96,11 @@ afterEvaluate {
         )
 
         fileTree("src/main/kotlin").forEach { file ->
-            println("Input for src/main/kotlin is: ${file}")
+            logger.quiet("Input for src/main/kotlin is: ${file}")
         }
 
         fileTree("build/test-results").forEach { file ->
-            println("Input for build/test-results is: ${file}")
+            logger.quiet("Input for build/test-results is: ${file}")
         }
 
 
@@ -158,11 +158,11 @@ val getCurrentAndPreviousHash = tasks.register("getCurrentAndPreviousHash") {
 
         if(previousHashPath.exists()) {
             if(previousHashPath.readLines().isEmpty()) {
-                println("First time comparing test classes. Previous hash doesnt exist")
+                logger.quiet("First time comparing test classes. Previous hash doesnt exist")
             } else if (tempOutputFile.readLines() == previousHashPath.readLines()) {
-                println("Test class hashes are the same. Test classes have not changed")
+                logger.quiet("Test class hashes are the same. Test classes have not changed")
             } else {
-                println("Test class hashes are NOT the same. Test classes HAVE changed")
+                logger.quiet("Test class hashes are NOT the same. Test classes HAVE changed")
             }
 
             tempOutputFile.copyTo(previousHashPath, overwrite = true)
@@ -211,20 +211,20 @@ val shouldExecuteTests = tasks.register("shouldExecuteTests") {
     outputs.files(outputFile)
 
     doLast {
-        val haveTestFilesChanged =
-            buildDir.asFile.resolve("previous-hash.txt").readLines().isNotEmpty() &&
-                    (
-                            buildDir.asFile.resolve("current-hash.txt").readLines() !==
-                                    buildDir.asFile.resolve("previous-hash.txt").readLines()
-                            )
+        val hasNothingToCompareTo = buildDir.asFile.resolve("previous-hash.txt").readLines().isEmpty()
+        val hashesAreDifferent = buildDir.asFile.resolve("current-hash.txt").readLines() !=
+                buildDir.asFile.resolve("previous-hash.txt").readLines()
 
+        val shouldReExecute = hasNothingToCompareTo || hashesAreDifferent
+
+        logger.quiet("Should we re-execute tests? $shouldReExecute")
         /*
             We know for this example that if the tests haven't changed, because we're only
             uncommenting/re-commenting the multiply function, that this means test execution
             output/file shouldn't change
          */
 
-        outputFile.writeText("should re-execute tests: ${haveTestFilesChanged}")
+        outputFile.writeText("should re-execute tests: $shouldReExecute")
     }
 
 }
