@@ -84,17 +84,6 @@ class KotlinBasePlugin: Plugin<Project> {
                     TestLogEvent.STANDARD_OUT,
                     TestLogEvent.STANDARD_ERROR,
                 )
-
-                test.inputs.files("src/main/kotlin")
-                test.outputs.dir("build/test-results")
-
-                project.fileTree("src/main/kotlin").forEach { file ->
-                    project.logger.quiet("Input for src/main/kotlin is: ${file}")
-                }
-
-                project.fileTree("build/test-results").forEach { file ->
-                    project.logger.quiet("Input for build/test-results is: ${file}")
-                }
             }
         }
     }
