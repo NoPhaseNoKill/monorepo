@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.gradle.api.tasks.testing.logging.TestLogging
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
@@ -55,6 +56,7 @@ class KotlinBasePlugin: Plugin<Project> {
             val junitVersion = versionCatalog?.findVersion("junit")?.get().toString()
             val junitPlatformVersion = versionCatalog?.findVersion("junitPlatform")?.get().toString()
             val kotlinVersion = versionCatalog?.findVersion("kotlin")?.get().toString()
+            val coroutinesVersion = versionCatalog?.findVersion("coroutines")?.get().toString()
 
             dependencies.run {
 
@@ -66,6 +68,8 @@ class KotlinBasePlugin: Plugin<Project> {
                     Equivalent of: implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
                  */
                 add("implementation", "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+
+                add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${coroutinesVersion}")
 
 
                 add("testImplementation", "org.junit.jupiter:junit-jupiter-api:$junitVersion")
@@ -84,6 +88,8 @@ class KotlinBasePlugin: Plugin<Project> {
                     TestLogEvent.STANDARD_OUT,
                     TestLogEvent.STANDARD_ERROR,
                 )
+
+                test.testLogging.minGranularity = 2
             }
         }
     }
