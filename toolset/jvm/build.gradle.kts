@@ -33,7 +33,7 @@ val localTaskGroup = "Local"
  * Reduces the noise in the exposed tasks, by simply doing the equivalent of a task at root (ie ./gradlew clean) behind
  * a scoped set of tasks in a 'group'.
  * registerAllTask("build") will register a task named 'buildAll',
- * that iterates over each of the subprojects :build is run on EACH them.
+ * that iterates over each of the subprojects, and ensure :build is run on EACH them.
  */
 fun registerAllTask(
     taskName: String,
