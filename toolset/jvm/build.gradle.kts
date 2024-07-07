@@ -27,6 +27,7 @@ plugins {
 registerAllTask("build")
 registerAllTask("clean")
 registerAllTask("test")
+registerAllTask("run")
 
 val localTaskGroup = "Local"
 
