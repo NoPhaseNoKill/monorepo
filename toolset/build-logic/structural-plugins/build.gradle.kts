@@ -1,5 +1,20 @@
 plugins {
-    `kotlin-dsl`
+    alias(libs.plugins.kotlinJvm)
+    `java-gradle-plugin`
+}
+
+gradlePlugin {
+    plugins {
+        create("kotlinBasePlugin") {
+            id = "com.nophasenokill.component-plugin"
+            implementationClass = "com.nophasenokill.ComponentPlugin"
+        }
+    }
+}
+
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
+    jvmTargetValidationMode.set(org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode.ERROR)
 }
 
 /*

@@ -1,9 +1,10 @@
 [versions]
 kotlin = "2.0.0"
-kotlinDsl = "4.3.0"
 junit = "5.10.1"
 junitPlatform = "1.10.1"
+kspSymbolProcessing = "2.0.0-1.0.22"
+squareUpJavaPoet = "1.12.1"
 
 [plugins]
-#kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-#kotlinDsl = { id = "org.gradle.kotlin:gradle-kotlin-dsl-plugins", version.ref = "kotlinDsl" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+#kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }

@@ -12,7 +12,7 @@ class ApplicationOneTest {
     fun `app should run`() {
 
         val output = captureOutput {
-            App.main()
+            ApplicationOneApp.main()
         }
 
         val expectedOutput = """
