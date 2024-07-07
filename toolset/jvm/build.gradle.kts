@@ -28,6 +28,7 @@ registerAllTask("build")
 registerAllTask("clean")
 registerAllTask("test")
 registerAllTask("run")
+registerAllTask("check")
 
 val localTaskGroup = "Local"
 
