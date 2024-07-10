@@ -5,7 +5,7 @@ plugins {
 
 gradlePlugin {
     plugins {
-        create("kotlinBasePlugin") {
+        create("componentPlugin") {
             id = "com.nophasenokill.component-plugin"
             implementationClass = "com.nophasenokill.ComponentPlugin"
         }
@@ -47,4 +47,8 @@ afterEvaluate {
             }
         }
     }
+}
+
+dependencies {
+    implementation("com.gradle:develocity-gradle-plugin:${libs.versions.gradleEnterprise.get()}")
 }
