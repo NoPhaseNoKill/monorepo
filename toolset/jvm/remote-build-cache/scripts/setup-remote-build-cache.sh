@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Launches build remote cache server on port 8080
+# Launches build remote cache server on port 5071
 # Usage:
 #   - Requires the absolute path to the root dir (ie: /home/tomga/projects/monorepo/toolset/jvm )
 if [ -z "$1" ]; then
@@ -13,7 +13,7 @@ ABSOLUTE_PATH_TO_REMOTE_BUILD_SERVER_JAR="$ROOT_DIR/remote-build-cache/build-cac
 ABSOLUTE_PATH_TO_THIS_SCRIPT="$ROOT_DIR/remote-build-cache/build-cache-node.sh"
 SERVICE_FILE="/etc/systemd/system/gradle-remote-build-cache.service"
 
-# Create gradle-remote-build-cache.service
+# Create gradle-remote-build-cache.service for automatic starting
 if [ ! -f "$SERVICE_FILE" ]; then
   sudo bash -c "cat << EOF > $SERVICE_FILE
 [Unit]
@@ -46,5 +46,5 @@ sudo systemctl enable gradle-remote-build-cache
 
 echo "Starting service at http://localhost:5071 ....."
 
-# Start the server for verification (this step can be removed if the service works)
+# Start the server for verification
 java -jar $ABSOLUTE_PATH_TO_REMOTE_BUILD_SERVER_JAR start --data-dir=/opt/build-cache-node
