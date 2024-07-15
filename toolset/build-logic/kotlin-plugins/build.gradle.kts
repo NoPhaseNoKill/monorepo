@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinJvm)
     `java-gradle-plugin`
+    jacoco
 }
 
 gradlePlugin {
@@ -50,5 +51,17 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:${libs.versions.junit.get()}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:${libs.versions.junitPlatform.get()}")
 }
-
-
+//
+//
+//
+// tasks.jacocoTestReport {
+//     reports {
+//         xml.required = false
+//         csv.required = false
+//         html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+//     }
+// }
+//
+//
+//
+//
