@@ -97,15 +97,18 @@ class JacocoPlugin: Plugin<Project> {
 
             val currentSessionFile = layout.buildDirectory.file("jacoco-session/jacoco-sessions.txt")
             val previousSessionFile = layout.buildDirectory.file("jacoco-session/previous-jacoco-sessions.txt")
+            val shouldRunTests = layout.buildDirectory.file("jacoco-session/should-run-tests.txt")
 
             it.inputs.file(tasks.named("sessions").get().outputs.files.first())
-            it.outputs.file(previousSessionFile)
+            it.outputs.files(previousSessionFile, shouldRunTests)
 
             it.doLast {
                 val currentContent = if (currentSessionFile.get().asFile.exists()) {
                     currentSessionFile.get().asFile.readText()
                 } else {
                     logger.warn("Current session file not found.")
+                    shouldRunTests.get().asFile.createNewFile()
+                    shouldRunTests.get().asFile.writeText("true")
                     return@doLast
                 }
 
@@ -115,11 +118,15 @@ class JacocoPlugin: Plugin<Project> {
                     // No previous data to compare with, assume first run
                     logger.info("No previous session file found. Saving current as previous for future comparisons.")
                     previousSessionFile.get().asFile.writeText(currentContent.trim())
+                    shouldRunTests.get().asFile.createNewFile()
+                    shouldRunTests.get().asFile.writeText("true")
                     return@doLast
                 }
 
                 if (currentContent == previousContent) {
                     logger.lifecycle("No changes detected between sessions.")
+                    shouldRunTests.get().asFile.createNewFile()
+                    shouldRunTests.get().asFile.writeText("false")
                 } else {
                     logger.lifecycle("Changes detected between sessions!. Writing content to jacoco-session/debug-current.txt and jacoco-session/debug-previous.txt")
 
@@ -131,6 +138,12 @@ class JacocoPlugin: Plugin<Project> {
 
                     debugCurrent.get().asFile.writeText(currentContent)
                     debugPrevious.get().asFile.writeText(previousContent)
+
+                    currentSessionFile.get().asFile.writeText(currentContent)
+                    previousSessionFile.get().asFile.writeText(previousContent)
+
+                    shouldRunTests.get().asFile.createNewFile()
+                    shouldRunTests.get().asFile.writeText("true")
                 }
 
                 // Update the previous file with current for next comparison
