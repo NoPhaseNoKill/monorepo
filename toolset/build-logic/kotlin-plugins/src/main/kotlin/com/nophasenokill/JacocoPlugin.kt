@@ -98,13 +98,14 @@ class JacocoPlugin: Plugin<Project> {
             val currentSessionFile = layout.buildDirectory.file("jacoco-session/jacoco-sessions.txt")
             val previousSessionFile = layout.buildDirectory.file("jacoco-session/previous-jacoco-sessions.txt")
             val shouldRunTests = layout.buildDirectory.file("jacoco-session/should-run-tests.txt")
+            val difference = layout.buildDirectory.file("jacoco-session/difference.txt")
 
             it.inputs.file(tasks.named("sessions").get().outputs.files.first())
-            it.outputs.files(previousSessionFile, shouldRunTests)
+            it.outputs.files(previousSessionFile, shouldRunTests, difference)
 
             it.doLast {
-                val currentContent = if (currentSessionFile.get().asFile.exists()) {
-                    currentSessionFile.get().asFile.readText()
+                val currentContentLines = if (currentSessionFile.get().asFile.exists()) {
+                    currentSessionFile.get().asFile.readLines()
                 } else {
                     logger.warn("Current session file not found.")
                     shouldRunTests.get().asFile.createNewFile()
@@ -112,42 +113,45 @@ class JacocoPlugin: Plugin<Project> {
                     return@doLast
                 }
 
-                val previousContent = if (previousSessionFile.get().asFile.exists()) {
-                    previousSessionFile.get().asFile.readText()
+                val previousContentLines = if (previousSessionFile.get().asFile.exists()) {
+                    previousSessionFile.get().asFile.readLines()
                 } else {
                     // No previous data to compare with, assume first run
                     logger.info("No previous session file found. Saving current as previous for future comparisons.")
-                    previousSessionFile.get().asFile.writeText(currentContent.trim())
+                    previousSessionFile.get().asFile.writeText(currentContentLines.joinToString("\n"))
                     shouldRunTests.get().asFile.createNewFile()
                     shouldRunTests.get().asFile.writeText("true")
                     return@doLast
                 }
 
-                if (currentContent == previousContent) {
+                // Detect and print line differences
+                val differences = currentContentLines.zip(previousContentLines).filterNot { (current, previous) -> current == previous }
+                if (differences.isEmpty() && currentContentLines.size == previousContentLines.size) {
                     logger.lifecycle("No changes detected between sessions.")
                     shouldRunTests.get().asFile.createNewFile()
                     shouldRunTests.get().asFile.writeText("false")
                 } else {
-                    logger.lifecycle("Changes detected between sessions!. Writing content to jacoco-session/debug-current.txt and jacoco-session/debug-previous.txt")
+                    logger.lifecycle("Changes detected between sessions!")
+                    difference.map { it.asFile.createNewFile() }
+                    differences.forEach { (current, previous) ->
+                        difference.get().asFile.appendText("Previous: $previous -> Current: $current")
+                        logger.lifecycle("Previous: $previous -> Current: $current")
+                    }
 
-                    val debugCurrent = layout.buildDirectory.file("jacoco-session/debug-current.txt")
-                    val debugPrevious= layout.buildDirectory.file("jacoco-session/debug-previous.txt")
-
-                    debugCurrent.get().asFile.createNewFile()
-                    debugPrevious.get().asFile.createNewFile()
-
-                    debugCurrent.get().asFile.writeText(currentContent)
-                    debugPrevious.get().asFile.writeText(previousContent)
-
-                    currentSessionFile.get().asFile.writeText(currentContent)
-                    previousSessionFile.get().asFile.writeText(previousContent)
+                    // Check for extra lines in current file
+                    if (currentContentLines.size > previousContentLines.size) {
+                        currentContentLines.subList(previousContentLines.size, currentContentLines.size).forEach {
+                            difference.get().asFile.appendText("Previous: null -> Current: $it")
+                            logger.lifecycle("New line: $it")
+                        }
+                    }
 
                     shouldRunTests.get().asFile.createNewFile()
                     shouldRunTests.get().asFile.writeText("true")
                 }
 
                 // Update the previous file with current for next comparison
-                previousSessionFile.get().asFile.writeText(currentContent)
+                previousSessionFile.get().asFile.writeText(currentContentLines.joinToString("\n"))
             }
         }
     }
