@@ -5,6 +5,7 @@ dependencyResolutionManagement {
 }
 
 
+include("meta-gradle-utilities")
 include("kotlin-plugins")
 include("structural-plugins")
 

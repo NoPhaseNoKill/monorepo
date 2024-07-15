@@ -2,14 +2,7 @@ package com.nophasenokill
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.plugins.JavaApplication
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
-import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 import java.util.*
 
 class KotlinApplicationPlugin: Plugin<Project> {
@@ -17,6 +10,7 @@ class KotlinApplicationPlugin: Plugin<Project> {
         project.run {
             plugins.apply("com.nophasenokill.kotlin-base-plugin")
             plugins.apply("application")
+            plugins.apply("com.nophasenokill.jacoco-plugin")
 
             val mainClassName = projectDir.name.split("-").joinToString("") { it ->
                 it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
@@ -25,7 +19,7 @@ class KotlinApplicationPlugin: Plugin<Project> {
             val kotlinJvmProjectExtension = extensions.findByType(JavaApplication::class.java)
 
             kotlinJvmProjectExtension?.run {
-                mainClass. set("com.nophasenokill.${mainClassName}")
+                mainClass.set("com.nophasenokill.${mainClassName}")
             }
         }
     }

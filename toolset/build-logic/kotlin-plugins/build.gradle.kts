@@ -19,14 +19,27 @@ gradlePlugin {
             id = "com.nophasenokill.kotlin-application-plugin"
             implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
         }
+
+        create("jacocoPlugin") {
+            id = "com.nophasenokill.jacoco-plugin"
+            implementationClass = "com.nophasenokill.JacocoPlugin"
+        }
     }
 }
 
 dependencies {
     /*
+        Does not need this due to: applyDependencies() method inside of JavaGradlePluginPlugin (`java-gradle-plugin`)
+        already applying this.
+
+        implementation(gradleApi())
+     */
+
+    /*
         Equivalent of: implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
      */
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
+    implementation(projects.metaGradleUtilities)
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
@@ -37,3 +50,5 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:${libs.versions.junit.get()}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:${libs.versions.junitPlatform.get()}")
 }
+
+
