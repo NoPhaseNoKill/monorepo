@@ -2,9 +2,43 @@ plugins {
     id("com.nophasenokill.kotlin-application-plugin")
 }
 
+/*
+    Allows us to consume the results of our the test task from our dependencies,
+    which could form an aggregation of binary test result outputs.
+
+    TODO
+    
+    This could be used with jacoco, to output something similar
+    to the configuration cache. We would then group by hash/folder name,
+    where each project outputs whether or not we need to re-run the test task.
+    We can then consume it here, aggregate them all, and make a determination
+    of whether or not the affected code we have touched needs re-running (incremental
+    feedback)
+ */
+
+val testReportData: Configuration by configurations.creating {
+    isCanBeConsumed = false
+    attributes {
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named("test-report-data"))
+    }
+}
+
+val testReportTask = tasks.register<TestReport>("testReportTask") {
+    destinationDirectory = reporting.baseDirectory.dir("allTests")
+    // Use test results from testReportData configuration
+    testResults.from(testReportData)
+}
+
+tasks.build {
+    dependsOn(testReportTask)
+}
+
 dependencies {
     implementation(projects.standaloneProjects.libraries.libraryOne)
+    testReportData(projects.standaloneProjects.libraries.libraryOne)
 }
+
 
 /*
     Determines whether to re-run tests based on the hash outputs for each class hash

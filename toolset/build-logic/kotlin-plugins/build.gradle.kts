@@ -51,17 +51,14 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:${libs.versions.junit.get()}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:${libs.versions.junitPlatform.get()}")
 }
-//
-//
-//
-// tasks.jacocoTestReport {
-//     reports {
-//         xml.required = false
-//         csv.required = false
-//         html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
-//     }
-// }
-//
-//
-//
-//
+
+// // Share the test report data to be aggregated for the whole project
+configurations.create("binaryTestResultsElements") {
+    isCanBeResolved = false
+    isCanBeConsumed = true
+    attributes {
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named("test-report-data"))
+    }
+    outgoing.artifact(tasks.test.map { task -> task.getBinaryResultsDirectory().get() })
+}
