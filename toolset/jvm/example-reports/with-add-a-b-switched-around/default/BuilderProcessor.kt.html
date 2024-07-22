@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BuilderProcessor.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacocoTest.exec</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">BuilderProcessor.kt</span></div><h1>BuilderProcessor.kt</h1><pre class="source lang-java linenums">import com.google.devtools.ksp.processing.*
+import com.google.devtools.ksp.symbol.*
+import com.google.devtools.ksp.validate
+import java.io.File
+import java.io.OutputStream
+
+fun OutputStream.appendText(str: String) {
+<span class="nc" id="L8">    this.write(str.toByteArray())</span>
+<span class="nc" id="L9">}</span>
+<span class="nc" id="L10">class BuilderProcessor(</span>
+<span class="nc" id="L11">    val codeGenerator: CodeGenerator,</span>
+<span class="nc" id="L12">    val logger: KSPLogger</span>
+) : SymbolProcessor {
+    override fun process(resolver: Resolver): List&lt;KSAnnotated&gt; {
+<span class="nc" id="L15">        val symbols = resolver.getSymbolsWithAnnotation(&quot;com.example.annotation.Builder&quot;)</span>
+<span class="nc bnc" id="L16" title="All 2 branches missed.">        val ret = symbols.filter { !it.validate() }.toList()</span>
+<span class="nc" id="L17">        symbols</span>
+<span class="nc bnc" id="L18" title="All 4 branches missed.">            .filter { it is KSClassDeclaration &amp;&amp; it.validate() }</span>
+<span class="nc" id="L19">            .forEach { it.accept(BuilderVisitor(), Unit) }</span>
+<span class="nc" id="L20">        return ret</span>
+    }
+
+<span class="nc" id="L23">    inner class BuilderVisitor : KSVisitorVoid() {</span>
+        override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
+<span class="nc" id="L25">            classDeclaration.primaryConstructor!!.accept(this, data)</span>
+<span class="nc" id="L26">        }</span>
+
+        override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
+<span class="nc" id="L29">            val parent = function.parentDeclaration as KSClassDeclaration</span>
+<span class="nc" id="L30">            val packageName = parent.containingFile!!.packageName.asString()</span>
+<span class="nc" id="L31">            val className = &quot;${parent.simpleName.asString()}Builder&quot;</span>
+<span class="nc" id="L32">            val file = codeGenerator.createNewFile(Dependencies(true, function.containingFile!!), packageName , className)</span>
+<span class="nc" id="L33">            file.appendText(&quot;package $packageName\n\n&quot;)</span>
+<span class="nc" id="L34">            file.appendText(&quot;import HELLO\n\n&quot;)</span>
+<span class="nc" id="L35">            file.appendText(&quot;class $className{\n&quot;)</span>
+<span class="nc" id="L36">            function.parameters.forEach {</span>
+<span class="nc" id="L37">                val name = it.name!!.asString()</span>
+<span class="nc bnc" id="L38" title="All 4 branches missed.">                val typeName = StringBuilder(it.type.resolve().declaration.qualifiedName?.asString() ?: &quot;&lt;ERROR&gt;&quot;)</span>
+<span class="nc" id="L39">                val typeArgs = it.type.element!!.typeArguments</span>
+<span class="nc bnc" id="L40" title="All 4 branches missed.">                if (it.type.element!!.typeArguments.isNotEmpty()) {</span>
+<span class="nc" id="L41">                    typeName.append(&quot;&lt;&quot;)</span>
+<span class="nc" id="L42">                    typeName.append(</span>
+<span class="nc" id="L43">                            typeArgs.map {</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">                                val type = it.type?.resolve()</span>
+<span class="nc bnc" id="L45" title="All 8 branches missed.">                                &quot;${it.variance.label} ${type?.declaration?.qualifiedName?.asString() ?: &quot;ERROR&quot;}&quot; +</span>
+<span class="nc bnc" id="L46" title="All 4 branches missed.">                                        if (type?.nullability == Nullability.NULLABLE) &quot;?&quot; else &quot;&quot;</span>
+<span class="nc" id="L47">                            }.joinToString(&quot;, &quot;)</span>
+                    )
+<span class="nc" id="L49">                    typeName.append(&quot;&gt;&quot;)</span>
+                }
+<span class="nc" id="L51">                file.appendText(&quot;    private var $name: $typeName? = null\n&quot;)</span>
+<span class="nc bnc" id="L52" title="All 4 branches missed.">                file.appendText(&quot;    internal fun with${name.replaceFirstChar { it.uppercase() } }($name: $typeName): $className {\n&quot;)</span>
+<span class="nc" id="L53">                file.appendText(&quot;        this.$name = $name\n&quot;)</span>
+<span class="nc" id="L54">                file.appendText(&quot;        return this\n&quot;)</span>
+<span class="nc" id="L55">                file.appendText(&quot;    }\n\n&quot;)</span>
+<span class="nc" id="L56">            }</span>
+<span class="nc" id="L57">            file.appendText(&quot;    internal fun build(): ${parent.qualifiedName!!.asString()} {\n&quot;)</span>
+<span class="nc" id="L58">            file.appendText(&quot;        return ${parent.qualifiedName!!.asString()}(&quot;)</span>
+<span class="nc" id="L59">            file.appendText(</span>
+<span class="nc" id="L60">                function.parameters.map {</span>
+<span class="nc" id="L61">                    &quot;${it.name!!.asString()}!!&quot;</span>
+<span class="nc" id="L62">                }.joinToString(&quot;, &quot;)</span>
+            )
+<span class="nc" id="L64">            file.appendText(&quot;)\n&quot;)</span>
+<span class="nc" id="L65">            file.appendText(&quot;    }\n&quot;)</span>
+<span class="nc" id="L66">            file.appendText(&quot;}\n&quot;)</span>
+<span class="nc" id="L67">            file.close()</span>
+<span class="nc" id="L68">        }</span>
+    }
+
+}
+
+<span class="nc" id="L73">class BuilderProcessorProvider : SymbolProcessorProvider {</span>
+    override fun create(
+        environment: SymbolProcessorEnvironment
+    ): SymbolProcessor {
+<span class="nc" id="L77">        return BuilderProcessor(environment.codeGenerator, environment.logger)</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

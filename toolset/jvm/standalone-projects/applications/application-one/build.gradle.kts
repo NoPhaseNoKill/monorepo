@@ -1,130 +1,180 @@
 plugins {
     id("com.nophasenokill.kotlin-application-plugin")
-}
-
-/*
-    Allows us to consume the results of our the test task from our dependencies,
-    which could form an aggregation of binary test result outputs.
-
-    TODO
-    
-    This could be used with jacoco, to output something similar
-    to the configuration cache. We would then group by hash/folder name,
-    where each project outputs whether or not we need to re-run the test task.
-    We can then consume it here, aggregate them all, and make a determination
-    of whether or not the affected code we have touched needs re-running (incremental
-    feedback)
- */
-
-val testReportData: Configuration by configurations.creating {
-    isCanBeConsumed = false
-    attributes {
-        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.DOCUMENTATION))
-        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named("test-report-data"))
-    }
-}
-
-val testReportTask = tasks.register<TestReport>("testReportTask") {
-    destinationDirectory = reporting.baseDirectory.dir("allTests")
-    // Use test results from testReportData configuration
-    testResults.from(testReportData)
-}
-
-tasks.build {
-    dependsOn(testReportTask)
+    id("jacoco")
+    id("com.nophasenokill.hashing-tasks-plugin")
 }
 
 dependencies {
     implementation(projects.standaloneProjects.libraries.libraryOne)
-    testReportData(projects.standaloneProjects.libraries.libraryOne)
 }
 
+val jacocoOutputTask = tasks.register("jacocoOutputTask") {
+    dependsOn(tasks.test)
+    dependsOn(tasks.jacocoTestReport)
 
-/*
-    Determines whether to re-run tests based on the hash outputs for each class hash
-    that jacoco produces. This represents the test execution, and will be able to tell
-    us if there is a difference in any of our test execution (which is important, because
-    matching on the source files changing along doesn't guarantee we don't hit new code
-    due to execution paths etc).
+    val outputDir = layout.buildDirectory.dir("outputs")
+    val jacocoOutputDir = layout.buildDirectory.dir("jacoco")
+    val jacocoSessionsDir = layout.buildDirectory.dir("reports/jacoco/test/html")
 
-    Currently, this checks all files, which is semi-useless, but we now have all of the hashes
-    which were the hard thing. We can now apply filtering by narrowing down even further (say with
-    a file filter/some form of namespacing like 'Test').
 
-    Plans are:
-        1. Output all files and their execution hashes                            - DONE
-        2. Determine based on run tests, whether or not we need to run them again - TODO
-        3. It should also cater for no source file changes for the upToDate check - TODO
-        4. Port this across to the JacocoPlugin file                              - TODO
- */
-
-val shouldTestsRunTask = tasks.register("shouldTestsRunTask") {
-    val jacocoTestReport = tasks.named("jacocoTestReport")
-    dependsOn(jacocoTestReport)
-
-    val exec = jacocoTestReport.get().inputs.files.asFileTree.filter {
-        it.name.contains("exec")
-    }
-    val incrementalDir = layout.buildDirectory.dir("holy-grail-incremental-dir")
-
-    inputs.files(exec)
-    outputs.dir(incrementalDir)
     doLast {
+        outputDir.get().asFile.mkdir()
+        val firstDir = outputDir.get().dir("first-stage")
+        outputDir.get().dir("first-stage").asFile.mkdir()
+        firstDir.file("jacoco-output-task.txt").asFile.writeText("Completing jacocoOutputTask")
 
-        val sessions = getSessions()
+        val jacocoExec = jacocoOutputDir.get().file("test.exec")
+        val jacocoSessions = jacocoSessionsDir.get().file("jacoco-sessions.html")
 
-        val current = incrementalDir.get().asFile.resolve("current.txt")
-        val previous = incrementalDir.get().asFile.resolve("previous.txt")
-        val outcome = incrementalDir.get().asFile.resolve("outcome.txt")
-        var shouldRunTests = true
+        jacocoExec.asFile.copyTo( firstDir.file("jacoco-output-task.exec").asFile, overwrite = true)
+        jacocoSessions.asFile.copyTo(firstDir.file("sessions.html").asFile, overwrite = true)
+    }
+}
 
-        if(sessions == null) {
-            current.createNewFile()
-            previous.createNewFile()
-        } else if(!current.exists()) {
-            current.writeText(sessions.get().readText())
-            previous.createNewFile()
-        } else if (previous.readText().isEmpty() && current.readText().isNotEmpty()) {
-            current.copyTo(previous, overwrite = true)
-            previous.writeText(sessions.get().readText())
-        } else if(previous.readText().isNotEmpty()) {
+//TODO FIX BUG WITH CALCULATOR NOT COMING THROUGH IN PREVIOUS AFTER MULTIPLE RUNS
 
-            val contentsSame = sessions.get().readText() == previous.readText() && previous.readText() == current.readText()
+val dependsOnJacocoOutput = tasks.register("dependsOnJacocoOutput") {
+    dependsOn(jacocoOutputTask)
+    dependsOn(tasks.test)
+    dependsOn(tasks.jacocoTestReport)
+    mustRunAfter(jacocoOutputTask)
+    val inputText = layout.buildDirectory.dir("outputs/first-stage").get().file("jacoco-output-task.txt")
+    val inputExec = layout.buildDirectory.dir("outputs/first-stage").get().file("jacoco-output-task.exec")
 
-            if(contentsSame) {
-                // do nothing
-                shouldRunTests = false
-            } else {
-                previous.copyTo(current, overwrite = true)
-                previous.writeText(sessions.get().readText())
-            }
+    val inputSession = layout.buildDirectory.dir("outputs/first-stage").get().file("sessions.html")
+    inputs.files(inputText, inputExec, inputSession)
+    val outputDir = layout.buildDirectory.dir("outputs/second-stage")
+    val sessionsList = outputDir.get().file("sessions-list.txt")
+
+    doLast {
+        outputDir.get().asFile.mkdir()
+        val text = inputText.asFile.readText()
+        val sessions = extractClassData(inputSession.asFile.readText())
+        val sessionsFilesCurrent =  outputDir.get().dir("sessions-files-current")
+        val sessionsFilesPrevious =  outputDir.get().dir("sessions-files-previous")
+
+        outputDir.get().file("depends-on-jacoco-output.txt").asFile.writeText("Gets values from jacoco dependant task. Text is: ${text}")
+        inputExec.asFile.copyRecursively(outputDir.get().file("depends-on-jacoco-output-exec.exec").asFile, overwrite = true)
+
+        sessionsFilesCurrent.asFile.mkdir()
+
+
+        val sessionFileList = sessions.map {
+            val file = sessionsFilesCurrent.file(it.key)
+            file.asFile.createNewFile()
+            file.asFile.writeText(it.value)
+
+            it.key
         }
-        outcome.writeText("Should run tests: $shouldRunTests")
+
+        sessionsList.asFile.createNewFile()
+
+        val sessionsString = sessionFileList.joinToString("\n") { sessionItem ->
+            sessionItem
+        }
+
+        sessionsList.asFile.writeText(sessionsString)
+
+        // first run -> make them equal
+        if(!sessionsFilesPrevious.asFile.exists()) {
+            sessionsFilesPrevious.asFile.mkdir()
+            sessionsFilesCurrent.asFile.copyRecursively(sessionsFilesPrevious.asFile)
+        }
     }
 }
 
-private fun getSessions(): Provider<File>? {
-    val inputDir = tasks.named("jacocoTestReport").get().outputs.files.asFileTree
-    val outputDir = layout.buildDirectory.dir("jacoco-session")
-    val newFile = outputDir.map { it.asFile.resolve("jacoco-sessions.txt") }
+// val combinesJacocoInfo = tasks.register("combinesJacocoInfo") {
+//     dependsOn(tasks.test)
+//     dependsOn(jacocoOutputTask)
+//     dependsOn(dependsOnJacocoOutput)
+//     dependsOn(tasks.jacocoTestReport)
+//
+//     val currentToCompare = layout.buildDirectory.dir("outputs/second-stage/sessions-files-current").get()
+//     val previousToCompare = layout.buildDirectory.dir("outputs/second-stage/sessions-files-previous").get()
+//     val difference = layout.buildDirectory.dir("outputs/third-stage")
+//     val differenceOutput = difference.get().asFile.resolve("total-differences.txt")
+//
+//     inputs.dir(currentToCompare)
+//     inputs.dir( previousToCompare )
+//     outputs.file(differenceOutput)
+//
+//     doLast {
+//
+//         val currentToCompareFileTrees = currentToCompare.asFileTree
+//         val previousToCompareFileTrees = previousToCompare.asFileTree
+//
+//
+//         val currentSetFiles = currentToCompareFileTrees.files.toSet()
+//         val previousSetFiles = previousToCompareFileTrees.files.toSet()
+//         val diff = currentSetFiles.filter { currentFile ->
+//             val found = previousSetFiles.find { return@find it.name == currentFile.name && it.readText() == currentFile.readText() }
+//             return@filter found?.exists() != true
+//         }
+//
+//         var tally = 0
+//         difference.get().asFile.delete()
+//
+//         diff.forEach {
+//             difference.get().asFile.createNewFile()
+//             val output = difference.get().asFile.resolve(it.name)
+//             output.writeText(it.readText())
+//             tally += 1
+//         }
+//
+//         differenceOutput.writeText("Differences found: $tally")
+//     }
+// }
 
-    outputDir.get().asFile.mkdirs()
-
-    val sessionFile = inputDir.files.firstOrNull { it.name == "jacoco-sessions.html" }
-    if (sessionFile != null && sessionFile.exists()) {
-
-        newFile.get().createNewFile()
-        val readContents = extractClassData(sessionFile.readText())
-        val allContents = readContents.map { it.toString() }
-        val allContent = allContents.joinToString(separator = "\n") { content -> content }
-        newFile.get().writeText(allContent) // Writes all content at once, overwriting any existing content
-        return newFile
-    } else {
-        logger.info("Jacoco sessions file not found, skipping 'sessions' task.")
-        return null
-    }
-
+tasks.check {
+//     // dependsOn(combinesJacocoInfo)
+//     dependsOn(shouldTestsRun)
+//     // dependsOn(dependsOnJacocoOutput)
+    dependsOn(jacocoOutputTask)
+    dependsOn(dependsOnJacocoOutput)
 }
+//
+// tasks.build {
+//     // dependsOn(combinesJacocoInfo)
+//     dependsOn(shouldTestsRun)
+//     // dependsOn(dependsOnJacocoOutput)
+//     // dependsOn(jacocoOutputTask)
+// }
+//
+// tasks.test {
+//     mustRunAfter(shouldTestsRun)
+//     dependsOn(shouldTestsRun)
+//     // dependsOn(combinesJacocoInfo)
+//     // dependsOn(dependsOnJacocoOutput)
+//     // dependsOn(jacocoOutputTask)
+// }
+//
+// val shouldTestsRun = tasks.register("shouldTestsRun") {
+//     dependsOn(combinesJacocoInfo)
+//     dependsOn(tasks.test)
+//     dependsOn(jacocoOutputTask)
+//     dependsOn(dependsOnJacocoOutput)
+//
+//     val inputText = layout.buildDirectory.dir("outputs/third-stage").get().file("total-differences.txt")
+//     val output = layout.buildDirectory.dir("outputs/fourth-stage").get().file("test-summary-differences.txt")
+//
+//     inputs.dir(layout.buildDirectory.dir("outputs/third-stage"))
+//     outputs.files(output)
+//
+//     this.outputs.upToDateWhen {
+//         inputText.asFile.readText() == "Differences found: 0"
+//     }
+//
+//     doLast {
+//         if (!inputText.asFile.exists()) {
+//             println("total-differences.txt not found")
+//         } else {
+//             println("Differences found: ${inputText.asFile.readText() != "Differences found: 0"}")
+//             output.asFile.createNewFile()
+//             output.asFile.writeText(inputText.asFile.readText())
+//         }
+//     }
+//
+// }
 
 private fun extractClassData(html: String): Map<String, String> {
     val result = mutableMapOf<String, String>()

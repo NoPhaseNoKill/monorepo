@@ -21,20 +21,20 @@ class ApplicationOneTest {
             """.trimIndent()
         assertEquals(expectedOutput, output.trim())
     }
-    //
-    // @Test
-    // fun `app should run2`() {
-    //
-    //     val output = captureOutput {
-    //         ApplicationOneApp.main()
-    //     }
-    //
-    //     val expectedOutput = """
-    //         Hello world!
-    //         Using the library calculator. LibraryOneCalculator.add(2, 2): 4
-    //         """.trimIndent()
-    //     assertEquals(expectedOutput, output.trim())
-    // }
+
+    @Test
+    fun `app should run2`() {
+
+        val output = captureOutput {
+            ApplicationOneApp.main()
+        }
+
+        val expectedOutput = """
+            Hello world!
+            Using the library calculator. LibraryOneCalculator.add(2, 2): 4
+            """.trimIndent()
+        assertEquals(expectedOutput, output.trim())
+    }
 
     private fun captureOutput(block: () -> Unit): String {
          ByteArrayOutputStream().use { stream ->

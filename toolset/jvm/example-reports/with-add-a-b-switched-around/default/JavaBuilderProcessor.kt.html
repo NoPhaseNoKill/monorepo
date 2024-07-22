@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavaBuilderProcessor.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacocoTest.exec</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">JavaBuilderProcessor.kt</span></div><h1>JavaBuilderProcessor.kt</h1><pre class="source lang-java linenums">import com.example.annotation.Builder
+import com.squareup.javapoet.*
+import javax.annotation.processing.AbstractProcessor
+import javax.annotation.processing.RoundEnvironment
+import javax.lang.model.SourceVersion
+import javax.lang.model.element.ExecutableElement
+import javax.lang.model.element.Modifier
+import javax.lang.model.element.PackageElement
+import javax.lang.model.element.TypeElement
+
+<span class="nc" id="L11">class JavaBuilderProcessor : AbstractProcessor() {</span>
+
+    override fun getSupportedSourceVersion(): SourceVersion {
+<span class="nc" id="L14">        return SourceVersion.latestSupported()</span>
+    }
+    override fun getSupportedAnnotationTypes(): MutableSet&lt;String&gt; {
+<span class="nc" id="L17">        return mutableSetOf(&quot;com.example.annotation.Builder&quot;)</span>
+    }
+
+    private fun processType(typeElement: TypeElement) {
+<span class="nc" id="L21">        val typeSpecBuilder = TypeSpec.classBuilder(&quot;${typeElement.simpleName}Builder&quot;)</span>
+<span class="nc" id="L22">        val constructor = typeElement.enclosedElements.filterIsInstance&lt;ExecutableElement&gt;()</span>
+<span class="nc" id="L23">                .filter { it.simpleName.toString() == &quot;&lt;init&gt;&quot; }</span>
+<span class="nc" id="L24">                .first()</span>
+
+<span class="nc" id="L26">        constructor.parameters.forEach {</span>
+<span class="nc" id="L27">            typeSpecBuilder.addField(ClassName.get(it.asType()), it.simpleName.toString(), Modifier.PRIVATE)</span>
+<span class="nc" id="L28">            val parameterSpec = ParameterSpec.builder(ClassName.get(it.asType()), it.simpleName.toString()).build()</span>
+<span class="nc" id="L29">            typeSpecBuilder.addMethod(</span>
+<span class="nc bnc" id="L30" title="All 4 branches missed.">                    MethodSpec.methodBuilder(&quot;with${it.simpleName.toString().replaceFirstChar { it.uppercase() } }&quot;)</span>
+<span class="nc" id="L31">                            .addParameter(parameterSpec)</span>
+<span class="nc" id="L32">                            .addModifiers(Modifier.PUBLIC)</span>
+<span class="nc" id="L33">                            .addStatement(&quot;this.\$N = \$N&quot;, it.simpleName, it.simpleName)</span>
+<span class="nc" id="L34">                            .addStatement(&quot;return this&quot;)</span>
+<span class="nc" id="L35">                            .returns(ClassName.bestGuess(&quot;${typeElement.qualifiedName}Builder&quot;))</span>
+<span class="nc" id="L36">                            .build()</span>
+            )
+<span class="nc" id="L38">        }</span>
+<span class="nc" id="L39">        val statements = constructor.parameters.map { it.simpleName.toString() }.joinToString(&quot;, &quot;)</span>
+<span class="nc" id="L40">        typeSpecBuilder.addMethod(</span>
+<span class="nc" id="L41">                MethodSpec.methodBuilder(&quot;build&quot;)</span>
+<span class="nc" id="L42">                        .addModifiers(Modifier.PUBLIC)</span>
+<span class="nc" id="L43">                        .returns(ClassName.get(typeElement.asType()))</span>
+<span class="nc" id="L44">                        .addStatement(&quot;return new ${typeElement.simpleName}($statements)&quot;)</span>
+<span class="nc" id="L45">                        .build()</span>
+        )
+<span class="nc" id="L47">        val javaFileBuilder = JavaFile.builder((typeElement.enclosingElement as PackageElement).qualifiedName.toString(), typeSpecBuilder.build())</span>
+<span class="nc" id="L48">        javaFileBuilder.skipJavaLangImports(true).build().writeTo(processingEnv.filer)</span>
+<span class="nc" id="L49">    }</span>
+
+    override fun process(annotations: MutableSet&lt;out TypeElement&gt;?, roundEnv: RoundEnvironment?): Boolean {
+<span class="nc" id="L52">        val elements = roundEnv!!.getElementsAnnotatedWith(Builder::class.java)</span>
+<span class="nc" id="L53">        elements.filterIsInstance&lt;TypeElement&gt;()</span>
+<span class="nc" id="L54">                .map { processType(it) }</span>
+<span class="nc" id="L55">        return true</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -14,7 +14,7 @@ object LibraryOneCalculator {
         that have previously passed. We'll call this: 'The holy grail of incremental feedback'.
      */
 
-    // fun multiply(a: Int, b: Int): Int {
-    //     return a * b
-    // }
+    fun multiply(a: Int, b: Int): Int {
+        return a * b
+    }
 }

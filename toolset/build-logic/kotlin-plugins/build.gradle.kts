@@ -25,8 +25,25 @@ gradlePlugin {
             id = "com.nophasenokill.jacoco-plugin"
             implementationClass = "com.nophasenokill.JacocoPlugin"
         }
+
+        create("hashingTasksPlugin") {
+            id = "com.nophasenokill.hashing-tasks-plugin"
+            implementationClass = "com.nophasenokill.HashingTasksPlugin"
+        }
+
+        create("instrumentedJarConsumerPlugin") {
+            id = "com.nophasenokill.instrumented-jar-consumer-plugin"
+            implementationClass = "com.nophasenokill.InstrumentedJarConsumerPlugin"
+        }
+
+        create("instrumentedJarProducerPlugin") {
+            id = "com.nophasenokill.instrumented-jar-producer-plugin"
+            implementationClass = "com.nophasenokill.InstrumentedJarProducerPlugin"
+        }
     }
 }
+
+configurations.creating
 
 dependencies {
     /*
@@ -41,6 +58,11 @@ dependencies {
      */
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
     implementation(projects.metaGradleUtilities)
+
+    implementation("org.ow2.asm:asm:9.2")
+    implementation("org.ow2.asm:asm-commons:9.2")
+    implementation("org.ow2.asm:asm-util:9.2")
+    implementation("org.benf:cfr:0.152")
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
