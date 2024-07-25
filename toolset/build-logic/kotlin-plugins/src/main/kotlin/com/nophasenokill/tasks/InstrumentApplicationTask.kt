@@ -1,14 +1,14 @@
 package com.nophasenokill.tasks
 
-import org.benf.cfr.reader.Main
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.*
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.TaskAction
 import org.objectweb.asm.*
 import java.io.File
-import java.net.URL
-import java.nio.file.Files
 
 abstract class InstrumentApplicationTask: DefaultTask() {
     @get:Input
@@ -35,7 +35,7 @@ abstract class InstrumentApplicationTask: DefaultTask() {
 
         val url = fileDir.resolve("${appName.get()}.class").toURI().toURL()
         val classFileInputStream = url.openStream()
-        val classReader = ClassReader(classFileInputStream)
+        val classReader = ClassReader(classFileInputStream, )
         val classWriter = ClassWriter(ClassWriter.COMPUTE_FRAMES)
         val classVisitor = MethodLoggerClassVisitor(classWriter)
 
@@ -47,48 +47,48 @@ abstract class InstrumentApplicationTask: DefaultTask() {
         outputFile.parentFile.mkdirs()
         outputFile.writeBytes(bytecode)
 
-        val bytes = Files.readAllBytes(outputFile.toPath())
-        // val decompiledCode = decompileClass(bytes) // Makes it readable so in future we can write a test for this output
-
-
-        // val outputJavaFile = outputDir.get().asFile.resolve("instrumented-java-output.java")
-
+        // val bytes = Files.readAllBytes(outputFile.toPath())
+        // // val decompiledCode = decompileClass(bytes) // Makes it readable so in future we can write a test for this output
+        //
+        //
+        // // val outputJavaFile = outputDir.get().asFile.resolve("instrumented-java-output.java")
+        //
         // val outputJavaFile = outputDir.get().asFile.resolve(classFilePath.replace(".class", ".java"))
         //
         // if(!outputJavaFile.exists()) {
         //     outputJavaFile.createNewFile()
         // }
-        //
+
         // outputJavaFile.writeText(decompiledCode)
     }
 }
 
 
-private fun decompileClass(bytes: ByteArray): String {
-    val tempClassFile = File.createTempFile("tempClass", ".class")
-    Files.write(tempClassFile.toPath(), bytes)
-
-    val outputDir = File("build/instrumented-class")
-    outputDir.mkdirs()
-
-    val rootDir = File("")
-
-    // Means we can just run the test suite or the main method and have required classes on the classpath for both
-    val classpath = System.getProperty("java.class.path") + File.pathSeparator + "${rootDir.absolutePath}/build/libs/example-of-instrumentation-application-0.1.local-dev.jar"
-    val args = arrayOf(
-        tempClassFile.absolutePath,
-        "--outputdir", outputDir.absolutePath,
-        "--extraclasspath", classpath
-    )
-
-    Main.main(args)
-
-    val decompiledFile = outputDir.walkTopDown()
-        .filter { it.isFile && it.extension == "java" }
-        .firstOrNull() ?: throw IllegalArgumentException("Decompiled file not found")
-
-    return Files.readString(decompiledFile.toPath())
-}
+// private fun decompileClass(bytes: ByteArray): String {
+//     val tempClassFile = File.createTempFile("tempClass", ".class")
+//     Files.write(tempClassFile.toPath(), bytes)
+//
+//     val outputDir = File("build/instrumented-class")
+//     outputDir.mkdirs()
+//
+//     val rootDir = File("")
+//
+//     // Means we can just run the test suite or the main method and have required classes on the classpath for both
+//     val classpath = System.getProperty("java.class.path") + File.pathSeparator + "${rootDir.absolutePath}/build/libs/example-of-instrumentation-application-0.1.local-dev.jar"
+//     val args = arrayOf(
+//         tempClassFile.absolutePath,
+//         "--outputdir", outputDir.absolutePath,
+//         "--extraclasspath", classpath
+//     )
+//
+//     Main.main(args)
+//
+//     val decompiledFile = outputDir.walkTopDown()
+//         .filter { it.isFile && it.extension == "java" }
+//         .firstOrNull() ?: throw IllegalArgumentException("Decompiled file not found")
+//
+//     return Files.readString(decompiledFile.toPath())
+// }
 
 
 class MethodLoggerClassVisitor(classVisitor: ClassVisitor) : ClassVisitor(Opcodes.ASM9, classVisitor) {

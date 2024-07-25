@@ -30,20 +30,8 @@ gradlePlugin {
             id = "com.nophasenokill.hashing-tasks-plugin"
             implementationClass = "com.nophasenokill.HashingTasksPlugin"
         }
-
-        create("instrumentedJarConsumerPlugin") {
-            id = "com.nophasenokill.instrumented-jar-consumer-plugin"
-            implementationClass = "com.nophasenokill.InstrumentedJarConsumerPlugin"
-        }
-
-        create("instrumentedJarProducerPlugin") {
-            id = "com.nophasenokill.instrumented-jar-producer-plugin"
-            implementationClass = "com.nophasenokill.InstrumentedJarProducerPlugin"
-        }
     }
 }
-
-configurations.creating
 
 dependencies {
     /*
