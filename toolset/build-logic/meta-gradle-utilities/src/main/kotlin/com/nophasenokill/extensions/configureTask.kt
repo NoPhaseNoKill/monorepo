@@ -8,12 +8,12 @@ inline fun <reified T : Task> Project.configureTask(
     taskName: String,
     noinline codeBlock: T.() -> Unit
 ) {
-    return tasks.named(taskName, T::class.java).configure(codeBlock)
+    tasks.named(taskName, T::class.java).configure(codeBlock)
 }
 
 inline fun <reified T : Task> configureTask(
     taskProvider: TaskProvider<T>,
     noinline codeBlock: T.() -> Unit
 ) {
-    return taskProvider.configure(codeBlock)
+    taskProvider.configure(codeBlock)
 }
