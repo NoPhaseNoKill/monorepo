@@ -7,36 +7,12 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/applications/application-one" name="application-one">
+              <build path="$PROJECT_DIR$/toolset/build-logic" name="build-logic">
                 <projects>
-                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/applications/application-one" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/generalised-platform" name="generalised-platform">
-                <projects>
-                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/generalised-platform" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/junit-platform" name="junit-platform">
-                <projects>
-                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/junit-platform" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/libraries" name="libraries">
-                <projects>
-                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/libraries" />
-                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-one" />
-                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-two" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/meta-plugins/meta-plugin-one" name="meta-plugin-one">
-                <projects>
-                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/meta-plugins/meta-plugin-one" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins/standalone-plugin-one" name="standalone-plugin-one">
-                <projects>
-                  <project path="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins/standalone-plugin-one" />
+                  <project path="$PROJECT_DIR$/toolset/build-logic" />
+                  <project path="$PROJECT_DIR$/toolset/build-logic/kotlin-plugins" />
+                  <project path="$PROJECT_DIR$/toolset/build-logic/meta-gradle-utilities" />
+                  <project path="$PROJECT_DIR$/toolset/build-logic/structural-plugins" />
                 </projects>
               </build>
             </builds>
@@ -45,15 +21,23 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$/toolset/jvm" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$/toolset/build-logic" />
+            <option value="$PROJECT_DIR$/toolset/build-logic/kotlin-plugins" />
+            <option value="$PROJECT_DIR$/toolset/build-logic/meta-gradle-utilities" />
+            <option value="$PROJECT_DIR$/toolset/build-logic/structural-plugins" />
             <option value="$PROJECT_DIR$/toolset/jvm" />
-            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/applications/application-one" />
-            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/libraries" />
-            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-one" />
-            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/libraries/library-two" />
-            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/meta-plugins/meta-plugin-one" />
-            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/generalised-platform" />
-            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/platforms/junit-platform" />
-            <option value="$PROJECT_DIR$/toolset/jvm/composite-build/standalone-plugins/standalone-plugin-one" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/applications" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/applications/application-one" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/applications/application-two" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/applications/application-with-instrumentation" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/applications/build-tool-ui" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/libraries" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/libraries/example-library-three" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/libraries/ksp-processor" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/libraries/library-one" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/libraries/library-two" />
+            <option value="$PROJECT_DIR$/toolset/jvm/standalone-projects/libraries/some-new-lib" />
           </set>
         </option>
       </GradleProjectSettings>
