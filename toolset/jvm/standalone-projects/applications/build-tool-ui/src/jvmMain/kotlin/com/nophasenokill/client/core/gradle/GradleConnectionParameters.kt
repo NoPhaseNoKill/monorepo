@@ -16,7 +16,7 @@ data class GradleConnectionParameters(
             (path.isBlank() && isEnvironmentValidJavaHome()) || isValidJavaHome(File(path))
 
         private fun isEnvironmentValidJavaHome(): Boolean =
-            System.getenv("JAVA_HOME")?.takeIf { it.isNotBlank() }
+            System.getProperty("java.home")?.takeIf { it.isNotBlank() }
                 ?.let { isValidJavaHome(File(it)) }
                 ?: false
 

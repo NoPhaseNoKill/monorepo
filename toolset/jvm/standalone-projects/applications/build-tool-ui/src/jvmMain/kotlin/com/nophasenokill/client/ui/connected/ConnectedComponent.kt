@@ -118,18 +118,19 @@ class ConnectedComponent(
                                 .addArguments(
                                     when (parameters.javaHomeDir) {
                                         null -> {
-                                            val javaHome = System.getenv("JAVA_HOME")
+
+                                            val javaHome = System.getProperty("JAVA_HOME")
+
                                             if(javaHome == null) {
-                                                val sdkHome = System.getenv("SDKMAN_DIR")
-                                                if(sdkHome != null) {
-                                                    val path = "/candidates/java/current"
-                                                    val full = "${System.getenv("SDKMAN_DIR")}${path}"
-                                                    "-Dorg.gradle.java.home=${full}"
+                                                val secondaryJavaHome = System.getProperty("java.home")
+
+                                                if(secondaryJavaHome == null) {
+                                                    throw Exception("Whoops! Could not find System.getProperty(\"JAVA_HOME\") or  System.getProperty(\"java.home\")")
                                                 } else {
-                                                    throw Exception("Whoops! Could not find JAVA_HOME or SDKMAN_DIR")
+                                                    "-Dorg.gradle.java.home=${secondaryJavaHome}"
                                                 }
                                             } else {
-                                                "-Dorg.gradle.java.home=${System.getenv("JAVA_HOME")}"
+                                                "-Dorg.gradle.java.home=${javaHome}"
                                             }
                                         }
                                         else -> "-Dorg.gradle.java.home=${parameters.javaHomeDir}"
@@ -153,7 +154,7 @@ class ConnectedComponent(
                                 .addArguments(
                                     when (parameters.javaHomeDir) {
                                         null -> {
-                                            val javaHome = System.getenv("JAVA_HOME")
+                                            val javaHome = System.getProperty("java.home")
                                             if(javaHome == null) {
                                                 val sdkHome = System.getenv("SDKMAN_DIR")
                                                 if(sdkHome != null) {
@@ -165,7 +166,7 @@ class ConnectedComponent(
                                                     throw Exception("Whoops! Could not find JAVA_HOME or SDKMAN_DIR")
                                                 }
                                             } else {
-                                                "-Dorg.gradle.java.home=${System.getenv("JAVA_HOME")}"
+                                                "-Dorg.gradle.java.home=${System.getProperty("java.home")}"
                                             }
 
                                         }

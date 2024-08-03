@@ -8,7 +8,15 @@
 # Use this when you want to be absolutely certain there's nothing being cached locally for the project
 
 delete_gradle_cache() {
-    find "$1" -type d \( -name 'build' -o -name '.gradle' \) -exec rm -rf {} +
+  # Only deletes build folders which are on the same level as either a settings.gradle.kts or build.gradle.kts file
+  # This prevents accidental removal of any actual source folders named 'build'
+    find "$1" -type d -name 'build' | while read -r build_dir; do
+        parent_dir=$(dirname "$build_dir")
+        if [ -f "$parent_dir/build.gradle.kts" ] || [ -f "$parent_dir/settings.gradle.kts" ]; then
+            rm -rf "$build_dir"
+        fi
+    done
+    find "$1" -type d -name '.gradle' -exec rm -rf {} +
 }
 
 delete_intellij_cache() {

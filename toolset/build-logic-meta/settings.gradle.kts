@@ -1,15 +1,10 @@
-rootProject.name = "build-logic"
-
+rootProject.name = "build-logic-meta"
 
 dependencyResolutionManagement {
     repositories.gradlePluginPortal()
 }
 
-includeBuild("../build-logic-meta")
-include("meta-gradle-utilities")
-include("kotlin-plugins")
-include("structural-plugins")
-
+include("kotlin-dsl-plugin")
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

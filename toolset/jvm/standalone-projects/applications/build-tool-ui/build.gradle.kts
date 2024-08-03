@@ -100,6 +100,7 @@ compose.desktop {
         mainClass = "com.nophasenokill.client.GradleClientMainKt"
         jvmArgs += "-Xms35m"
         jvmArgs += "-Xmx128m"
+        javaHome = javaToolchains.compilerFor{}.map { it.metadata.installationPath }.get().asFile.path
 
         buildTypes.release.proguard {
             optimize = false
