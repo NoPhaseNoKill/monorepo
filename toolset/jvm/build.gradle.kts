@@ -1,6 +1,7 @@
 import java.util.*
 
 plugins {
+    alias(libs.plugins.kotlinDsl) apply(false)
     alias(libs.plugins.kotlinJvm) apply(false)
     alias(libs.plugins.jetbrainsCompose) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false

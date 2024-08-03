@@ -1,6 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlinJvm)
-    `java-gradle-plugin`
+    id("com.nophasenokill.kotlin-dsl-plugin")
 }
 
 gradlePlugin {

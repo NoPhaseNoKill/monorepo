@@ -1,5 +1,5 @@
 plugins {
-    `kotlin-dsl`
+    id("com.nophasenokill.kotlin-dsl-plugin")
     jacoco
 }
 
@@ -18,6 +18,11 @@ gradlePlugin {
         create("kotlinApplicationPlugin") {
             id = "com.nophasenokill.kotlin-application-plugin"
             implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
+        }
+
+        create("kotlinDesktopApplicationPlugin") {
+            id = "com.nophasenokill.kotlin-desktop-application-plugin"
+            implementationClass = "com.nophasenokill.KotlinDesktopApplicationPlugin"
         }
 
         create("jacocoPlugin") {
@@ -45,6 +50,7 @@ dependencies {
      */
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
     implementation(projects.metaGradleUtilities)
+    implementation("org.jetbrains.compose:compose-gradle-plugin:${libs.versions.composePlugin.get()}")
 
     implementation("org.ow2.asm:asm:9.2")
     implementation("org.ow2.asm:asm-commons:9.2")

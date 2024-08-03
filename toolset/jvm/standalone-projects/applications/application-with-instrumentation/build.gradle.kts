@@ -1,3 +1,4 @@
+import com.nophasenokill.GradleDirectory.getBuildDirectory
 import java.util.*
 
 plugins {
@@ -24,15 +25,15 @@ fun getMainClassName(): String {
 }
 
 tasks.register<Copy>("instrumentApp") {
+    val buildDir = project.getBuildDirectory()
     dependsOn("compileKotlin")
     from("src/main/kotlin")
-    into("${project.layout.buildDirectory.get()}/instrumented")
+    into("${buildDir.get()}/instrumented")
 
     doLast {
-        val instrumentedDir = file("${project.layout.buildDirectory.get()}/instrumented")
+        val instrumentedDir = file("${buildDir.get()}/instrumented")
 
         instrumentedDir.walk().filter { it.isFile && it.extension == "kt" && it.name.contains(getMainClassName()) }.forEach { file ->
-            println("File included is: ${file}")
             file.writeText("""
                 package com.nophasenokill;
                 

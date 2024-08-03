@@ -2,8 +2,6 @@ plugins {
     `kotlin-dsl`
 }
 
-evaluationDependsOnChildren()
-
 gradlePlugin {
     plugins {
         create("kotlinDslPlugin") {
