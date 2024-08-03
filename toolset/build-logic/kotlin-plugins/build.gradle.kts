@@ -1,6 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlinJvm)
-    `java-gradle-plugin`
+    `kotlin-dsl`
     jacoco
 }
 
