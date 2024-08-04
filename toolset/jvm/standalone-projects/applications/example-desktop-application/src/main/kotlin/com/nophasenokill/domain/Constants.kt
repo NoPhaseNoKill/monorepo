@@ -1,4 +1,4 @@
-package com.nophasenokill
+package com.nophasenokill.domain
 
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
