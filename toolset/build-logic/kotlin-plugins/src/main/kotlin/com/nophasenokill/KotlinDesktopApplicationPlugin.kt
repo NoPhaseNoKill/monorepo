@@ -67,15 +67,17 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
             }
         }
     }
+
+    val org.jetbrains.compose.ComposeExtension.desktop: org.jetbrains.compose.desktop.DesktopExtension get() =
+        (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("desktop") as org.jetbrains.compose.desktop.DesktopExtension
+
+    val Project.compose: org.jetbrains.compose.ComposeExtension get() =
+        (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("compose") as org.jetbrains.compose.ComposeExtension
+
+    val org.gradle.api.artifacts.dsl.DependencyHandler.compose: ComposePlugin.Dependencies get() =
+        (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("compose") as ComposePlugin.Dependencies
 }
 
-val org.jetbrains.compose.ComposeExtension.desktop: org.jetbrains.compose.desktop.DesktopExtension get() =
-    (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("desktop") as org.jetbrains.compose.desktop.DesktopExtension
 
-val Project.compose: org.jetbrains.compose.ComposeExtension get() =
-    (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("compose") as org.jetbrains.compose.ComposeExtension
-
-val org.gradle.api.artifacts.dsl.DependencyHandler.compose: ComposePlugin.Dependencies get() =
-    (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("compose") as ComposePlugin.Dependencies
 
 
