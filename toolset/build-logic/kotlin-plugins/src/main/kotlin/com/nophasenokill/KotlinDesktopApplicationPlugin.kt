@@ -43,6 +43,7 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
                 // (in a separate module for demo project and in testMain).
                 // With compose.desktop.common you will also lose @Preview functionality
                 add("implementation", compose.desktop.currentOs)
+                add("implementation", compose.material3)
             }
 
             val mainClassName = projectDir.name.split("-").joinToString("") { it ->
