@@ -54,8 +54,8 @@ class ComponentPlugin: Plugin<Settings> {
                                 isEnabled = true
                             }
 
-                            remote(HttpBuildCache::class.java).run {
-                                isEnabled = true
+                            remote(HttpBuildCache::class.java   ).run {
+                                isEnabled = false // turn on in future
                                 isPush = true
                                 isAllowUntrustedServer = true
                                 isAllowInsecureProtocol = true
