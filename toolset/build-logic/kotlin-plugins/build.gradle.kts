@@ -34,6 +34,11 @@ gradlePlugin {
             id = "com.nophasenokill.hashing-tasks-plugin"
             implementationClass = "com.nophasenokill.HashingTasksPlugin"
         }
+
+        create("packageNameRelocatorPlugin") {
+            id = "com.nophasenokill.package-name-relocator-plugin"
+            implementationClass = "com.nophasenokill.PackageNameRelocatorPlugin"
+        }
     }
 }
 
@@ -56,6 +61,8 @@ dependencies {
     implementation("org.ow2.asm:asm-commons:9.2")
     implementation("org.ow2.asm:asm-util:9.2")
     implementation("org.benf:cfr:0.152")
+
+    implementation("me.lucko:jar-relocator:1.7")
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
