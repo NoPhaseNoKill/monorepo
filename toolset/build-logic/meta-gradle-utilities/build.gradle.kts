@@ -7,8 +7,12 @@ plugins {
 
 dependencies {
     implementation(gradleApi())
-    implementation("org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:${libs.versions.kotlinDsl.get()}")
+    implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
 
+    implementation("app.cash.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
+
+    implementation("org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:${libs.versions.kotlinDsl.get()}")
+    implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
     testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
 
     /*

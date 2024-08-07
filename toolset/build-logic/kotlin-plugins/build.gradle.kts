@@ -39,6 +39,12 @@ gradlePlugin {
             id = "com.nophasenokill.package-name-relocator-plugin"
             implementationClass = "com.nophasenokill.PackageNameRelocatorPlugin"
         }
+
+        create("kotlinMultiPlatformAppPlugin") {
+            id = "com.nophasenokill.kotlin-multi-platform-app-plugin"
+            implementationClass = "com.nophasenokill.KotlinMultiPlatformAppPlugin"
+        }
+
     }
 }
 
@@ -63,6 +69,8 @@ dependencies {
     implementation("org.benf:cfr:0.152")
 
     implementation("me.lucko:jar-relocator:1.7")
+
+    implementation("app.cash.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
