@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
 @Composable
-fun RunTestsButton(onClick: () -> Unit, text: String = "Click to run tests", modifier: Modifier = Modifier) {
+fun RunTaskButton(onClick: () -> Unit, text: String = "Click to run task", modifier: Modifier = Modifier) {
     Button(
         onClick = { onClick() },
         modifier = modifier

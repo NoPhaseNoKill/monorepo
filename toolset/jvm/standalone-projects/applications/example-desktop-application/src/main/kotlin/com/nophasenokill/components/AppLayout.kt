@@ -9,16 +9,16 @@ import com.nophasenokill.domain.Constants
 import org.gradle.tooling.ProjectConnection
 
 @Composable
-fun AppLayout(modifier: Modifier = Modifier, gradleConnector: ProjectConnection) {
+fun AppLayout(modifier: Modifier = Modifier, gradleConnector: ProjectConnection, task: String) {
 
     var runTests by remember { mutableStateOf(false) }
 
 
     Column {
         if(runTests) {
-            GradleToolingApiSection(modifier, gradleConnector)
+            GradleToolingApiSection(modifier, gradleConnector, task)
         } else {
-            RunTestsButton(
+            RunTaskButton(
                 onClick = { runTests = !runTests },
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(Constants.DEFAULT_PADDING)
             )

@@ -23,42 +23,43 @@ import org.gradle.tooling.ProjectConnection
 fun GradleToolingApiSection(
     modifier: Modifier = Modifier,
     gradleConnector: ProjectConnection,
+    task: String,
 ) {
     var isLoadingContent by remember { mutableStateOf(true) }
-    var warmedTestRunOutput by remember { mutableStateOf("") }
+    var output by remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
-    var shouldRunTests by remember { mutableStateOf(false) }
+    var shouldRunTask by remember { mutableStateOf(false) }
 
-    fun onTestStart() {
+    fun onTaskStart() {
         isLoadingContent = true
-        warmedTestRunOutput = ""
-        shouldRunTests = true
+        output = ""
+        shouldRunTask = true
     }
 
 
     if (isLoadingContent) {
         Loading()
 
-        if(warmedTestRunOutput.isEmpty()) {
-            LaunchedEffect(shouldRunTests) {
+        if(output.isEmpty()) {
+            LaunchedEffect(shouldRunTask) {
                 val result = withContext(Dispatchers.IO) {
-                    GradleToolingApi.runTestSuite(gradleConnector)
+                    GradleToolingApi.runTask(gradleConnector, task)
                 }
-                warmedTestRunOutput = result
+                output = result
                 isLoadingContent = false
-                shouldRunTests = false
+                shouldRunTask = false
             }
         }
     } else {
         Column {
             if(!isLoadingContent) {
-                RunTestsButton(
-                    onClick = ::onTestStart,
-                    text = "Click to run warmed test suite",
+                RunTaskButton(
+                    onClick = ::onTaskStart,
+                    text = "Click to run task: ${task} ",
                     modifier = Modifier.align(Alignment.CenterHorizontally).padding(Constants.DEFAULT_PADDING)
                 )
 
-                if(warmedTestRunOutput.isNotEmpty()) {
+                if(output.isNotEmpty()) {
                     Box(modifier) {
                         Column(
                             modifier = Modifier
@@ -66,13 +67,13 @@ fun GradleToolingApiSection(
                                 .padding(Constants.DEFAULT_PADDING)
                         ) {
                             Text(
-                                text = "Warmed test run output:",
+                                text = "Task '${task}' output:",
                                 fontSize = Constants.HEADING_FONT_SIZE,
                                 lineHeight = Constants.DEFAULT_LINE_HEIGHT,
                                 textAlign = TextAlign.Left,
                             )
                             Text(
-                                text = warmedTestRunOutput,
+                                text = output,
                                 fontSize = Constants.DEFAULT_FONT_SIZE,
                                 lineHeight = Constants.DEFAULT_LINE_HEIGHT,
                                 textAlign = TextAlign.Left,

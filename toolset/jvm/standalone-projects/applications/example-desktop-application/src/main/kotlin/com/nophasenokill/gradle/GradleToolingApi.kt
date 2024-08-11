@@ -6,27 +6,29 @@ import org.gradle.tooling.model.build.BuildEnvironment
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
-import java.nio.file.Paths
 
 
 object GradleToolingApi {
 
-    fun getConnector(): GradleConnector {
-        val rootJvmPath = Paths.get("").toAbsolutePath().parent.parent.parent.toString()
-        val projectDir = File(rootJvmPath)
 
-        val connector = GradleConnector.newConnector().forProjectDirectory(projectDir)
+    fun connectToProject(connector: GradleConnector): ProjectConnection {
+        println("CONNECT TO PROJECT connector.connect() ${connector.connect()}")
+        return connector.connect()
+    }
+
+    fun getConnector(path: String): GradleConnector {
+        val connector = GradleConnector.newConnector().forProjectDirectory(File(path))
         return connector
     }
 
-    fun runTestSuite(connection: ProjectConnection): String {
+    fun runTask(connection: ProjectConnection, task: String): String {
         val startTime = System.currentTimeMillis()
 
         val outputStream = ByteArrayOutputStream()
 
         connection
             .newBuild()
-            .forTasks("testAll")
+            .forTasks(task)
             .setStandardOutput(PrintStream(outputStream))
             .withArguments("--scan", "--console=plain" )
             .run()

@@ -11,14 +11,15 @@ import org.gradle.tooling.ProjectConnection
 
 @Composable
 fun AppContainer(
-    gradleConnector: ProjectConnection
+    gradleConnector: ProjectConnection,
+    task: String
 ) {
     MaterialTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            AppLayout(modifier = Modifier.padding(Constants.DEFAULT_PADDING), gradleConnector)
+            AppLayout(modifier = Modifier.padding(Constants.DEFAULT_PADDING), gradleConnector, task)
         }
     }
 }
