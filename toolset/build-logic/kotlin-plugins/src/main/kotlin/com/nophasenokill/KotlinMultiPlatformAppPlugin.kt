@@ -23,7 +23,36 @@ class KotlinMultiPlatformAppPlugin : Plugin<Project> {
             pluginManager.apply(versionCatalog.findCatalogPlugin("sqldelight"))
             pluginManager.apply(versionCatalog.findCatalogPlugin("composeCompiler"))
 
+
             kotlin {
+                /*
+                       Adds a task named 'test' so that we can use this in the testAll from the root jvm project.
+
+                       For some reason, MPP breaks conventions of having a 'test' task and changes it to 'allTests',
+                       so we need to manually make this.
+
+                       Note: 'allTests' provides a report aggregation which we don't want, so instead we need to iterate
+                       over each one.
+                */
+                val testTask = tasks.register("test") {
+                    group = "verification"
+                    description = "Runs all tests for all targets."
+
+                    /*
+                         Ensures we depend on all platform test tasks aka jvmTest, iosTest etc
+                      */
+                    targets.all {
+                        val targetTestTask = tasks.findByName("${name}Test")
+                        if (targetTestTask != null) {
+                            dependsOn(targetTestTask)
+                        }
+                    }
+                }
+
+                tasks.named("check") {
+                    dependsOn(testTask)
+                }
+
                 jvm()
                 sourceSets {
 

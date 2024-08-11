@@ -1,14 +1,14 @@
 [versions]
 kotlin = "2.0.0"
-kotlinDsl = "4.3.1"
+kotlinDsl = "4.4.0"
 junit = "5.10.1"
 junitPlatform = "1.10.1"
 coroutines = "1.8.1"
-gradleEnterprise = "3.17.5"
+gradleEnterprise = "3.17.6"
 composePlugin = "1.7.0-alpha02"
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-#kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }
+kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 

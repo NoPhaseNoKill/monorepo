@@ -12,7 +12,7 @@ gradlePlugin {
 }
 
 /*
-     Fixes undeclared build service usage when using: enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+     Fixes undeclared build service usage when using: settings.enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
      Known issue to be fixed here: https://youtrack.jetbrains.com/issue/KT-63165
 
      Note: Because of the structure of the whole root jvm project, this ALSO needs to be applied directly

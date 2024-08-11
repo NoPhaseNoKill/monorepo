@@ -14,7 +14,7 @@ plugins {
     Reduces the noise in the exposed tasks, by simply doing the equivalent of a task at root (ie ./gradlew clean) behind
     a scoped set of tasks in a 'group'.
     registerAllTask("build") will register a task named 'buildAll',
-    that iterates over each of the subprojects :build is run on EACH them.
+    that iterates over each of the all included builds' subprojects + all subprojects :build is run on EACH them.
 
     Example:
 
@@ -25,8 +25,8 @@ plugins {
 
     Local tasks
     -----------
-    buildAll - Build all subprojects builds
-    cleanAll - Clean all subprojects builds
+    buildAll - Build all included builds subprojects' + all subprojects builds
+    cleanAll - Clean all included builds subprojects' + all subprojects builds
 
  */
 
@@ -42,7 +42,7 @@ val localTaskGroup = "Local"
  * Reduces the noise in the exposed tasks, by simply doing the equivalent of a task at root (ie ./gradlew clean) behind
  * a scoped set of tasks in a 'group'.
  * registerAllTask("build") will register a task named 'buildAll',
- * that iterates over each of the subprojects, and ensure :build is run on EACH them.
+ * that iterates over each of the all included builds subprojects' + all subprojects, and ensure :build is run on EACH them.
  */
 fun registerAllTask(
     taskName: String,
@@ -52,7 +52,7 @@ fun registerAllTask(
 
     tasks.register("${taskName}All") {
         group = localTaskGroup
-        description = "$taskDescription all subprojects"
+        description = "$taskDescription all included builds subprojects' + all subprojects"
         additionalActions()
 
         registerTaskEquivalents(this, taskName)
@@ -64,26 +64,26 @@ fun registerTaskEquivalents(task: Task, taskName: String) {
     /*
         Dynamically includes any projects (something with a build.gradle.kts)
         and excludes the root project.
-     */
-    rootDir.walk().forEach { file ->
-        if (file.isFile && file.name == "build.gradle.kts") {
-            val parentFileRelativeToRootDir = file.parentFile.relativeTo(rootDir)
-            val replacedRelativePath = parentFileRelativeToRootDir.path.replace(File.separator, ":")
 
-            if(parentFileRelativeToRootDir.path.isNotEmpty() && replacedRelativePath !== "") {
-                task
-                    .dependsOn(
-                        getTasksByName(taskName, true)
-                            .map { subproject ->
-                                logger.debug("Included subproject build task: ${subproject.path}")
-                                subproject.path
-                            }
-                    )
+        This ensures that any included builds are also a part of running this task, so you have a single centralized place
+        to run/build/test/check etc everything.
+
+     */
+    gradle.includedBuilds.forEach { includedBuild ->
+        includedBuild.projectDir.walkTopDown().forEach { file ->
+            if (file.isFile && file.name == "build.gradle.kts") {
+
+                val relativePath = file.parentFile.relativeTo(includedBuild.projectDir).path.replace(File.separator, ":")
+                val isNotRootPath = relativePath.isNotEmpty()
+
+                if (isNotRootPath) {
+                    // Equivalent of making buildAll task depend on : ':build-logic:kotlin-plugins:build' for example
+                    task.dependsOn(includedBuild.task(":${relativePath}:${taskName}"))
+                    logger.quiet("Dynamically included ${taskName} task: :${includedBuild.name}:${relativePath}:${taskName}")
+                }
             }
         }
     }
-
-
 }
 
 tasks.named<TaskReportTask>("tasks") {

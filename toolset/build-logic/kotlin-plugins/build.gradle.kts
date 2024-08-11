@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     id("com.nophasenokill.kotlin-dsl-plugin")
     jacoco
@@ -43,6 +45,11 @@ gradlePlugin {
         create("kotlinMultiPlatformAppPlugin") {
             id = "com.nophasenokill.kotlin-multi-platform-app-plugin"
             implementationClass = "com.nophasenokill.KotlinMultiPlatformAppPlugin"
+        }
+
+        create("taskEventsPlugin") {
+            id = "com.nophasenokill.task-events-plugin"
+            implementationClass = "com.nophasenokill.TaskEventsPlugin"
         }
 
     }
@@ -92,3 +99,19 @@ configurations.create("binaryTestResultsElements") {
     }
     outgoing.artifact(tasks.test.map { task -> task.getBinaryResultsDirectory().get() })
 }
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging.events = setOf(
+        TestLogEvent.STANDARD_OUT,
+        TestLogEvent.STARTED,
+        TestLogEvent.PASSED,
+        TestLogEvent.SKIPPED,
+        TestLogEvent.FAILED,
+        TestLogEvent.STANDARD_OUT,
+        TestLogEvent.STANDARD_ERROR,
+    )
+
+    testLogging.minGranularity = 2
+}
+

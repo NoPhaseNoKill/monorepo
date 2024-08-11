@@ -26,6 +26,7 @@ class KotlinBasePlugin: Plugin<Project> {
             version = "0.1.local-dev"
 
             plugins.apply("org.jetbrains.kotlin.jvm")
+            plugins.apply("com.nophasenokill.task-events-plugin")
 
             val kotlinJvmProjectExtension = extensions.findByType(KotlinJvmProjectExtension::class.java)
 
