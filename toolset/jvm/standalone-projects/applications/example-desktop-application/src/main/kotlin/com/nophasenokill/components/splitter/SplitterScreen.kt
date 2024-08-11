@@ -73,7 +73,11 @@ fun SplitterScreen(gradleConnector: ProjectConnection, task: String) {
 
                     first(50.dp) {
                         // Box(Modifier.background(Color.Blue).fillMaxSize())
-                        AppLayout(modifier = Modifier.padding(Constants.DEFAULT_PADDING), gradleConnector, task)
+                        Box(Modifier.background(Color.Blue).fillMaxSize()) {
+                            Column {
+                                AppLayout(modifier = Modifier.padding(Constants.DEFAULT_PADDING), gradleConnector, task)
+                            }
+                        }
                     }
                     second(20.dp) {
                         Box(Modifier.background(Color.Green).fillMaxSize())
