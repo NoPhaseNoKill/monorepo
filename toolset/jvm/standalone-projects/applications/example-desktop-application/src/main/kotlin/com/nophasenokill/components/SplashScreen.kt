@@ -4,13 +4,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Window
+import com.nophasenokill.components.splitter.SplitterScreen
 import com.nophasenokill.domain.Constants
 import kotlinx.coroutines.delay
-import androidx.compose.material3.Text
 import org.gradle.tooling.ProjectConnection
 
 @Composable
@@ -31,8 +32,8 @@ fun SplashScreen(
     if (isSplashScreenShowing) {
         Window(onAppClose, title = "Splash") {}
     } else {
-        Window(onAppClose, title = "App") {
 
+        Window(onAppClose, title = "App") {
             Column {
                 if (snackbarState.currentSnackbarData?.visuals?.message?.contains("Valid: true") == true) {
                     val length = requireNotNull(snackbarState.currentSnackbarData?.visuals?.message?.length) {

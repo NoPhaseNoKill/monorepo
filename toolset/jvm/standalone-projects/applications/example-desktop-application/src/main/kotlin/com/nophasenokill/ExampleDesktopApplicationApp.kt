@@ -11,7 +11,6 @@ import java.nio.file.Paths
 
 fun main() = application {
 
-
     val defaultCurrentDir = Paths.get("").toAbsolutePath().parent.parent.parent.toString()
 
     var javaDir by remember { mutableStateOf(defaultCurrentDir) }
@@ -39,8 +38,6 @@ fun main() = application {
         connector.disconnect()
         exitApplication()
     }
-
-
 
     SplashScreen(::onAppClose, ::onJavaDirChange, ::onTaskChange, taskName, projectConnector)
 }
