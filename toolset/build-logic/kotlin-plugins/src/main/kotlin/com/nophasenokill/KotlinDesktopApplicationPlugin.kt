@@ -1,12 +1,14 @@
 package com.nophasenokill
 
+import com.nophasenokill.extensions.findCatalog
+import com.nophasenokill.extensions.kotlinJvm
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.repositories
 import org.jetbrains.compose.ComposePlugin
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import java.net.URI
 import java.util.*
 
@@ -14,17 +16,15 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
     override fun apply(project: Project) {
 
         project.run {
+
             if(!project.pluginManager.hasPlugin("com.nophasenokill.kotlin-base-plugin")) {
                 project.pluginManager.apply("com.nophasenokill.kotlin-base-plugin")
             }
 
-            val versionCatalog = project.extensions.findByType(VersionCatalogsExtension::class.java)?.named("libs")
-            val jetbrainsComposePlugin = requireNotNull(versionCatalog?.findPlugin("jetbrainsCompose")?.get()?.get()?.pluginId) {
-                "Expected to find jetBrainsCompose plugin id"
-            }
-            val composeCompilerPlugin = requireNotNull ( versionCatalog?.findPlugin("composeCompiler")?.get()?.get()?.pluginId ) {
-                "Expected to find composeCompilerPlugin plugin id"
-            }
+            val versionCatalog = project.findCatalog()
+
+            pluginManager.apply(versionCatalog.findPlugin("jetbrainsCompose").get().get().pluginId)
+            pluginManager.apply(versionCatalog.findPlugin("composeCompiler").get().get().pluginId)
 
             repositories {
                 mavenCentral()
@@ -34,8 +34,10 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
                 google()
             }
 
-            project.pluginManager.apply(jetbrainsComposePlugin)
-            project.pluginManager.apply(composeCompilerPlugin)
+
+            kotlinJvm {
+                KotlinPlatformType.jvm
+            }
 
             dependencies {
                 // Note, if you develop a library, you should use compose.desktop.common.

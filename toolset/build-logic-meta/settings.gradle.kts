@@ -1,7 +1,14 @@
 rootProject.name = "build-logic-meta"
 
-dependencyResolutionManagement {
+pluginManagement {
     repositories.gradlePluginPortal()
+}
+
+dependencyResolutionManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
 }
 
 include("kotlin-dsl-plugin")

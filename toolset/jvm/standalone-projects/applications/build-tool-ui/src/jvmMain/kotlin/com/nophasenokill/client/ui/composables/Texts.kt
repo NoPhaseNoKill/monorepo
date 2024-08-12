@@ -1,27 +1,22 @@
 package com.nophasenokill.client.ui.composables
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextOverflow
 import com.nophasenokill.client.ui.theme.spacing
 import com.nophasenokill.client.ui.theme.transparency
-
-@Composable
-fun TitleLarge(text: String, modifier: Modifier = Modifier) {
-    Text(
-        modifier = modifier,
-        text = text,
-        style = MaterialTheme.typography.titleLarge,
-    )
-}
 
 @Composable
 fun TitleMedium(text: String, modifier: Modifier = Modifier) {
@@ -41,23 +36,6 @@ fun TitleSmall(text: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Composable
-fun BodyMedium(text: String, modifier: Modifier = Modifier) {
-    Text(
-        modifier = modifier,
-        text = text,
-        style = MaterialTheme.typography.bodyMedium,
-    )
-}
-
-@Composable
-fun LabelSmall(text: String, modifier: Modifier = Modifier) {
-    Text(
-        modifier = modifier,
-        text = text,
-        style = MaterialTheme.typography.labelSmall,
-    )
-}
 
 @Composable
 fun LabelMedium(text: String, textStyle: TextStyle = TextStyle.Default, modifier: Modifier = Modifier) {
@@ -65,15 +43,6 @@ fun LabelMedium(text: String, textStyle: TextStyle = TextStyle.Default, modifier
         modifier = modifier,
         text = text,
         style = textStyle.plus(MaterialTheme.typography.labelMedium),
-    )
-}
-
-@Composable
-fun HeadlineSmall(text: String, modifier: Modifier = Modifier) {
-    Text(
-        modifier = modifier,
-        text = text,
-        style = MaterialTheme.typography.headlineSmall,
     )
 }
 
@@ -90,13 +59,49 @@ fun CodeBlock(
         shape = MaterialTheme.shapes.extraSmall,
         modifier = modifier
     ) {
+
         ClickableText(
             text = code,
             modifier = Modifier.padding(MaterialTheme.spacing.level2),
             style = MaterialTheme.typography.labelMedium.copy(fontFamily = FontFamily.Monospace),
-            onClick = onClick,
+            onClick = onClick
         )
+
     }
+}
+
+@Composable
+fun ClickableText(
+    text: AnnotatedString,
+    modifier: Modifier = Modifier,
+    style: TextStyle = TextStyle.Default,
+    softWrap: Boolean = true,
+    overflow: TextOverflow = TextOverflow.Clip,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
+    onClick: (Int) -> Unit
+) {
+    var layoutResult: TextLayoutResult? = null
+
+    BasicText(
+        text = text,
+        modifier = modifier.pointerInput(Unit) {
+            detectTapGestures { pos ->
+                layoutResult?.let {
+                    val offset = it.getOffsetForPosition(pos)
+                    onClick(offset)
+                }
+            }
+        },
+        style = style,
+        softWrap = softWrap,
+        overflow = overflow,
+        maxLines = maxLines,
+        onTextLayout = { textLayoutResult ->
+            layoutResult = textLayoutResult
+            onTextLayout(textLayoutResult)
+        }
+    )
 }
 
 fun Modifier.semiTransparentIfNull(any: Any?) =

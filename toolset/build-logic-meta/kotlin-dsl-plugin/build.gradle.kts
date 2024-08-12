@@ -1,5 +1,5 @@
 plugins {
-    `kotlin-dsl`
+    alias(libs.plugins.kotlinDsl)
 }
 
 gradlePlugin {
@@ -44,5 +44,5 @@ afterEvaluate {
 }
 
 dependencies {
-    implementation("org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:4.4.0")
+    implementation("org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:${libs.versions.kotlinDsl.get()}")
 }

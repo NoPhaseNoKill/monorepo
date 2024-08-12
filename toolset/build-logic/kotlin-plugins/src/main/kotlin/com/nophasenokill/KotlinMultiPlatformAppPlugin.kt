@@ -1,30 +1,40 @@
 package com.nophasenokill
 
 import app.cash.sqldelight.gradle.SqlDelightExtension
-import com.nophasenokill.extensions.*
+import com.nophasenokill.extensions.findCatalogLibrary
+import com.nophasenokill.extensions.javaToolchains
+import com.nophasenokill.extensions.kotlinMpp
+import com.nophasenokill.extensions.sourceSets
 import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.repositories
 import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.compose.ComposePlugin
+import org.jetbrains.compose.ComposePlugin.DesktopDependencies
+import org.jetbrains.compose.desktop.DesktopExtension
 
 class KotlinMultiPlatformAppPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.run {
 
-            version = "1.2.0"
+            val versionCatalog = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
 
-            val versionCatalog = project.findCatalog()
-            pluginManager.apply(versionCatalog.findCatalogPlugin("kotlinMultiplatform"))
-            pluginManager.apply(versionCatalog.findCatalogPlugin("kotlinSerialization"))
-            pluginManager.apply(versionCatalog.findCatalogPlugin("jetbrainsCompose"))
-            pluginManager.apply(versionCatalog.findCatalogPlugin("sqldelight"))
-            pluginManager.apply(versionCatalog.findCatalogPlugin("composeCompiler"))
+            /*
+                TODO At some stage we should be using the kotlin-base-plugin, and adding the KMP over the top,
+                however at the moment we get:
+                    > Failed to apply plugin 'org.jetbrains.kotlin.multiplatform'.
+                    > Cannot add extension with name 'kotlin', as there is an extension already registered with that name.
 
+             */
+            pluginManager.apply(versionCatalog.findPlugin("kotlinMultiplatform").get().get().pluginId)
+            pluginManager.apply(versionCatalog.findPlugin("kotlinSerialization").get().get().pluginId)
+            pluginManager.apply(versionCatalog.findPlugin("sqldelight").get().get().pluginId)
+            pluginManager.apply(versionCatalog.findPlugin("composeCompiler").get().get().pluginId)
 
-            kotlin {
+            kotlinMpp {
                 /*
                        Adds a task named 'test' so that we can use this in the testAll from the root jvm project.
 
@@ -86,46 +96,45 @@ class KotlinMultiPlatformAppPlugin : Plugin<Project> {
                         implementation(versionCatalog.findCatalogLibrary("gradle.declarative.dsl.evaluator"))
                         implementation(versionCatalog.findCatalogLibrary("gradle.declarative.dsl.tooling.models"))
 
+                        val composePluginVersion = versionCatalog.findVersion("composePlugin").get()
 
-                        implementation(compose.runtime)
-                        implementation(compose.foundation)
-                        implementation(compose.material3)
-                        implementation(compose.materialIconsExtended)
-                        implementation(compose.ui)
-                        implementation(compose.components.resources)
-                        implementation(compose.components.uiToolingPreview)
-                        implementation(compose.desktop.currentOs)
-
+                        implementation("org.jetbrains.compose.foundation:foundation:${composePluginVersion}")
+                        implementation("org.jetbrains.compose.material3:material3:${composePluginVersion}")
+                        implementation("org.jetbrains.compose.material:material-icons-extended:${composePluginVersion}")
+                        implementation("org.jetbrains.compose.ui:ui:${composePluginVersion}")
+                        implementation("org.jetbrains.compose.components:components-resources:${composePluginVersion}")
+                        implementation("org.jetbrains.compose.components:components-ui-tooling-preview:${composePluginVersion}")
+                        implementation(DesktopDependencies.currentOs)
 
                         runtimeOnly(versionCatalog.findCatalogLibrary("kotlinx.coroutines.swing"))
-                    }
 
-                    jvmTest.dependencies {
-                        implementation(versionCatalog.findCatalogLibrary("junit.junit"))
-                        implementation(compose.desktop.uiTestJUnit4)
+                        jvmTest.dependencies {
+                            implementation(versionCatalog.findCatalogLibrary("junit.junit"))
+                            implementation("org.jetbrains.compose.ui:ui-test-junit4:${composePluginVersion}")
+                        }
                     }
                 }
-            }
 
 
-            sqldelight {
+                sqldelight {
 
-                databases.create("ApplicationDatabase") {
-                    packageName.set("com.nophasenokill.client.core.database.sqldelight.generated")
-                    verifyDefinitions.set(true)
-                    verifyMigrations.set(true)
-                    deriveSchemaFromMigrations.set(true)
-                    generateAsync.set(false)
+                    databases.create("ApplicationDatabase") {
+                        packageName.set("com.nophasenokill.client.core.database.sqldelight.generated")
+                        verifyDefinitions.set(true)
+                        verifyMigrations.set(true)
+                        deriveSchemaFromMigrations.set(true)
+                        generateAsync.set(false)
+                    }
                 }
-            }
 
-            val appName = "GradleClient"
-            val appDisplayName = "Gradle Client"
-            val appQualifiedName = "com.nophasenokill.client"
-            val appUUID = file("app-uuid.txt").readText().trim()
+                val appName = "GradleClient"
+                val appDisplayName = "Gradle Client"
+                val appQualifiedName = "com.nophasenokill.client"
+                val appUUID = file("app-uuid.txt").readText().trim()
 
-            compose.desktop {
-                application {
+                val composeDesktopApplicationExtension = extensions.findByType(DesktopExtension::class.java)
+
+                composeDesktopApplicationExtension?.application {
                     mainClass = "com.nophasenokill.client.GradleClientMainKt"
                     jvmArgs += "-Xms35m"
                     jvmArgs += "-Xmx128m"
@@ -174,52 +183,49 @@ class KotlinMultiPlatformAppPlugin : Plugin<Project> {
                         }
                     }
                 }
-            }
-            repositories {
-                mavenCentral()
-                gradlePluginPortal {
-                    content {
-                        includeGroupAndSubgroups("com.gradle")
-                        includeGroupAndSubgroups("org.gradle")
-                        includeGroupAndSubgroups("io.github.gradle")
+                repositories {
+                    mavenCentral()
+                    gradlePluginPortal {
+                        content {
+                            includeGroupAndSubgroups("com.gradle")
+                            includeGroupAndSubgroups("org.gradle")
+                            includeGroupAndSubgroups("io.github.gradle")
+                        }
                     }
-                }
-                google {
-                    content {
-                        includeGroupAndSubgroups("androidx")
-                        includeGroupAndSubgroups("com.android")
-                        includeGroupAndSubgroups("com.google")
+                    google {
+                        content {
+                            includeGroupAndSubgroups("androidx")
+                            includeGroupAndSubgroups("com.android")
+                            includeGroupAndSubgroups("com.google")
+                        }
                     }
-                }
-                gradlePluginPortal {
-                    content {
-                        includeGroup("org.gradle.toolchains")
-                        includeGroup("org.gradle.experimental")
+                    gradlePluginPortal {
+                        content {
+                            includeGroup("org.gradle.toolchains")
+                            includeGroup("org.gradle.experimental")
+                        }
                     }
-                }
-                maven(url = "https://repo.gradle.org/gradle/libs-releases") {
-                    content {
-                        includeGroup("org.gradle")
+                    maven(url = "https://repo.gradle.org/gradle/libs-releases") {
+                        content {
+                            includeGroup("org.gradle")
+                        }
                     }
-                }
-                maven(url = "https://repo.gradle.org/gradle/libs-snapshots") {
-                    content {
-                        includeGroup("org.gradle")
+                    maven(url = "https://repo.gradle.org/gradle/libs-snapshots") {
+                        content {
+                            includeGroup("org.gradle")
+                        }
                     }
+                    mavenCentral()
                 }
-                mavenCentral()
             }
         }
     }
 }
 
-val Project.javaToolchains: org.gradle.jvm.toolchain.JavaToolchainService
-    get() =
-        (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("javaToolchains") as org.gradle.jvm.toolchain.JavaToolchainService
 
-val org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension.compose: org.jetbrains.compose.ComposePlugin.Dependencies
+val org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension.compose: ComposePlugin.Dependencies
     get() =
-        (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("compose") as org.jetbrains.compose.ComposePlugin.Dependencies
+        (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("compose") as ComposePlugin.Dependencies
 
 val Project.sqldelight: SqlDelightExtension
     get() =

@@ -6,7 +6,7 @@ junitPlatform = "1.10.1"
 kspSymbolProcessing = "2.0.0-1.0.22"
 squareUpJavaPoet = "1.12.1"
 coroutines = "1.8.1"
-gradleEnterprise = "3.17.5"
+gradleEnterprise = "3.17.6"
 composePlugin = "1.7.0-alpha02"
 kotlinx-coroutines = "1.7.3"
 kotlinx-serialization = "1.6.2"
@@ -15,13 +15,18 @@ gradle-tooling = "8.10-20240723003427+0000"
 declarative-dsl = "8.10-20240723003427+0000"
 sqldelight = "2.0.1"
 ktor = "2.3.9"
+kotlinCompose = "2.0.10"
+
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinDsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlinDsl" }
+kotlinComposePlugin = { id = "org.jetbrains.kotlin.plugin.compose", version = "kotlin" }
+
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
