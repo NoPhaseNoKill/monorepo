@@ -1,4 +1,5 @@
 import com.nophasenokill.GradleDirectory.getBuildDirectory
+import com.nophasenokill.extensions.sourceSets
 import java.util.*
 
 plugins {
@@ -25,13 +26,13 @@ fun getMainClassName(): String {
 }
 
 tasks.register<Copy>("instrumentApp") {
-    val buildDir = project.getBuildDirectory()
+    val buildDir = project.getBuildDirectory().get()
     dependsOn("compileKotlin")
-    from("src/main/kotlin")
-    into("${buildDir.get()}/instrumented")
+    from(sourceSets["main"].kotlin.sourceDirectories)
+    into("${buildDir.asFile.absolutePath}/instrumented")
 
     doLast {
-        val instrumentedDir = file("${buildDir.get()}/instrumented")
+        val instrumentedDir = file("${buildDir}/instrumented")
 
         instrumentedDir.walk().filter { it.isFile && it.extension == "kt" && it.name.contains(getMainClassName()) }.forEach { file ->
             file.writeText("""
