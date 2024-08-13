@@ -1,43 +1,108 @@
 package com.nophasenokill
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
-import com.nophasenokill.components.SplashScreen
+import androidx.compose.ui.window.rememberWindowState
+import com.nophasenokill.components.GradleToolingApiSection
+import com.nophasenokill.components.layout.SectionColumn
+import com.nophasenokill.components.layout.SectionContainer
+import com.nophasenokill.components.layout.SectionRow
 import com.nophasenokill.gradle.GradleToolingApi
-import java.nio.file.Paths
+import com.nophasenokill.theme.AppTheme
+
+
+@Composable
+fun UiContent(content: @Composable () -> Unit) {
+    SectionContainer {
+        content()
+    }
+}
 
 fun main() = application {
 
-    val defaultCurrentDir = Paths.get("").toAbsolutePath().parent.parent.parent.toString()
+    val windowState = rememberWindowState(size = DpSize(1200.dp, 900.dp), isMinimized = false, position = WindowPosition(alignment = BiasAlignment(0f, -0.6f)))
+    var darkMode by remember { mutableStateOf(false) }
 
-    var javaDir by remember { mutableStateOf(defaultCurrentDir) }
-    var connector by remember { mutableStateOf(GradleToolingApi.getConnector(javaDir)) }
-    var projectConnector by remember { mutableStateOf(GradleToolingApi.connectToProject(connector)) }
-    var taskName by remember { mutableStateOf("tasks") }
+    fun onToggleThemeClick() {
+        darkMode = !darkMode
+    }
 
-    fun onJavaDirChange(value: String) {
-        if (javaDir != value) {
-            println("Changing java dir from: $javaDir, to: $value")
-            javaDir = value
-            connector = GradleToolingApi.getConnector(javaDir)
-            projectConnector = GradleToolingApi.connectToProject(connector)
+    fun onTaskClicked(value: String) {
+        println("Task clicked was: ${value}")
+    }
+
+    Window(
+        state = windowState,
+        onCloseRequest = ::exitApplication,
+        title = "Gradle desktop app",
+    ) {
+
+        val connector = GradleToolingApi.getConnector("/home/tomga/projects/monorepo/toolset/jvm").connect()
+
+        AppTheme(isDarkMode = darkMode) {
+            UiContent {
+                SectionRow(horizontalArrangement = Arrangement.SpaceBetween) {
+                    SectionColumn(Modifier.align(Alignment.CenterVertically)) {
+                        Button(onClick = ::onToggleThemeClick) {
+                            Text("Click here to toggle theme")
+                        }
+                    }
+                }
+
+                SectionRow {
+
+                    SectionColumn {
+                        Button(onClick = {
+                            onTaskClicked("testAll1")
+                        }) {
+                            Text("Run task: testAll1")
+                        }
+                    }
+
+                    SectionColumn {
+                        GradleToolingApiSection(
+                            task = "test",
+                            gradleConnector = connector
+                        )
+                        Button(onClick = {
+                            onTaskClicked("testAll3")
+                        }) {
+                            Text("Run task: testAll3")
+                        }
+                    }
+                    SectionColumn(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+                        Button(onClick = {
+                            onTaskClicked("testAll4")
+                        }) {
+                            Text("Run task: testAll4")
+                        }
+                    }
+                }
+
+                SectionRow {
+
+                    SectionColumn {
+                        Button(onClick = {
+                            onTaskClicked("testAll5")
+                        }) {
+                            Text("Run task: testAll5")
+                        }
+                    }
+                }
+            }
+
         }
     }
-
-    fun onTaskChange(value: String) {
-        if(taskName != value) {
-            taskName = value
-        }
-    }
-
-    fun onAppClose() {
-        println("Disconnecting from gradle tooling API connector")
-        connector.disconnect()
-        exitApplication()
-    }
-
-    SplashScreen(::onAppClose, ::onJavaDirChange, ::onTaskChange, taskName, projectConnector)
 }

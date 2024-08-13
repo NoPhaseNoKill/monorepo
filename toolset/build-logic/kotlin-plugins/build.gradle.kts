@@ -7,6 +7,11 @@ plugins {
 
 gradlePlugin {
     plugins {
+        create("javaBasePlugin") {
+            id = "com.nophasenokill.java-base-plugin"
+            implementationClass = "com.nophasenokill.JavaBasePlugin"
+        }
+
         create("kotlinBasePlugin") {
             id = "com.nophasenokill.kotlin-base-plugin"
             implementationClass = "com.nophasenokill.KotlinBasePlugin"

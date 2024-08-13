@@ -9,7 +9,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Window
-import com.nophasenokill.components.splitter.SplitterScreen
 import com.nophasenokill.domain.Constants
 import kotlinx.coroutines.delay
 import org.gradle.tooling.ProjectConnection
@@ -54,7 +53,9 @@ fun SplashScreen(
                         label = { Text("Enter Task Name") },
                         modifier = Modifier.fillMaxWidth().padding(Constants.DEFAULT_PADDING)
                     )
-                    AppContainer(projectConnection, taskName)
+                    // AppContainer {
+                            // projectConnection, taskName
+                    // }
 
                     onJavaDirChange(rootDir)
                 }

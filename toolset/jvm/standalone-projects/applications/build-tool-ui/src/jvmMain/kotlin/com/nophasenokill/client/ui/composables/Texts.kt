@@ -15,6 +15,7 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.nophasenokill.client.ui.theme.spacing
 import com.nophasenokill.client.ui.theme.transparency
 
@@ -53,7 +54,7 @@ fun CodeBlock(
     onClick: (Int) -> Unit = {},
 ) {
     Surface(
-        tonalElevation = MaterialTheme.spacing.level1,
+        tonalElevation = 4.dp,
         color = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
         shape = MaterialTheme.shapes.extraSmall,
@@ -62,7 +63,7 @@ fun CodeBlock(
 
         ClickableText(
             text = code,
-            modifier = Modifier.padding(MaterialTheme.spacing.level2),
+            modifier = Modifier.padding(8.dp),
             style = MaterialTheme.typography.labelMedium.copy(fontFamily = FontFamily.Monospace),
             onClick = onClick
         )

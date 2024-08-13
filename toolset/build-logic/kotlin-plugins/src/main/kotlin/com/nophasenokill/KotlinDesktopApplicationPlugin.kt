@@ -1,6 +1,7 @@
 package com.nophasenokill
 
 import com.nophasenokill.extensions.findCatalog
+import com.nophasenokill.extensions.findCatalogLibrary
 import com.nophasenokill.extensions.kotlinJvm
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -26,6 +27,7 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
             pluginManager.apply(versionCatalog.findPlugin("jetbrainsCompose").get().get().pluginId)
             pluginManager.apply(versionCatalog.findPlugin("composeCompiler").get().get().pluginId)
 
+
             repositories {
                 mavenCentral()
                 maven {
@@ -48,6 +50,8 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
                 add("implementation", compose.material3)
                 add("api", compose.runtime)
                 add("api", compose.foundation)
+                add("api", versionCatalog.findCatalogLibrary("materialKolor"))
+
             }
 
             val mainClassName = projectDir.name.split("-").joinToString("") { it ->
