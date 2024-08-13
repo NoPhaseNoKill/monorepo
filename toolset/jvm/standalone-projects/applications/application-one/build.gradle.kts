@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.standaloneProjects.libraries.libraryOne)
+    implementation(projects.standaloneProjectsLibrariesLibraryOne)
 }
 
 val jacocoOutputTask = tasks.register("jacocoOutputTask") {

@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    ksp(projects.standaloneProjects.libraries.kspProcessor)
+    ksp(projects.standaloneProjectsLibrariesKspProcessor)
 }
