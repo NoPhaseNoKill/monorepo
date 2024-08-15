@@ -48,8 +48,6 @@ val dependsOnJacocoOutput = tasks.register("dependsOnJacocoOutput") {
     inputs.files(inputText, inputExec)
     val outputDir = layout.buildDirectory.dir("outputs/second-stage")
     val sessionsList = outputDir.map { it.file("sessions-list.txt")}
-    // val inputSession = layout.buildDirectory.dir("outputs/first-stage").map {file("sessions.html") }
-    val inputSession = layout.buildDirectory.dir("outputs/first-stage").map {file("sessions.html") }
     val firstStageBuildDir = layout.buildDirectory.dir("outputs/first-stage")
     val isFirstRunFilePath = "isFirstRun.txt"
 

@@ -1,14 +1,11 @@
 
-// settings.gradle.kts
-gradle.lifecycle.beforeProject {
-    println("[Thread-${Thread.currentThread()}] Lifecycle :$name")
-    extra["foo"] = "bar"    // Set project state
-}
 rootProject.name = "jvm"
 
 pluginManagement {
 
     val kotlinVersion = "2.0.0"
+    val androidAppVersion = "8.7.0-alpha05"
+    val composeVersion = "1.7.0-alpha02"
 
     buildscript {
         repositories {
@@ -19,6 +16,8 @@ pluginManagement {
         dependencies {
             classpath("org.jetbrains.kotlin:kotlin-serialization:${kotlinVersion}")
             classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:${kotlinVersion}")
+            classpath("com.android.application:com.android.application.gradle.plugin:${androidAppVersion}")
+            classpath("org.jetbrains.compose:compose-gradle-plugin:${composeVersion}")
         }
     }
 
@@ -88,9 +87,9 @@ pluginManagement {
                         \--- Included build ':build-logic-meta'
                  */
 
-    // includeBuild("../build-logic-meta")
     includeBuild("../build-logic")
-    // includeBuild("../build-logic-meta")
+    includeBuild("../build-logic-meta")
+
 }
 /*
     DO not use dependency management here. If you need to add more repositories,
@@ -126,12 +125,3 @@ fun includeProject(projectName: String, type: ProjectType) {
     include(":${projectName}")
     project(":${projectName}").projectDir = file(File("standalone-projects/${type.path}/${projectName}"))
 }
-
-/*
-    Any mods to builds here need to be updated in Component Plugin to avoid duplicating thread work.
-
-    These include:
-        includeBuild("../build-logic-meta")
-        includeBuild("../build-logic")
-        includeBuild("standalone-projects")
- */

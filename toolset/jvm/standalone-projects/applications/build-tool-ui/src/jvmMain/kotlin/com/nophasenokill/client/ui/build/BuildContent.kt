@@ -194,7 +194,7 @@ private fun GradleDistributionField(
         onExpandedChange = { sourceMenuExpanded = !sourceMenuExpanded }
     ) {
         BuildTextField(
-            modifier = Modifier.menuAnchor(),
+            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable),
             value = state.value.displayName,
             readOnly = true,
             onValueChange = {},
@@ -234,7 +234,7 @@ private fun GradleVersionField(
         onExpandedChange = { versionMenuExpanded = !versionMenuExpanded }
     ) {
         BuildTextField(
-            modifier = Modifier.menuAnchor(),
+            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable),
             value = state.value,
             onValueChange = { state.value = it },
             isError = isError,
