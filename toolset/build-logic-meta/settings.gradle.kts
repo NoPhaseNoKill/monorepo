@@ -11,7 +11,5 @@ dependencyResolutionManagement {
     }
 }
 
-include("kotlin-dsl-plugin")
-
 settings.enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 settings.enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

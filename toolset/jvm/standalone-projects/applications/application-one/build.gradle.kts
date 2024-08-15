@@ -4,8 +4,10 @@ plugins {
     id("com.nophasenokill.hashing-tasks-plugin")
 }
 
+evaluationDependsOnChildren()
+
 dependencies {
-    implementation(projects.standaloneProjectsLibrariesLibraryOne)
+    implementation(projects.libraryOne)
 }
 
 val jacocoOutputTask = tasks.register("jacocoOutputTask") {
@@ -16,6 +18,7 @@ val jacocoOutputTask = tasks.register("jacocoOutputTask") {
     val jacocoOutputDir = layout.buildDirectory.dir("jacoco")
     val jacocoSessionsDir = layout.buildDirectory.dir("reports/jacoco/test/html")
 
+    outputs.dir(outputDir)
 
     doLast {
         outputDir.get().asFile.mkdir()
@@ -37,25 +40,58 @@ val dependsOnJacocoOutput = tasks.register("dependsOnJacocoOutput") {
     dependsOn(jacocoOutputTask)
     dependsOn(tasks.test)
     dependsOn(tasks.jacocoTestReport)
-    mustRunAfter(jacocoOutputTask)
-    val inputText = layout.buildDirectory.dir("outputs/first-stage").get().file("jacoco-output-task.txt")
-    val inputExec = layout.buildDirectory.dir("outputs/first-stage").get().file("jacoco-output-task.exec")
+    mustRunAfter(jacocoOutputTask, tasks.jacocoTestReport, tasks.test)
+    val inputText = layout.buildDirectory.dir("outputs/first-stage").map {file("jacoco-output-task.txt")}
+    val inputExec = layout.buildDirectory.dir("outputs/first-stage").map { file("jacoco-output-task.exec") }
 
-    val inputSession = layout.buildDirectory.dir("outputs/first-stage").get().file("sessions.html")
-    inputs.files(inputText, inputExec, inputSession)
+
+    inputs.files(inputText, inputExec)
     val outputDir = layout.buildDirectory.dir("outputs/second-stage")
-    val sessionsList = outputDir.get().file("sessions-list.txt")
+    val sessionsList = outputDir.map { it.file("sessions-list.txt")}
+    // val inputSession = layout.buildDirectory.dir("outputs/first-stage").map {file("sessions.html") }
+    val inputSession = layout.buildDirectory.dir("outputs/first-stage").map {file("sessions.html") }
+    val firstStageBuildDir = layout.buildDirectory.dir("outputs/first-stage")
+    val isFirstRunFilePath = "isFirstRun.txt"
+
+    outputs.dir(outputDir)
 
     doLast {
+        val inputSessionActual = firstStageBuildDir.get().asFile.resolve("sessions.html").readText()
+
+        val sessions = mutableMapOf<String, String>()
+        val rows = inputSessionActual.split("<tr>").drop(1)
+
+        for (row in rows) {
+
+            val classStart = row.indexOf(">") + 1
+            val classEnd = row.indexOf("</")
+            if (classStart == 0 || classEnd == -1) continue
+            val classNamePart = row.substring(classStart, classEnd)
+            val className = classNamePart.split(">").last().split("<").first()
+
+
+            val idStart = row.indexOf("<code>") + 6
+            val idEnd = row.indexOf("</code>")
+            if (idStart < 6 || idEnd == -1) continue
+            val classId = row.substring(idStart, idEnd)
+
+            if (className.isNotEmpty() && classId.isNotEmpty()) {
+                sessions[className] = classId
+            }
+        }
+
+        println("RESULT IS:${sessions}")
+
+
+        // val sessions = extractClassData(inputSessionActual)
         outputDir.get().asFile.mkdir()
-        val text = inputText.asFile.readText()
-        val sessions = extractClassData(inputSession.asFile.readText())
+        val text = firstStageBuildDir.get().asFile.resolve("jacoco-output-task.txt").readText()
         val sessionsFilesCurrent =  outputDir.get().dir("sessions-files-current")
         val sessionsFilesPrevious =  outputDir.get().dir("sessions-files-previous")
-
+        //
         outputDir.get().file("depends-on-jacoco-output.txt").asFile.writeText("Gets values from jacoco dependant task. Text is: ${text}")
-        inputExec.asFile.copyRecursively(outputDir.get().file("depends-on-jacoco-output-exec.exec").asFile, overwrite = true)
-
+        firstStageBuildDir.get().asFile.resolve("jacoco-output-task.exec").copyRecursively(outputDir.get().file("depends-on-jacoco-output-exec.exec").asFile, overwrite = true)
+        //
         sessionsFilesCurrent.asFile.mkdir()
 
 
@@ -67,18 +103,36 @@ val dependsOnJacocoOutput = tasks.register("dependsOnJacocoOutput") {
             it.key
         }
 
-        sessionsList.asFile.createNewFile()
+        val isFirstRunFile = outputDir.get().file(isFirstRunFilePath)
+        isFirstRunFile.asFile.createNewFile()
+        println("READ TEXT OF NEW FILE: ${isFirstRunFile.asFile.readText()}")
+        val firstRunFile = outputDir.get().file(isFirstRunFilePath).asFile
+
+        if(isFirstRunFile.asFile.readText().isEmpty()) {
+            println("Is first run")
+            firstRunFile.createNewFile()
+            firstRunFile.writeText("true")
+        } else {
+            firstRunFile.writeText("false")
+        }
+
+        sessionsList.get().asFile.createNewFile()
 
         val sessionsString = sessionFileList.joinToString("\n") { sessionItem ->
             sessionItem
         }
 
-        sessionsList.asFile.writeText(sessionsString)
+        sessionsList.get().asFile.writeText(sessionsString)
 
-        // first run -> make them equal
-        if(!sessionsFilesPrevious.asFile.exists()) {
+
+        /*
+            by this stage the file has been created, and has contents of either true or false
+            first run == "true" -> create empty dir
+            not first run == "false" -> do nothing
+         */
+        if(isFirstRunFile.asFile.readText() == "true") {
+            println("is first run")
             sessionsFilesPrevious.asFile.mkdir()
-            sessionsFilesCurrent.asFile.copyRecursively(sessionsFilesPrevious.asFile)
         }
     }
 }
@@ -176,7 +230,7 @@ tasks.check {
 //
 // }
 
-private fun extractClassData(html: String): Map<String, String> {
+private fun extractClassData(html: String): MutableMap<String, String> {
     val result = mutableMapOf<String, String>()
     val rows = html.split("<tr>").drop(1)
 

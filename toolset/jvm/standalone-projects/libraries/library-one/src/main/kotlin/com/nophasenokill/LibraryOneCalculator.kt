@@ -2,6 +2,7 @@ package com.nophasenokill
 
 object LibraryOneCalculator {
     fun add(a: Int, b: Int): Int {
+        multiply(a, b)
         return a + b
     }
 

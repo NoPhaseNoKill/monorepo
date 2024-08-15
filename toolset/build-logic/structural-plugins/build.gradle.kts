@@ -1,6 +1,8 @@
 plugins {
-    id("com.nophasenokill.kotlin-dsl-plugin")
+    `kotlin-dsl`
 }
+
+evaluationDependsOnChildren()
 
 gradlePlugin {
     plugins {

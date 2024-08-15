@@ -1,9 +1,12 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id("com.nophasenokill.kotlin-dsl-plugin")
+    `kotlin-dsl`
+    // id("com.nophasenokill.kotlin-dsl-plugin")
     jacoco
 }
+
+evaluationDependsOnChildren()
 
 gradlePlugin {
     plugins {

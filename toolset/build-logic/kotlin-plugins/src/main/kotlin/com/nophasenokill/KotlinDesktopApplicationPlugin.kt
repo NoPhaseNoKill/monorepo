@@ -48,6 +48,11 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
                 // With compose.desktop.common you will also lose @Preview functionality
                 add("implementation", compose.desktop.currentOs)
                 add("implementation", compose.material3)
+                add("implementation", compose.materialIconsExtended)
+                add("implementation", compose.material)
+                add("implementation", compose.uiUtil)
+                add("implementation", compose.materialIconsExtended)
+
                 add("api", compose.runtime)
                 add("api", compose.foundation)
                 add("api", versionCatalog.findCatalogLibrary("materialKolor"))

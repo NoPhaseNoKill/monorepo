@@ -1,7 +1,8 @@
 rootProject.name = "build-logic"
 
+
+
 pluginManagement {
-    includeBuild("../build-logic-meta")
     repositories {
         gradlePluginPortal()
     }

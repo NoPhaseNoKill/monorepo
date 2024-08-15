@@ -27,6 +27,6 @@ abstract class TaskEventsService : BuildService<BuildServiceParameters.None>,
     }
 
     override fun onFinish(event: FinishEvent) {
-        println("Event ${event.displayName} took: ${event.result.endTime - event.result.startTime}")
+        println("[Thread-${Thread.currentThread()}] Event ${event.displayName} took: ${event.result.endTime - event.result.startTime}")
     }
 }

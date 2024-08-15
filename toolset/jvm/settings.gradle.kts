@@ -1,5 +1,9 @@
 
-
+// settings.gradle.kts
+gradle.lifecycle.beforeProject {
+    println("[Thread-${Thread.currentThread()}] Lifecycle :$name")
+    extra["foo"] = "bar"    // Set project state
+}
 rootProject.name = "jvm"
 
 pluginManagement {
@@ -84,25 +88,9 @@ pluginManagement {
                         \--- Included build ':build-logic-meta'
                  */
 
-    fun includeBuildsAndProjects(dir: File) {
-        dir.walk().forEach { file ->
-            if (file.isFile && file.name == "build.gradle.kts" && !file.path.contains("buildSrc")) {
-                // Include any projects
-                val relativePath = file.parentFile.relativeTo(rootDir).path.replace(File.separator, ":")
-                val projectName = relativePath.replace(":", "-") // Convert to a flat project name
-                include(":$projectName")
-                project(":$projectName").projectDir = file.parentFile
-            } else if (file.isFile && file.name == "settings.gradle.kts" && !file.path.contains("buildSrc")) {
-                // Include any builds
-                includeBuild(file.parentFile)
-            }
-        }
-    }
-
-    includeBuildsAndProjects(rootDir)
-
+    // includeBuild("../build-logic-meta")
     includeBuild("../build-logic")
-    includeBuild("../build-logic-meta")
+    // includeBuild("../build-logic-meta")
 }
 /*
     DO not use dependency management here. If you need to add more repositories,
@@ -115,3 +103,35 @@ plugins {
 
 settings.enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 settings.enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+
+includeProject("application-one", ProjectType.APP)
+includeProject("application-two", ProjectType.APP)
+includeProject("application-with-instrumentation", ProjectType.APP)
+includeProject("build-tool-ui", ProjectType.APP)
+includeProject("example-desktop-application", ProjectType.APP)
+includeProject("example-package-name-relocation-app", ProjectType.APP)
+includeProject("example-library-three", ProjectType.LIB)
+includeProject("ksp-processor", ProjectType.LIB)
+includeProject("library-one", ProjectType.LIB)
+includeProject("library-two", ProjectType.LIB)
+includeProject("some-new-lib", ProjectType.LIB)
+
+enum class ProjectType(val path: String) {
+    LIB("libraries"),
+    APP("applications")
+}
+
+fun includeProject(projectName: String, type: ProjectType) {
+    include(":${projectName}")
+    project(":${projectName}").projectDir = file(File("standalone-projects/${type.path}/${projectName}"))
+}
+
+/*
+    Any mods to builds here need to be updated in Component Plugin to avoid duplicating thread work.
+
+    These include:
+        includeBuild("../build-logic-meta")
+        includeBuild("../build-logic")
+        includeBuild("standalone-projects")
+ */

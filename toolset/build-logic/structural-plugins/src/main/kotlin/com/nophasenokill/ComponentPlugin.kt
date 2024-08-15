@@ -5,14 +5,24 @@ import org.gradle.api.Plugin
 import org.gradle.api.initialization.Settings
 import org.gradle.caching.http.HttpBuildCache
 import org.gradle.kotlin.dsl.develocity
+import org.gradle.kotlin.dsl.extra
 import java.io.File
 import java.net.URI
 
 class ComponentPlugin: Plugin<Settings> {
     override fun apply(settings: Settings) {
+        settings.gradle.lifecycle.beforeProject {
+            println("[Thread-${Thread.currentThread()}] Lifecycle :$name")
+            extra["foo"] = "bar"    // Set project state
+        }
 
         settings.run {
-
+        //
+        //     gradle.lifecycle.beforeProject {
+        //         println("Lifecycle :$name")
+        //         extra["foo"] = "bar"    // Set project state
+        //     }
+        //
             settings.pluginManagement.repositories.gradlePluginPortal()
             settings.dependencyResolutionManagement.repositories.mavenCentral()
 
@@ -114,22 +124,32 @@ class ComponentPlugin: Plugin<Settings> {
                     \--- Included build ':build-logic-meta'
              */
 
-            fun includeBuildsAndProjects(dir: File) {
-                dir.walk().forEach { file ->
-                    if (file.isFile && file.name == "build.gradle.kts" && !file.path.contains("buildSrc")) {
-                        // Include any projects
-                        val relativePath = file.parentFile.relativeTo(rootDir).path.replace(File.separator, ":")
-                        val projectName = relativePath.replace(":", "-") // Convert to a flat project name
-                        include(":$projectName")
-                        project(":$projectName").projectDir = file.parentFile
-                    } else if (file.isFile && file.name == "settings.gradle.kts" && !file.path.contains("buildSrc")) {
-                        // Include any builds
-                        includeBuild(file.parentFile)
-                    }
-                }
-            }
+            // fun includeNestedBuildsAndProjects(dir: File) {
+            //     val includedBuilds = setOf<File>()
+            //
+            //     dir.walk().forEach { file ->
+            //         if (file.isFile && file.name == "build.gradle.kts" && !file.path.contains("buildSrc")) {
+            //             // Include any projects
+            //
+            //             val relativePath = file.parentFile.relativeTo(rootDir).path.replace(File.separator, ":")
+            //             val projectClassifier = relativePath
+            //             include(":$projectClassifier")
+            //             project(":$projectClassifier").projectDir = File(file.parentFile.path)
+            //         } else if (file.isFile && file.name == "settings.gradle.kts" && !file.path.contains("buildSrc")) {
+            //             // Include any builds
+            //             includedBuilds.plus(file.parentFile)
+            //         }
+            //     }
+            //
+            //     includedBuilds.forEach {
+            //         if(it.name != "build-logic" && it.name != "build-logic-meta" || it.name != "standalone-projects") {
+            //             includeBuild(it)
+            //         }
+            //     }
+            // }
+            //
+            // includeNestedBuildsAndProjects(rootDir)
 
-            includeBuildsAndProjects(rootDir)
             settings.enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
             settings.enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
         }

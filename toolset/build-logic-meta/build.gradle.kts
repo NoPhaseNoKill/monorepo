@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.kotlinDsl)
 }
 
+evaluationDependsOnChildren()
+
 gradlePlugin {
     plugins {
         create("kotlinDslPlugin") {

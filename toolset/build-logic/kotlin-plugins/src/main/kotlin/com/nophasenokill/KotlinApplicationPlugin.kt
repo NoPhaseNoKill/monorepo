@@ -2,7 +2,6 @@ package com.nophasenokill
 
 import com.nophasenokill.extensions.configureTask
 import com.nophasenokill.extensions.registerAndConfigureTask
-import com.nophasenokill.tasks.InstrumentApplicationTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaApplication

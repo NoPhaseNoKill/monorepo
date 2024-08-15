@@ -9,18 +9,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.res.loadImageBitmap
+import androidx.compose.ui.res.useResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.WindowPosition
-import androidx.compose.ui.window.application
-import androidx.compose.ui.window.rememberWindowState
+import androidx.compose.ui.window.*
 import com.nophasenokill.components.GradleToolingApiSection
 import com.nophasenokill.components.layout.SectionColumn
 import com.nophasenokill.components.layout.SectionContainer
 import com.nophasenokill.components.layout.SectionRow
 import com.nophasenokill.gradle.GradleToolingApi
 import com.nophasenokill.theme.AppTheme
+import com.nophasenokill.windows.MainDesktopView
 
 
 @Composable
@@ -29,6 +30,7 @@ fun UiContent(content: @Composable () -> Unit) {
         content()
     }
 }
+
 
 fun main() = application {
 
@@ -102,7 +104,6 @@ fun main() = application {
                     }
                 }
             }
-
         }
     }
 }

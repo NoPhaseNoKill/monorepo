@@ -5,6 +5,8 @@ plugins {
     id("java-library")
 }
 
+evaluationDependsOnChildren()
+
 dependencies {
     implementation(gradleApi())
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
