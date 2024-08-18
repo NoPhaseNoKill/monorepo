@@ -1,109 +1,126 @@
 package com.nophasenokill
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.BiasAlignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.res.useResource
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.*
-import com.nophasenokill.components.GradleToolingApiSection
-import com.nophasenokill.components.layout.SectionColumn
-import com.nophasenokill.components.layout.SectionContainer
-import com.nophasenokill.components.layout.SectionRow
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import com.nophasenokill.components.DirChooserDialog
+import com.nophasenokill.domain.CoroutineScopeName
+import com.nophasenokill.domain.GradleConnectorName
 import com.nophasenokill.gradle.GradleToolingApi
-import com.nophasenokill.theme.AppTheme
-import com.nophasenokill.windows.MainDesktopView
-
-
-@Composable
-fun UiContent(content: @Composable () -> Unit) {
-    SectionContainer {
-        content()
-    }
-}
+import com.nophasenokill.windows.AppSettingsLoader
+import com.nophasenokill.windows.UIContent
+import java.io.InputStream
+import java.nio.file.Files
+import java.nio.file.Paths
 
 
 fun main() = application {
 
-    val windowState = rememberWindowState(size = DpSize(1200.dp, 900.dp), isMinimized = false, position = WindowPosition(alignment = BiasAlignment(0f, -0.6f)))
-    var darkMode by remember { mutableStateOf(false) }
+    var javaDir by remember { mutableStateOf("") }
 
-    fun onToggleThemeClick() {
-        darkMode = !darkMode
-    }
+    // val baseDir = Paths.get("").toAbsolutePath().toString()
+    // val defaultCurrentDir = "$baseDir/src/main/resources/example-in-app-project"
 
-    fun onTaskClicked(value: String) {
-        println("Task clicked was: ${value}")
-    }
 
-    Window(
-        state = windowState,
-        onCloseRequest = ::exitApplication,
-        title = "Gradle desktop app",
-    ) {
 
-        val connector = GradleToolingApi.getConnector("/home/tomga/projects/monorepo/toolset/jvm").connect()
+    val blockingNetworkRequests = rememberCoroutineScope()
+    val blockingFileIo = rememberCoroutineScope()
 
-        AppTheme(isDarkMode = darkMode) {
-            UiContent {
-                SectionRow(horizontalArrangement = Arrangement.SpaceBetween) {
-                    SectionColumn(Modifier.align(Alignment.CenterVertically)) {
-                        Button(onClick = ::onToggleThemeClick) {
-                            Text("Click here to toggle theme")
-                        }
-                    }
-                }
+    val scopes = mapOf(
+        CoroutineScopeName.LOADING_APP_SCOPE to blockingNetworkRequests,
+        CoroutineScopeName.BLOCKING_FILE_IO to blockingFileIo,
+    )
 
-                SectionRow {
 
-                    SectionColumn {
-                        Button(onClick = {
-                            onTaskClicked("testAll1")
-                        }) {
-                            Text("Run task: testAll1")
-                        }
-                    }
+    var initialAppHasLoaded by remember { mutableStateOf(false) }
+    var connector by remember { mutableStateOf(GradleToolingApi.getConnector(javaDir)) }
+    var projectConnector by remember { mutableStateOf(GradleToolingApi.connectToProject(connector)) }
+    var taskName by remember { mutableStateOf("tasks") }
 
-                    SectionColumn {
-                        GradleToolingApiSection(
-                            task = "test",
-                            gradleConnector = connector
-                        )
-                        Button(onClick = {
-                            onTaskClicked("testAll3")
-                        }) {
-                            Text("Run task: testAll3")
-                        }
-                    }
-                    SectionColumn(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
-                        Button(onClick = {
-                            onTaskClicked("testAll4")
-                        }) {
-                            Text("Run task: testAll4")
-                        }
-                    }
-                }
+    val connectors = mapOf(
+        GradleConnectorName.GENERAL to projectConnector
+    )
 
-                SectionRow {
 
-                    SectionColumn {
-                        Button(onClick = {
-                            onTaskClicked("testAll5")
-                        }) {
-                            Text("Run task: testAll5")
-                        }
-                    }
-                }
-            }
+    fun onJavaDirChange(value: String) {
+        if (javaDir != value) {
+            println("Changing java dir from: $javaDir, to: $value")
+            javaDir = value
+            connector = GradleToolingApi.getConnector(javaDir)
+            projectConnector = GradleToolingApi.connectToProject(connector)
         }
     }
+
+    DirChooserDialog("Pick a file!", false, { dir -> onJavaDirChange(dir?.absolutePath.toString())})
+
+    fun onTaskChange(value: String) {
+        if (taskName != value) {
+            taskName = value
+        }
+    }
+
+    fun onWholeAppClose() {
+        println("Whole app window closing")
+        println("Disconnecting from gradle tooling API connector")
+        connector.disconnect()
+        println("Disconnected from gradle tooling API connector")
+        exitApplication()
+        println("Whole app window closed")
+    }
+
+    val onAppLoad = {
+        println("App is about to be loaded. Setting initialAppHasLoaded to true")
+        initialAppHasLoaded = true
+        println("initialAppHasLoaded has been set to true")
+    }
+
+    fun onInitialLoad(title: String) {
+        println("Screen title of initial screen is: ${title}")
+    }
+
+    @Composable
+    fun onAppLoad(onAppClose: () -> Unit, onLoad: () -> Unit) {
+        onLoad()
+        println("Setting initialAppHasLoaded to true. This should not happen until splash screen is closed")
+
+        // Entry point once the settings etc have loaded is here
+        Window(onAppClose, title = "App") {
+            UIContent(scopes, connectors)
+        }
+
+        println("Have set initialAppHasLoaded to true.")
+
+    }
+
+    AppSettingsLoader(scopes, ::onWholeAppClose, ::onInitialLoad) {
+        onAppLoad(::onWholeAppClose, onAppLoad)
+    }
 }
+
+
+//
+// @Composable
+// fun WashAGen (
+//     onAppClose: () -> Unit,
+//     onJavaDirChange: (value: String) -> Unit,
+//     onTaskChange: (value: String) -> Unit,
+//     taskName: String,
+//     projectConnection: ProjectConnection
+// ) = application {
+//     var isSplashScreenShowing by remember { mutableStateOf(true) }
+//     val snackbarState = remember { SnackbarHostState() }
+//
+//     val connector = GradleToolingApi.getConnector()
+//     val projectConnector = connector.connect()
+//
+//     // fun onAppClose() {
+//     //     println("Disconnecting from gradle tooling API connector")
+//     //     connector.disconnect()
+//     //     ::exitApplication
+//     // }
+//
+//     SplashScreen(onAppClose, ({}), onTaskChange = {}, projectConnector = testAll )
+// }
+

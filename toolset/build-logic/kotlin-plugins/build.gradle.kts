@@ -3,8 +3,9 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 plugins {
     `kotlin-dsl`
     // id("com.nophasenokill.kotlin-dsl-plugin")
-    jacoco
+    // jacoco
 }
+
 
 evaluationDependsOnChildren()
 
@@ -48,11 +49,6 @@ gradlePlugin {
         create("packageNameRelocatorPlugin") {
             id = "com.nophasenokill.package-name-relocator-plugin"
             implementationClass = "com.nophasenokill.PackageNameRelocatorPlugin"
-        }
-
-        create("kotlinMultiPlatformAppPlugin") {
-            id = "com.nophasenokill.kotlin-multi-platform-app-plugin"
-            implementationClass = "com.nophasenokill.KotlinMultiPlatformAppPlugin"
         }
 
         create("taskEventsPlugin") {

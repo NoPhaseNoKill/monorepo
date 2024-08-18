@@ -46,23 +46,23 @@ class TestProcessor(
         }
 
         override fun visitModifierListOwner(modifierListOwner: KSModifierListOwner, data: String) {
-            TODO("Not yet implemented")
+
         }
 
         override fun visitDefNonNullReference(reference: KSDefNonNullReference, data: String) {
-            TODO("Not yet implemented")
+
         }
 
         override fun visitNode(node: KSNode, data: String) {
-            TODO("Not yet implemented")
+
         }
 
         override fun visitPropertyAccessor(accessor: KSPropertyAccessor, data: String) {
-            TODO("Not yet implemented")
+
         }
 
         override fun visitDynamicReference(reference: KSDynamicReference, data: String) {
-            TODO("Not yet implemented")
+
         }
         val visited = HashSet<Any>()
 

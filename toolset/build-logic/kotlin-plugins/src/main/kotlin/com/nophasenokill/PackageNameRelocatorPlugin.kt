@@ -44,7 +44,7 @@ class PackageNameRelocatorPlugin: Plugin<Project> {
         project.run {
             group = "com.nophasenokill"
             version = "0.1.local-dev"
-            
+
             plugins.apply("org.jetbrains.kotlin.jvm")
 
             val kotlinJvmProjectExtension = extensions.findByType(KotlinJvmProjectExtension::class.java)

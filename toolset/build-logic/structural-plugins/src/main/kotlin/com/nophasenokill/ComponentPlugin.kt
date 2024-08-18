@@ -1,6 +1,7 @@
 package com.nophasenokill
 
 import com.gradle.develocity.agent.gradle.DevelocityPlugin
+import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.initialization.Settings
 import org.gradle.caching.http.HttpBuildCache
@@ -14,8 +15,33 @@ class ComponentPlugin: Plugin<Settings> {
 
 
         settings.run {
-            settings.pluginManagement.repositories.gradlePluginPortal()
+
+            settings.pluginManagement.repositories {
+                google()
+                mavenCentral()
+                gradlePluginPortal()
+            }
+
             settings.dependencyResolutionManagement.repositories.mavenCentral()
+
+            pluginManager.apply("org.gradle.toolchains.foojay-resolver-convention")
+
+
+            // val foundJava = System.getProperty("java.home")
+            // val otherJavaLocation = System.getenv("JAVA_HOME")
+            // val hasJava = foundJava != null || otherJavaLocation != null
+            // val validJava = hasJava && JavaVersion.VERSION_1_7 == JavaVersion.VERSION_1_7
+
+            // if(!validJava) {
+            //     println("Found version: ${foundJava}")
+            //     val message = """
+            //                     This build requires Java 17, currently using ${JavaVersion.VERSION_1_7}. Please also ensure JAVA_HOME is configured correctly (ie echo ${'$'}{JAVA_HOME} should return a result"
+            //                 """.trimIndent()
+            //
+            //     throw Exception(
+            //         message
+            //     )
+            // }
 
             settings.plugins.apply(DevelocityPlugin::class.java)
 

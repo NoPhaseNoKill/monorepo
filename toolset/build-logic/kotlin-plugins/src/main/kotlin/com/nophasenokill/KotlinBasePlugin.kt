@@ -10,8 +10,10 @@ import org.gradle.api.attributes.DocsType
 import org.gradle.api.tasks.testing.AbstractTestTask
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.named
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
@@ -30,10 +32,15 @@ class KotlinBasePlugin: Plugin<Project> {
 
             val kotlinJvmProjectExtension = extensions.findByType(KotlinJvmProjectExtension::class.java)
 
+
             kotlinJvmProjectExtension?.run {
 
                 jvmToolchain {
-                    compilerOptions.languageVersion.set(KotlinVersion.KOTLIN_2_0)
+                    languageVersion.set(JavaLanguageVersion.of(17))
+
+                    compilerOptions {
+                        languageVersion.set(KotlinVersion.KOTLIN_1_9)
+                    }
                 }
 
                 kotlinDaemonJvmArgs = listOf(

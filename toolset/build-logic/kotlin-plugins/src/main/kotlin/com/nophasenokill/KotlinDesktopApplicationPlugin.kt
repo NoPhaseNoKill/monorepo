@@ -8,6 +8,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.repositories
 import org.jetbrains.compose.ComposePlugin
+import org.jetbrains.compose.desktop.DesktopExtension
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import java.net.URI
@@ -81,8 +82,8 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
         }
     }
 
-    val org.jetbrains.compose.ComposeExtension.desktop: org.jetbrains.compose.desktop.DesktopExtension get() =
-        (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("desktop") as org.jetbrains.compose.desktop.DesktopExtension
+    val org.jetbrains.compose.ComposeExtension.desktop: DesktopExtension get() =
+        (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("desktop") as DesktopExtension
 
     val Project.compose: org.jetbrains.compose.ComposeExtension get() =
         (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("compose") as org.jetbrains.compose.ComposeExtension

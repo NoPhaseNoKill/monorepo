@@ -11,8 +11,8 @@ class LibraryTwoCalculatorTest {
 
     @Test
     fun `should multiply one number with another`() {
-        val result = LibraryTwoCalculator.multiply(2, 2)
-        val expected = 4
+        val result = LibraryTwoCalculator.multiply(3, 3)
+        val expected = 9
 
         Assertions.assertEquals(expected, result)
     }
