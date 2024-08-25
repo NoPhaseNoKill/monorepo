@@ -1,19 +1,15 @@
 package com.nophasenokill
 
 import androidx.compose.runtime.*
-import androidx.compose.ui.res.loadImageBitmap
-import androidx.compose.ui.res.useResource
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.nophasenokill.components.DirChooserDialog
+import com.nophasenokill.components.designsystem.compose.NewTheme
 import com.nophasenokill.domain.CoroutineScopeName
 import com.nophasenokill.domain.GradleConnectorName
 import com.nophasenokill.gradle.GradleToolingApi
 import com.nophasenokill.windows.AppSettingsLoader
 import com.nophasenokill.windows.UIContent
-import java.io.InputStream
-import java.nio.file.Files
-import java.nio.file.Paths
 
 
 fun main() = application {
@@ -53,7 +49,7 @@ fun main() = application {
         }
     }
 
-    DirChooserDialog("Pick a file!", false, { dir -> onJavaDirChange(dir?.absolutePath.toString())})
+
 
     fun onTaskChange(value: String) {
         if (taskName != value) {
@@ -87,8 +83,14 @@ fun main() = application {
 
         // Entry point once the settings etc have loaded is here
         Window(onAppClose, title = "App") {
-            UIContent(scopes, connectors)
+            // UIContent(scopes, connectors) {
+            //     DirChooserDialog("Pick a file!", false, { dir -> onJavaDirChange(dir?.absolutePath.toString()) })
+            // }
+
+            NewTheme()
         }
+
+
 
         println("Have set initialAppHasLoaded to true.")
 
