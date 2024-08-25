@@ -11,20 +11,23 @@ import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AirplaneTicket
 import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.GridOn
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.window.application
+import com.nophasenokill.components.DirChooserDialog
 import com.nophasenokill.components.designsystem.compose.ui.DlsTheme
 import com.nophasenokill.components.designsystem.compose.ui.dlsDarkColorPalette
 import com.nophasenokill.components.designsystem.compose.ui.dlsLightColorPalette
+import com.nophasenokill.components.layout.TextButton
 
 @Composable
-fun NewTheme() {
+fun NewTheme(onJavaDirChange: (path: String) -> Unit) {
     val isDarkState = rememberSaveable { mutableStateOf(false) }
 
     DlsTheme(
@@ -81,16 +84,27 @@ fun NewTheme() {
                 when (section) {
                     HomeSections.Style -> StyleScreen()
                     HomeSections.Component -> ComponentScreen()
+                    HomeSections.GradleTask -> {
+                        DirChooserDialog("Pick a file!", false) { dir -> onJavaDirChange(dir?.absolutePath.toString()) }
+                    }
+
+                    HomeSections.INITIAL_LANDING_SCREEN -> {
+                        TextButton("Press this button to launch a gradle task") {
+                            println("Launching task...")
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-private enum class HomeSections(
+enum class HomeSections(
     val label: String,
     val icon: ImageVector
 ) {
+    INITIAL_LANDING_SCREEN("InitialLandingScreen", Icons.Outlined.AirplaneTicket),
     Style("Style", Icons.Outlined.Favorite),
     Component("Component", Icons.Outlined.List),
+    GradleTask("GradleTask", Icons.Outlined.GridOn),
 }

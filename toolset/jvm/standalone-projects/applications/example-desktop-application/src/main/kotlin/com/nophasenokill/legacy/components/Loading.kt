@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import com.nophasenokill.domain.Constants
 
 @Composable
-fun Loading() {
+fun Loading(modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier.fillMaxSize().padding(top = Constants.DEFAULT_PADDING),
+        modifier = modifier.fillMaxSize().padding(top = Constants.DEFAULT_PADDING),
         contentAlignment = Alignment.Center
     ) {
         Column {

@@ -6,7 +6,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,12 +14,7 @@ import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.nophasenokill.components.AppLayout
-import com.nophasenokill.components.DirChooserDialog
-import com.nophasenokill.domain.Constants
-import com.nophasenokill.domain.Content
 import com.nophasenokill.theme.ColorsSecondaryBackground
-import com.nophasenokill.theme.Foreground
 import com.nophasenokill.theme.SoftPink
 import org.gradle.tooling.ProjectConnection
 import java.awt.Cursor
@@ -88,7 +82,7 @@ fun SplitterScreen(
             second(70.dp) {
                 VerticalSplitPane(splitPaneState = hSplitterState) {
 
-                    first(450.dp) {
+                    first(475.dp) {
                         // Box(Modifier.background(Color.Blue).fillMaxSize())
                         // Box(Modifier.background(Color.Blue).fillMaxSize()) {
                         //     Column {

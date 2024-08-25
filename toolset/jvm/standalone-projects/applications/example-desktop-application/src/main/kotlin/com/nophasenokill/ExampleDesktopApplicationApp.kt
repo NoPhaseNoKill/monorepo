@@ -1,8 +1,12 @@
 package com.nophasenokill
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import com.nophasenokill.components.DirChooserDialog
 import com.nophasenokill.components.designsystem.compose.NewTheme
 import com.nophasenokill.domain.CoroutineScopeName
@@ -10,15 +14,18 @@ import com.nophasenokill.domain.GradleConnectorName
 import com.nophasenokill.gradle.GradleToolingApi
 import com.nophasenokill.windows.AppSettingsLoader
 import com.nophasenokill.windows.UIContent
+import java.io.File
 
 
 fun main() = application {
 
+    val state = rememberWindowState(WindowPlacement.Floating)
     var javaDir by remember { mutableStateOf("") }
+
+    val APP_NAME = "NoPhaseNoKill Gradle Build Tool"
 
     // val baseDir = Paths.get("").toAbsolutePath().toString()
     // val defaultCurrentDir = "$baseDir/src/main/resources/example-in-app-project"
-
 
 
     val blockingNetworkRequests = rememberCoroutineScope()
@@ -40,15 +47,15 @@ fun main() = application {
     )
 
 
-    fun onJavaDirChange(value: String) {
-        if (javaDir != value) {
+    fun onJavaDirChange(value: File) {
+        println("Java path is: ${javaDir}, absolute is: ${value.absolutePath}")
+        if (javaDir != value.absolutePath) {
             println("Changing java dir from: $javaDir, to: $value")
-            javaDir = value
+            javaDir = value.absolutePath
             connector = GradleToolingApi.getConnector(javaDir)
             projectConnector = GradleToolingApi.connectToProject(connector)
         }
     }
-
 
 
     fun onTaskChange(value: String) {
@@ -81,17 +88,25 @@ fun main() = application {
         onLoad()
         println("Setting initialAppHasLoaded to true. This should not happen until splash screen is closed")
 
-        // Entry point once the settings etc have loaded is here
-        Window(onAppClose, title = "App") {
-            // UIContent(scopes, connectors) {
-            //     DirChooserDialog("Pick a file!", false, { dir -> onJavaDirChange(dir?.absolutePath.toString()) })
-            // }
+        val windowState = rememberWindowState(size = DpSize(1800.dp, 1200.dp))
 
-            NewTheme()
-        }
+            LaunchedEffect(Unit) {
+                println("$APP_NAME started!")
+            }
 
+            // Entry point once the settings etc have loaded is here
+            Window(onAppClose, title = "App") {
 
+                // NewTheme({})
 
+                UIContent(scopes, connectors) {
+                    DirChooserDialog("Pick a file!", false) { dir ->
+                        if (dir != null) {
+                            onJavaDirChange(dir)
+                        }
+                    }
+                }
+            }
         println("Have set initialAppHasLoaded to true.")
 
     }
@@ -100,29 +115,4 @@ fun main() = application {
         onAppLoad(::onWholeAppClose, onAppLoad)
     }
 }
-
-
-//
-// @Composable
-// fun WashAGen (
-//     onAppClose: () -> Unit,
-//     onJavaDirChange: (value: String) -> Unit,
-//     onTaskChange: (value: String) -> Unit,
-//     taskName: String,
-//     projectConnection: ProjectConnection
-// ) = application {
-//     var isSplashScreenShowing by remember { mutableStateOf(true) }
-//     val snackbarState = remember { SnackbarHostState() }
-//
-//     val connector = GradleToolingApi.getConnector()
-//     val projectConnector = connector.connect()
-//
-//     // fun onAppClose() {
-//     //     println("Disconnecting from gradle tooling API connector")
-//     //     connector.disconnect()
-//     //     ::exitApplication
-//     // }
-//
-//     SplashScreen(onAppClose, ({}), onTaskChange = {}, projectConnector = testAll )
-// }
 
