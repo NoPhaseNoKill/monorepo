@@ -1,6 +1,20 @@
 
 rootProject.name = "jvm"
 
+gradle.lifecycle.beforeProject {
+    apply(plugin = "base")
+    println("BUILD TREE PATH: ${project.buildTreePath}")
+
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        google()
+    }
+
+    val rootDir = project.isolated.rootProject.projectDirectory
+    println("The root project directory is $rootDir")
+}
+
 pluginManagement {
 
     val kotlinVersion = "2.0.0"
@@ -111,7 +125,6 @@ includeProject("application-with-instrumentation", ProjectType.APP)
 includeProject("example-desktop-application", ProjectType.APP)
 includeProject("example-package-name-relocation-app", ProjectType.APP)
 includeProject("example-library-three", ProjectType.LIB)
-includeProject("ksp-processor", ProjectType.LIB)
 includeProject("library-one", ProjectType.LIB)
 includeProject("library-two", ProjectType.LIB)
 includeProject("some-new-lib", ProjectType.LIB)
