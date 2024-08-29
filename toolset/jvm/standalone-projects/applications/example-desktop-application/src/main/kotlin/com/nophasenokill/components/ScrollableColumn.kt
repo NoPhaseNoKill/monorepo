@@ -3,11 +3,12 @@ package com.nophasenokill.components
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.nophasenokill.theme.Foreground
+
 
 @Composable
 fun ScrollableColumn(
@@ -17,10 +18,14 @@ fun ScrollableColumn(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Foreground)  // Darker background for contrast
             .border(2.dp, Color(0xFF6C63FF))  // Border to make it stand out
     ) {
-        val verticalScrollState = rememberScrollState(0)
+        val verticalScrollState = rememberScrollState()
+
+        // Scroll to the end when content changes
+        LaunchedEffect(key1 = verticalScrollState.maxValue) {
+            verticalScrollState.animateScrollTo(verticalScrollState.maxValue)
+        }
 
         Box(
             modifier = Modifier

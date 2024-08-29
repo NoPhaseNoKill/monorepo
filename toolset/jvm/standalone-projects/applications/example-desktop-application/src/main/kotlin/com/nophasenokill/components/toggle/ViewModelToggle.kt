@@ -1,7 +1,10 @@
 package com.nophasenokill.components.toggle
 
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 sealed class View
 data object LoadingView: View()
@@ -11,10 +14,10 @@ data object LandingPageView: View()
 data object ResultPageView: View()
 
 data class ScreenState(private var _currentView: View) {
-    
+
     val currentView: View
         get() = _currentView
-    
+
     fun setView(updated: View) {
         _currentView = updated
     }
@@ -23,7 +26,7 @@ data class ScreenState(private var _currentView: View) {
 @Composable
 fun ViewModelToggle(state: ScreenState) {
     val currentView by remember { mutableStateOf(state.currentView) }
-    
+
     when (currentView) {
         is LoadingView -> LoadingScreen()
         is TaskSelectionView -> TaskSelectionScreen()

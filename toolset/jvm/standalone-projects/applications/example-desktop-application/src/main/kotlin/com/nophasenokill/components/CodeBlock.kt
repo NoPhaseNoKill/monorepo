@@ -1,7 +1,9 @@
 package com.nophasenokill.components
 
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -17,35 +19,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// @Composable
-// fun CodeBlock(
-//     modifier: Modifier = Modifier,
-//     code: AnnotatedString,
-//     onClick: (Any) -> Unit = {},
-// ) {
-//
-//     println("Rendering CodeBlock")
-//
-//     Surface(
-//         tonalElevation = 8.dp,
-//         shadowElevation = 8.dp,
-//         color = MaterialTheme.colorScheme.onPrimaryContainer,
-//         contentColor = MaterialTheme.colorScheme.onSurface,
-//         shape = MaterialTheme.shapes.extraSmall,
-//         modifier = modifier,
-//
-//     ) {
-//
-//         ClickableText(
-//             text = code,
-//             modifier = Modifier.padding(12.dp),
-//             style = MaterialTheme.typography.labelMedium.copy(fontFamily = FontFamily.Monospace),
-//             onClick = onClick
-//         )
-//
-//     }
-// }
-
 @Composable
 fun CodeBlock(
     modifier: Modifier = Modifier,
@@ -57,9 +30,6 @@ fun CodeBlock(
     Surface(
         tonalElevation = 8.dp,
         shadowElevation = 8.dp,
-        color =  MaterialTheme.colorScheme.onPrimaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSurface,
-        shape = MaterialTheme.shapes.extraSmall,
         modifier = modifier,
     ) {
         Column(
@@ -75,7 +45,6 @@ fun CodeBlock(
                 }
             )
 
-            // Spacer(modifier = Modifier.height(8.dp)) // Space between text and button
         }
     }
 }

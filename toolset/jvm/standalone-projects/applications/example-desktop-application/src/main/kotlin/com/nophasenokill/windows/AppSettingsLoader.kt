@@ -4,7 +4,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import com.nophasenokill.domain.Content
 import com.nophasenokill.domain.CoroutineScopeName
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
 
 @Composable
 fun AppSettingsLoader(
