@@ -6,6 +6,10 @@ plugins {
     // jacoco
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 
 evaluationDependsOnChildren()
 

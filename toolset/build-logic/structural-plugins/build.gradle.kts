@@ -2,7 +2,9 @@ plugins {
     `kotlin-dsl`
 }
 
-evaluationDependsOnChildren()
+kotlin {
+    jvmToolchain(17)
+}
 
 gradlePlugin {
     plugins {

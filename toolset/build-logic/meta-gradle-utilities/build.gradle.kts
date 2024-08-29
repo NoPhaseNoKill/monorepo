@@ -5,7 +5,10 @@ plugins {
     id("java-library")
 }
 
-evaluationDependsOnChildren()
+kotlin {
+    jvmToolchain(17)
+}
+
 
 dependencies {
     implementation(gradleApi())

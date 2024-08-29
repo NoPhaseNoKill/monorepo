@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.kotlinDsl)
 }
 
-evaluationDependsOnChildren()
+kotlin {
+    jvmToolchain(17)
+}
 
 gradlePlugin {
     plugins {
