@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import kotlinx.coroutines.launch
+import java.io.File
 
 @Composable
 fun AddBuildButton(snackbarState: SnackbarHostState) {
@@ -21,12 +22,12 @@ fun AddBuildButton(snackbarState: SnackbarHostState) {
     if (isDirChooserOpen) {
         DirChooserDialog(
             helpText = ADD_BUILD_HELP_TEXT,
-            onDirChosen = { rootDir ->
+            onPathChosen = { rootDir ->
                 isDirChooserOpen = false
                 if (rootDir == null) {
                     scope.launch { snackbarState.showSnackbar("No build selected") }
                 } else {
-                    val valid = rootDir.listFiles { file ->
+                    val valid = File(rootDir).listFiles { file ->
                         file.name.contains("settings.gradle")
                     }?.isNotEmpty() ?: false
                     if (!valid) {

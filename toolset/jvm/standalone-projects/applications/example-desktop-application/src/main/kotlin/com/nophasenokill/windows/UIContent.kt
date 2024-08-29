@@ -31,10 +31,11 @@ enum class HomeSections(val icon: ImageVector) {
 fun UIContent(
     appScopes: Map<CoroutineScopeName, CoroutineScope>,
     connectors: Map<GradleConnectorName, ProjectConnection>,
+    onJavaDirChange: (value: String) -> Unit
 ) {
 
 
-    AppTheme { _, section ->
+    AppTheme(onJavaDirChange = onJavaDirChange) { _, section ->
         when (section) {
             HomeSections.Style -> StyleScreen()
             HomeSections.Component -> ComponentScreen()

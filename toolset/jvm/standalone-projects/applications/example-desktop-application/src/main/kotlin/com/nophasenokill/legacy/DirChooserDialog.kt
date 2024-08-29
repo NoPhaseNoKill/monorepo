@@ -9,7 +9,7 @@ import javax.swing.JFileChooser
 fun DirChooserDialog(
     helpText: String,
     showHiddenFiles: Boolean = false,
-    onDirChosen: (dir: File?) -> Unit,
+    onPathChosen: (value: String?) -> Unit,
 ) {
     LaunchedEffect(Unit) {
         val chooser = JFileChooser()
@@ -19,9 +19,9 @@ fun DirChooserDialog(
         chooser.isMultiSelectionEnabled = false
         chooser.isFileHidingEnabled = !showHiddenFiles
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            onDirChosen(chooser.selectedFile)
+            onPathChosen(chooser.selectedFile.absolutePath)
         } else {
-            onDirChosen(null)
+            onPathChosen(null)
         }
     }
 }

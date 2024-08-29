@@ -8,6 +8,7 @@ import com.nophasenokill.domain.GradleConnectorName
 import com.nophasenokill.gradle.GradleToolingApi
 import com.nophasenokill.windows.AppSettingsLoader
 import com.nophasenokill.windows.UIContent
+import org.gradle.tooling.ProjectConnection
 
 
 fun main() = application {
@@ -32,10 +33,11 @@ fun main() = application {
     var connector by remember { mutableStateOf(GradleToolingApi.getConnector(javaDir)) }
     var projectConnector by remember { mutableStateOf(GradleToolingApi.connectToProject(connector)) }
     var taskName by remember { mutableStateOf("tasks") }
-
-    val connectors = mapOf(
-        GradleConnectorName.GENERAL to projectConnector
-    )
+    var connectors: Map<GradleConnectorName, ProjectConnection> by remember {
+        mutableStateOf(
+            mapOf(GradleConnectorName.GENERAL to projectConnector)
+        )
+    }
 
 
     fun onJavaDirChange(value: String) {
@@ -43,6 +45,12 @@ fun main() = application {
         if (javaDir != value) {
             println("Changing java dir from: $javaDir, to: $value")
             javaDir = value
+            connector.disconnect()
+            connector = GradleToolingApi.getConnector(javaDir)
+            projectConnector = GradleToolingApi.connectToProject(connector)
+            connectors = connectors.toMutableMap().apply {
+                this[GradleConnectorName.GENERAL] = projectConnector
+            }
         }
     }
 
@@ -80,7 +88,7 @@ fun main() = application {
 
         // Entry point once the settings etc have loaded is here
         Window(onAppClose, title = "App") {
-            UIContent(scopes, connectors)
+            UIContent(scopes, connectors, { value -> onJavaDirChange(value) })
         }
 
 
