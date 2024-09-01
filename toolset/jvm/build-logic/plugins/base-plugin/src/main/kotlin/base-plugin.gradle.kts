@@ -71,14 +71,14 @@ tasks.withType<JavaCompile>().configureEach {
         For more details: https://docs.gradle.org/current/userguide/performance.html#optimize_the_compiler
      */
 
-    options.isFork = false
+    options.isFork = true
 
     /*
         Ensures that incremental compilation is absolutely OFF and is not being overriden somehow.
 
         This is due to noticed issues with caching when it was on.
      */
-    options.isIncremental = false
+    options.isIncremental = true
 
     /*
         Is kept consistent with gradle.properties to ensure that single use daemon's can be made if we need them
