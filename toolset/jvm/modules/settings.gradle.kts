@@ -190,9 +190,14 @@ class CustomEventLogger : BuildAdapter(), ProjectEvaluationListener, TaskExecuti
         val linePrefix = "${TERMINAL_INDENT}|"
         println(linePrefix)
 
-        taskDurationTimes.forEach { (task, duration) ->
-            println("${linePrefix} ${task} took ${duration} nanoseconds")
-        }
+        taskDurationTimes
+            .map { it }
+            .sortedBy { it.value }
+            .forEach { (task, duration) ->
+                val millis = duration / 1_000_000.0
+                val formattedMillis = String.format("%.1f", millis)
+                println("${linePrefix} ${task} took ${formattedMillis} ms (${duration} nanoseconds)")
+            }
 
         val milliseconds: Double = (buildEndTime - buildStartTime) / 1_000_000.0 // Convert to double for floating-point division
         val formattedMilliseconds = String.format("%.1f", milliseconds) // Formats to 1 decimal place
