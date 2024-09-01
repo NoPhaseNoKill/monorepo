@@ -1,14 +1,3 @@
-plugins {
-    /*
-        Plugin that outputs performance metrics of the gradle command that was run to the $rootDir/build
-        directory. This can be useful in diagnosing bottlenecks, long-running tasks, or simply
-        to get an idea of the order in which tasks are run.
-
-        The intended long-term plan of this is to get a local equivalent of the build scan, which can then be used
-        to store information in a database for better observations of build improvements or degradation.
-     */
-    id("performance-metrics-plugin")
-}
 
 group = "com.nophasenokill.jvm"
 
@@ -34,7 +23,7 @@ tasks.named<TaskReportTask>("tasks") {
     displayGroup = mainBuildGroup
 }
 
-val runAll = tasks.register("runAll") {
+val runAll = tasks.register("build") {
     group = mainBuildGroup
     description = "Runs all of the main build sub-tasks"
 

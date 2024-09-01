@@ -19,7 +19,6 @@ include("tested-plugins")
 include("dependency-analysis-project")
 include("dependency-analysis-platform")
 include("source-file-hashing-plugin")
-include("performance-metrics-plugin")
 
 include("base-plugin")
 include("my-kotlin-plugin")
