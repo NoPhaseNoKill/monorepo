@@ -5,7 +5,7 @@ plugins {
     id("com.nophasenokill.hashing-tasks-plugin")
 }
 
-evaluationDependsOnChildren()
+
 
 dependencies {
     implementation(projects.libraryOne)

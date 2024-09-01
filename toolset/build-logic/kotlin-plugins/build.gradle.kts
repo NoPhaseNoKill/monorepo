@@ -1,18 +1,10 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    
-    `kotlin-dsl`
-    // id("com.nophasenokill.kotlin-dsl-plugin")
-    // jacoco
-}
-
-kotlin {
-    jvmToolchain(17)
+    alias(libs.plugins.kotlinDsl)
 }
 
 
-evaluationDependsOnChildren()
 
 gradlePlugin {
     plugins {

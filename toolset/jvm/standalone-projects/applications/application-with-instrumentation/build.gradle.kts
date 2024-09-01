@@ -7,7 +7,7 @@ plugins {
     id("com.nophasenokill.kotlin-application-plugin")
 }
 
-evaluationDependsOnChildren()
+
 
 // tasks.register<Copy>("instrumentApp") {
 //     val buildDir = project.getBuildDirectory().get()

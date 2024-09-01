@@ -1,10 +1,5 @@
 plugins {
-
-    `kotlin-dsl`
-}
-
-kotlin {
-    jvmToolchain(17)
+    alias(libs.plugins.kotlinDsl)
 }
 
 gradlePlugin {
