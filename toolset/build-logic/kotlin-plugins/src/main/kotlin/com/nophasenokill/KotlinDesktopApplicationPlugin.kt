@@ -19,6 +19,15 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
 
         project.run {
 
+            repositories {
+                mavenCentral()
+                maven {
+                    url = URI("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+                }
+                google()
+                gradlePluginPortal()
+            }
+
             if(!project.pluginManager.hasPlugin("com.nophasenokill.kotlin-base-plugin")) {
                 project.pluginManager.apply("com.nophasenokill.kotlin-base-plugin")
             }
@@ -29,13 +38,7 @@ class KotlinDesktopApplicationPlugin: Plugin<Project> {
             pluginManager.apply(versionCatalog.findPlugin("composeCompiler").get().get().pluginId)
 
 
-            repositories {
-                mavenCentral()
-                maven {
-                    url = URI("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-                }
-                google()
-            }
+
 
 
             kotlinJvm {

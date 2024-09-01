@@ -3,6 +3,7 @@ import com.nophasenokill.extensions.sourceSets
 import java.util.*
 
 plugins {
+    
     id("com.nophasenokill.kotlin-application-plugin")
 }
 

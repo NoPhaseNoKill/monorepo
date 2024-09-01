@@ -1,4 +1,5 @@
 plugins {
+
     `kotlin-dsl`
 }
 
@@ -55,4 +56,5 @@ afterEvaluate {
 
 dependencies {
     implementation("com.gradle:develocity-gradle-plugin:${libs.versions.gradleEnterprise.get()}")
+    implementation("org.gradle.toolchains:foojay-resolver:${libs.versions.fooJayResolver.get()}")
 }

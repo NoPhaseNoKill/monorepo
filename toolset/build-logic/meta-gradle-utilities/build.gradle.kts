@@ -1,6 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
+    
     alias(libs.plugins.kotlinJvm)
     id("java-library")
 }

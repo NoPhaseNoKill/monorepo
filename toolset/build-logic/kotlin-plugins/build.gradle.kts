@@ -1,6 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
+    
     `kotlin-dsl`
     // id("com.nophasenokill.kotlin-dsl-plugin")
     // jacoco
@@ -77,6 +78,8 @@ dependencies {
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
     implementation(projects.metaGradleUtilities)
     implementation("org.jetbrains.compose:compose-gradle-plugin:${libs.versions.composePlugin.get()}")
+
+    implementation("org.jetbrains.kotlin:compose-compiler-gradle-plugin")
 
     implementation("org.ow2.asm:asm:9.2")
     implementation("org.ow2.asm:asm-commons:9.2")

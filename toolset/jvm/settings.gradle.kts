@@ -17,48 +17,29 @@ gradle.lifecycle.beforeProject {
 
 pluginManagement {
 
+    /*
+        This ensures absolute consistency across the composite build.
+        Without this, we run into race conditions where included builds
+        compete against each other and may load different versions.
+        This should be the only version declared this way,
+        the rest should be in the .toml file
+     */
+
+
     val kotlinVersion = "2.0.0"
-    val composeVersion = "1.7.0-alpha02"
-    val fooJayResolverVersion = "0.8.0"
 
     buildscript {
-        repositories {
-            maven {
-                url = uri("https://plugins.gradle.org/m2/")
-            }
-        }
+
+
         dependencies {
-            classpath("org.jetbrains.kotlin:kotlin-serialization:${kotlinVersion}")
-            classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:${kotlinVersion}")
-            classpath("org.jetbrains.compose:compose-gradle-plugin:${composeVersion}")
-            classpath("org.gradle.toolchains:foojay-resolver:${fooJayResolverVersion}")
+            classpath(platform("org.jetbrains.kotlin:kotlin-bom:${kotlinVersion}"))
         }
     }
-
-    repositories {
-
-        /*
-            This ensures absolute consistency across the composite build.
-            Without this, we run into race conditions where included builds
-            compete against each other and may load different versions.
-            This should be the only version declared this way,
-            the rest should be in the .toml file
-         */
-
-        plugins {
-            id("org.gradle.kotlin.kotlin-dsl") version kotlinVersion
-        }
-
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-
 
     includeBuild("../build-logic")
     includeBuild("../build-logic-meta")
-
 }
+
 /*
     DO not use dependency management here. If you need to add more repositories,
     add them to: com.nophasenokill.component-plugin.settings.gradle.kts

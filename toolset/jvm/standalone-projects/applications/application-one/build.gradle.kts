@@ -1,4 +1,5 @@
 plugins {
+    
     id("com.nophasenokill.kotlin-application-plugin")
     id("jacoco")
     id("com.nophasenokill.hashing-tasks-plugin")
