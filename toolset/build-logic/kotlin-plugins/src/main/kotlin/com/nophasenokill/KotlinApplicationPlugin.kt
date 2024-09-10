@@ -2,6 +2,7 @@ package com.nophasenokill
 
 import com.nophasenokill.extensions.configureTask
 import com.nophasenokill.extensions.registerAndConfigureTask
+import com.nophasenokill.extensions.sourceSets
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaApplication
@@ -15,6 +16,7 @@ class KotlinApplicationPlugin: Plugin<Project> {
             plugins.apply("com.nophasenokill.kotlin-base-plugin")
             plugins.apply("application")
             plugins.apply("com.nophasenokill.jacoco-plugin")
+            plugins.apply("com.nophasenokill.idea-sources-download-plugin")
 
 
             val mainClassName = projectDir.name.split("-").joinToString("") { it ->

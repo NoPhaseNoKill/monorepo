@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.kotlinDsl)
 }
 
-
-
 gradlePlugin {
     plugins {
         create("javaBasePlugin") {
@@ -53,6 +51,11 @@ gradlePlugin {
             implementationClass = "com.nophasenokill.TaskEventsPlugin"
         }
 
+        create("ideaSourcesDownloadPlugin") {
+            id = "com.nophasenokill.idea-sources-download-plugin"
+            implementationClass = "com.nophasenokill.IdeaSourcesDownloadPlugin"
+        }
+
     }
 }
 
@@ -71,7 +74,16 @@ dependencies {
     implementation(projects.metaGradleUtilities)
     implementation("org.jetbrains.compose:compose-gradle-plugin:${libs.versions.composePlugin.get()}")
 
-    implementation("org.jetbrains.kotlin:compose-compiler-gradle-plugin")
+    // only exists from v2 onwards
+    if(libs.versions.kotlin.get() >= "2.0.0") {
+        implementation("org.jetbrains.kotlin:compose-compiler-gradle-plugin:${libs.versions.kotlin.get()}")
+    } else {
+        println("""
+            Not including org.jetbrains.kotlin:compose-compiler-gradle-plugin dependency. Found kotlin version needs to be
+            2.0.0 or above for this dependency to make sense
+        """.trimIndent())
+    }
+
 
     implementation("org.ow2.asm:asm:9.2")
     implementation("org.ow2.asm:asm-commons:9.2")

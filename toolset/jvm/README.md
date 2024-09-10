@@ -1,5 +1,6 @@
 <!-- TOC -->
-  * [Current short-term/medium roadmap (Updated 16/03/2024)](#current-short-termmedium-roadmap-updated-16032024)
+  * [Current short-term/medium roadmap (Updated 10/09/2024)](#current-short-termmedium-roadmap-updated-10092024)
+    * [10/09/2024 - Understanding the true elephant in the room](#10092024---understanding-the-true-elephant-in-the-room)
     * [16/03/2024 - The pain points and ways forward](#16032024---the-pain-points-and-ways-forward)
     * [14/02/2024 - Low parallelism, mainly just understanding/configuring gradle correctly](#14022024---low-parallelism-mainly-just-understandingconfiguring-gradle-correctly)
     * [12/02/2024 - Initial Summary](#12022024---initial-summary)
@@ -10,7 +11,35 @@
   * [Park bench ideas](#park-bench-ideas)
 <!-- TOC -->
 
-## Current short-term/medium roadmap (Updated 16/03/2024)
+## Current short-term/medium roadmap (Updated 10/09/2024)
+
+### 10/09/2024 - Understanding the true elephant in the room
+
+It's been nearly 6 months since I last wrote an update. I've still been working
+on this project, and have done just over 200 commits in that time.
+
+I'll try and breakdown the majority of my findings into sections, that I feel are important.
+
+The short summary:
+
+1. Key build information is unintentionally obfuscated/difficult to track down, making it hard to understand
+what is really happening.
+
+2. Finding compatible gradle versions that work with everything I want has been near impossible
+
+3. Gradle's core API is horrendous 
+
+Because of these three things, I have been working still on trying to find the right layout, have been building
+a UI with jetpack compose so that you can have a tool which helps surface the relevant info you need, while
+continuing to use gradle itself to feel each of those pain points deeply so I can really wrap my head around
+what's wrong with it.
+
+The longer summary:
+
+TODO
+
+When I have a clearer understanding of suspected cache invalidation,
+alongside buildSrc with includedBuilds fill this section out
 
 ### 16/03/2024 - The pain points and ways forward
 

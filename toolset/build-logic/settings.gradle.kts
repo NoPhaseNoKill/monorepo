@@ -17,5 +17,5 @@ include("kotlin-plugins")
 include("structural-plugins")
 
 
-settings.enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
-settings.enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

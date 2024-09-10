@@ -15,6 +15,29 @@ gradle.lifecycle.beforeProject {
     println("The root project directory is $rootDir")
 }
 
+gradle.lifecycle.afterProject {
+    // Iterate over specific tasks or use a pattern to select tasks
+    val tasksOfInterest = project.tasks.withType(DefaultTask::class.java)
+
+    tasksOfInterest.configureEach {
+        // Directly interact with the service registrations relevant to Kotlin compilation tasks
+        project.gradle.sharedServices.registrations.all {
+            val buildServiceProvider = this.service
+            val buildService = buildServiceProvider.get()
+
+            val kotlinCollectorSearchString = "org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnosticsCollector"
+            if (buildService.toString().contains(kotlinCollectorSearchString)) {
+                project.logger.debug(
+                    "Applying checkKotlinGradlePluginConfigurationErrors workaround to task: {} for project: {}",
+                    this@configureEach.name,
+                    project.name
+                )
+                this@configureEach.usesService(buildServiceProvider)
+            }
+        }
+    }
+}
+
 pluginManagement {
 
     /*
@@ -37,7 +60,6 @@ pluginManagement {
     }
 
     includeBuild("../build-logic")
-    includeBuild("../build-logic-meta")
 }
 
 /*
@@ -49,8 +71,8 @@ plugins {
     id("com.nophasenokill.component-plugin")
 }
 
-settings.enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
-settings.enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 
 
@@ -109,6 +131,7 @@ includeProject("example-library-three", ProjectType.LIB)
 includeProject("library-one", ProjectType.LIB)
 includeProject("library-two", ProjectType.LIB)
 includeProject("some-new-lib", ProjectType.LIB)
+
 
 enum class ProjectType(val path: String) {
     LIB("libraries"),
