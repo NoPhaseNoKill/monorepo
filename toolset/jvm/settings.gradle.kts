@@ -1,6 +1,6 @@
 
 rootProject.name = "jvm"
-//
+
 gradle.lifecycle.beforeProject {
     apply(plugin = "base")
     println("BUILD TREE PATH: ${project.buildTreePath}")

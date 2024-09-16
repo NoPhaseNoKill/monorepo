@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
@@ -52,6 +53,13 @@ class KotlinBasePlugin: Plugin<Project> {
                     "-Dfile.encoding=UTF-8",
                     "-XX:+HeapDumpOnOutOfMemoryError"
                 )
+            }
+
+            tasks.named<KotlinCompilationTask<*>>("compileKotlin").configure {
+                compilerOptions {
+                    languageVersion.set(KotlinVersion.KOTLIN_2_0)
+                    progressiveMode.set(true)
+                }
             }
 
             configureTasks<KotlinCompile> {

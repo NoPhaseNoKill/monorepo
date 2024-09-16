@@ -81,25 +81,21 @@ class ComponentPlugin: Plugin<Settings> {
                             termsOfUseUrl.set("https://gradle.com/terms-of-service")
                             termsOfUseAgree.set("yes")
 
-                            /*
-                                If you try to abstract these strings to a 'val' outside gradleEnterprise lambda, you get errors
-                                such as below:
-
-                                4 problems were found storing the configuration cache.
-                                - Gradle runtime: cannot serialize Gradle script object references as these are not supported with the configuration cache.
-                                  See https://docs.gradle.org/8.5/userguide/configuration_cache.html#config_cache:requirements:disallowed_types
-                                    ...
-                                    ...
-                             */
                             obfuscation.run {
-                                username { "OBFUSCATED_USERNAME" }
-                                ipAddresses { addresses -> addresses.map { _ -> "OBFUSCATED_IP_ADDRESS" } }
-                                hostname { "OBFUSCATED_HOSTNAME" }
+                                username { OBFUSCATED_USERNAME }
+                                ipAddresses { addresses -> addresses.map { _ -> OBFUSCATED_HOSTNAME } }
+                                hostname { OBFUSCATED_IP_ADDRESS }
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    companion object {
+        const val OBFUSCATED_USERNAME = "OBFUSCATED_USERNAME"
+        const val OBFUSCATED_HOSTNAME = "OBFUSCATED_HOSTNAME"
+        const val OBFUSCATED_IP_ADDRESS = "OBFUSCATED_IP_ADDRESS"
     }
 }
