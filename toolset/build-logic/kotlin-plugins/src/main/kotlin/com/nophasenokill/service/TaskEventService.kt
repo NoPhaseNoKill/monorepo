@@ -2,6 +2,7 @@ package com.nophasenokill.service
 
 import com.nophasenokill.domain.GradleTime
 import org.gradle.api.Project
+import org.gradle.api.logging.Logging
 import org.gradle.api.services.BuildService
 import org.gradle.api.services.BuildServiceParameters
 import org.gradle.tooling.events.*
@@ -18,6 +19,9 @@ abstract class TaskEventsService : BuildService<BuildServiceParameters.None>,
         ProgressEvent
      */
 {
+    companion object {
+        val LOGGER = Logging.getLogger(TaskEventsService::class.java)
+    }
     override fun getStartTime(): Long {
         val time = GradleTime.now()
         return time.current
@@ -31,12 +35,13 @@ abstract class TaskEventsService : BuildService<BuildServiceParameters.None>,
     // Function to register a plugin listener on the current project
     fun registerPluginListener(project: Project) {
         project.plugins.all {
+            LOGGER.lifecycle("Plugin applied: ${this.javaClass.name}")
             println("Plugin applied: ${this.javaClass.name}")
         }
     }
 
     override fun onFinish(event: FinishEvent) {
-        println("Finish event is: ${event}")
-        println("[Thread-${Thread.currentThread()}] Event ${event.displayName} took: ${event.result.endTime - event.result.startTime}")
+        LOGGER.lifecycle("Finish event is: ${event}")
+        LOGGER.lifecycle("[Thread-${Thread.currentThread()}] Event ${event.displayName} took: ${event.result.endTime - event.result.startTime}")
     }
 }

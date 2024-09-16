@@ -70,6 +70,7 @@ dependencies {
     }
     implementation("app.cash.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
 
+    implementation("org.slf4j:slf4j-simple:1.7.10")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
 
@@ -80,7 +81,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:${libs.versions.junitPlatform.get()}")
 }
 
-// // Share the test report data to be aggregated for the whole project
+// Share the test report data to be aggregated for the whole project
 configurations.create("binaryTestResultsElements") {
     isCanBeResolved = false
     isCanBeConsumed = true

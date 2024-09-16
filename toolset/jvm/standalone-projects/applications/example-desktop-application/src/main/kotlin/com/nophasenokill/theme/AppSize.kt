@@ -5,7 +5,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data class AppSize internal constructor(
+data class AppSize (
     val smaller: Dp = 4.dp,
     val small: Dp = 8.dp,
     val medium: Dp = 16.dp,

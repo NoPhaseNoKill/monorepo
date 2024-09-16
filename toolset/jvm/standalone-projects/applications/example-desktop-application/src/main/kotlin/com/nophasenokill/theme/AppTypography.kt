@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.sp
 
 
 @Immutable
-data class AppTypography internal constructor(
+data class AppTypography (
     val headline1: TextStyle = TextStyle(
         fontSize = 36.sp,
         fontWeight = FontWeight.Bold,
