@@ -100,12 +100,10 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 includeProject("application-one", ProjectType.APP)
 includeProject("application-two", ProjectType.APP)
-includeProject("application-with-instrumentation", ProjectType.APP)
 includeProject("example-desktop-application", ProjectType.APP)
 includeProject("example-library-three", ProjectType.LIB)
 includeProject("library-one", ProjectType.LIB)
 includeProject("library-two", ProjectType.LIB)
-includeProject("some-new-lib", ProjectType.LIB)
 
 
 enum class ProjectType(val path: String) {
