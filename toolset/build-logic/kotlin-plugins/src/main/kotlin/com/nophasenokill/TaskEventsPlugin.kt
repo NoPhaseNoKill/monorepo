@@ -36,6 +36,7 @@ abstract class TaskEventsPlugin : Plugin<Project> {
                 TaskEventsService::class.java,
             )
 
+        serviceProvider.get().registerPluginListener(project)
         // Use the service Provider to subscribe the build service to build events.
         eventsListenerRegistry.onTaskCompletion(serviceProvider)
     }

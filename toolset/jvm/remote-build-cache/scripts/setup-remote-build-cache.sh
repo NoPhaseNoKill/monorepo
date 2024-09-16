@@ -1,16 +1,20 @@
 #!/bin/bash
 
-# Launches build remote cache server on port 5071
-# Usage:
-#   - Requires the absolute path to the root dir (ie: /home/tomga/projects/monorepo/toolset/jvm )
+# Launches build remote cache server on port you specify
+# Example usage: ./start-remote-build-cache-serve.sh $HOME/projects/monorepo/toolset/jvm 5071
+#
+# Would launch it on port 5071
+#
+# Please note: This requires the absolute path to the root dir (ie: $HOME/projects/monorepo/toolset/jvm )
 if [ -z "$1" ]; then
-  echo "Usage: $0 /home/tomga/projects/monorepo/toolset/jvm"
+  echo "Usage: $0 $HOME/projects/monorepo/toolset/jvm"
   exit 1
 fi
 
 ROOT_DIR="$1"
-ABSOLUTE_PATH_TO_REMOTE_BUILD_SERVER_JAR="$ROOT_DIR/remote-build-cache/build-cache-node-19.1.jar"
-ABSOLUTE_PATH_TO_THIS_SCRIPT="$ROOT_DIR/remote-build-cache/build-cache-node.sh"
+ABSOLUTE_PATH_TO_REMOTE_BUILD_SERVER_JAR="$ROOT_DIR/remote-build-cache/build-cache-node-20.0.jar"
+ABSOLUTE_PATH_TO_THIS_SCRIPT="$ROOT_DIR/remote-build-cache/setup-remote-build-cache.sh"
+ABSOLUTE_PATH_TO_CONFIG="$ROOT_DIR/remote-build-cache/config.yaml"
 SERVICE_FILE="/etc/systemd/system/gradle-remote-build-cache.service"
 
 # Create gradle-remote-build-cache.service for automatic starting
@@ -44,7 +48,15 @@ sudo systemctl start gradle-remote-build-cache
 # Enable systemd to start the build cache node on system boot
 sudo systemctl enable gradle-remote-build-cache
 
-echo "Starting service at http://localhost:5071 ....."
+echo "Starting service at http://localhost:$2 ....."
+
+BUILD_CACHE_LOCATION="$HOME/.cache/build-cache-node"
+BUILD_CACHE_CONF_LOCATION="$BUILD_CACHE_LOCATION/conf"
+
+mkdir -p "$BUILD_CACHE_CONF_LOCATION"
+
+# Copies the default config over
+cp "$ABSOLUTE_PATH_TO_CONFIG" "$BUILD_CACHE_LOCATION/conf"
 
 # Start the server for verification
-java -jar $ABSOLUTE_PATH_TO_REMOTE_BUILD_SERVER_JAR start --data-dir=/opt/build-cache-node
+java -jar $ABSOLUTE_PATH_TO_REMOTE_BUILD_SERVER_JAR start --data-dir="$BUILD_CACHE_LOCATION" --config-dir="$BUILD_CACHE_CONF_LOCATION" --port="$2"
