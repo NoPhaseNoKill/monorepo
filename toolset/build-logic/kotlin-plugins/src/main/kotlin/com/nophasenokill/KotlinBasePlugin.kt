@@ -30,11 +30,15 @@ class KotlinBasePlugin: Plugin<Project> {
 
             plugins.apply("org.jetbrains.kotlin.jvm")
             plugins.apply("com.nophasenokill.task-events-plugin")
-
+            plugins.apply("com.nophasenokill.hashing-tasks-plugin")
             plugins.apply("com.nophasenokill.java-version-checker-plugin")
 
             tasks.named("check").configure {
                 dependsOn("checkJavaVersion")
+            }
+
+            tasks.named("build").configure {
+                dependsOn("hashKotlinSourceSet")
             }
 
             val kotlinJvmProjectExtension = extensions.findByType(KotlinJvmProjectExtension::class.java)

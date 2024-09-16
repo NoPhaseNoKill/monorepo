@@ -8,7 +8,6 @@ class KotlinLibraryPlugin: Plugin<Project> {
         project.run {
             plugins.apply("com.nophasenokill.kotlin-base-plugin")
             plugins.apply("java-library")
-            plugins.apply("com.nophasenokill.jacoco-plugin")
             plugins.apply("com.nophasenokill.idea-sources-download-plugin")
         }
     }

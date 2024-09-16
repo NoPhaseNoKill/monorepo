@@ -26,11 +26,6 @@ gradlePlugin {
             implementationClass = "com.nophasenokill.KotlinDesktopApplicationPlugin"
         }
 
-        create("jacocoPlugin") {
-            id = "com.nophasenokill.jacoco-plugin"
-            implementationClass = "com.nophasenokill.JacocoPlugin"
-        }
-
         create("hashingTasksPlugin") {
             id = "com.nophasenokill.hashing-tasks-plugin"
             implementationClass = "com.nophasenokill.HashingTasksPlugin"
@@ -73,15 +68,6 @@ dependencies {
             2.0.0 or above for this dependency to make sense
         """.trimIndent())
     }
-
-
-    implementation("org.ow2.asm:asm:9.2")
-    implementation("org.ow2.asm:asm-commons:9.2")
-    implementation("org.ow2.asm:asm-util:9.2")
-    implementation("org.benf:cfr:0.152")
-
-    implementation("me.lucko:jar-relocator:1.7")
-
     implementation("app.cash.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
 
 
