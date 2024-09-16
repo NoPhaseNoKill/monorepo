@@ -6,11 +6,6 @@ plugins {
 
 gradlePlugin {
     plugins {
-        create("javaBasePlugin") {
-            id = "com.nophasenokill.java-base-plugin"
-            implementationClass = "com.nophasenokill.JavaBasePlugin"
-        }
-
         create("kotlinBasePlugin") {
             id = "com.nophasenokill.kotlin-base-plugin"
             implementationClass = "com.nophasenokill.KotlinBasePlugin"
@@ -39,11 +34,6 @@ gradlePlugin {
         create("hashingTasksPlugin") {
             id = "com.nophasenokill.hashing-tasks-plugin"
             implementationClass = "com.nophasenokill.HashingTasksPlugin"
-        }
-
-        create("packageNameRelocatorPlugin") {
-            id = "com.nophasenokill.package-name-relocator-plugin"
-            implementationClass = "com.nophasenokill.PackageNameRelocatorPlugin"
         }
 
         create("taskEventsPlugin") {

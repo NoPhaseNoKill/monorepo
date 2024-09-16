@@ -1,6 +1,6 @@
 
 rootProject.name = "jvm"
-
+//
 gradle.lifecycle.beforeProject {
     apply(plugin = "base")
     println("BUILD TREE PATH: ${project.buildTreePath}")
@@ -13,29 +13,6 @@ gradle.lifecycle.beforeProject {
 
     val rootDir = project.isolated.rootProject.projectDirectory
     println("The root project directory is $rootDir")
-}
-
-gradle.lifecycle.afterProject {
-    // Iterate over specific tasks or use a pattern to select tasks
-    val tasksOfInterest = project.tasks.withType(DefaultTask::class.java)
-
-    tasksOfInterest.configureEach {
-        // Directly interact with the service registrations relevant to Kotlin compilation tasks
-        project.gradle.sharedServices.registrations.all {
-            val buildServiceProvider = this.service
-            val buildService = buildServiceProvider.get()
-
-            val kotlinCollectorSearchString = "org.jetbrains.kotlin.gradle.plugin.diagnostics.KotlinToolingDiagnosticsCollector"
-            if (buildService.toString().contains(kotlinCollectorSearchString)) {
-                project.logger.debug(
-                    "Applying checkKotlinGradlePluginConfigurationErrors workaround to task: {} for project: {}",
-                    this@configureEach.name,
-                    project.name
-                )
-                this@configureEach.usesService(buildServiceProvider)
-            }
-        }
-    }
 }
 
 pluginManagement {
@@ -109,7 +86,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
                     +--- Project ':standalone-projects-applications-application-with-instrumentation'
                     +--- Project ':standalone-projects-applications-build-tool-ui'
                     +--- Project ':standalone-projects-applications-example-desktop-application'
-                    +--- Project ':standalone-projects-applications-example-package-name-relocation-app'
                     +--- Project ':standalone-projects-libraries-example-library-three'
                     +--- Project ':standalone-projects-libraries-ksp-processor'
                     +--- Project ':standalone-projects-libraries-library-one'
@@ -126,7 +102,6 @@ includeProject("application-one", ProjectType.APP)
 includeProject("application-two", ProjectType.APP)
 includeProject("application-with-instrumentation", ProjectType.APP)
 includeProject("example-desktop-application", ProjectType.APP)
-includeProject("example-package-name-relocation-app", ProjectType.APP)
 includeProject("example-library-three", ProjectType.LIB)
 includeProject("library-one", ProjectType.LIB)
 includeProject("library-two", ProjectType.LIB)

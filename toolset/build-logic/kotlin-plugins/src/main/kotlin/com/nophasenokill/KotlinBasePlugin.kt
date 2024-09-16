@@ -31,18 +31,16 @@ class KotlinBasePlugin: Plugin<Project> {
             plugins.apply("org.jetbrains.kotlin.jvm")
             plugins.apply("com.nophasenokill.task-events-plugin")
 
+            plugins.apply("com.nophasenokill.java-version-checker-plugin")
+
+            tasks.named("check").configure {
+                dependsOn("checkJavaVersion")
+            }
+
             val kotlinJvmProjectExtension = extensions.findByType(KotlinJvmProjectExtension::class.java)
 
 
             kotlinJvmProjectExtension?.run {
-
-                jvmToolchain {
-                    languageVersion.set(JavaLanguageVersion.of(17))
-
-                    compilerOptions {
-                        languageVersion.set(KotlinVersion.KOTLIN_1_9)
-                    }
-                }
 
                 kotlinDaemonJvmArgs = listOf(
                     "-Xmx2g",
