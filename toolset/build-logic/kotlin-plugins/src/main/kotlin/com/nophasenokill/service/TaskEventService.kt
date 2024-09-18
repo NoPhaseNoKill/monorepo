@@ -5,8 +5,9 @@ import org.gradle.api.Project
 import org.gradle.api.logging.Logging
 import org.gradle.api.services.BuildService
 import org.gradle.api.services.BuildServiceParameters
-import org.gradle.tooling.events.*
-import org.gradle.tooling.events.configuration.ProjectConfigurationOperationResult
+import org.gradle.tooling.events.FinishEvent
+import org.gradle.tooling.events.OperationCompletionListener
+import org.gradle.tooling.events.OperationResult
 
 
 abstract class TaskEventsService : BuildService<BuildServiceParameters.None>,

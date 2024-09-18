@@ -41,6 +41,16 @@ gradlePlugin {
             implementationClass = "com.nophasenokill.IdeaSourcesDownloadPlugin"
         }
 
+        create("testReportDataConsumerPlugin") {
+            id = "com.nophasenokill.test-report-data-consumer-plugin"
+            implementationClass = "com.nophasenokill.TestReportDataConsumerPlugin"
+        }
+
+        create("testReportDataProviderPlugin") {
+            id = "com.nophasenokill.test-report-data-producer-plugin"
+            implementationClass = "com.nophasenokill.TestReportDataProviderPlugin"
+        }
+
     }
 }
 

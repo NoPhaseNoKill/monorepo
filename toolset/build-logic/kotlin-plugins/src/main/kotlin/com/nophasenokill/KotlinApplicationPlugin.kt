@@ -13,7 +13,6 @@ class KotlinApplicationPlugin: Plugin<Project> {
             plugins.apply("com.nophasenokill.idea-sources-download-plugin")
 
 
-
             val mainClassName = projectDir.name.split("-").joinToString("") { it ->
                 it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             } + "AppKt"

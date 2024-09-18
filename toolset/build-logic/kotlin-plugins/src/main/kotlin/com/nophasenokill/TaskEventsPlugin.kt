@@ -3,7 +3,6 @@ package com.nophasenokill
 import com.nophasenokill.service.TaskEventsService
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.logging.LogLevel
 import org.gradle.api.provider.Provider
 import org.gradle.build.event.BuildEventsListenerRegistry
 import javax.inject.Inject
@@ -37,6 +36,7 @@ abstract class TaskEventsPlugin : Plugin<Project> {
             )
 
         serviceProvider.get().registerPluginListener(project)
+
         // Use the service Provider to subscribe the build service to build events.
         eventsListenerRegistry.onTaskCompletion(serviceProvider)
     }

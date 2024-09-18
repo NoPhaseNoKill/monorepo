@@ -9,6 +9,7 @@ plugins {
 
 dependencies {
     implementation(projects.libraryOne)
+    api(projects.libraryTwo)
 }
 
 val jacocoOutputTask = tasks.register("jacocoOutputTask") {

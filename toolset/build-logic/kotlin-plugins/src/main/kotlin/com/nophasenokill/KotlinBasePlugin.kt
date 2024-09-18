@@ -33,6 +33,8 @@ class KotlinBasePlugin: Plugin<Project> {
             plugins.apply("com.nophasenokill.task-events-plugin")
             plugins.apply("com.nophasenokill.hashing-tasks-plugin")
             plugins.apply("com.nophasenokill.java-version-checker-plugin")
+            plugins.apply("com.nophasenokill.test-report-data-consumer-plugin")
+            plugins.apply("com.nophasenokill.test-report-data-producer-plugin")
 
             tasks.named("check").configure {
                 dependsOn("checkJavaVersion")
@@ -111,31 +113,6 @@ class KotlinBasePlugin: Plugin<Project> {
 
                 testLogging.minGranularity = 2
             }
-
-            configureTestReport()
-        }
-    }
-
-    private fun Project.configureTestReport() {
-        // Disable the test report for the individual test task
-        configureTask<Test>("test") {
-            reports.html.required.set(false)
-        }
-
-
-        // Share the test report data to be aggregated for the whole project
-        configurations.create("binaryTestResultsElements") {
-            isCanBeResolved = false
-            isCanBeConsumed = true
-
-            attributes {
-                attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.DOCUMENTATION))
-                attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named("test-report-data"))
-            }
-
-            val testTask = project.tasks.named<AbstractTestTask>("test")
-
-            outgoing.artifact(testTask.map { task -> task.binaryResultsDirectory.get() })
         }
     }
 }
