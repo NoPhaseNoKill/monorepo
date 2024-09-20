@@ -67,6 +67,7 @@ dependencies {
      */
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
     implementation(projects.metaGradleUtilities)
+    implementation(projects.metaByteBuddy)
     implementation("org.jetbrains.compose:compose-gradle-plugin:${libs.versions.composePlugin.get()}")
 
     // only exists from v2 onwards

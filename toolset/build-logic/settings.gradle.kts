@@ -1,7 +1,5 @@
 rootProject.name = "build-logic"
 
-
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -12,6 +10,7 @@ dependencyResolutionManagement {
     repositories.gradlePluginPortal()
 }
 
+include("meta-byte-buddy")
 include("meta-gradle-utilities")
 include("kotlin-plugins")
 include("structural-plugins")

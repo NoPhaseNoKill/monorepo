@@ -29,8 +29,6 @@ pluginManagement {
     val kotlinVersion = "2.0.20"
 
     buildscript {
-
-
         dependencies {
             classpath(platform("org.jetbrains.kotlin:kotlin-bom:${kotlinVersion}"))
         }
