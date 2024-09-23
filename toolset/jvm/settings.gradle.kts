@@ -103,6 +103,8 @@ includeProject("example-library-three", ProjectType.LIB)
 includeProject("library-one", ProjectType.LIB)
 includeProject("library-two", ProjectType.LIB)
 
+includeBuild("hierarchical-project-prototype")
+
 
 enum class ProjectType(val path: String) {
     LIB("libraries"),
