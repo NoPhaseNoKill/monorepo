@@ -35,9 +35,11 @@ class KotlinBasePlugin: Plugin<Project> {
             plugins.apply("com.nophasenokill.java-version-checker-plugin")
             plugins.apply("com.nophasenokill.test-report-data-consumer-plugin")
             plugins.apply("com.nophasenokill.test-report-data-producer-plugin")
+            plugins.apply("com.nophasenokill.incremental-test-plugin")
 
             tasks.named("check").configure {
                 dependsOn("checkJavaVersion")
+                dependsOn("incrementalTest")
             }
 
             tasks.named("build").configure {

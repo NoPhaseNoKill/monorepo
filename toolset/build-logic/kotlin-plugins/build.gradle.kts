@@ -51,6 +51,10 @@ gradlePlugin {
             implementationClass = "com.nophasenokill.TestReportDataProviderPlugin"
         }
 
+        create("incrementalTestPlugin") {
+            id = "com.nophasenokill.incremental-test-plugin"
+            implementationClass = "com.nophasenokill.IncrementalTestPlugin"
+        }
     }
 }
 
@@ -66,6 +70,7 @@ dependencies {
         Equivalent of: implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:${libs.versions.kotlin.get()}")
      */
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
+    implementation(kotlin("stdlib"))
     implementation(projects.metaGradleUtilities)
     implementation(projects.metaByteBuddy)
     implementation("org.jetbrains.compose:compose-gradle-plugin:${libs.versions.composePlugin.get()}")
