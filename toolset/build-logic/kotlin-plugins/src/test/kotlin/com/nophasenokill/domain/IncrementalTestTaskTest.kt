@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import java.io.File
 
 
-class IncrementalTestKitTest : PluginTest() {
+class IncrementalTestTaskTest : PluginTest() {
 
 
     @Test
