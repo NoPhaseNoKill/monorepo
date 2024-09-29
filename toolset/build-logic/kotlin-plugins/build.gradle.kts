@@ -86,8 +86,6 @@ dependencies {
     }
     implementation("app.cash.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
 
-    implementation("org.slf4j:slf4j-simple:1.7.10")
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
 
     /*

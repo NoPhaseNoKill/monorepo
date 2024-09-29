@@ -2,18 +2,17 @@ package com.nophasenokill
 
 import com.nophasenokill.extensions.configureTask
 import com.nophasenokill.extensions.configureTasks
+import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.api.attributes.Category
-import org.gradle.api.attributes.DocsType
-import org.gradle.api.tasks.testing.AbstractTestTask
+import org.gradle.api.tasks.bundling.AbstractArchiveTask
 import org.gradle.api.tasks.testing.Test
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.tasks.Jar
+import org.gradle.kotlin.dsl.attributes
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.named
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
@@ -37,14 +36,15 @@ class KotlinBasePlugin: Plugin<Project> {
             plugins.apply("com.nophasenokill.test-report-data-producer-plugin")
             plugins.apply("com.nophasenokill.incremental-test-plugin")
 
-            tasks.named("check").configure {
+            configureTask<DefaultTask>("check") {
                 dependsOn("checkJavaVersion")
                 dependsOn("incrementalTest")
             }
 
-            tasks.named("build").configure {
+            configureTask<DefaultTask>("build") {
                 dependsOn("hashKotlinSourceSet")
             }
+
 
             val kotlinJvmProjectExtension = extensions.findByType(KotlinJvmProjectExtension::class.java)
 
@@ -59,9 +59,13 @@ class KotlinBasePlugin: Plugin<Project> {
                 )
             }
 
-            tasks.named<KotlinCompilationTask<*>>("compileKotlin").configure {
+            val versionCatalog = project.extensions.findByType(VersionCatalogsExtension::class.java)?.named("libs")
+            val kotlinVersion = versionCatalog?.findVersion("kotlin")?.get().toString()
+
+            configureTasks<KotlinCompilationTask<*>> {
+                println("Setting kotlin language version to: ${KotlinVersion.DEFAULT}")
                 compilerOptions {
-                    languageVersion.set(KotlinVersion.KOTLIN_2_0)
+                    languageVersion.set(KotlinVersion.DEFAULT)
                     progressiveMode.set(true)
                 }
             }
@@ -75,11 +79,28 @@ class KotlinBasePlugin: Plugin<Project> {
                 compilerExecutionStrategy.set(KotlinCompilerExecutionStrategy.DAEMON)
             }
 
+            /*
+                See: https://docs.gradle.org/current/userguide/working_with_files.html#sec:reproducible_archives
+             */
+            configureTasks<AbstractArchiveTask> {
+                isPreserveFileTimestamps = false
+                isReproducibleFileOrder = true
+            }
 
-            val versionCatalog = project.extensions.findByType(VersionCatalogsExtension::class.java)?.named("libs")
+            /*
+                See: https://docs.gradle.org/current/userguide/common_caching_problems.html#suggestions_for_authoring_your_build
+             */
+            configureTask<Jar>("jar") {
+                manifest {
+                    val classPath = configurations.named("runtimeClasspath").get().map { it.name }.joinToString(" ")
+                    attributes("Class-Path" to classPath)
+                }
+            }
+
+
             val junitVersion = versionCatalog?.findVersion("junit")?.get().toString()
             val junitPlatformVersion = versionCatalog?.findVersion("junitPlatform")?.get().toString()
-            val kotlinVersion = versionCatalog?.findVersion("kotlin")?.get().toString()
+
             val coroutinesVersion = versionCatalog?.findVersion("coroutines")?.get().toString()
 
             dependencies {
@@ -112,7 +133,9 @@ class KotlinBasePlugin: Plugin<Project> {
                     TestLogEvent.STANDARD_OUT,
                     TestLogEvent.STANDARD_ERROR,
                 )
-
+                testLogging.showStackTraces = true
+                testLogging.exceptionFormat = TestExceptionFormat.FULL
+                testLogging.showStandardStreams
                 testLogging.minGranularity = 2
             }
         }

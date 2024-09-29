@@ -16,7 +16,6 @@ object LibraryOneCalculator {
      */
 
     fun multiply(a: Int, b: Int): Int {
-        println("Ohai ")
         return a * b
     }
 }

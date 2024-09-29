@@ -60,32 +60,28 @@ class ComponentPlugin: Plugin<Settings> {
             }
 
             pluginManager.apply("org.gradle.toolchains.foojay-resolver-convention")
+            pluginManager.apply(DevelocityPlugin::class.java)
 
-            plugins.apply(DevelocityPlugin::class.java)
-
-            plugins.withType(DevelocityPlugin::class.java) {
-                extensions.findByType(DevelocityPlugin::class.java).run {
-
-                    develocity.run {
-                        buildScan.run {
-                            publishing.onlyIf {
-                                val hasFailures = it.buildResult.failures.isNotEmpty()
-                                println("Decision to publish build scan was: ${hasFailures}.")
-                                if (hasFailures) {
-                                    println("Failures were: ${it.buildResult.failures}")
-                                }
-                                hasFailures
+            pluginManager.withPlugin("com.gradle.develocity") {
+                develocity {
+                    buildScan {
+                        publishing.onlyIf {
+                            val hasFailures = it.buildResult.failures.isNotEmpty()
+                            println("Decision to publish build scan was: ${hasFailures}.")
+                            if (hasFailures) {
+                                println("Failures were: ${it.buildResult.failures}")
                             }
+                            hasFailures
+                        }
 
-                            uploadInBackground.set(false)
-                            termsOfUseUrl.set("https://gradle.com/terms-of-service")
-                            termsOfUseAgree.set("yes")
+                        uploadInBackground.set(false)
+                        termsOfUseUrl.set("https://gradle.com/terms-of-service")
+                        termsOfUseAgree.set("yes")
 
-                            obfuscation.run {
-                                username { OBFUSCATED_USERNAME }
-                                ipAddresses { addresses -> addresses.map { _ -> OBFUSCATED_HOSTNAME } }
-                                hostname { OBFUSCATED_IP_ADDRESS }
-                            }
+                        obfuscation {
+                            username { OBFUSCATED_USERNAME }
+                            ipAddresses { addresses -> addresses.map { _ -> OBFUSCATED_HOSTNAME } }
+                            hostname { OBFUSCATED_IP_ADDRESS }
                         }
                     }
                 }
