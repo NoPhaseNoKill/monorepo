@@ -47,8 +47,15 @@ abstract class PluginTest {
         protected lateinit var testProjectFile: File
 
         @JvmStatic
+        protected lateinit var buildDir: File
+
+        @JvmStatic
+        protected lateinit var sourceDir: File
+
+        @JvmStatic
         @BeforeAll
         fun setup(): Unit {
+
             testProjectFile = testProjectDir.toFile()
             settingsFile = testProjectFile.resolve("settings.gradle.kts")
             settingsFile.appendText(
@@ -60,6 +67,8 @@ abstract class PluginTest {
                 }
             """
             )
+            sourceDir = testProjectDir.resolve("src").toFile()
+            buildDir = testProjectDir.resolve("build").toFile()
             buildFile = testProjectFile.resolve("build.gradle.kts")
         }
 

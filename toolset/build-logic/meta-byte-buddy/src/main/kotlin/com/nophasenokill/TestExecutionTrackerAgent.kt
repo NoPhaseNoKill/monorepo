@@ -1,112 +1,152 @@
 package com.nophasenokill
+
+
 import net.bytebuddy.agent.builder.AgentBuilder
+import net.bytebuddy.asm.AsmVisitorWrapper
 import net.bytebuddy.description.NamedElement
-import net.bytebuddy.implementation.FixedValue
-import net.bytebuddy.matcher.ElementMatchers.isAnnotatedWith
-import net.bytebuddy.matcher.ElementMatchers.named
+import net.bytebuddy.description.field.FieldDescription
+import net.bytebuddy.description.field.FieldList
+import net.bytebuddy.description.method.MethodDescription
+import net.bytebuddy.description.method.MethodList
+import net.bytebuddy.description.type.TypeDescription
+import net.bytebuddy.dynamic.DynamicType
+import net.bytebuddy.implementation.Implementation
+import net.bytebuddy.jar.asm.*
+import net.bytebuddy.matcher.ElementMatchers
+import net.bytebuddy.matcher.ElementMatchers.nameStartsWith
+import net.bytebuddy.pool.TypePool
+import net.bytebuddy.utility.JavaModule
+import java.io.File
 import java.lang.instrument.Instrumentation
 
 object TestExecutionTrackerAgent {
+
     @JvmStatic
-    fun premain(arguments: String?, instrumentation: Instrumentation) {
-        AgentBuilder.Default()
-            .type(isAnnotatedWith(InstrumentedAnnotation::class.java))
-            .transform { builder, typeDescription, classloader, javaModule, protectionDomain ->
-                builder.method(named<NamedElement>("toString"))
-                    .intercept(FixedValue.value("Instrumented"))
-            }
-            .installOn(instrumentation)
+    fun premain(agentArgs: String?, instrumentation: Instrumentation) {
+        println("[TRACKER] Test Execution Tracker Agent loaded")
+        println("Agent args: $agentArgs")
+
+        val testsToRunProperty = System.getProperty("test.classpath")
+
+        if (testsToRunProperty != null) {
+            println("[TRACKER] test.classpath property: $testsToRunProperty")
+
+            val testsToRunPaths = testsToRunProperty.split(File.pathSeparatorChar)
+
+            // Convert file paths to fully qualified class names
+            val testsToRun = testsToRunPaths
+                .filter { it.endsWith(".class") }
+                .map {
+                    it.substringAfter("test/")
+                        .replace('/', '.')
+                        .removeSuffix(".class")
+                }
+
+            val testPrefixes = testsToRun.map { it.substringBeforeLast('.') }
+
+            println("[TRACKER] Tests to run (class names): $testsToRun")
+
+            // Byte Buddy AgentBuilder setup
+            AgentBuilder.Default()
+                .type(testPrefixes.map { nameStartsWith<NamedElement>(it) }.reduce { acc, matcher -> acc.or(matcher) })
+                .transform { builder: DynamicType.Builder<*>, typeDescription: TypeDescription, classLoader: ClassLoader?, module: JavaModule?, protectionDomain ->
+                    println("[TRACKER] Transforming class: ${typeDescription.name}")
+                    builder
+                        .visit(AsmVisitorWrapper.ForDeclaredMethods()
+                            .method(ElementMatchers.any(), MyMethodVisitorWrapper())
+                        )
+                        .visit(MyAsmClassVisitorWrapper())
+                }
+                .installOn(instrumentation)
+        } else {
+            println("[TRACKER] No test.classpath property found.")
+        }
     }
 }
 
-/*
-    Example of how to see some classes loaded.
+class MyMethodVisitorWrapper : AsmVisitorWrapper.ForDeclaredMethods.MethodVisitorWrapper {
+    override fun wrap(
+        instrumentedType: TypeDescription,
+        instrumentedMethod: MethodDescription,
+        methodVisitor: MethodVisitor,
+        implementationContext: Implementation.Context,
+        typePool: TypePool,
+        writerFlags: Int,
+        readerFlags: Int,
+    ): MethodVisitor {
+        return MyMethodVisitor(Opcodes.ASM9, methodVisitor, instrumentedMethod.name)
+    }
+}
 
-    Note: This outputs duplicates and is not properly refined, hence why I've commented it out
- */
+class MyAsmClassVisitorWrapper : AsmVisitorWrapper {
+    override fun mergeWriter(flags: Int): Int {
+        return flags or ClassWriter.COMPUTE_FRAMES
+    }
 
-// object TestExecutionTrackerAgent {
-//     private val transformedClasses = mutableSetOf<String>()
-//
-//     @JvmStatic
-//     fun premain(arguments: String?, instrumentation: Instrumentation) {
-//         AgentBuilder.Default()
-//             // Apply transformation to non-Java/Kotlin classes
-//             .type(
-//                 not(
-//                     nameStartsWith<NamedElement>("java.")
-//                         .or(nameStartsWith("javax."))
-//                         .or(nameStartsWith("kotlin."))
-//                         .or(nameStartsWith("sun."))
-//                         .or(nameStartsWith("jdk."))
-//                         .or(nameStartsWith("org.gradle"))
-//                         .or(nameStartsWith("org.opentest4j"))
-//                 )
-//             )
-//             .transform { builder, typeDescription, classLoader, javaModule, protectionDomain ->
-//                 builder.visit(Advice.to(LoggingAdvice::class.java).on(any()))
-//             }
-//             .with(ClassBytecodeLoggingListener("/tmp/instrumentation"))
-//             .installOn(instrumentation)
-//     }
-// }
-//
-// object LoggingAdvice {
-//     @Advice.OnMethodEnter
-//     @JvmStatic
-//     fun onEnter(@Advice.Origin clazz: Class<*>) {
-//         if (clazz.name.contains("nophasenokill")) {
-//             println("Class Loaded: ${clazz.name}")
-//         }
-//     }
-// }
-//
-// // Listener to capture and log bytecode
-// class ClassBytecodeLoggingListener(private val outputDir: String) : AgentBuilder.Listener {
-//     private val processedClasses = mutableSetOf<String>() // Track processed classes
-//
-//     override fun onDiscovery(typeName: String, classLoader: ClassLoader?, module: JavaModule?, loaded: Boolean) {
-//
-//     }
-//
-//     override fun onTransformation(
-//         typeDescription: TypeDescription,
-//         @MaybeNull classLoader: ClassLoader?,
-//         @MaybeNull javaModule: JavaModule?,
-//         loaded: Boolean,
-//         dynamicType: DynamicType
-//     ) {
-//         // Avoid processing the same class multiple times
-//         if (typeDescription.name.contains("nophasenokill") && processedClasses.add(typeDescription.name)) {
-//             val className = typeDescription.name.replace('.', '/')
-//             val filePath = Paths.get(outputDir, "$className.class")
-//
-//             // Ensure output directory exists
-//             Files.createDirectories(filePath.parent)
-//
-//             // Write the bytecode to a file
-//             Files.write(filePath, dynamicType.bytes, StandardOpenOption.CREATE)
-//             println("Saved instrumented bytecode for class: ${typeDescription.name} at $filePath")
-//
-//             println("Transformed class: ${typeDescription.name}")
-//             val bytecode = dynamicType.bytes
-//             println("Bytecode (Hex): ${byteArrayToHex(bytecode)}")
-//         }
-//     }
-//
-//     override fun onIgnored(typeDescription: TypeDescription, classLoader: ClassLoader?, javaModule: JavaModule?, loaded: Boolean) {
-//         // Ignored classes are not processed
-//     }
-//
-//     override fun onError(typeName: String, classLoader: ClassLoader?, javaModule: JavaModule?, loaded: Boolean, throwable: Throwable) {
-//         // Handle transformation errors
-//     }
-//
-//     override fun onComplete(typeName: String, classLoader: ClassLoader?, javaModule: JavaModule?, loaded: Boolean) {
-//         // Transformation complete
-//     }
-//
-//     private fun byteArrayToHex(bytes: ByteArray): String {
-//         return bytes.joinToString("") { String.format("%02x", it) }
-//     }
-// }
+    override fun mergeReader(flags: Int): Int {
+        return flags or ClassReader.EXPAND_FRAMES
+    }
+
+    override fun wrap(
+        instrumentedType: TypeDescription,
+        classVisitor: ClassVisitor,
+        implementationContext: Implementation.Context,
+        typePool: TypePool,
+        fields: FieldList<FieldDescription.InDefinedShape>,
+        methods: MethodList<*>,
+        writerFlags: Int,
+        readerFlags: Int,
+    ): ClassVisitor {
+        return MyClassVisitor(Opcodes.ASM9, classVisitor)
+    }
+}
+
+class MyClassVisitor(api: Int, classVisitor: ClassVisitor) : ClassVisitor(api, classVisitor) {
+    override fun visit(
+        version: Int,
+        access: Int,
+        name: String?,
+        signature: String?,
+        superName: String?,
+        interfaces: Array<out String>?,
+    ) {
+        println("[TRACKER][CLASS] Class Name: ${name?.replace("/", ".")}, Super Class: ${superName?.replace("/", ".")}")
+        interfaces?.forEach { println("[TRACKER][CLASS] Implements Interface: ${it.replace("/", ".")}") }
+        super.visit(version, access, name, signature, superName, interfaces)
+    }
+
+    override fun visitMethod(
+        access: Int, name: String?, descriptor: String?, signature: String?, exceptions: Array<out String>?,
+    ): MethodVisitor {
+        println("[TRACKER][METHOD] Test Method: $name, Descriptor: $descriptor")
+
+        val originalMethodVisitor = super.visitMethod(access, name, descriptor, signature, exceptions)
+        return MyMethodVisitor(Opcodes.ASM9, originalMethodVisitor, name)
+    }
+}
+
+class MyMethodVisitor(api: Int, methodVisitor: MethodVisitor, private val methodName: String?) : MethodVisitor(api, methodVisitor) {
+    override fun visitCode() {
+        println("[TRACKER][CODE] Entering method body of $methodName")
+        super.visitCode()
+    }
+
+    override fun visitMethodInsn(
+        opcode: Int, owner: String?, name: String?, descriptor: String?, isInterface: Boolean,
+    ) {
+        val ownerClass = owner?.replace("/", ".")
+        println("[TRACKER][INVOKE] Method Call: $name() in Class: $ownerClass with Descriptor: $descriptor")
+        super.visitMethodInsn(opcode, owner, name, descriptor, isInterface)
+    }
+
+    override fun visitVarInsn(opcode: Int, variable: Int) {
+        println("[TRACKER][VARIABLE] Accessing Local Variable at index: $variable with Opcode: $opcode")
+        super.visitVarInsn(opcode, variable)
+    }
+
+    override fun visitEnd() {
+        println("[TRACKER][CODE] Exiting method body of $methodName")
+        super.visitEnd()
+    }
+}
+

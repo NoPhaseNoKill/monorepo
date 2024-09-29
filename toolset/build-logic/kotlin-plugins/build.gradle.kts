@@ -4,6 +4,16 @@ plugins {
     alias(libs.plugins.kotlinDsl)
 }
 
+group = "com.nophasenokill"
+version = "0.1.local-dev"
+
+
+val org.gradle.api.Project.`testing`: org.gradle.testing.base.TestingExtension get() =
+    (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("testing") as org.gradle.testing.base.TestingExtension
+
+
+val test by testing.suites.existing(JvmTestSuite::class)
+
 gradlePlugin {
     plugins {
         create("kotlinBasePlugin") {
@@ -75,6 +85,11 @@ dependencies {
     implementation(projects.metaByteBuddy)
     implementation("org.jetbrains.compose:compose-gradle-plugin:${libs.versions.composePlugin.get()}")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
+
+    implementation("org.ow2.asm:asm:9.7")
+    implementation("org.ow2.asm:asm-commons:9.7")
+    implementation("org.ow2.asm:asm-util:9.7")
+    implementation("org.benf:cfr:0.152")
 
     // only exists from v2 onwards
     if(libs.versions.kotlin.get() >= "2.0.0") {

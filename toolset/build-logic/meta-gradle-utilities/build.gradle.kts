@@ -6,6 +6,9 @@ plugins {
 
 }
 
+group = "com.nophasenokill"
+version = "0.1.local-dev"
+
 dependencies {
     implementation(gradleApi())
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))

@@ -113,6 +113,9 @@ class KotlinBasePlugin: Plugin<Project> {
                  */
                 add("implementation", "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 
+                add("implementation", "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
+                add("implementation", "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+
                 add("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${coroutinesVersion}")
 
 
