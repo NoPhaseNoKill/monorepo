@@ -1,4 +1,0 @@
-module appmodule {
-    requires libmodule;
-}
-

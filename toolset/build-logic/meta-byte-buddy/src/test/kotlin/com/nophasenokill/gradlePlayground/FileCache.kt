@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 import java.util.function.Function
 
 /*
-    This replaces gradle's CacheAccessSerializer.java file.
+    This is intended to replace gradle's CacheAccessSerializer.java file.
 
     It makes two clear improvements:
         1. This code awaits the result of a pending load rather than starting a redundant one.
