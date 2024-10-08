@@ -1,5 +1,4 @@
 plugins {
-
     id("com.nophasenokill.kotlin-application-plugin")
     id("jacoco")
     id("com.nophasenokill.hashing-tasks-plugin")
@@ -8,8 +7,8 @@ plugins {
 
 
 dependencies {
-    implementation(projects.libraryOne)
-    api(projects.libraryTwo)
+    implementation(projects.standaloneProjects.libraries.libraryOne)
+    api(projects.standaloneProjects.libraries.libraryTwo)
 }
 
 // val jacocoOutputTask = tasks.register("jacocoOutputTask") {

@@ -26,15 +26,25 @@ pluginManagement {
      */
 
 
-    val kotlinVersion = "2.0.20"
+    // Declared below in plugins section also
+    val kotlinVersion = "2.1.0-Beta1"
 
     buildscript {
         dependencies {
             classpath(platform("org.jetbrains.kotlin:kotlin-bom:${kotlinVersion}"))
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
         }
     }
 
-    includeBuild("../build-logic")
+
+    includeBuild("../build-logic/structural-plugins")
+    includeBuild("../build-logic/meta-gradle-utilities")
+    includeBuild("../build-logic/meta-byte-buddy")
+    includeBuild("../build-logic/kotlin-plugins")
+
+    includeBuild("hierarchical-project-prototype/plugins/binary-root-settings-plugins")
+    includeBuild("hierarchical-project-prototype/plugins/conventions-root-settings-plugins")
+    includeBuild("hierarchical-project-prototype/plugins/kotlin-plugins/kotlin-plugin-one")
 }
 
 /*
@@ -43,7 +53,12 @@ pluginManagement {
  */
 
 plugins {
-    kotlin("jvm") version("2.0.20")  apply false
+    // Declared above in pluginManagement section also
+    val kotlinVersion = "2.1.0-Beta1"
+
+    kotlin("jvm") version(kotlinVersion) apply false
+    `kotlin-dsl` apply false
+
     id("com.nophasenokill.component-plugin")
 }
 
@@ -104,15 +119,41 @@ includeProject("example-library-three", ProjectType.LIB)
 includeProject("library-one", ProjectType.LIB)
 includeProject("library-two", ProjectType.LIB)
 
-includeBuild("hierarchical-project-prototype")
+includeProject("application-one", ProjectType.HIERARCHICAL_APP)
+includeProject("application-two", ProjectType.HIERARCHICAL_APP)
+includeProject("library-one", ProjectType.HIERARCHICAL_LIB)
+includeProject("library-two", ProjectType.HIERARCHICAL_LIB)
+includeProject("plugin-one-that-applies-binary-plugin", ProjectType.HIERARCHICAL_PLUGINS_THAT_APPLY_BINARY_PLUGINS)
+includeProject("plugin-two-that-applies-binary-plugin", ProjectType.HIERARCHICAL_PLUGINS_THAT_APPLY_BINARY_PLUGINS)
 
+includeBuild("${IncludedBuildType.HIERARCHICAL_STANDALONE_PLUGINS.path}/binary-plugins")
+includeBuild("${IncludedBuildType.HIERARCHICAL_STANDALONE_PLUGINS.path}/conventions-plugins")
+includeBuild("${IncludedBuildType.HIERARCHICAL_STANDALONE_PLUGINS.path}/included-build-plugins-that-apply-binary-plugins")
+includeBuild("${IncludedBuildType.HIERARCHICAL_STANDALONE_PLUGINS.path}/included-build-standalone-plugin-that-applies-binary-plugins")
+
+enum class IncludedBuildType(val path: String) {
+    STANDALONE_PROJECTS("standalone-projects"),
+    HIERARCHICAL_STANDALONE_PROJECTS("hierarchical-project-prototype/standalone-projects"),
+    HIERARCHICAL_STANDALONE_PLUGINS("hierarchical-project-prototype/plugins"),
+}
 
 enum class ProjectType(val path: String) {
-    LIB("libraries"),
-    APP("applications")
+    LIB("${IncludedBuildType.STANDALONE_PROJECTS.path}/libraries"),
+    APP("${IncludedBuildType.STANDALONE_PROJECTS.path}/applications"),
+    HIERARCHICAL_LIB("${IncludedBuildType.HIERARCHICAL_STANDALONE_PROJECTS.path}/libraries"),
+    HIERARCHICAL_APP("${IncludedBuildType.HIERARCHICAL_STANDALONE_PROJECTS.path}/applications"),
+    HIERARCHICAL_PLUGINS_THAT_APPLY_BINARY_PLUGINS("${IncludedBuildType.HIERARCHICAL_STANDALONE_PLUGINS.path}/plugins-that-apply-binary-plugins"),
 }
 
 fun includeProject(projectName: String, type: ProjectType) {
-    include(":${projectName}")
-    project(":${projectName}").projectDir = file(File("standalone-projects/${type.path}/${projectName}"))
+    val projectNamePrefix = type.path.replace("${File.separatorChar}", ":")
+    println("""
+
+        Old name: ${projectName}
+        New name: ${projectNamePrefix}:$projectName
+        Project name prefix: ${projectNamePrefix}, type: ${type.path}, project name: ${projectName}
+
+    """.trimIndent())
+    include(":${projectNamePrefix}:$projectName")
+    project(":${projectNamePrefix}:$projectName").projectDir = file(File("${type.path}/${projectName}"))
 }

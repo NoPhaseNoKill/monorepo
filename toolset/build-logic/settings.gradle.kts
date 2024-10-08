@@ -1,20 +1,6 @@
 rootProject.name = "build-logic"
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-    }
-}
-
-dependencyResolutionManagement {
-    repositories.gradlePluginPortal()
-}
-
-include("meta-byte-buddy")
-include("meta-gradle-utilities")
-include("kotlin-plugins")
-include("structural-plugins")
-
-
-enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+includeBuild("kotlin-plugins")
+includeBuild("structural-plugins")
+includeBuild("meta-gradle-utilities")
+includeBuild("meta-byte-buddy")

@@ -1,7 +1,7 @@
 package com.nophasenokill
 
 @InstrumentedAnnotation
-class ClassToBeInstrumentedAtRuntime {
+open class ClassToBeInstrumentedAtRuntime {
     override fun toString(): String {
         return "Uninstrumented"
     }

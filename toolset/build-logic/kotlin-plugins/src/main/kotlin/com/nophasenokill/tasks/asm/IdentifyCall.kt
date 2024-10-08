@@ -90,7 +90,7 @@ class IdentifyCall private constructor(
                     println("Unary operation on instruction: $insn")
                     sources.computeIfAbsent(
                         insn
-                    ) { x: AbstractInsnNode? -> HashSet() }
+                    ) { _: AbstractInsnNode? -> HashSet() }
                         .add(value)
                     return super.unaryOperation(insn, value)
                 }
@@ -122,7 +122,7 @@ class IdentifyCall private constructor(
                     println("Adding all values for instruction: $insn")
                     sources.computeIfAbsent(
                         insn
-                    ) { x: AbstractInsnNode? -> HashSet() }
+                    ) { _: AbstractInsnNode? -> HashSet() }
                         .addAll(values)
                 }
             }

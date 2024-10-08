@@ -4,15 +4,8 @@ plugins {
     alias(libs.plugins.kotlinDsl)
 }
 
-group = "com.nophasenokill"
+group = "com.nophasenokill.$name"
 version = "0.1.local-dev"
-
-
-val org.gradle.api.Project.`testing`: org.gradle.testing.base.TestingExtension get() =
-    (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("testing") as org.gradle.testing.base.TestingExtension
-
-
-val test by testing.suites.existing(JvmTestSuite::class)
 
 gradlePlugin {
     plugins {
@@ -65,6 +58,17 @@ gradlePlugin {
             id = "com.nophasenokill.incremental-test-plugin"
             implementationClass = "com.nophasenokill.IncrementalTestPlugin"
         }
+        create("minifyExternalDependenciesPlugin") {
+            id = "com.nophasenokill.minify-dependencies-plugin"
+            implementationClass = "com.nophasenokill.MinifyExternalDependenciesPlugin"
+        }
+
+        create("localPublishingPlugin") {
+            id = "com.nophasenokill.local-publishing-plugin"
+            implementationClass = "com.nophasenokill.LocalPublishingPlugin"
+        }
+
+
     }
 }
 
@@ -81,8 +85,11 @@ dependencies {
      */
     implementation(kotlin("gradle-plugin", libs.versions.kotlin.get()))
     implementation(kotlin("stdlib"))
-    implementation(projects.metaGradleUtilities)
-    implementation(projects.metaByteBuddy)
+    implementation(kotlin("reflect"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${libs.versions.coroutines.get()}")
+
+    implementation("com.nophasenokill.meta-byte-buddy:meta-byte-buddy:0.1.local-dev")
+    implementation("com.nophasenokill.meta-gradle-utilities:meta-gradle-utilities:0.1.local-dev")
     implementation("org.jetbrains.compose:compose-gradle-plugin:${libs.versions.composePlugin.get()}")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
 

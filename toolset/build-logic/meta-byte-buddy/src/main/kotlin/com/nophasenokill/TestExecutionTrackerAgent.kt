@@ -10,14 +10,48 @@ import net.bytebuddy.description.method.MethodDescription
 import net.bytebuddy.description.method.MethodList
 import net.bytebuddy.description.type.TypeDescription
 import net.bytebuddy.dynamic.DynamicType
+import net.bytebuddy.implementation.FixedValue
 import net.bytebuddy.implementation.Implementation
 import net.bytebuddy.jar.asm.*
 import net.bytebuddy.matcher.ElementMatchers
-import net.bytebuddy.matcher.ElementMatchers.nameStartsWith
+import net.bytebuddy.matcher.ElementMatchers.*
 import net.bytebuddy.pool.TypePool
 import net.bytebuddy.utility.JavaModule
 import java.io.File
 import java.lang.instrument.Instrumentation
+
+object Agent {
+    @JvmStatic
+    fun load(instrumentation: Instrumentation) {
+        AgentBuilder.Default()
+            .type(isAnnotatedWith(InstrumentedAnnotation::class.java))  // Filter for classes annotated with @ToString
+            .transform { builder, typeDescription, classloader, javaModule, protectionDomain ->
+                builder.method(named<NamedElement>("toString"))
+                    .intercept(FixedValue.value("Instrumented"))
+            }
+            .installOn(instrumentation)
+    }
+}
+
+object SecondaryAgent {
+    fun secondaryLoad(
+        testPrefixes: List<String>,
+        instrumentation: Instrumentation,
+    ) {
+        AgentBuilder.Default()
+            .type(testPrefixes.map { nameStartsWith<NamedElement>(it) }.reduce { acc, matcher -> acc.or(matcher) })
+            .transform { builder: DynamicType.Builder<*>, typeDescription: TypeDescription, classLoader: ClassLoader?, module: JavaModule?, protectionDomain ->
+                println("[TRACKER] Transforming class: ${typeDescription.name}")
+                builder
+                    .visit(
+                        AsmVisitorWrapper.ForDeclaredMethods()
+                            .method(any(), MyMethodVisitorWrapper())
+                    )
+                    .visit(MyAsmClassVisitorWrapper())
+            }
+            .installOn(instrumentation)
+    }
+}
 
 object TestExecutionTrackerAgent {
 
@@ -25,6 +59,8 @@ object TestExecutionTrackerAgent {
     fun premain(agentArgs: String?, instrumentation: Instrumentation) {
         println("[TRACKER] Test Execution Tracker Agent loaded")
         println("Agent args: $agentArgs")
+
+        Agent.load(instrumentation)
 
         val testsToRunProperty = System.getProperty("test.classpath")
 
@@ -46,22 +82,13 @@ object TestExecutionTrackerAgent {
 
             println("[TRACKER] Tests to run (class names): $testsToRun")
 
-            // Byte Buddy AgentBuilder setup
-            AgentBuilder.Default()
-                .type(testPrefixes.map { nameStartsWith<NamedElement>(it) }.reduce { acc, matcher -> acc.or(matcher) })
-                .transform { builder: DynamicType.Builder<*>, typeDescription: TypeDescription, classLoader: ClassLoader?, module: JavaModule?, protectionDomain ->
-                    println("[TRACKER] Transforming class: ${typeDescription.name}")
-                    builder
-                        .visit(AsmVisitorWrapper.ForDeclaredMethods()
-                            .method(ElementMatchers.any(), MyMethodVisitorWrapper())
-                        )
-                        .visit(MyAsmClassVisitorWrapper())
-                }
-                .installOn(instrumentation)
+            SecondaryAgent.secondaryLoad(testPrefixes, instrumentation)
         } else {
             println("[TRACKER] No test.classpath property found.")
         }
     }
+
+
 }
 
 class MyMethodVisitorWrapper : AsmVisitorWrapper.ForDeclaredMethods.MethodVisitorWrapper {

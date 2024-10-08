@@ -1,19 +1,17 @@
 package com.nophasenokill
 
-import MapTestToClassDigest_v1
 import com.nophasenokill.extensions.registerAndConfigureTask
-import com.nophasenokill.tasks.*
+import com.nophasenokill.tasks.ComputeClassDigestTask
+import com.nophasenokill.tasks.IncrementalTestTask
+import com.nophasenokill.tasks.MapTestToClassDigest_v2
 import com.nophasenokill.tasks.asm.ComputeInstructionsForSpecificMethodTask
-import org.gradle.api.NamedDomainObjectCollection
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.jvm.JvmTestSuite
-import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.api.tasks.testing.Test
-import org.gradle.kotlin.dsl.*
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kotlin.reflect.KClass
+import org.gradle.kotlin.dsl.getValue
+import org.gradle.kotlin.dsl.provideDelegate
+import org.gradle.kotlin.dsl.register
 
 class IncrementalTestPlugin: Plugin<Project> {
     override fun apply(project: Project) {
@@ -61,20 +59,17 @@ class IncrementalTestPlugin: Plugin<Project> {
                 /*
                     Fixes: https://docs.gradle.org/8.10.1/userguide/upgrading_version_8.html#test_task_default_classpath
                  */
-                val test by testing.suites.existing(JvmTestSuite::class)
+                val test by testing.suites.withType(JvmTestSuite::class.java)
 
                 val incrementalTest = project.registerAndConfigureTask<IncrementalTestTask>("incrementalTest") {
                     dependsOn(mapTestToClassDigests_v2)
-                    testClassesDirs = files(test.map { it.sources.output.classesDirs })
-                    classpath = files(test.map { it.sources.runtimeClasspath })
+                    testClassesDirs = files(test.sources.output.classesDirs )
+                    classpath = files(test.sources.runtimeClasspath)
                 }
                 project.tasks.named("check").get().dependsOn(incrementalTest)
             }
         }
 
-    val Project.`testing`: org.gradle.testing.base.TestingExtension get() =
+    val Project.testing: org.gradle.testing.base.TestingExtension get() =
         (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("testing") as org.gradle.testing.base.TestingExtension
-
-    fun <T : Any, C : NamedDomainObjectCollection<T>, U : T> C.existing(type: KClass<U>): ExistingDomainObjectDelegateProviderWithType<out C, U> =
-        ExistingDomainObjectDelegateProviderWithType.of(this, type)
 }

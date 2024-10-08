@@ -45,7 +45,7 @@ class ComponentPlugin: Plugin<Settings> {
                 throw GradleException(message)
             }
 
-            settings.gradle.beforeSettings {
+            gradle.beforeSettings {
                 pluginManagement.repositories {
                     google()
                     mavenCentral()
@@ -55,6 +55,7 @@ class ComponentPlugin: Plugin<Settings> {
                 dependencyResolutionManagement {
                     repositories {
                         mavenCentral()
+                        gradlePluginPortal()
                     }
                 }
             }

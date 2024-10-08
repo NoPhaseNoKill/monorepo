@@ -11,6 +11,7 @@ import net.bytebuddy.pool.TypePool
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 
@@ -23,20 +24,22 @@ object ClassToBeInstrumentedAtRuntimeTest {
         assertEquals(expected, annotatedClass.toString())
     }
 
+
+
     @Test
+    @Disabled("Will throw warnings due to dynamically loading")
     fun `testing byte buddy`() {
+
         class Foo {
             fun m(): String {
                 return "foo"
             }
         }
 
-        class Bar {
-            fun m(): String {
-                return "bar"
-            }
-        }
 
+        /*
+            Required to be loaded statically
+         */
         ByteBuddyAgent.install()
         val foo = Foo()
         ByteBuddy()

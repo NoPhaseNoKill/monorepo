@@ -1,3 +1,3 @@
 package com.nophasenokill
 
-class Bar { }
+class Bar {}

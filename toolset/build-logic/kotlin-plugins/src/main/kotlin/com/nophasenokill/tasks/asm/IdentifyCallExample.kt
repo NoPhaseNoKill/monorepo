@@ -1,5 +1,6 @@
 package com.nophasenokill.tasks.asm
 
+import java.util.*
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.tree.AbstractInsnNode
 import org.objectweb.asm.tree.ClassNode
@@ -50,42 +51,43 @@ class IdentifyCallExample {
         }
 
         private fun tryHead(b: IntArray, lo: Int, hi: Int): Boolean {
-            var lo = lo
+            var localLo = lo
             val head = branches.removeFirst()
             try {
                 if (head[1] > b[0]) return false
-                if (branches.isEmpty() || (branches.first[0].also { lo = it }) >= b[1]) {
+                if (branches.isEmpty() || (branches.first[0].also { localLo = it }) >= b[1]) {
                     branches.addFirst(b)
                     return true
-                } else return if ((b[0] > lo && b[1] < hi) && (b[0] + b[1] shr 1) > ((lo + hi) shr 1)) tryTail(
+                } else return if ((b[0] > localLo && b[1] < hi) && (b[0] + b[1] shr 1) > ((localLo + hi) shr 1)) tryTail(
                     b,
-                    lo,
+                    localLo,
                     hi
-                ) else tryHead(b, lo, hi)
+                ) else tryHead(b, localLo, hi)
             } finally {
                 branches.addFirst(head)
             }
         }
 
         private fun tryTail(b: IntArray, lo: Int, hi: Int): Boolean {
-            var hi = hi
+            var localHi = hi
             val tail = branches.removeLast()
             try {
                 if (tail[0] < b[1]) return false
-                if (branches.isEmpty() || (branches.last[1].also { hi = it }) <= b[0]) {
+                if (branches.isEmpty() || (branches.last[1].also { localHi = it }) <= b[0]) {
                     branches.addLast(b)
                     return true
-                } else return if (b[0] > lo && b[1] < hi && (b[0] + b[1]) shr 1 > ((lo + hi) shr 1)) tryTail(
+                } else return if (b[0] > lo && b[1] < localHi && (b[0] + b[1]) shr 1 > ((lo + localHi) shr 1)) tryTail(
                     b,
                     lo,
-                    hi
-                ) else tryHead(b, lo, hi)
+                    localHi
+                ) else tryHead(b, lo, localHi)
             } finally {
                 branches.addLast(tail)
             }
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     companion object {
         @JvmStatic
         fun anotherMethod1(str: String?, oof: String?): Boolean {

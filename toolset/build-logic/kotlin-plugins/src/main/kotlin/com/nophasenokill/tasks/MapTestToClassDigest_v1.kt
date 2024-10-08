@@ -94,7 +94,6 @@ abstract class MapTestToClassDigest_v1 : DefaultTask() {
 
             println("Test class: ${testClass.name}")
             println("fileName: ${fileName}")
-            val testName = testClass.nameWithoutExtension
             val relatedProductionClasses = findProductionClassesUsedInTest(testClass)
             fileName to relatedProductionClasses
         }
