@@ -1,6 +1,6 @@
 
 
-rootProject.name = "gradle-composite-build-example"
+rootProject.name = "jvm"
 
 /*
     Ensures consistent versions across included builds and subprojects
