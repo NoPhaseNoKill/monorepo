@@ -1,6 +1,6 @@
 
 
-rootProject.name = "gradle-composite-build-example"
+rootProject.name = "creme-de-la-creme-project-layout"
 
 /*
     Ensures consistent versions across included builds and subprojects
@@ -69,7 +69,7 @@ rootProject.name = "gradle-composite-build-example"
             }
  */
 pluginManagement {
-    includeBuild("creme-de-la-creme-project-layout/build-logic")
+    includeBuild("build-logic")
     repositories {
         gradlePluginPortal()
     }
@@ -79,35 +79,14 @@ plugins {
     id("root-settings")
 }
 
-includeBuild("creme-de-la-creme-project-layout/some-other-build")
+// includeBuild("build-logic")
+// includeBuild("other")
+// includeBuild("other/build-logic") { name = "other-build-logic" }
+// includeBuild("other") { name = "other-root"}
+includeBuild("some-other-build")
+include(":some-subproject-that-depends-on-local-plugin")
+include(":some-subproject-with-no-dependencies-on-local-plugin")
 
-includeProject("some-subproject-that-depends-on-local-plugin", ProjectType.CREME_DE_LA_CREME_PROJECT_LAYOUT)
-includeProject("some-subproject-with-no-dependencies-on-local-plugin", ProjectType.CREME_DE_LA_CREME_PROJECT_LAYOUT)
-
-// include(":some-subproject-that-depends-on-local-plugin")
-// project(":some-subproject-with-no-dependencies-on-local-plugin").projectDir = file(File("creme-de-la-creme-project-layout/some-subproject-that-depends-on-local-plugin"))
-//
-// include(":some-subproject-with-no-dependencies-on-local-plugin")
-// project(":some-subproject-with-no-dependencies-on-local-plugin").projectDir = file(File("creme-de-la-creme-project-layout/some-subproject-with-no-dependencies-on-local-plugin"))
-
-enum class ProjectType(val path: String) {
-    CREME_DE_LA_CREME_PROJECT_LAYOUT("creme-de-la-creme-project-layout"),
-}
-
-fun includeProject(projectName: String, type: ProjectType) {
-    val projectNamePrefix = type.path.replace("${File.separatorChar}", ":")
-    println(
-        """
-
-        Old name: ${projectName}
-        New name: ${projectNamePrefix}:$projectName
-        Project name prefix: ${projectNamePrefix}, type: ${type.path}, project name: ${projectName}
-
-    """.trimIndent()
-    )
-    include(":${projectNamePrefix}:$projectName")
-    project(":${projectNamePrefix}:$projectName").projectDir = file(File("${type.path}/${projectName}"))
-}
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

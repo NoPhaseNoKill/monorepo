@@ -1,0 +1,8 @@
+println "Hello from some plugin"
+
+gradle.lifecycle.beforeProject {
+    // apply(plugin = "base")
+    apply { plugin = "base" }
+    // apply(plugin = "base")
+    println("Hello from ${file(".")}")
+}
