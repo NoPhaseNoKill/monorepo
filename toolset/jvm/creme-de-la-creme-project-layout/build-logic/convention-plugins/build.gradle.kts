@@ -15,7 +15,7 @@ repositories {
     mavenCentral()
 }
 
-val lines = file("../../kotlin-meta-dependencies.txt").readLines()
+val lines = file("../../../kotlin-meta-dependencies.txt").readLines()
 val kotlinVersion = lines.first { it.contains("kotlinJvmVersion") }.substringAfter("=").trimStart()
 val foojayResolverVersion = lines.first { it.contains("fooJayResolverVersion") }.substringAfter("=").trimStart()
 

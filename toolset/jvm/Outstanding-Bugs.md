@@ -8,3 +8,4 @@ Registrar of lodged bugs/bugs faced during development:
 5. Fix undeclared build service - https://youtrack.jetbrains.com/issue/KT-63165/Gradle-checkKotlinGradlePluginConfigurationErrors-uses-deprecated-Gradle-behavior
 6. Configuration avoidance not working for compose: https://youtrack.jetbrains.com/issue/KT-69330/KotlinCompile-friendPathsSet-property-is-racy-due-causing-build-cache-invalidation
 7. Sdkman bug: https://github.com/sdkman/sdkman-cli/issues/1312
+8. Configuration cache entry unnecessary creation bug: https://github.com/gradle/gradle/issues/30889
