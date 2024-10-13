@@ -1,0 +1,7 @@
+
+
+tasks.register("buildAll") {
+    List<String> exclusions = ["modules"]
+    dependsOn(gradle.includedBuilds.findAll { !exclusions.contains(it.name) }.collect { it.task(":build") })
+    dependsOn(subprojects.findAll {!exclusions.contains(it.name) }.collect { it.tasks.named("build") })
+}

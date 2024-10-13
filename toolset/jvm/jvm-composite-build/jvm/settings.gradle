@@ -1,0 +1,30 @@
+
+
+pluginManagement {
+    includeBuild("modules/meta-plugins")
+    repositories {
+        gradlePluginPortal()
+        maven {
+            url = uri("${rootDir}/local-repo")
+        }
+    }
+}
+
+plugins {
+    /*
+        Must be published to $rootDir/local-repo before this can get resolved
+     */
+    id("com.nophasenokill.root-settings-plugin")
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'jvm'
+
+
+
+
