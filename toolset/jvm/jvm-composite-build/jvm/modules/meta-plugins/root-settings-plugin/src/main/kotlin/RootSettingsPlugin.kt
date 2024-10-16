@@ -1,6 +1,13 @@
 import org.gradle.api.Plugin
 import org.gradle.api.initialization.Settings
 import com.gradle.develocity.agent.gradle.DevelocityPlugin
+import org.gradle.api.Action
+import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.plugins.ObjectConfigurationAction
+import org.gradle.api.plugins.PluginAware
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.toolchain.JvmImplementation
+import org.gradle.jvm.toolchain.JvmVendorSpec
 import org.gradle.kotlin.dsl.develocity
 import java.io.File
 
@@ -8,8 +15,41 @@ class RootSettingsPlugin : Plugin<Settings> {
 
     override fun apply(settings: Settings) {
         settings.run {
+            configureSubprojectsWithJavaToolchain()
+            configureSubprojectsWithBasePlugin()
             configureBuildStructure()
             configureDevelocity()
+        }
+    }
+
+    private fun Settings.configureSubprojectsWithJavaToolchain() {
+
+        val javaExtension = extensions.findByType(JavaPluginExtension::class.java)
+
+        gradle.lifecycle.beforeProject { project ->
+            project.pluginManager.withPlugin("org.gradle.java-base") {
+                javaExtension?.apply{
+
+                    toolchain {
+                        it.languageVersion.set(JavaLanguageVersion.of(21))
+                        it.vendor.set(JvmVendorSpec.ADOPTIUM)
+                        it.implementation.set(JvmImplementation.VENDOR_SPECIFIC)
+                    }
+
+                    consistentResolution {
+                        it.useCompileClasspathVersions()
+                    }
+
+                    withSourcesJar()
+                    withJavadocJar()
+                }
+            }
+        }
+    }
+
+    private fun Settings.configureSubprojectsWithBasePlugin() {
+        gradle.lifecycle.beforeProject { project ->
+            project.apply ("plugin" to "base")
         }
     }
 
@@ -23,10 +63,8 @@ class RootSettingsPlugin : Plugin<Settings> {
             val type: ProjectCategory = customProject.category
             val pluginName: String = customProject.path
 
-            val projectNamePrefix = type.path.replace("${File.separatorChar}", ":")
-
-            include(":${projectNamePrefix}:$pluginName")
-            project(":${projectNamePrefix}:$pluginName").projectDir = File("${type.path}/${customProject.path}")
+            include(":$pluginName")
+            project(":$pluginName").projectDir = File("${type.path}/${customProject.path}")
         }
 
         combined
@@ -139,4 +177,6 @@ val combined: Set<CustomProject> =
             PluginName.entries.toSet()
 
 
-
+fun PluginAware.apply(vararg options: Pair<String, Any?>) {
+    apply(mapOf(*options))
+}
