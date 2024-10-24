@@ -1,3 +1,4 @@
+import java.nio.file.Paths
 
 plugins {
     `java-gradle-plugin`
@@ -8,6 +9,8 @@ plugins {
 kotlin {
     jvmToolchain(21)
 }
+
+
 
 group = "com.nophasenokill"
 version = "1.0.0-local"
@@ -31,22 +34,56 @@ repositories {
     gradlePluginPortal()
 }
 
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        maven(providers.environmentVariable("PUBLISHING_REPOSITORY_URL").getOrElse("/home/gardo/projects/monorepo/toolset/jvm/jvm-composite-build/jvm/local-repo"))
+gradle.settingsEvaluated {
+    buildscript {
+
+        repositories {
+            gradlePluginPortal()
+            maven {
+                // Determine the root project of the full build
+                val rootProjectDir = if (gradle.parent == null) {
+                    // This block means we're in the root build
+                    project.rootDir
+                } else {
+                    // This block means We are in an included build, we need to get the top-level root project
+                    gradle.parent?.rootProject?.rootDir
+                }
+
+                // Set the URL to point to the local-repo in the root project
+                url =  uri(File(rootProjectDir, "local-repo"))
+            }
+        }
+
+        dependencies {
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1")
+        }
+
+        configurations.all {
+            resolutionStrategy {
+                force("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+            }
+        }
     }
 
-    dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1")
-    }
+    publishing.repositories {
 
-    configurations.all {
-        resolutionStrategy {
-            force("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+        maven {
+            // Determine the root project of the full build
+            val rootProjectDir = if (gradle.parent == null) {
+                // We are in the root build
+                project.rootDir
+            } else {
+                // We are in an included build, get the top-level root project
+                gradle.parent?.rootProject?.rootDir
+            }
+
+            // Set the URL to point to the local-repo in the root project
+            url =  uri(File(rootProjectDir, "local-repo"))
         }
     }
 }
+
+
 
 subprojects {
     configurations.all {
@@ -55,29 +92,19 @@ subprojects {
         }
     }
 }
-
-
-//
 publishing.publications.create<MavenPublication>("mavenJava") {
-
-
     from(components["java"])
     versionMapping { allVariants { fromResolutionResult() } }
 }
 
-publishing.repositories {
 
-    maven(providers.environmentVariable("PUBLISHING_REPOSITORY_URL").getOrElse("${rootDir}/../local-repo"))
-}
 
 // Because the jar is shared with the root build, this ensures we get a fresh copy each time the project changes
 tasks.publish {
     dependsOn(tasks.jar)
 }
-//
+
 dependencies {
-//     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
-//     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1") {
         isTransitive = false
     }
@@ -88,6 +115,7 @@ dependencies {
         isTransitive = false
     }
 }
-//
-//
-//
+
+tasks.build {
+    dependsOn(tasks.publish)
+}

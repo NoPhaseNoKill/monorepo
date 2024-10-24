@@ -9,11 +9,107 @@ import org.gradle.jvm.toolchain.JvmVendorSpec
 import org.gradle.kotlin.dsl.develocity
 import org.gradle.toolchains.foojay.FoojayToolchainsPlugin
 import java.io.File
+import java.net.URI
+import java.nio.file.Paths
 
 class RootSettingsPlugin : Plugin<Settings> {
 
     override fun apply(settings: Settings) {
+
+
+
         settings.run {
+
+            println("Hash code: ${settings.getBuildscript().hashCode()}")
+            println("Hash code: ${buildscript.hashCode()}")
+
+            /*
+                      gradle. projectsLoaded {
+                        rootProject.buildscript {
+                          repositories {
+                            //...
+                          }
+                          dependencies {
+                            //...
+                          }
+                        }
+                      }
+             */
+            // // settings.gradle.projectsLoaded { project ->
+            //     settings.buildscript.configurations.all { configuration ->
+            //         if(configuration.name == "classpath") {
+            //             configuration.allDependencyConstraints.find { it.name.contains("stdlib") }?.version { version ->
+            //                 version.strictly("2.1.0-Beta1") }
+            //             val constraints =configuration.allDependencyConstraints
+            //             constraints.forEach { constraint ->
+            //                 constraint.version { constraint ->
+            //                     constraint.strictly("2.1.0-Beta1")
+            //                 }
+            //             }
+            //             println("Config build deps: ${configuration.allDependencyConstraints}")
+            //             // this.buildscript.dependencies.constraints.add("classpath", "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+            //             // println("Hierarchy: ${configuration.getHierarchy()}")
+            //             // val resolved = configuration.resolve()
+            //
+            //         }
+            //     }
+            // // }
+
+            // settings.gradle.settingsEvaluated {
+            //     this.buildscript.configurations.all { configuration ->
+            //         println("Configuration: ${configuration.name}")
+            //     }
+            // }
+
+
+            settings.buildscript.configurations.all { configuration ->
+                // configuration.resolutionStrategy.forcedModules.forEach { forcedModule ->
+                //     if(forcedModule.name.contains("kotlin-stdlib")) {
+                //         forcedModule.apply {  }
+                //     }
+                // }
+                println("Forced modules for ${configuration.name}: ${configuration.resolutionStrategy.forcedModules}")
+            }
+
+            pluginManagement {
+                buildscript.apply {
+                    configurations.all { configuration ->
+                        configuration.resolutionStrategy.force("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+                    }
+                }
+            }
+
+            settings.gradle.settingsEvaluated {
+
+                val rootPath = Paths.get(settings.rootDir.absolutePath)
+                val settingsPath = Paths.get(settings.settingsDir.absolutePath)
+                val environmentVariable = settings.providers.environmentVariable("PUBLISHING_REPOSITORY_URL")
+
+                // Compute the relative path from the settings directory to the root directory
+                val relativePath = settingsPath.relativize(rootPath).toString()
+                val repo = environmentVariable.getOrElse("$relativePath/local-repo")
+
+                settings.pluginManagement.apply {
+                    repositories.apply {
+
+                        maven { action ->
+                            action.setUrl(
+                                URI(repo)
+                            )
+                        }
+                    }
+
+                    // Enforce Kotlin version for plugins
+                    resolutionStrategy.apply {
+                        eachPlugin { plugin ->
+                            if (plugin.requested.id.id.startsWith("org.jetbrains.kotlin")) {
+                                plugin.useVersion("2.1.0-Beta1")
+                            }
+                        }
+                    }
+                }
+            }
+
             configureBuildScriptRepo()
             configureMavenLocalRepoPlugin()
             configureSubprojectsWithJavaToolchain()
