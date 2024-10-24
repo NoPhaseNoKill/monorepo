@@ -39,15 +39,15 @@ class RootSettingsPlugin : Plugin<Settings> {
             //     settings.buildscript.configurations.all { configuration ->
             //         if(configuration.name == "classpath") {
             //             configuration.allDependencyConstraints.find { it.name.contains("stdlib") }?.version { version ->
-            //                 version.strictly("2.1.0-Beta1") }
+            //                 version.strictly("2.0.21") }
             //             val constraints =configuration.allDependencyConstraints
             //             constraints.forEach { constraint ->
             //                 constraint.version { constraint ->
-            //                     constraint.strictly("2.1.0-Beta1")
+            //                     constraint.strictly("2.0.21")
             //                 }
             //             }
             //             println("Config build deps: ${configuration.allDependencyConstraints}")
-            //             // this.buildscript.dependencies.constraints.add("classpath", "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+            //             // this.buildscript.dependencies.constraints.add("classpath", "org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
             //             // println("Hierarchy: ${configuration.getHierarchy()}")
             //             // val resolved = configuration.resolve()
             //
@@ -74,7 +74,7 @@ class RootSettingsPlugin : Plugin<Settings> {
             pluginManagement {
                 buildscript.apply {
                     configurations.all { configuration ->
-                        configuration.resolutionStrategy.force("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+                        configuration.resolutionStrategy.force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
                     }
                 }
             }
@@ -103,7 +103,7 @@ class RootSettingsPlugin : Plugin<Settings> {
                     resolutionStrategy.apply {
                         eachPlugin { plugin ->
                             if (plugin.requested.id.id.startsWith("org.jetbrains.kotlin")) {
-                                plugin.useVersion("2.1.0-Beta1")
+                                plugin.useVersion("2.0.21")
                             }
                         }
                     }
@@ -135,7 +135,7 @@ class RootSettingsPlugin : Plugin<Settings> {
         pluginManagement.run {
             resolutionStrategy.eachPlugin { plugin ->
                 if (plugin.requested.id.id.startsWith("org.jetbrains.kotlin")) {
-                    plugin.useVersion("2.1.0-Beta1")
+                    plugin.useVersion("2.0.21")
                 }
             }
 

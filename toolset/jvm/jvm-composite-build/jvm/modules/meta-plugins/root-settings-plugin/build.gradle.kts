@@ -3,7 +3,7 @@ import java.nio.file.Paths
 plugins {
     `java-gradle-plugin`
     id("org.gradle.maven-publish")
-    id("org.jetbrains.kotlin.jvm") version ("2.1.0-Beta1")
+    id("org.jetbrains.kotlin.jvm") version ("2.0.21")
 }
 
 kotlin {
@@ -55,12 +55,12 @@ gradle.settingsEvaluated {
         }
 
         dependencies {
-            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1")
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21")
         }
 
         configurations.all {
             resolutionStrategy {
-                force("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+                force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
             }
         }
     }
@@ -88,7 +88,7 @@ gradle.settingsEvaluated {
 subprojects {
     configurations.all {
         resolutionStrategy {
-            force("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+            force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
         }
     }
 }
@@ -105,7 +105,7 @@ tasks.publish {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1") {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.21") {
         isTransitive = false
     }
     implementation("com.gradle:develocity-gradle-plugin:3.18.1") {
