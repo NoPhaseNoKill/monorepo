@@ -90,10 +90,10 @@ val isAtLeastGroovy4 = VersionNumber.parse(groovyVersion).major >= 4
 val codenarcVersion = if (isAtLeastGroovy4) "3.1.0-groovy-4.0" else "3.1.0"
 
 dependencies {
-    rules("gradlebuild:code-quality-rules") {
+    rules("com.nophasenokill:code-quality") {
         because("Provides rules defined in XML files")
     }
-    codenarc("gradlebuild:code-quality-rules") {
+    codenarc("com.nophasenokill:code-quality") {
         because("Provides the IntegrationTestFixturesRule implementation")
     }
     codenarc("org.codenarc:CodeNarc:$codenarcVersion")

@@ -5,7 +5,7 @@ plugins {
     `java-platform`
 }
 
-group = "gradlebuild"
+group = "com.nophasenokill"
 
 description = "Provides a platform that constrains versions of external dependencies used by Gradle"
 

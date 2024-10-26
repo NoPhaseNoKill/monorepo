@@ -14,7 +14,7 @@ plugins {
 java.configureJavaToolChain()
 
 dependencies {
-    api(platform("gradlebuild:build-platform"))
+    api(platform("com.nophasenokill:build-platform"))
     implementation("com.nophasenokill:gradle-plugin")
 
     testImplementation("org.junit.vintage:junit-vintage-engine")

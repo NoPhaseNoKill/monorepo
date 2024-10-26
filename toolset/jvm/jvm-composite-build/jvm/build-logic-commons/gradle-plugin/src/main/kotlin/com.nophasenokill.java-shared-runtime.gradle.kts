@@ -25,7 +25,7 @@ testing {
         val test by getting(JvmTestSuite::class) {
             useSpock()
             dependencies {
-                implementation(platform("gradlebuild:build-platform"))
+                implementation(platform("com.nophasenokill:build-platform"))
             }
         }
     }

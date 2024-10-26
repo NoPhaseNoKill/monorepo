@@ -25,6 +25,5 @@ include("root-build")
 include("cleanup")
 include("idea")
 include("lifecycle")
-include("documentation")
 
 rootProject.name = "build-logic"
