@@ -183,7 +183,7 @@ fun enforceJavaCompatibility(targetVersion: Provider<Int>, useRelease: Provider<
                 } else {
                     // To compile Java 6 and 7 sources, we need an older compiler
                     // We choose 11 since it supports both of these versions.
-                    provider { JavaLanguageVersion.of(11) }
+                    provider { JavaLanguageVersion.of(21) }
                 }
             }
             vendor = JvmVendorSpec.ADOPTIUM
@@ -213,7 +213,7 @@ fun enforceGroovyCompatibility(targetVersion: Provider<Int>) {
                 // We do not expect dev machines to have Java 6 or 7 installed,
                 // so when compiling this code, we accept the risk of seeing
                 // higher standard library classes.
-                JavaLanguageVersion.of(maxOf(it, 8))
+                JavaLanguageVersion.of(maxOf(it, 21))
             }
             // TODO: Use a stable vendor. CI currently specifies different vendors for Java 8 depending on the OS
         }

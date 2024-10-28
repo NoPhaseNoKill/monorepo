@@ -12,7 +12,7 @@ plugins {
 gradle.lifecycle.beforeProject {
     pluginManager.withPlugin("java-base") {
         the<JavaPluginExtension>().toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
+            languageVersion = JavaLanguageVersion.of(21)
             vendor = JvmVendorSpec.ADOPTIUM
         }
     }

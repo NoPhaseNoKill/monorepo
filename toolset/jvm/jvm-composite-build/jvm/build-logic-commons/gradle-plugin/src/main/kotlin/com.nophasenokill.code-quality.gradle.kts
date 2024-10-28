@@ -118,11 +118,16 @@ checkstyle {
 }
 
 plugins.withType<GroovyBasePlugin> {
+
     the<SourceSetContainer>().all {
+        val name = this.name
         tasks.register<Checkstyle>(getTaskName("checkstyle", "groovy")) {
             config = configFile("checkstyle-groovy.xml")
             source(allGroovy)
             classpath = compileClasspath
+            val name2 = this@all.name
+            logger.lifecycle("Hashcode: ${name}")
+            logger.lifecycle("Hashcode2: ${name2}")
             reports.xml.outputLocation = checkstyle.reportsDir.resolve("${this@all.name}-groovy.xml")
         }
     }

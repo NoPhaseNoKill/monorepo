@@ -26,12 +26,11 @@ fun Project.wrapperUpdateTask(name: String, label: String) {
     }
 
     tasks.register(configureWrapperTaskName) {
-        doLast {
-            val jsonText = URI("https://services.gradle.org/versions/$label").toURL().readText()
-            val versionInfo = Gson().fromJson(jsonText, VersionDownloadInfo::class.java)
-            println("updating wrapper to $label version: ${versionInfo.version} (downloadUrl: ${versionInfo.downloadUrl})")
-            wrapperTask.get().distributionUrl = versionInfo.downloadUrl
-        }
+
+        val jsonText = URI("https://services.gradle.org/versions/$label").toURL().readText()
+        val versionInfo = Gson().fromJson(jsonText, VersionDownloadInfo::class.java)
+        val task = wrapperTask.get()
+        task.distributionUrl = versionInfo.downloadUrl
     }
 }
 

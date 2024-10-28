@@ -35,7 +35,7 @@ fun <T : AbstractBuildScanInfoCollectingService> Project.registerBuildScanInfoCo
             val buildService: Provider<T> = gradle.sharedServices.registerIfAbsent("${klass.simpleName}-$rootProjectName", klass) {
                 parameters.monitoredTaskPaths = allTasks.filter(taskFilter).map { if (isInBuildLogic) ":build-logic${it.path}" else it.path }.toSet()
             }
-            println("Does it get here?")
+
             gradle.serviceOf<BuildEventsListenerRegistry>().onTaskCompletion(buildService)
             gradleRootProject.extensions.extraProperties.set("collectedInfo-${klass.simpleName}-${rootProjectName}", buildService.get().collectedInformation)
 

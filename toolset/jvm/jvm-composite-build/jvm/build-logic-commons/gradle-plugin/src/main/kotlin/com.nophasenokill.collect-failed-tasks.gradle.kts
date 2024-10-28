@@ -10,7 +10,6 @@ import java.util.concurrent.CopyOnWriteArrayList
 registerBuildScanInfoCollectingService(CollectFailedTaskPathsBuildService::class.java, ::shouldBeReportedAsTeamCityBuildProblem) { failedTasksInBuildLogic, failedTasksInMainBuild ->
 
 
-    println("Gets here??")
     buildScanPublished {
             ((failedTasksInBuildLogic as List<*>) + (failedTasksInMainBuild as List<*>)).forEach {
                 println("##teamcity[buildProblem description='${buildScanUri}/console-log?task=$it']")

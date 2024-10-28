@@ -90,7 +90,7 @@ fun DistributionTest.setJvmArgsOfTestJvm() {
     jvmArgs("-Xmx${project.the<IntegrationTestExtension>().testJvmXmx.get()}", "-XX:+HeapDumpOnOutOfMemoryError")
 
     val testJavaVersion = JavaLanguageVersion.of(project.testJavaVersion)
-    if (!testJavaVersion.canCompileOrRun(8)) {
+    if (!testJavaVersion.canCompileOrRun(21)) {
         jvmArgs("-XX:MaxPermSize=768m")
     }
 }
