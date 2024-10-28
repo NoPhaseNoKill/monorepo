@@ -2,16 +2,11 @@
 rootProject.name = "jvm"
 
 pluginManagement {
-    includeBuild("plugins/first-loaded")
-    includeBuild("plugins/second-loaded")
-    includeBuild("plugins/third-loaded")
+    includeBuild("plugins/non-meta-plugins")
+    includeBuild("plugins/custom-plugins")
+    includeBuild("plugins/combinatory-plugins")
 }
 
-
-includeBuild("plugins/first-loaded")
-includeBuild("plugins/second-loaded")
-includeBuild("plugins/third-loaded")
-
-plugins {
-    id("first-loaded-plugin")
-}
+includeBuild("plugins/non-meta-plugins")
+includeBuild("plugins/custom-plugins")
+includeBuild("plugins/combinatory-plugins")

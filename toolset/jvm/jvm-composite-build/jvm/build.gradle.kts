@@ -1,18 +1,6 @@
 
-buildscript {
-    dependencies {
-        classpath("com.nophasenokill.plugins:second-loaded:0.1.local-dev")
-        classpath("com.nophasenokill.plugins:third-loaded:0.1.local-dev")
-    }
-}
-
 plugins {
-    id("second-loaded-plugin")
-    id("third-loaded-plugin")
-    id("java")
-}
-
-dependencies {
-    implementation("com.nophasenokill.plugins:second-loaded:0.1.local-dev")
-    implementation("com.nophasenokill.plugins:third-loaded:0.1.local-dev")
+    id("base")
+    id("com.nophasenokill.non-meta-plugins.greeting") version "1.0"
+    id("com.nophasenokill.custom-plugins.greeting") version "1.0"
 }
