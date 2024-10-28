@@ -1,6 +1,11 @@
 
-plugins {
-    id("base")
-    id("com.nophasenokill.non-meta-plugins.greeting") version "1.0"
-    id("com.nophasenokill.custom-plugins.greeting") version "1.0"
+
+tasks.register("buildAll") {
+    gradle.includedBuilds.map { it.task(":build")}
+    gradle.allprojects { tasks.named("build") }
+}
+
+tasks.register("cleanAll") {
+    gradle.includedBuilds.map { it.task(":clean")}
+    gradle.allprojects { tasks.named("clean") }
 }

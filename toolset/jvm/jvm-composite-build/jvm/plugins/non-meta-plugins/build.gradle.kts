@@ -16,11 +16,20 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        create("simplePlugin") {
-            id = "com.nophasenokill.non-meta-plugins.greeting"
-            implementationClass = "com.nophasenokill.NonMetaGreetingPlugin"
+        /*
+            BEWARE:
+                Name specifically in this context is NOT the same as project.name a
+                nd WILL catch you out if you're not careful
+         */
+        create(lowerCaseName("${group}.NonMetaGreetingPlugin")) {
+            id = "${group}.${project.name}.greeting" // project.name !== name in this context
+            implementationClass = "${group}.NonMetaGreetingPlugin"
         }
     }
+}
+
+fun lowerCaseName (name: String): String {
+    return name.replaceFirstChar { it.lowercase() }
 }
 
 publishing {
@@ -29,4 +38,13 @@ publishing {
             url = uri(layout.buildDirectory.dir("repo"))
         }
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
+    dependsOn("publish")
+}
+
+tasks.build {
+    finalizedBy("publish")
 }

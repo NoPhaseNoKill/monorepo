@@ -16,11 +16,20 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        create("simplePlugin") {
-            id = "com.nophasenokill.custom-plugins.greeting"
-            implementationClass = "com.nophasenokill.CustomGreetingPlugin"
+        /*
+            BEWARE:
+                Name specifically in this context is NOT the same as project.name a
+                nd WILL catch you out if you're not careful
+         */
+        create(lowerCaseName("${group}.CustomGreetingPlugin")) {
+            id = "${group}.${project.name}.greeting" // project.name !== name in this context
+            implementationClass = "${group}.CustomGreetingPlugin"
         }
     }
+}
+
+fun lowerCaseName (name: String): String {
+    return name.replaceFirstChar { it.lowercase() }
 }
 
 publishing {
@@ -30,3 +39,13 @@ publishing {
         }
     }
 }
+
+tasks.test {
+    useJUnitPlatform()
+    dependsOn("publish")
+}
+
+tasks.build {
+    finalizedBy("publish")
+}
+
