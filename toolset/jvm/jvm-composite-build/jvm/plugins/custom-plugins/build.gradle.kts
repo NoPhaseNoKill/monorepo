@@ -40,12 +40,5 @@ publishing {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
-    dependsOn("publish")
-}
 
-tasks.build {
-    finalizedBy("publish")
-}
 

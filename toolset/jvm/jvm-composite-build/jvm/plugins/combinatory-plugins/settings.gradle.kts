@@ -1,5 +1,8 @@
 
 pluginManagement {
+
+    includeBuild("../custom-plugins")
+    includeBuild("../non-meta-plugins")
     repositories {
         maven {
             val nophasenokillPluginPrefix: String? by settings
