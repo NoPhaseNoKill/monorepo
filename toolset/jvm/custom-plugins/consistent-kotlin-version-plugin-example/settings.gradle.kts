@@ -274,10 +274,8 @@ gradle.lifecycle.beforeProject {
 
     tasks.register("gatherProjectDependencies") {
 
-        // Define the output directory
         val outputDir = layout.buildDirectory.dir("custom-tasks/gather-project-dependencies")
 
-        // Define the task output
         outputs.dir(outputDir)
 
         val projectConfigs = project.configurations.toSet()
