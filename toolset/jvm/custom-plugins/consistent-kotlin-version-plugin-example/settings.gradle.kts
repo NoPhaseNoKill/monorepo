@@ -39,7 +39,7 @@ pluginManagement {
                     this.resolutionStrategy {
                         eachDependency {
 
-                            if(this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
+                            if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
                                 this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
                             }
 
@@ -134,7 +134,7 @@ gradle.lifecycle.beforeProject {
                 this.resolutionStrategy {
                     eachDependency {
 
-                        if(this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
+                        if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
                             this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
                         }
 
@@ -175,7 +175,7 @@ gradle.lifecycle.beforeProject {
                 this.resolutionStrategy {
                     eachDependency {
 
-                        if(this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
+                        if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
                             this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
                         }
 
@@ -220,7 +220,7 @@ gradle.lifecycle.beforeProject {
                 this.resolutionStrategy {
                     eachDependency {
 
-                        if(this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
+                        if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
                             this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
                         }
 
@@ -259,7 +259,7 @@ gradle.lifecycle.beforeProject {
                 this.resolutionStrategy {
                     eachDependency {
 
-                        if(this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
+                        if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
                             this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
                         }
 
@@ -274,20 +274,17 @@ gradle.lifecycle.beforeProject {
 
     tasks.register("gatherProjectDependencies") {
 
-        val outputDir = file(layout.buildDirectory.dir("custom-tasks/gather-project-dependencies"))
+        // Define the output directory
+        val outputDir = layout.buildDirectory.dir("custom-tasks/gather-project-dependencies")
 
-        outputDir.mkdirs()
-        outputDir.createNewFile()
+        // Define the task output
+        outputs.dir(outputDir)
 
         val projectConfigs = project.configurations.toSet()
 
         val configurationsToDependencies = projectConfigs.map {
             val sorted = if (it.isCanBeResolved) {
                 it.resolve()
-                /*
-                    This will resolve the dependency graph, so we pull in all the transitive dependencies too,
-                    but will not resolve or download the artifacts.
-                 */
                 it.incoming.resolutionResult.allDependencies
                     .map { it.requested.displayName }
                     .toSet()
@@ -295,129 +292,93 @@ gradle.lifecycle.beforeProject {
             } else {
                 null
             }
-
             it.name to sorted
         }
 
-
-        val allUniqueDeps = configurationsToDependencies.flatMap {
-            val name = it.first
-            val dependencies = it.second ?: emptyList()
-            val dependenciesToConfig = dependencies.map { it }
-            val dependenciesOutput = dependenciesToConfig.joinToString(separator = "\n") { "$name $it" }
-
-            val configFile = file(outputDir).resolve("configuration-${name}-dependencies.txt")
-            configFile.createNewFile()
-            configFile.writeText(dependenciesOutput)
-            dependenciesToConfig
-        }.toSet()
-
-        val configFile = file(outputDir).resolve("all-dependencies.txt")
-
         doLast {
-            configFile.createNewFile()
+
+            val allUniqueDeps = configurationsToDependencies.flatMap {
+                val name = it.first
+                val dependencies = it.second ?: emptyList()
+                val dependenciesOutput = dependencies.joinToString(separator = "\n") { "$name $it" }
+                val configFile = outputDir.get().file("configuration-${name}-dependencies.txt").asFile
+                configFile.writeText(dependenciesOutput)
+                dependencies
+            }.toSet()
+
+            val configFile = outputDir.get().file("all-dependencies.txt").asFile
+
             configFile.writeText("")
 
-            /*
-                Used to indent everything like:
-                    org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:2.0.20      ->  Used by [kotlinBuildToolsApiClasspath]
-                    org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:2.0.20 ->  Used by [kotlinBuildToolsApiClasspath]
-             */
             val longestString = allUniqueDeps.maxByOrNull { it.length }.orEmpty()
 
             allUniqueDeps
                 .map { uniqueDep ->
-                    val configurationsRelatedToDep =
-                        configurationsToDependencies.filter { it.second?.contains(uniqueDep) == true }.map { it.first }
+                    val configurationsRelatedToDep = configurationsToDependencies
+                        .filter { it.second?.contains(uniqueDep) == true }
+                        .map { it.first }
                     val padding = 1
                     val indent = " ".repeat(longestString.length - uniqueDep.length + padding)
                     "$uniqueDep$indent->  Used by $configurationsRelatedToDep"
                 }
                 .sorted()
                 .forEachIndexed { index, uniqueDep ->
-                    // Ensure we have no empty lines
-                    if (index == 0) {
-                        configFile.appendText(uniqueDep)
-                    } else {
-                        configFile.appendText("\n$uniqueDep")
-                    }
+                    if (index == 0) configFile.appendText(uniqueDep)
+                    else configFile.appendText("\n$uniqueDep")
                 }
         }
     }
 
     tasks.register("gatherBuildScriptDependencies") {
 
-        val outputDir = file(layout.buildDirectory.dir("custom-tasks/gather-build-script-dependencies/${project.name}"))
-        outputDir.mkdirs()
-        outputDir.createNewFile()
+        val outputDir = layout.buildDirectory.dir("custom-tasks/gather-build-script-dependencies/${project.name}")
+        outputs.dir(outputDir)
 
         val configurations = buildscript.configurations.filter { it.isCanBeResolved }
-        val configurationsToDependencies = configurations
-            .map {
-                val sorted =  configurations
-                    .filter { it.isCanBeResolved }
-                    .flatMap { config ->
-                        config.incoming.resolutionResult.root.dependencies
-                            .asSequence()
-                            .mapNotNull { dependencyResult ->
-                                /*
-                                    Means we only get actually resolved components
-                                    (ie none of: org.jetbrains.kotlin:kotlin-stdlib:{strictly 1.9.24} -> 2.1.0-Beta1)
-                                 */
-                                (dependencyResult as? ResolvedDependencyResult)?.let { resolved ->
-                                    val displayName = resolved.selected.id.displayName
-                                    displayName
-                                }
-                            }
-                            .toSet()
-                            .sorted()
-                    }
-
-                return@map it.name to sorted
-            }
+        val configurationsToDependencies = configurations.map {
+            val sorted = configurations
+                .filter { it.isCanBeResolved }
+                .flatMap { config ->
+                    config.incoming.resolutionResult.root.dependencies
+                        .mapNotNull { dependencyResult ->
+                            (dependencyResult as? ResolvedDependencyResult)?.selected?.id?.displayName
+                        }
+                        .toSet()
+                        .sorted()
+                }
+            it.name to sorted
+        }
 
         val allUniqueDeps = configurationsToDependencies.flatMap {
             val name = it.first
             val dependencies = it.second
-            val dependenciesToConfig = dependencies.map { it }
-            val dependenciesOutput = dependenciesToConfig.joinToString(separator = "\n") { "$name $it" }
-
-            val configFile = file(outputDir).resolve("configuration-${name}-dependencies.txt")
-            configFile.createNewFile()
+            val dependenciesOutput = dependencies.joinToString(separator = "\n") { "$name $it" }
+            val configFile = outputDir.get().file("configuration-${name}-dependencies.txt").asFile
             configFile.writeText(dependenciesOutput)
-            dependenciesToConfig
+            dependencies
         }.toSet()
 
-        val configFile = file(outputDir).resolve("all-dependencies.txt")
+        val configFile = outputDir.get().file("all-dependencies.txt").asFile
 
         doLast {
 
-            configFile.createNewFile()
             configFile.writeText("")
 
-            /*
-                Used to indent everything like:
-                    org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:2.1.0-Beta1      ->  Used by [kotlinBuildToolsApiClasspath]
-                    org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:2.1.0-Beta1 ->  Used by [kotlinBuildToolsApiClasspath]
-             */
             val longestString = allUniqueDeps.maxByOrNull { it.length }.orEmpty()
 
             allUniqueDeps
                 .map { uniqueDep ->
-                    val configurationsRelatedToDep =
-                        configurationsToDependencies.filter { it.second.contains(uniqueDep) }.map { it.first }
+                    val configurationsRelatedToDep = configurationsToDependencies
+                        .filter { it.second.contains(uniqueDep) }
+                        .map { it.first }
                     val padding = 1
                     val indent = " ".repeat(longestString.length - uniqueDep.length + padding)
                     "$uniqueDep$indent->  Used by $configurationsRelatedToDep"
                 }
                 .sorted()
                 .forEachIndexed { index, uniqueDep ->
-                    // Ensure we have no empty lines
-                    if (index == 0) {
-                        configFile.appendText(uniqueDep)
-                    } else {
-                        configFile.appendText("\n$uniqueDep")
-                    }
+                    if (index == 0) configFile.appendText(uniqueDep)
+                    else configFile.appendText("\n$uniqueDep")
                 }
         }
     }
