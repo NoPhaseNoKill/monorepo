@@ -3,11 +3,7 @@
     DO NOT DECLARE BUILD SCRIPT HERE
  */
 
-plugins {
-    id("java-library")
-    kotlin("jvm")
-}
 
-dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+tasks.register("build") {
+    dependsOn(gradle.includedBuilds.map { it.task(":build") })
 }

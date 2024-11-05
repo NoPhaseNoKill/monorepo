@@ -608,6 +608,5 @@ gradle.lifecycle.beforeProject {
     }
 }
 
-include("app")
-include("module")
-
+// include("app")
+includeBuild("module")
