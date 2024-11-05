@@ -2,49 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinApiPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
-buildscript {
-    repositories {
-        maven {
-            url = uri("https://plugins.gradle.org/m2/")
-        }
-    }
-
-    configurations.all {
-        isTransitive = false
-    }
-
-    dependencies {
-
-        classpath("org.jetbrains.kotlin:kotlin-compiler-embeddable:2.1.0-Beta1")
-        classpath("org.jetbrains.kotlin:kotlin-compiler-runner:2.1.0-Beta1")
-        classpath("org.jetbrains.kotlin:kotlin-daemon-client:2.1.0-Beta1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin-api:2.1.0-Beta1")
-        classpath("org.jetbrains.kotlin:kotlin-tooling-core:2.1.0-Beta1")
-
-        // classpath("org.jetbrains.intellij.deps:trove4j:1.0.20200330")
-        // classpath("org.jetbrains.kotlin:kotlin-build-common:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-build-tools-api:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-build-tools-impl:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-daemon-embeddable:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-native-prebuilt:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-script-runtime:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-scripting-common:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-scripting-jvm:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
-
-        // classpath("org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:5.1.2")
-
-        // classpath("org.jetbrains.kotlin:kotlin-gradle-plugin-model:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
-        // classpath("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
-        // classpath("org.jetbrains:annotations:23.0")
-
-    }
-}
 
 val implementation = configurations.create("implementation")
 val api = configurations.create("api")
@@ -54,9 +11,9 @@ val compileClasspath = configurations.create("compileClasspath") {
 }
 
 dependencies {
-    api("jakarta.activation:jakarta.activation-api:2.1.3")
-    implementation("commons-io:commons-io:2.17.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+    api("jakarta.activation:jakarta.activation-api")
+    implementation("commons-io:commons-io")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
 }
 
 

@@ -16,6 +16,7 @@ pluginManagement {
 
         repositories {
             gradlePluginPortal()
+            mavenCentral() // to go second, as a fallback for the slf4j dependencies
         }
 
         configurations.all {
@@ -43,6 +44,10 @@ pluginManagement {
                 buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
                 buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.0-Beta1")
                 buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "jakarta.activation:jakarta.activation-api:2.1.3")
+                buildscript.dependencies.constraints.add(this.name, "commons-io:commons-io:2.17.0")
+                buildscript.dependencies.constraints.add(this.name, "org.slf4j:slf4j-api:2.0.16")
+                buildscript.dependencies.constraints.add(this.name, "org.slf4j:slf4j-simple:2.0.16")
 
                 /*
                    These do not require constraints, they simply require different resolution results. See below resolutionStrategy
@@ -65,7 +70,7 @@ pluginManagement {
 
             this.resolutionStrategy {
 
-                val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+                val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1", "com.gradle:develocity-gradle-plugin:3.18.1")
 
                 forcedModules.forEach {
 
@@ -167,15 +172,20 @@ gradle.lifecycle.beforeProject {
 
    project.buildscript {
        project.buildscript.repositories {
-           project.buildscript.repositories.maven {
-                url = uri("https://plugins.gradle.org/m2/")
-            }
+           project.buildscript.repositories.gradlePluginPortal()
+           project.buildscript.repositories.mavenCentral() // to go second, only for the slf4j dependencies
         }
        project.buildscript.dependencies.add("classpath", "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.0-Beta1") { isTransitive = false }
 
        project.buildscript.configurations.all {
            isTransitive = false
            this.resolutionStrategy.setForcedModules() // Clears any forced modules from gradle (aka gradle version being dependent on an old stdlib version)
+
+           // runtimeOnly declaration
+           if(this.isCanBeResolved && this.isCanBeConsumed && this.name.contains("runtime")) {
+               project.buildscript.dependencies.constraints.add(this.name, "org.slf4j:slf4j-api:2.0.16") { isTransitive = false } // Required by slf4j simple
+               project.buildscript.dependencies.constraints.add(this.name, "org.slf4j:slf4j-simple:2.0.16") { isTransitive = false }
+           }
 
            if(this.name.contains("classpath")) {
 
@@ -199,6 +209,10 @@ gradle.lifecycle.beforeProject {
                project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0") { isTransitive = false }
                project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.0-Beta1") { isTransitive = false }
                project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "jakarta.activation:jakarta.activation-api:2.1.3") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "commons-io:commons-io:2.17.0") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.slf4j:slf4j-api:2.0.16") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.slf4j:slf4j-simple:2.0.16") { isTransitive = false }
 
                /*
                 These do not need a dependency as they are applied at the settings level:
@@ -226,7 +240,7 @@ gradle.lifecycle.beforeProject {
 
            this.resolutionStrategy {
 
-               val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+               val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1", "com.gradle:develocity-gradle-plugin:3.18.1")
 
                forcedModules.forEach {
 
@@ -294,6 +308,12 @@ gradle.lifecycle.beforeProject {
         println("Can be resovled: ${this.isCanBeResolved} for ${this.name}")
         println("Can be consumed: ${this.isCanBeConsumed} for ${this.name}")
 
+        // runtimeOnly declaration
+        if(this.isCanBeResolved && this.isCanBeConsumed && this.name.contains("runtime")) {
+            project.dependencies.constraints.add(this.name, "org.slf4j:slf4j-api:2.0.16") { isTransitive = false } // Required by slf4j simple
+            project.dependencies.constraints.add(this.name, "org.slf4j:slf4j-simple:2.0.16") { isTransitive = false }
+        }
+
         if(this.isCanBeResolved && !this.name.contains("classpath", true)) {
             project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1") { isTransitive = false }
             project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea:2.1.0-Beta1") { isTransitive = false }
@@ -315,7 +335,10 @@ gradle.lifecycle.beforeProject {
             project.dependencies.constraints.add(this.name, "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0") { isTransitive = false }
             project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.0-Beta1") { isTransitive = false }
             project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1") { isTransitive = false }
-
+            project.dependencies.constraints.add(this.name, "jakarta.activation:jakarta.activation-api:2.1.3") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "commons-io:commons-io:2.17.0") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.slf4j:slf4j-api:2.0.16") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.slf4j:slf4j-simple:2.0.16") { isTransitive = false }
             /*
              These do not need a dependency as they are applied at the settings level:
 
@@ -343,7 +366,7 @@ gradle.lifecycle.beforeProject {
 
         this.resolutionStrategy {
 
-            val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+            val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1", "com.gradle:develocity-gradle-plugin:3.18.1")
 
             forcedModules.forEach {
 
@@ -517,4 +540,7 @@ gradle.lifecycle.beforeProject {
         }
     }
 }
+
+include("app")
+include("module")
 
