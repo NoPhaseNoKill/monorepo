@@ -22,7 +22,7 @@ pluginManagement {
         configurations.all {
             this.isTransitive = false
 
-            if(this.name.contains("classpath")) {
+            if(this.name.contains("classpath", true)) {
                 buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1")
                 buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea:2.1.0-Beta1")
                 buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-tooling-core:2.1.0-Beta1")
@@ -48,7 +48,9 @@ pluginManagement {
                 buildscript.dependencies.constraints.add(this.name, "commons-io:commons-io:2.17.0")
                 buildscript.dependencies.constraints.add(this.name, "org.slf4j:slf4j-api:2.0.16")
                 buildscript.dependencies.constraints.add(this.name, "org.slf4j:slf4j-simple:2.0.16")
-
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-native-prebuilt:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.intellij.deps:trove4j:1.0.20200330")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains:annotations:13.0")
                 /*
                    These do not require constraints, they simply require different resolution results. See below resolutionStrategy
                    for details.
@@ -187,7 +189,7 @@ gradle.lifecycle.beforeProject {
                project.buildscript.dependencies.constraints.add(this.name, "org.slf4j:slf4j-simple:2.0.16") { isTransitive = false }
            }
 
-           if(this.name.contains("classpath")) {
+           if(this.name.contains("classpath", true)) {
 
                project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1") { isTransitive = false }
                project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea:2.1.0-Beta1") { isTransitive = false }
@@ -213,6 +215,11 @@ gradle.lifecycle.beforeProject {
                project.buildscript.dependencies.add(this.name, "commons-io:commons-io:2.17.0") { isTransitive = false }
                project.buildscript.dependencies.add(this.name, "org.slf4j:slf4j-api:2.0.16") { isTransitive = false }
                project.buildscript.dependencies.add(this.name, "org.slf4j:slf4j-simple:2.0.16") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "jakarta.activation:jakarta.activation-api:2.1.3") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "commons-io:commons-io:2.17.0") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-native-prebuilt:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.intellij.deps:trove4j:1.0.20200330") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains:annotations:13.0") { isTransitive = false }
 
                /*
                 These do not need a dependency as they are applied at the settings level:
@@ -299,14 +306,66 @@ gradle.lifecycle.beforeProject {
     }
 
     project.configurations.all {
-        isTransitive = false
 
         val configuration = this
 
         assert(configuration is Configuration)
 
-        println("Can be resovled: ${this.isCanBeResolved} for ${this.name}")
+        val hasToIncludeTransitives = listOf(
+            "compileClasspath",
+            "annotationProcessor",
+            "runtimeClasspath",
+            "testCompileClasspath",
+            "testAnnotationProcessor",
+            "testRuntimeClasspath",
+            "kotlinCompilerClasspath",
+            "kotlinBuildToolsApiClasspath",
+            "kotlinNativeBundleConfiguration",
+            "kotlinCompilerPluginClasspath",
+            "kotlinNativeCompilerPluginClasspath",
+            "kotlinKlibCommonizerClasspath",
+            "apiDependenciesMetadata",
+            "implementationDependenciesMetadata",
+            "compileOnlyDependenciesMetadata",
+            "intransitiveDependenciesMetadata",
+            "kotlinCompilerPluginClasspathMain",
+            "testApiDependenciesMetadata",
+            "testImplementationDependenciesMetadata",
+            "testCompileOnlyDependenciesMetadata",
+            "testIntransitiveDependenciesMetadata",
+            "kotlinCompilerPluginClasspathTest",
+            "kotlinScriptDefExtensions",
+            "testKotlinScriptDefExtensions",
+        )
+
+
+        println("Can be resolved: ${this.isCanBeResolved} for ${this.name}")
         println("Can be consumed: ${this.isCanBeConsumed} for ${this.name}")
+
+        /*
+            Without this we get error:
+
+            * What went wrong:
+            Execution failed for task ':module:compileKotlin'.
+            > Could not resolve all files for configuration ':module:detachedConfiguration1'.
+               > Failed to transform jakarta.activation-api-2.1.3.jar to match attributes {artifactType=classpath-entry-snapshot, org.gradle.libraryelements=jar, org.gradle.usage=java-runtime}.
+                  > Execution failed for BuildToolsApiClasspathEntrySnapshotTransform: /home/gardo/.gradle/caches/modules-2/files-2.1/jakarta.activation/jakarta.activation-api/2.1.3/fa165bd70cda600368eee31555222776a46b881f/jakarta.activation-api-2.1.3.jar.
+                     > org.jetbrains.kotlin.buildtools.api.CompilationService: Provider org.jetbrains.kotlin.buildtools.internal.CompilationServiceProxy could not be instantiated
+               > Failed to transform commons-io-2.17.0.jar to match attributes {artifactType=classpath-entry-snapshot, org.gradle.libraryelements=jar, org.gradle.usage=java-runtime}.
+                  > Execution failed for BuildToolsApiClasspathEntrySnapshotTransform: /home/gardo/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.17.0/ddcc8433eb019fb48fe25207c0278143f3e1d7e2/commons-io-2.17.0.jar.
+                     > org.jetbrains.kotlin.buildtools.api.CompilationService: Provider org.jetbrains.kotlin.buildtools.internal.CompilationServiceProxy could not be instantiated
+               > Failed to transform kotlin-stdlib-2.1.0-Beta1.jar to match attributes {artifactType=classpath-entry-snapshot, org.gradle.libraryelements=jar, org.gradle.usage=java-runtime}.
+                  > Execution failed for BuildToolsApiClasspathEntrySnapshotTransform: /home/gardo/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.1.0-Beta1/15bc9aa9c2379bc9213c33f4e6316c870992fd60/kotlin-stdlib-2.1.0-Beta1.jar.
+                     > org.jetbrains.kotlin.buildtools.api.CompilationService: Provider org.jetbrains.kotlin.buildtools.internal.CompilationServiceProxy could not be instantiated
+
+
+         */
+
+        if(hasToIncludeTransitives.contains(this.name)) {
+            isTransitive = true
+        } else {
+            isTransitive = false
+        }
 
         // runtimeOnly declaration
         if(this.isCanBeResolved && this.isCanBeConsumed && this.name.contains("runtime")) {
@@ -315,6 +374,7 @@ gradle.lifecycle.beforeProject {
         }
 
         if(this.isCanBeResolved && !this.name.contains("classpath", true)) {
+
             project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1") { isTransitive = false }
             project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea:2.1.0-Beta1") { isTransitive = false }
             project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-tooling-core:2.1.0-Beta1") { isTransitive = false }
@@ -339,12 +399,16 @@ gradle.lifecycle.beforeProject {
             project.dependencies.constraints.add(this.name, "commons-io:commons-io:2.17.0") { isTransitive = false }
             project.dependencies.constraints.add(this.name, "org.slf4j:slf4j-api:2.0.16") { isTransitive = false }
             project.dependencies.constraints.add(this.name, "org.slf4j:slf4j-simple:2.0.16") { isTransitive = false }
-            /*
-             These do not need a dependency as they are applied at the settings level:
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-native-prebuilt:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.intellij.deps:trove4j:1.0.20200330") { isTransitive = false}
+            project.dependencies.constraints.add(this.name, "org.jetbrains:annotations:13.0") { isTransitive = false }
+             /*
+              These do not need a dependency as they are applied at the settings level:
 
-                 project.dependencies.constraints.add(this.name, "com.gradle:develocity-gradle-plugin:3.18.1") { isTransitive = false }
-             */
+                  project.dependencies.constraints.add(this.name, "com.gradle:develocity-gradle-plugin:3.18.1") { isTransitive = false }
+              */
         }
+
 
 
         /*
@@ -541,6 +605,6 @@ gradle.lifecycle.beforeProject {
     }
 }
 
-include("app")
+// include("app")
 include("module")
 
