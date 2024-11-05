@@ -50,7 +50,8 @@ pluginManagement {
                 buildscript.dependencies.constraints.add(this.name, "org.slf4j:slf4j-simple:2.0.16")
                 buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-native-prebuilt:2.1.0-Beta1")
                 buildscript.dependencies.constraints.add(this.name, "org.jetbrains.intellij.deps:trove4j:1.0.20200330")
-                buildscript.dependencies.constraints.add(this.name, "org.jetbrains:annotations:13.0")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains:annotations:23.0.0")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1")
                 /*
                    These do not require constraints, they simply require different resolution results. See below resolutionStrategy
                    for details.
@@ -72,7 +73,7 @@ pluginManagement {
 
             this.resolutionStrategy {
 
-                val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1", "com.gradle:develocity-gradle-plugin:3.18.1")
+                val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1", "com.gradle:develocity-gradle-plugin:3.18.1", "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0", "org.jetbrains:annotations:23.0.0", "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1")
 
                 forcedModules.forEach {
 
@@ -219,7 +220,8 @@ gradle.lifecycle.beforeProject {
                project.buildscript.dependencies.add(this.name, "commons-io:commons-io:2.17.0") { isTransitive = false }
                project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-native-prebuilt:2.1.0-Beta1") { isTransitive = false }
                project.buildscript.dependencies.add(this.name, "org.jetbrains.intellij.deps:trove4j:1.0.20200330") { isTransitive = false }
-               project.buildscript.dependencies.add(this.name, "org.jetbrains:annotations:13.0") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains:annotations:23.0.0") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1") { isTransitive = false }
 
                /*
                 These do not need a dependency as they are applied at the settings level:
@@ -247,7 +249,7 @@ gradle.lifecycle.beforeProject {
 
            this.resolutionStrategy {
 
-               val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1", "com.gradle:develocity-gradle-plugin:3.18.1")
+               val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1", "com.gradle:develocity-gradle-plugin:3.18.1", "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0", "org.jetbrains:annotations:23.0.0", "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1")
 
                forcedModules.forEach {
 
@@ -401,7 +403,8 @@ gradle.lifecycle.beforeProject {
             project.dependencies.constraints.add(this.name, "org.slf4j:slf4j-simple:2.0.16") { isTransitive = false }
             project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-native-prebuilt:2.1.0-Beta1") { isTransitive = false }
             project.dependencies.constraints.add(this.name, "org.jetbrains.intellij.deps:trove4j:1.0.20200330") { isTransitive = false}
-            project.dependencies.constraints.add(this.name, "org.jetbrains:annotations:13.0") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains:annotations:23.0.0") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1") { isTransitive = false }
              /*
               These do not need a dependency as they are applied at the settings level:
 
@@ -430,7 +433,7 @@ gradle.lifecycle.beforeProject {
 
         this.resolutionStrategy {
 
-            val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1", "com.gradle:develocity-gradle-plugin:3.18.1")
+            val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1", "com.gradle:develocity-gradle-plugin:3.18.1", "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0", "org.jetbrains:annotations:23.0.0", "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1")
 
             forcedModules.forEach {
 
@@ -605,6 +608,6 @@ gradle.lifecycle.beforeProject {
     }
 }
 
-// include("app")
+include("app")
 include("module")
 

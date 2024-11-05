@@ -10,6 +10,10 @@ val compileClasspath = configurations.create("compileClasspath") {
     extendsFrom(implementation, api)
 }
 
+/*
+    DO NOT DECLARE BUILD SCRIPT HERE
+ */
+
 dependencies {
     api("jakarta.activation:jakarta.activation-api")
     implementation("commons-io:commons-io")
