@@ -1,10 +1,13 @@
 
+/*
+    DO NOT DECLARE BUILD SCRIPT HERE
+ */
 
+plugins {
+    id("java-library")
+    kotlin("jvm")
+}
 
-
-
-tasks.register("build") {
-    dependsOn(":app:build")
-    dependsOn(":module:build")
-    dependsOn(tasks.named("gatherBuildScriptDependencies"), tasks.named("gatherProjectDependencies"))
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
 }

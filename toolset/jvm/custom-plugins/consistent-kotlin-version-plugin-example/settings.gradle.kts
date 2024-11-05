@@ -1,71 +1,141 @@
 rootProject.name = "consistent-kotlin-version-plugin-example"
 
+
 pluginManagement {
 
+    repositories {
+        gradlePluginPortal()
+    }
+
+    plugins {
+        id("org.jetbrains.kotlin.jvm") version "2.1.0-Beta1"
+        id("com.gradle.develocity") version "3.18.1"
+    }
+
     buildscript {
+
         repositories {
-            maven {
-                url = uri("https://plugins.gradle.org/m2/")
-            }
+            gradlePluginPortal()
         }
 
-
         configurations.all {
-            isTransitive = false
+            this.isTransitive = false
 
-            val configurationName = this.name
+            if(this.name.contains("classpath")) {
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-tooling-core:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-annotations:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea-proto:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-klib-commonizer-api:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-native-utils:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-util-io:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-util-klib:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-build-tools-api:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-build-statistics:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "com.google.code.gson:gson:2.11.0")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-util-klib-metadata:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugins-bom:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-api:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-model:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-compiler-runner:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-daemon-client:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.0-Beta1")
+                buildscript.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
 
-            if (configurationName.contains("classpath", ignoreCase = true)) {
+                /*
+                   These do not require constraints, they simply require different resolution results. See below resolutionStrategy
+                   for details.
 
-                this.resolutionStrategy.setForcedModules()
+                    buildscript.dependencies.constraints.add(this.name, "com.gradle:develocity-gradle-plugin:3.18.1")
+                    buildscript.dependencies.constraints.add(this.name, "com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1")
 
-                val constrained = listOf(
-                    "org.jetbrains:annotations:23.0.0",
-                    "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1",
-                    "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1",
-                    "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0",
-                    "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:5.1.2",
-                    "com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1",
-                    "com.gradle:develocity-gradle-plugin:3.18.1"
-                )
-                constrained.forEach {
+                 */
+            }
 
-                    this.resolutionStrategy.force(it)
+            /*
+                Equivalent of:
+                    buildscript.configurations.all {
+                       resolutionStrategy {
 
-                    val group = it.split(":")[0]
-                    val module = it.split(":")[1]
-                    val version = it.split(":")[2]
+                       }
+                    }
+             */
 
-                    this.resolutionStrategy {
-                        eachDependency {
+            this.resolutionStrategy {
 
-                            if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
-                                this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
-                            }
+                val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
 
-                            if (this.requested.group == group && this.requested.name == module) {
-                                this.useVersion(version)
-                            }
+                forcedModules.forEach {
+
+                    setForcedModules() // Clears any forced modules from gradle (aka gradle version being dependent on an old stdlib version)
+                    eachDependency {
+
+                        val group = it.split(":")[0]
+                        val module = it.split(":")[1]
+                        val version = it.split(":")[2]
+
+
+                        /*
+                            Prevents dependency graph showing two dependencies when really it's just one that's being resolved differently.
+
+                            Without this we would get either:
+
+                            1.
+
+                            Could not apply requested plugin [id: 'com.gradle.develocity', version: '3.18.1'] as it does not provide a plugin with id 'com.gradle.develocity'. This is caused by an incorrect plugin implementation. Please contact the plugin author(s).
+                                > Plugin with id 'com.gradle.develocity' not found
+
+                                OR
+
+                            2.
+
+                            com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1 -> com.gradle:develocity-gradle-plugin:3.18.1
+
+                                OR
+                            3.
+
+                            com.gradle:develocity-gradle-plugin:3.18.1 constraint
+                            com.gradle:develocity-gradle-plugin:{prefer 3.17.6} -> 3.18.1
+
+                            OR
+
+                            A silent failure, because the resolution failed.
+
+                            In the future, this should be done as a capability instead.
+
+                         */
+
+                        if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
+                            this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
                         }
+
+                        // Aligns the versions to what we want
+                        if (this.requested.group == group && this.requested.name == module) {
+                            this.useVersion(version)
+                        }
+
+                        force(it)
                     }
                 }
             }
         }
 
-        dependencies {
-            classpath("com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1")
+        buildscript.dependencies.classpath("com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1") {
+            isTransitive = false
         }
     }
 }
 
 dependencyResolutionManagement {
-
-    rulesMode.set(RulesMode.FAIL_ON_PROJECT_RULES)
-    repositories.mavenCentral()
+    repositories {
+        mavenCentral()
+    }
 }
 
 plugins {
-    id("com.gradle.develocity") version ("3.18.1")
+    id("com.gradle.develocity")
 }
 
 develocity {
@@ -91,192 +161,253 @@ develocity {
     }
 }
 
-include("app")
-include("module")
-
 gradle.lifecycle.beforeProject {
-
-    project.buildscript {
-        repositories {
-            gradlePluginPortal()
-        }
-
-        dependencies.add("classpath", "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
-    }
-
 
     val project = this
 
-    project.buildscript.configurations.all {
-        val configurationName = this.name
-
-        if (configurationName.contains("classpath", ignoreCase = true)) {
-
-            this.resolutionStrategy.setForcedModules()
-
-            val constrained = listOf(
-                "org.jetbrains:annotations:23.0.0",
-                "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1",
-                "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1",
-                "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0",
-                "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:5.1.2",
-                "com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1",
-                "com.gradle:develocity-gradle-plugin:3.18.1"
-            )
-            constrained.forEach {
-
-                this.resolutionStrategy.force(it)
-
-                val group = it.split(":")[0]
-                val module = it.split(":")[1]
-                val version = it.split(":")[2]
-
-                this.resolutionStrategy {
-                    eachDependency {
-
-                        if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
-                            this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
-                        }
-
-                        if (this.requested.group == group && this.requested.name == module) {
-                            this.useVersion(version)
-                        }
-                    }
-                }
+   project.buildscript {
+       project.buildscript.repositories {
+           project.buildscript.repositories.maven {
+                url = uri("https://plugins.gradle.org/m2/")
             }
         }
+       project.buildscript.dependencies.add("classpath", "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.0-Beta1") { isTransitive = false }
+
+       project.buildscript.configurations.all {
+           isTransitive = false
+           this.resolutionStrategy.setForcedModules() // Clears any forced modules from gradle (aka gradle version being dependent on an old stdlib version)
+
+           if(this.name.contains("classpath")) {
+
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-tooling-core:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-annotations:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea-proto:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-klib-commonizer-api:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-native-utils:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-util-io:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-util-klib:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-build-tools-api:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-build-statistics:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "com.google.code.gson:gson:2.11.0") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-util-klib-metadata:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-api:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-model:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-compiler-runner:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-daemon-client:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.0-Beta1") { isTransitive = false }
+               project.buildscript.dependencies.add(this.name, "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1") { isTransitive = false }
+
+               /*
+                These do not need a dependency as they are applied at the settings level:
+                    project.buildscript.dependencies.add(this.name, "com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1") { isTransitive = false }
+                */
+
+           }
+
+           /*
+            Equivalent of:
+                project.buildscript.configurations.all {
+                   resolutionStrategy {
+
+                   }
+                }
+
+            NOT to be confused with:
+
+             project.configurations.all {
+                resolutionStrategy {
+
+                }
+             }
+         */
+
+           this.resolutionStrategy {
+
+               val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+
+               forcedModules.forEach {
+
+                   setForcedModules() // Clears any forced modules from gradle (aka gradle version being dependent on an old stdlib version)
+                   eachDependency {
+
+                       val group = it.split(":")[0]
+                       val module = it.split(":")[1]
+                       val version = it.split(":")[2]
+
+
+                       /*
+                           Prevents dependency graph showing two dependencies when really it's just one that's being resolved differently.
+
+                           Without this we would get either:
+
+                           1.
+
+                           Could not apply requested plugin [id: 'com.gradle.develocity', version: '3.18.1'] as it does not provide a plugin with id 'com.gradle.develocity'. This is caused by an incorrect plugin implementation. Please contact the plugin author(s).
+                               > Plugin with id 'com.gradle.develocity' not found
+
+                               OR
+
+                           2.
+
+                           com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1 -> com.gradle:develocity-gradle-plugin:3.18.1
+
+                               OR
+                           3.
+
+                           com.gradle:develocity-gradle-plugin:3.18.1 constraint
+                           com.gradle:develocity-gradle-plugin:{prefer 3.17.6} -> 3.18.1
+
+                           OR
+
+                           A silent failure, because the resolution failed.
+
+                           In the future, this should be done as a capability instead.
+
+                        */
+
+                       if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
+                           this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
+                       }
+
+                       // Aligns the versions to what we want
+                       if (this.requested.group == group && this.requested.name == module) {
+                           this.useVersion(version)
+                       }
+
+                       force(it)
+                   }
+               }
+           }
+       }
     }
 
     project.configurations.all {
-        val configurationName = this.name
+        isTransitive = false
 
-        if (configurationName.contains("classpath", ignoreCase = true)) {
+        val configuration = this
 
-            this.resolutionStrategy.setForcedModules()
+        assert(configuration is Configuration)
 
-            val constrained = listOf(
-                "org.jetbrains:annotations:23.0.0",
-                "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1",
-                "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1",
-                "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0",
-                "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:5.1.2",
-                "com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1",
-                "com.gradle:develocity-gradle-plugin:3.18.1"
+        println("Can be resovled: ${this.isCanBeResolved} for ${this.name}")
+        println("Can be consumed: ${this.isCanBeConsumed} for ${this.name}")
 
-            )
-            constrained.forEach {
+        if(this.isCanBeResolved && !this.name.contains("classpath", true)) {
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-tooling-core:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-annotations:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-idea-proto:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-klib-commonizer-api:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-native-utils:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-util-io:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-util-klib:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-build-tools-api:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-build-statistics:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "com.google.code.gson:gson:2.11.0") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-util-klib-metadata:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-api:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-gradle-plugin-model:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-compiler-runner:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-daemon-client:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.0-Beta1") { isTransitive = false }
+            project.dependencies.constraints.add(this.name, "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1") { isTransitive = false }
 
-                this.resolutionStrategy.force(it)
+            /*
+             These do not need a dependency as they are applied at the settings level:
 
-                val group = it.split(":")[0]
-                val module = it.split(":")[1]
-                val version = it.split(":")[2]
+                 project.dependencies.constraints.add(this.name, "com.gradle:develocity-gradle-plugin:3.18.1") { isTransitive = false }
+             */
+        }
 
-                this.resolutionStrategy {
-                    eachDependency {
 
-                        if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
-                            this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
-                        }
+        /*
+         Equivalent of:
+             project.configurations.all {
+                resolutionStrategy {
 
-                        if (this.requested.group == group && this.requested.name == module) {
-                            this.useVersion(version)
-                        }
+                }
+             }
+
+         NOT to be confused with:
+
+             project.buildscript.configurations.all {
+                   resolutionStrategy {
+
+                   }
+                }
+        */
+
+        this.resolutionStrategy {
+
+            val forcedModules = listOf("org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1")
+
+            forcedModules.forEach {
+
+                setForcedModules() // Clears any forced modules from gradle (aka gradle version being dependent on an old stdlib version)
+                eachDependency {
+
+                    val group = it.split(":")[0]
+                    val module = it.split(":")[1]
+                    val version = it.split(":")[2]
+
+
+                    /*
+                        Prevents dependency graph showing two dependencies when really it's just one that's being resolved differently.
+
+                        Without this we would get either:
+
+                        1.
+
+                        Could not apply requested plugin [id: 'com.gradle.develocity', version: '3.18.1'] as it does not provide a plugin with id 'com.gradle.develocity'. This is caused by an incorrect plugin implementation. Please contact the plugin author(s).
+                            > Plugin with id 'com.gradle.develocity' not found
+
+                            OR
+
+                        2.
+
+                        com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1 -> com.gradle:develocity-gradle-plugin:3.18.1
+
+                            OR
+                        3.
+
+                        com.gradle:develocity-gradle-plugin:3.18.1 constraint
+                        com.gradle:develocity-gradle-plugin:{prefer 3.17.6} -> 3.18.1
+
+                        OR
+
+                        A silent failure, because the resolution failed.
+
+                        In the future, this should be done as a capability instead.
+
+                     */
+
+                    if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
+                        this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
                     }
+
+                    // Aligns the versions to what we want
+                    if (this.requested.group == group && this.requested.name == module) {
+                        this.useVersion(version)
+                    }
+
+                    force(it)
                 }
             }
         }
-    }
-}
 
-
-gradle.lifecycle.beforeProject {
-    val project = this
-    project.buildscript.configurations.all {
-        val configurationName = this.name
-
-        if (configurationName.contains("classpath", ignoreCase = true)) {
-
-            this.resolutionStrategy.setForcedModules()
-
-            val constrained = listOf(
-                "org.jetbrains:annotations:23.0.0",
-                "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1",
-                "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1",
-                "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0",
-                "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:5.1.2",
-                "com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1",
-                "com.gradle:develocity-gradle-plugin:3.18.1"
-
-            )
-            constrained.forEach {
-
-                this.resolutionStrategy.force(it)
-
-                val group = it.split(":")[0]
-                val module = it.split(":")[1]
-                val version = it.split(":")[2]
-
-                this.resolutionStrategy {
-                    eachDependency {
-
-                        if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
-                            this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
-                        }
-
-                        if (this.requested.group == group && this.requested.name == module) {
-                            this.useVersion(version)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    project.configurations.all {
-        val configurationName = this.name
-        if (configurationName.contains("classpath", ignoreCase = true)) {
-
-            this.resolutionStrategy.setForcedModules()
-
-            val constrained = listOf(
-                "org.jetbrains:annotations:23.0.0",
-                "org.jetbrains.kotlin:kotlin-stdlib:2.1.0-Beta1",
-                "org.jetbrains.kotlin:kotlin-reflect:2.1.0-Beta1",
-                "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0",
-                "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:5.1.2",
-                "com.gradle.develocity:com.gradle.develocity.gradle.plugin:3.18.1",
-                "com.gradle:develocity-gradle-plugin:3.18.1"
-            )
-            constrained.forEach {
-
-                this.resolutionStrategy.force(it)
-
-                val group = it.split(":")[0]
-                val module = it.split(":")[1]
-                val version = it.split(":")[2]
-
-                this.resolutionStrategy {
-                    eachDependency {
-
-                        if (this.requested.group == "com.gradle.develocity" && this.requested.name == "com.gradle.develocity.gradle.plugin") {
-                            this.useTarget("com.gradle:develocity-gradle-plugin:${this.requested.version}")
-                        }
-
-                        if (this.requested.group == group && this.requested.name == module) {
-                            this.useVersion(version)
-                        }
-                    }
-                }
-            }
-        }
     }
 
     tasks.register("gatherProjectDependencies") {
 
         val outputDir = layout.buildDirectory.dir("custom-tasks/gather-project-dependencies")
 
+
         outputs.dir(outputDir)
+        outputDir.get().asFile.mkdirs()
 
         val projectConfigs = project.configurations.toSet()
 
@@ -300,6 +431,7 @@ gradle.lifecycle.beforeProject {
                 val dependencies = it.second ?: emptyList()
                 val dependenciesOutput = dependencies.joinToString(separator = "\n") { "$name $it" }
                 val configFile = outputDir.get().file("configuration-${name}-dependencies.txt").asFile
+                configFile.createNewFile()
                 configFile.writeText(dependenciesOutput)
                 dependencies
             }.toSet()
@@ -332,6 +464,8 @@ gradle.lifecycle.beforeProject {
         val outputDir = layout.buildDirectory.dir("custom-tasks/gather-build-script-dependencies/${project.name}")
         outputs.dir(outputDir)
 
+        outputDir.get().asFile.mkdirs()
+
         val configurations = buildscript.configurations.filter { it.isCanBeResolved }
         val configurationsToDependencies = configurations.map {
             val sorted = configurations
@@ -351,7 +485,9 @@ gradle.lifecycle.beforeProject {
             val name = it.first
             val dependencies = it.second
             val dependenciesOutput = dependencies.joinToString(separator = "\n") { "$name $it" }
+            outputDir.get().asFile.mkdirs()
             val configFile = outputDir.get().file("configuration-${name}-dependencies.txt").asFile
+            configFile.createNewFile()
             configFile.writeText(dependenciesOutput)
             dependencies
         }.toSet()
@@ -381,3 +517,4 @@ gradle.lifecycle.beforeProject {
         }
     }
 }
+
