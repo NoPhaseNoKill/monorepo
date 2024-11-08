@@ -1,3 +1,11 @@
+import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
+import org.gradle.plugins.ide.idea.model.Module
+import org.gradle.plugins.ide.idea.model.ModuleDependency
+import org.gradle.plugins.ide.idea.model.Project
+import org.w3c.dom.Element
+import java.util.*
+
 rootProject.name = "consistent-kotlin-version-plugin-example"
 
 
@@ -340,10 +348,6 @@ gradle.lifecycle.beforeProject {
             "testKotlinScriptDefExtensions",
         )
 
-
-        println("Can be resolved: ${this.isCanBeResolved} for ${this.name}")
-        println("Can be consumed: ${this.isCanBeConsumed} for ${this.name}")
-
         /*
             Without this we get error:
 
@@ -606,7 +610,201 @@ gradle.lifecycle.beforeProject {
                 }
         }
     }
+
+    if(project.buildTreePath == ":") {
+        project.pluginManager.apply("org.gradle.idea")
+
+        project.pluginManager.withPlugin("org.gradle.idea") {
+            val ideaModelExtension = project.extensions.getByType(IdeaModel::class.java)
+
+            val javaVersion = JavaVersion.VERSION_21
+
+            ideaModelExtension.project {
+                println("Configuring idea project")
+
+                /*
+                    When explicitly set in the build script, this setting overrides any calculated
+                    values for Idea project and Idea module.
+
+                    This ensures we have full consistency across modules/projects
+                 */
+                setLanguageLevel(javaVersion.majorVersion)
+                setTargetBytecodeVersion(javaVersion)
+
+                ipr {
+                    beforeMerged(Action<Project> {
+                        modulePaths.clear()
+                    })
+                }
+
+                ipr {
+                    withXml(Action<XmlProvider> {
+                        fun Element.firstElement(predicate: (Element.() -> Boolean)) =
+                            childNodes
+                                .run { (0 until length).map(::item) }
+                                .filterIsInstance<Element>()
+                                .first { it.predicate() }
+
+                        asElement()
+                            .firstElement { tagName == "component" && getAttribute("name") == "VcsDirectoryMappings" }
+                            .firstElement { tagName == "mapping" }
+                            .setAttribute("vcs", "Git")
+                    })
+                }
+            }
+
+
+            ideaModelExtension.module {
+                println("Configuring idea module")
+
+                iml {
+                    beforeMerged(Action<Module> {
+                        dependencies.clear()
+                    })
+                }
+
+                iml {
+                    whenMerged(Action<Module> {
+                        dependencies.forEach {
+                            (it as ModuleDependency).isExported = true
+                        }
+                    })
+                }
+
+                sourceDirs = files(file("src/java"), file("src/kotlin")).toSet()
+                generatedSourceDirs =  files(file("classes/java"), file("classes/kotlin")).toSet()
+                targetBytecodeVersion = JavaVersion.VERSION_21
+                languageLevel = IdeaLanguageLevel(JavaVersion.VERSION_21)
+            }
+
+            println("IDEA Target version: ${ideaModelExtension.targetVersion}")
+            ideaModelExtension.targetVersion = javaVersion.majorVersion
+            println("IDEA Target version: ${ideaModelExtension.targetVersion}")
+
+            ideaModelExtension.workspace {
+                println("Configuring idea workspace")
+            }
+        }
+    }
+
+    if(project.buildTreePath != ":") {
+
+        project.apply(plugin = "java")
+
+        project.pluginManager.withPlugin("java") {
+
+            val javaExtension = project.extensions.getByType(JavaPluginExtension::class.java)
+
+            /*
+                Used to ensure that compilation across subprojects happens with the same java version
+                and there are incompatibilities.
+
+                This is a newer way of doing:
+
+                    javaExtension.targetCompatibility = JavaVersion.VERSION_21
+                    javaExtension.sourceCompatibility = JavaVersion.VERSION_21
+             */
+
+            javaExtension.toolchain {
+                languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_21.majorVersion))
+                vendor.set(JvmVendorSpec.ADOPTIUM)
+            }
+
+            /*
+                Allows the project to have both java and kotlin source files.
+
+                This allows you to build kotlin first, and if performance is of importance (you should
+                only ever realise this later), allows you to easily migrate to java. A common reason
+                for this may be  plugins that are used by everything. They are bottlenecks, and the
+                faster we can compile these files (java compilation is about 2x faster than kotlin),
+                the faster the rest of the build process can proceed.
+
+                Please note: The decision was made to keep tests as Kotlin. These are not normally bottlenecks,
+                due to variant/configuration aware sharing, where compilation is the highest bottleneck currently
+                observed for things in the rest of the build, so other process can start. As such, there is no distinction between
+                java/kotlin for tests, as they should be written in kotlin, due to readability purposes being
+                the primary use case of tests. Java generally bloats code with boilerplate, and makes tests less readable,
+                so the decision was to stick to kotlin for this at the time of writing.
+             */
+
+            javaExtension.sourceSets["main"].java {
+                srcDirs("src/java", "src/kotlin")
+            }
+
+            javaExtension.sourceSets["test"].java.srcDirs("src/tests")
+        }
+
+        fun registerInputFileWriterTask(
+            taskName: String,
+            inputFiles: FileCollection
+        ) {
+            val titleCasedName = taskName.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(Locale.getDefault())
+                else it.toString()
+            }
+
+            tasks.register<WriteInputFiles>("write${titleCasedName}InputFiles") {
+                group = "Custom Tasks"
+                description = "Writes input files for $taskName task to a file"
+                this.inputFiles.from(inputFiles)
+            }
+        }
+
+        project.pluginManager.withPlugin("java") {
+            registerInputFileWriterTask("compileJava", tasks.named("compileJava").get().inputs.files)
+            registerInputFileWriterTask("compileTestJava", tasks.named("compileTestJava").get().inputs.files)
+
+            tasks.named("build") {
+                dependsOn("writeCompileJavaInputFiles", "writeCompileTestJavaInputFiles")
+            }
+        }
+
+        project.pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+            registerInputFileWriterTask("compileKotlin", tasks.named("compileKotlin").get().inputs.files)
+            registerInputFileWriterTask("compileTestKotlin", tasks.named("compileTestKotlin").get().inputs.files)
+
+            tasks.named("build") {
+                dependsOn("writeCompileKotlinInputFiles", "writeCompileTestKotlinInputFiles")
+            }
+        }
+
+        project.tasks.named("build") {
+            dependsOn(project.tasks.named("gatherBuildScriptDependencies"), project.tasks.named("gatherProjectDependencies"))
+        }
+    }
 }
 
-// include("app")
-includeBuild("module")
+abstract class WriteInputFiles : DefaultTask() {
+
+    @get:InputFiles
+    abstract val inputFiles: ConfigurableFileCollection
+
+    @get:OutputFile
+    val outputFile = project.layout.buildDirectory.file("custom-tasks/input-files/${name}-input-files.txt")
+
+    @TaskAction
+    fun writeInputFiles() {
+        val actualOutputFile = outputFile.get().asFile
+        actualOutputFile.parentFile.mkdirs() // Ensure the directory exists
+        actualOutputFile.writeText("") // Clear file before writing
+
+        inputFiles.files.toSortedSet().forEach { file ->
+            if (file.isFile) {
+                actualOutputFile.appendText("Input file: ${file}\n")
+            }
+        }
+        println("Input files for ${name} written to ${actualOutputFile}")
+    }
+}
+
+
+fun includeProject(path: String) {
+    val replaced = path.replace(":", File.separatorChar.toString()).replaceFirst(File.separatorChar.toString(), "")
+    println("Replaced: $replaced")
+    include(path)
+    project(path).projectDir = file(replaced)
+}
+
+includeProject(":library-one")
+includeProject(":app-one")
+includeProject(":other-one")

@@ -1,9 +1,4 @@
 
 /*
-    DO NOT DECLARE BUILD SCRIPT HERE
+    DO NOT DECLARE ANYTHING HERE
  */
-
-
-tasks.register("build") {
-    dependsOn(gradle.includedBuilds.map { it.task(":build") })
-}
