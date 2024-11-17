@@ -7,33 +7,29 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/build-logic" name="build-logic">
+              <build path="$PROJECT_DIR$/toolset/jvm/root-one" name="root-one">
                 <projects>
-                  <project path="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/build-logic" />
-                  <project path="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/build-logic/binary-plugins" />
-                  <project path="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/build-logic/convention-plugins" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/root-one" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/root-one/root-one-sub-project-one" />
                 </projects>
               </build>
-              <build path="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/some-other-build" name="some-other-build">
+              <build path="$PROJECT_DIR$/toolset/jvm/root-two" name="root-two">
                 <projects>
-                  <project path="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/some-other-build" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/root-two" />
+                  <project path="$PROJECT_DIR$/toolset/jvm/root-two/root-two-sub-project-one" />
                 </projects>
               </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$/toolset/jvm" />
-        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/toolset/jvm" />
-            <option value="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout" />
-            <option value="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/build-logic" />
-            <option value="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/build-logic/binary-plugins" />
-            <option value="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/build-logic/convention-plugins" />
-            <option value="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/some-other-build" />
-            <option value="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/some-subproject-that-depends-on-local-plugin" />
-            <option value="$PROJECT_DIR$/toolset/jvm/creme-de-la-creme-project-layout/some-subproject-with-no-dependencies-on-local-plugin" />
+            <option value="$PROJECT_DIR$/toolset/jvm/root-one" />
+            <option value="$PROJECT_DIR$/toolset/jvm/root-one/root-one-sub-project-one" />
+            <option value="$PROJECT_DIR$/toolset/jvm/root-two" />
+            <option value="$PROJECT_DIR$/toolset/jvm/root-two/root-two-sub-project-one" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,4 +1,5 @@
-rootProject.name = "jvm"
+rootProject.name = "root-two"
+
 
 /*
     When leveraging exclusive content filtering in the pluginManagement section
@@ -115,5 +116,5 @@ develocity {
     }
 }
 
-includeBuild("root-one")
-includeBuild("root-two")
+
+include("root-two-sub-project-one")

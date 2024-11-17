@@ -1,0 +1,513 @@
+a2e75fdf94c9f5081e10e9beba5b9864d8c836b2 Tom Gardiner <tom.gardiner7@gmail.com>: Add sounds on build finish
+ee440003f25b0427097d0aa3cce4735107627b3f Tom Gardiner <tom.gardiner7@gmail.com>: Add in latest idea for structure with working local plugins. Includes basic dependency/publishing troubleshooting tasks, compression, writing hashes/hex/binary.
+6b640d350567d920c669fbaf0c02f0de98834b34 Tom Gardiner <tom.gardiner7@gmail.com>: Add in more useful build tasks. Now outputs input files for compileJava/compileKotlin and equivalent test tasks
+c1d3284d90be5013c02eceac99abbe8ca1da37ee Tom Gardiner <tom.gardiner7@gmail.com>: Add in actual intellij working config
+03c14ddf881f4c2576adfc3f47c6061f95e74697 Tom Gardiner <tom.gardiner7@gmail.com>: Fix last remaining transitive deps kotlin compiler was pulling through incorrectly
+5bbff43fab28e26fd54d8d756fbeb5c423d15de3 Tom Gardiner <tom.gardiner7@gmail.com>: Fix issues with kotlin compile dependencies
+c3273446ac01c39d047c439ce07d3d3fd20fccb2 Tom Gardiner <tom.gardiner7@gmail.com>: Add back in included projects
+9273b03624ad20332fbdb5e84f1bd371c63d5f29 Tom Gardiner <tom.gardiner7@gmail.com>: Fix dependency tree inconsistencies. The problem was misunderstanding with the difference between build script dependencies/constraints in a settings level, compared with build script at a project level
+6b952d1057dc598f2edc86172b8333d9a2c6f1e7 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup
+9cf0d9b3c46e785be581d6da0640515018d5c0af Tom Gardiner <tom.gardiner7@gmail.com>: Make tasks cacheable
+8e9974db700c6285c9ad2b067f7b8571a1c4b966 Tom Gardiner <tom.gardiner7@gmail.com>: Fix dependencies result not working correctly with configuration cache
+d18b3941b03fcd511e14eb613202e965847e3d18 Tom Gardiner <tom.gardiner7@gmail.com>: Add custom plugins
+15207f6b1eb968678930cf25ff3971afb15995c3 Tom Gardiner <tom.gardiner7@gmail.com>: Add build scan bug link
+1855fa45322853d5c27ee701d0e312be3f529b15 Tom Gardiner <tom.gardiner7@gmail.com>: Change version back to java 21, fix configuration cache for groovy and reproducible archives sometimes failing
+ba9ccd83a8e4ff78730e1abe48228f1108343a50 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary docs
+fab7ccacc20bfa110b9e9fb5819418feb0ef3cb0 Tom Gardiner <tom.gardiner7@gmail.com>: Restructure to get everything we want. The best yet. Seems to be no real downsides except complex logic
+db89a24969c744a4609419e92215b3d5db2ff22b Tom Gardiner <tom.gardiner7@gmail.com>: Standardize kotlin version for consistency across custom plugins, subprojects and included builds
+9a16c133200192d10f6b58d744573d536bc7581f Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup further local plugin/local publishing structure. Still the go forward solution
+64ed2e487bb67fc00ac7d13eb52b693bdfc232f3 Tom Gardiner <tom.gardiner7@gmail.com>: Iron out kinks with local plugins and local publishing. Looks like the go-forward best solution still by far
+c510548f15ab8e104095a1ac6bb276b343c8a004 Tom Gardiner <tom.gardiner7@gmail.com>: Move dependencies file to top level root
+66bc2614c9cba95e7f133768d7758752575003bf Tom Gardiner <tom.gardiner7@gmail.com>: Fix root build name
+97f090e8c8b86786490f2655040b2893b220ec7b Tom Gardiner <tom.gardiner7@gmail.com>: Finally manage to have the ACTUAL layout I have always wanted without any downsides
+c6a2b98326e870f9efc386712924908a758a3ef1 Tom Gardiner <tom.gardiner7@gmail.com>: Add Minify plugin for external deps, consolidate builds
+dda617370364c635b17104e23c3e104598c516c2 Tom Gardiner <tom.gardiner7@gmail.com>: Fix develcoity multiple versions
+0bbf0f7f171a7b26cc6046bad7f91487629df217 Tom Gardiner <tom.gardiner7@gmail.com>: Remove asm, jmx sample projects
+9263f61d063308eee8de53a9cfd373a2f1b78a17 Tom Gardiner <tom.gardiner7@gmail.com>: Add compute instructions task for task execution digest that we can use for incremental feedback
+d2d4c8924f75f72039ae20bc23c23d5bd59e33d5 Tom Gardiner <tom.gardiner7@gmail.com>: Add spring boot example
+cd8dd4ee32928f02338a598fcaa23909bf244da5 Tom Gardiner <tom.gardiner7@gmail.com>: Add incremental hashing of each class file
+6f93ece236e8f255e92b4064a6e7bd16a8e3223f Tom Gardiner <tom.gardiner7@gmail.com>: Fix name of test
+62b6579eded43daf461a2e1a60a82257039cfa7e Tom Gardiner <tom.gardiner7@gmail.com>: Wire up existing test flow and test it to make sure we get expected results. Precursor for incremental tests
+d910cc6bf97d181e9a7c3d937c3ec715cde19dd1 Tom Gardiner <tom.gardiner7@gmail.com>: Add what appears to be semi functioning incremental test task. To figure out why other tasks are triggering rebuilds
+89e76effc1a08ca5312ab2c17c08e71e056ea92b Tom Gardiner <tom.gardiner7@gmail.com>: Add proper binary plugins alongside conventions prototype
+acaeff74d557c4fc53f1be454cec1833031b479e Tom Gardiner <tom.gardiner7@gmail.com>: Add byte buddy instrumentation
+fddca5d9651063395ecb543ed1afb6b57a53a5df Tom Gardiner <tom.gardiner7@gmail.com>: Add test data report configuration which can be used alongside jacoco to figure out caching value and whether tests needs to be re-run or not
+77a82bf42c52deba18f898c8f79e4e0b06e8f285 Tom Gardiner <tom.gardiner7@gmail.com>: Add in sdkman bug tracking
+13f2e78f97186599dd6fdb2f23099d3dbf986b77 Tom Gardiner <tom.gardiner7@gmail.com>: Add progressive mode
+739507d633668bee2881f0f84e8b40bb2021b517 Tom Gardiner <tom.gardiner7@gmail.com>: Bump version of KGP, fix bug, and remove warnings
+bc664f28b582f9af1e59129aa2accdf062e7905d Tom Gardiner <tom.gardiner7@gmail.com>: Move hashing plugin to base kotlin plugin
+f9ff308d67b2fc976299fed5750d950b4c17ca86 Tom Gardiner <tom.gardiner7@gmail.com>: Delete more
+ba11175469c80c92a19dc4d79ec8029c1afbae79 Tom Gardiner <tom.gardiner7@gmail.com>: Remove mroe leftover cruft, add java version checker for each project
+e5d87afe9e0eb5199546d4b17f60297e51d90610 Tom Gardiner <tom.gardiner7@gmail.com>: Add in more scripts and fix remote build cache
+327a64650e345ef402a2de65fd9997b7b1fa63da Tom Gardiner <tom.gardiner7@gmail.com>: Test gradle analyzer
+aec4336a168b64d2b034d6fa49632df2d49a116a Tom Gardiner <tom.gardiner7@gmail.com>: Add intellij sources for projects on load, cleanup build service and put it all in an isolated safe way
+a394b6c281d181245347fac8bb0a96ea25d27756 Tom Gardiner <tom.gardiner7@gmail.com>: Add card tracking all bugs faced
+f65cfee702a2be4de1b7683c37a485ce5913469c Tom Gardiner <tom.gardiner7@gmail.com>: Modify kotlin jvm version for projects that dont have that extension, and remove evaluation depends on children
+6615a5fe248b9c6d67d8d4fb0f4545bde0603bd5 Tom Gardiner <tom.gardiner7@gmail.com>: Try and fix dependency resolution timings by fixing the platform at root
+f46cb0e73d1c7062927c8ff33d46413ec220eb1a Tom Gardiner <tom.gardiner7@gmail.com>: Add in java directory selector
+fbbac4ce0b722c2e79c61864e399ca61660069a0 Tom Gardiner <tom.gardiner7@gmail.com>: Remove KSP to enable isolated projects
+36a598920396654a4159169d94cdba69562464d0 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup unused legacy, create more tabs, and add some basic niceties
+90f44290692de717383bb6f2b283c5d9c5ddf78e Tom Gardiner <tom.gardiner7@gmail.com>: Fix java toolchain being incorrect
+e417d79778b3c96a513e95062f13ca8adfc6626e Tom Gardiner <tom.gardiner7@gmail.com>: Add some basic examples to showcase to people
+9ac45a7b6b4e9dbd0eb4d34e1415677f2fc7b36f Tom Gardiner <tom.gardiner7@gmail.com>: Finalize styling
+870a670ecf0f5be210f48857949b31372b112194 Tom Gardiner <tom.gardiner7@gmail.com>: Add in basic screens, some styling and some light structure. Using gradle API and remove MPP plugin
+2d287a615355d8bdda355a837b03340c9e940e7d Tom Gardiner <tom.gardiner7@gmail.com>: Tidy up
+179af3a0bd382247d6984eacf6dcd46822ce01d3 Tom Gardiner <tom.gardiner7@gmail.com>: Add basic in code viewer window
+610c5e795c2a4a37e133b973ee657d5a1c8f2f33 Tom Gardiner <tom.gardiner7@gmail.com>: Fix instrument app standalone task not using the build directory properly
+d5bc3a3c5c1dc1d438ac14db0121c9ebd154a9fb Tom Gardiner <tom.gardiner7@gmail.com>: Add in bug fix for root project including projects/builds incorrectly when they were nested structure
+8d32513debcba3a3a898d8ee885a7683cc0b7fcd Tom Gardiner <tom.gardiner7@gmail.com>: Add in first part of nice UI
+ddb9b3f60a37ca6f41a4a59e009ccc5c1f699c56 Tom Gardiner <tom.gardiner7@gmail.com>: Fix provider at configuration warning for build-ui
+07b559e23140539a91e705d99cc75c9d15c7a8f0 Tom Gardiner <tom.gardiner7@gmail.com>: Shift button to section splitter
+c5b452038a922396e18850656e577a2232f4de61 Tom Gardiner <tom.gardiner7@gmail.com>: Add in vertical/horizontal splitter
+b2ae5a19a4b43b7250ee5d7929a63598c15d7594 Tom Gardiner <tom.gardiner7@gmail.com>: Add in ability to select task and run from different directories
+75f297bdab4c750ad07028169e4c72953eb2d788 Tom Gardiner <tom.gardiner7@gmail.com>: Add in gradle version, jvm args, build id
+a1fa2a89166dfcf9a68faaf7f296cf5aeb7172ff Tom Gardiner <tom.gardiner7@gmail.com>: Add running of warmed test suite button to ui after inital load
+2d139932fed9a6df212b9646f5da26ae20c85e45 Tom Gardiner <tom.gardiner7@gmail.com>: Add in task events plugin, fix root exposed tasks not including included builds
+b6566c7e49372720716bcdc7350c6e90fde58683 Tom Gardiner <tom.gardiner7@gmail.com>: Move multiplatform app to plugins
+85afae29a43877aef427dd98afaade3a27ab74ae Tom Gardiner <tom.gardiner7@gmail.com>: Disable remote build cache
+3d4cbb7560d33042642e3e02e1f19ded57efe4e4 Tom Gardiner <tom.gardiner7@gmail.com>: Revert "Disable build cache"
+78e5055952da042162240356a85a6d16160a42e1 Tom Gardiner <tom.gardiner7@gmail.com>: Disable build cache
+98ce9724cc20b3bd089e3205e9177415daf75816 Tom Gardiner <tom.gardiner7@gmail.com>: Move class relocator task to a plugin
+f859426645b301ba4c4c018411990016063fc0f4 Tom Gardiner <tom.gardiner7@gmail.com>: Add remove gradle cache scripts to composite builds
+5b77bd58d6df0cb9cd22a5de804b1864ef74c7db Tom Gardiner <tom.gardiner7@gmail.com>: Add example of relocation transform for package names
+48fb87f76d267e99c5bcae64045f7a2d6732c138 Tom Gardiner <tom.gardiner7@gmail.com>: Add in gradle api tooling output for desktop app. Now outputs testAll in a scrollable window
+e8a57cf0554129601a485ea644887d43a259f119 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup desktop app plugin
+71f63c3505c6f4536abfc13931ebf23f41685c61 Tom Gardiner <tom.gardiner7@gmail.com>: Add basic layout for rows, text, columns
+2bb8531e1f1b8c5c11dd1cffdfbbe4dad2c7054e Tom Gardiner <tom.gardiner7@gmail.com>: Add in desktop application plugin
+856bd46a3c81e658ccaa6128ac96281e06e9b6ce Tom Gardiner <tom.gardiner7@gmail.com>: Add kotlin dsl plugin to relevant plugins
+b68b093c025c81409da94da5bcf8a8d37670e3b9 Tom Gardiner <tom.gardiner7@gmail.com>: Add base kotlin-dsl and fix build-ui-tool
+2572d49e79e964746cc7e11a7b7bee08b344ef8f Tom Gardiner <tom.gardiner7@gmail.com>: Add a proper UI for the build ui tool
+2c856d2cf647591ffec570f85a205b631ed66c5b Tom Gardiner <tom.gardiner7@gmail.com>: Make json comparator
+2976b28536808cc7825c1733a549f8b8adec49a9 Tom Gardiner <tom.gardiner7@gmail.com>: Add in basic build tool ui
+c1cf7ac17c7f92ae7d72960a180a112db396d572 Tom Gardiner <tom.gardiner7@gmail.com>: Add gradle build dir function
+b32ee28d90365116b7194a9e3bfd71f9620373d7 Tom Gardiner <tom.gardiner7@gmail.com>: Basic cleanup
+da7b9a255ce37430b37605b476508751b72a68fb Tom Gardiner <tom.gardiner7@gmail.com>: Add in working basic instrumentation example. Has tests and works from both root and individual build
+d270aa8172bc8bbf61ffdfc492395413f96ee2f2 Tom Gardiner <tom.gardiner7@gmail.com>: Add in working instrumentation example with ASM. Clunky and no 'real' tests
+eadb3efbf54602301a99f51ce3d811355289272a Tom Gardiner <tom.gardiner7@gmail.com>: Bump gradle version
+6dbd57144993d93b09472eda079c9060e8ec98e8 Tom Gardiner <tom.gardiner7@gmail.com>: Add in example of consuming a configuration which outputs the test results from a dependant project. We could use this alongside jacoco to provide incremental feedback in future
+879fe733af914af02f81b5a15b7380154b6e9ff9 Tom Gardiner <tom.gardiner7@gmail.com>: Update gitignore
+dc06ef9f8da8587260069e619e9378a3caf498d0 Tom Gardiner <tom.gardiner7@gmail.com>: Add should run test task which is not dependent on test
+f963a8bdb04f1c8ad448b73566f0d24a0dd60b43 Tom Gardiner <tom.gardiner7@gmail.com>: Add in difference in lines output
+e32bf9db1ddd5047ae83bedfdd63abd00308888f Tom Gardiner <tom.gardiner7@gmail.com>: Add in should run test file for the output task to determine whether or not tests need re-running
+b5eea66b689ada42719a0e5e2f790fc4dd655bea Tom Gardiner <tom.gardiner7@gmail.com>: Register jacoco task compareSessions which can be used to identify whether or not test tasks need to be run again
+d12657acc91b365c48a45eec67a88169bf499417 Tom Gardiner <tom.gardiner7@gmail.com>: Add in jacoco plugin which will serve as the basis for comparing two test suite runs for propert test suite incremental feedback
+6e24786d970f53e440543d474a767bb39a877c0d Tom Gardiner <tom.gardiner7@gmail.com>: Tidy up some old messages that were not updated
+7af559c9e316745e61b634971977fa12cf8e86f6 Tom Gardiner <tom.gardiner7@gmail.com>:  Add example of build cache to showcase the utility this could have
+0f7df613ed08594a0a0ab8bb03d5b2703ac88b7d Tom Gardiner <tom.gardiner7@gmail.com>: Add in script to easily create library/applications
+75aaa2c080de2f961760d069cb430bfe7823a3e4 Tom Gardiner <tom.gardiner7@gmail.com>: Add check all task
+c986b40398ab846f56c200851c9b84e92d6ba167 Tom Gardiner <tom.gardiner7@gmail.com>: Add run all task
+4a1f226371d8b91fd3af1432c359cec9ed603d71 Tom Gardiner <tom.gardiner7@gmail.com>: Add in test task
+98dff366898a9f7bd8e9a3d69d982142eb9d5313 Tom Gardiner <tom.gardiner7@gmail.com>: Update/clarify wording for root tasks
+99be478277b27e8643cc912ab5d9774dfc17bcb5 Tom Gardiner <tom.gardiner7@gmail.com>: Add in root project tasks to simplify tasks needing to be run from root
+976bc3423683e876fe04281c6d8ae9b7480cb7fa Tom Gardiner <tom.gardiner7@gmail.com>: Add library with coroutines dependency example
+3e44acc9a5ede6d9716efa10f205a5710e5894fc Tom Gardiner <tom.gardiner7@gmail.com>: Add in example library-two to showcase standalone project with no dependencies and the effect modifications in that project have
+85b63df32fc866c52064494e52dbafa6326014c1 Tom Gardiner <tom.gardiner7@gmail.com>: Add in ksp-processor which outputs basic log file of source/test classes ASTs, align versions and move settings to custom plugin
+f3c18f253aec6c1208bf8daa07d7a0f398a01250 Tom Gardiner <tom.gardiner7@gmail.com>: Fix slight bug with should-we-execute-tests.txt not having the right value
+5b0c5f5b19265b2669b020e0a16fd2e26a3ddf2d Tom Gardiner <tom.gardiner7@gmail.com>: Modify wording slightly
+1b8fe75a7dbda44ce271f85a6b8f8e5d04bf4b06 Tom Gardiner <tom.gardiner7@gmail.com>: Add in an example of the holy grail of feedback, which showcases the possibilities of not running tests which were unrelated to some arbitrary condition
+9658cc68051e6c6a3038e3fec697f33743b8ba71 Tom Gardiner <tom.gardiner7@gmail.com>: Add in probably the nicest layout yet
+3e9292d2e6f7b4a27d7c5e07a8d750758a758b09 Tom Gardiner <tom.gardiner7@gmail.com>: Update basic plugin to be basic kotlin plugin
+4b825b245eb229502db06fea57fe7d8ae197c56b Tom Gardiner <tom.gardiner7@gmail.com>: Add in libs for each standalone project
+c04a5564ffd5756485ab9f3766d6215d9e4cf856 Tom Gardiner <tom.gardiner7@gmail.com>: Wire up libraries, and applications to start using plugins
+e9906bd7d5d17b2dea36159ddb939a28d05ebd43 Tom Gardiner <tom.gardiner7@gmail.com>: WIP
+65194074e0a6bde21e002e8ed14e90dd3f267642 Tom Gardiner <tom.gardiner7@gmail.com>: Re-organise structure to keep old experiments
+650819b6337c05c5394e3880fa7a7642e9b59a27 Tom Gardiner <tom.gardiner7@gmail.com>: Add in java 21 check
+b5ce93392b2a2ab03d1bff2a9409660fba1f66ad Tom Gardiner <tom.gardiner7@gmail.com>: Update all versions to now be either using either the embedded kotlin version or the toml file
+1affe7119d891875f932982a314a6e6a6ef3f4e1 Tom Gardiner <tom.gardiner7@gmail.com>: Allow projects to use version catalog
+170f15900d66e321f1338d835215053a6151445b Tom Gardiner <tom.gardiner7@gmail.com>: Fix build deprecation warnings
+00e342e5eff50cf8cce24f1882a89c48b7e0737e Tom Gardiner <tom.gardiner7@gmail.com>: Add in root build tasks for publishing locally and building all composite-builds/projects
+fdfd2b681551b90d8b4a03bbad5b6628285234aa Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary guff from root settings file
+9ba4c98275d24b8a5ebdb26659b40e8dabe6eb9c Tom Gardiner <tom.gardiner7@gmail.com>: Fix error with com.nophasenokill.BasicPlugin not being found in jar
+4e965ceaa9c928753c581a7eb8b15f920a90e92a Tom Gardiner <tom.gardiner7@gmail.com>: Add in a test confirming that the hash plugin is being brought in automatically to the extended-plugin classpath for tests, making testing infinitely easier
+bac53842c074686d534afefe43e3a0c6b263cc8e Tom Gardiner <tom.gardiner7@gmail.com>: Add task which exposes a hash for shared configurations, which include a shared configuration that has an output hash of its sources
+052d5c31a8d1f509e0da27e2f1f0817bcd5487c7 Tom Gardiner <tom.gardiner7@gmail.com>: Start organising requirements I am wanting for my plugins/build structure and see whether these all work
+4a433371ab777cc5709b3cba73f89add9371f1d3 Tom Gardiner <tom.gardiner7@gmail.com>: Remove root settings plugin unnecessary version usage
+586fc6fbb9ebbddec29ec58dc059179ed2bd3f00 Tom Gardiner <tom.gardiner7@gmail.com>: Fix plugin not being able to be found in extended-plugin to include in its deps
+bed08971fb67cc6a5cdeeb6a64b7eca73604115b Tom Gardiner <tom.gardiner7@gmail.com>: Add in hash source plugin to calculate the hash of a source folder contents
+5f2779a7344d1dd21bb414674de6a892e876cd84 Tom Gardiner <tom.gardiner7@gmail.com>: Add in basic working version using artifact sharing
+8076e789458926581ab974c6ddaae0c788ec4ed5 Tom Gardiner <tom.gardiner7@gmail.com>: Add in test logic to confirm that to fully include all plugins in our tests, we just need to ensure proper depenedency management and that we are applying them correctly
+24284569339e900f9a409ca91e782cda85ef9c93 Tom Gardiner <tom.gardiner7@gmail.com>: Bring project back to the state it was in before I was investigating how to fix tests on the classpath for cleaner testing
+6a0c493d53a9516e4bbf5d296102d84208a3d2b7 Tom Gardiner <tom.gardiner7@gmail.com>: Reverting the WIP changes so that I can have them in git history
+d80344a27de7cef111902a512ef9570cf155904e Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Get root-project build back working. TODO enable the commons again
+953c1168a1ce113e60f5918cf72d36c0b606b559 Tom Gardiner <tom.gardiner7@gmail.com>: Add build logic and platforms - gradle WIP
+97386e552f0a7076fcd560d2737e736ace8c36cd Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Add in basic example struture to then ask questions with
+f1c144407ac41c4d726b3b3d2da45efddf89bcb9 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Add build-logic stage which works in complete isolation as a standalone module
+398d8ef7798ef2478298ea53595a5a436713cf02 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Add massive structural learning around included projects and builds
+427114f6ebcd4753bdbe259b37dc54588f21d852 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Add consumer/producer plugin with instrumented jars configuration
+a8550b417c7b0c094735268c7e66c01816faa4ca Tom Gardiner <tom.gardiner7@gmail.com>: Showcase proper buildscript classpath usages
+b915775eab5c07211c02aa9b801c78c1583ef9dc Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Probably best structure yet
+1615a88e09e6a92c619b5847931ef532625d6857 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Nearly finalize structure
+7686023a6ac848fae70d8950b19bae830476b921 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Showcase how to build plugins that dont apply multiple times
+9f020379fd360a9433e141a954b3805525a5efc3 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Add example conventions hierarchy
+d9b7ca18a9e72e1208c6d8d6e10ad47bc9c18481 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Add resolution strategy
+7281468ce008934db70c429f62e3ae1ee9abbdd9 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Minimal number of tasks, has all basic scripts. Able to use them in settings, includeBuild, include etc - all the while having it on test classpath
+b0ceeeddb1c591bc47feac485e1ded7096c71761 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Add basic jvm/kotlin args, with a few configuration tweaks
+21369547a34c811406d86494621b7e945ff948f7 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Move kotlin dependencies and group/version into producer plugin
+c1b28515d3ffb29d925a9cab5f70eb67ad8b6de7 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Add standalone kotlin plugin to producer plugin
+2d6cb5d7b02440335050021b210e79d87eb6aa5d Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Move producer plugin to project dependency rather than external module
+90c3a10717909cc6b6d32f9144f68c00b8931206 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Move maven publish to kotlin plugin
+1b2423534bbd59e9afe8978fdb2d777acc217f77 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Move tests to common kotlin plugin
+89255319aef61096361dec95238442c28dad7091 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Move group and version to standalone kotlin plugin
+b4277e64554a784b07cb9b6bc72e3e8210dc6de8 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Move the dependency management/plugin repo down to the settings file
+175558a0afdbc36a4297068909345a38b1453926 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Add plugin as dependency as well as use plugin. Includes it on classpath for test, but producerPlugin also needs to be built before consumer can use it
+16cbdf76ecf1522c1e291fc19dbbc77f4f28515f Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Share dependencies between consumer and producer
+4e885de3376878f258a57c918b217800ba0a2ed6 Tom Gardiner <tom.gardiner7@gmail.com>: WIP Limit all of the kotlin modules looks inside of the pluginManagement block - to allow for consistent naming resolution. It also means we wont need to make/do the same amount of overall work, because the dependencies are now untied
+7c77eb5d41edb779ce016d202cf0392f57fc597a Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Barebones start structure
+6d19570329176914b97026463b8b43c5d43b49b4 Tom Gardiner <tom.gardiner7@gmail.com>: Create the first half of a producer/consumer rfelationship in the project structure wanted
+768119488009af0d23ed0d92ddd2472d3c24207c Tom Gardiner <tom.gardiner7@gmail.com>: Add readme in case michael needs install instructions
+474f373a2f0f0bddd7c4472bd344e4e9c45d741e Tom Gardiner <tom.gardiner7@gmail.com>: Add example layout for michaels game
+42bdba2837a875f28f77cdaa4b6235d78956cfdd Tom Gardiner <tom.gardiner7@gmail.com>: Standardise naming for standalone plugins
+45f74aa5c282e9a6daa343d54995bebcf0fcc19c Tom Gardiner <tom.gardiner7@gmail.com>: Fix the test composite build path
+d89bb87bde1ab3b53696b4abe5b3a202630ac6bf Tom Gardiner <tom.gardiner7@gmail.com>: Remove local repo as it is not required for consumer/producer projects. Declaration of dependencies is enough
+e3a81e3106cc3348222aea3fde3f8e79380c3156 Tom Gardiner <tom.gardiner7@gmail.com>: Add in an example composite build which showcases how plugins inside of tests can have a consumer/producer relationship. This will mean future test setup can be kept to a minimum
+86a3dc42e0b3a3b15c202660f4b0f897765a5b5d Tom Gardiner <tom.gardiner7@gmail.com>: Add in library plugin with basic test
+c6ab7cbf22505e3d3e14b1d58a1341111d4c6895 Tom Gardiner <tom.gardiner7@gmail.com>: Modify the build file for the check kotlin gradle plugin to increase configuration avoidance
+34123f81d0185d32d310fac2508fd31463741d31 Tom Gardiner <tom.gardiner7@gmail.com>: Significantly improve the clarity of the meta-plugin with reduction of dependency declaration. Made completely standalone project too
+44ccc3c29c84adf3240fb3043e18472089fea498 Tom Gardiner <tom.gardiner7@gmail.com>: Add in version catalog to plugins to allow further dependency consistency
+207d86adf68680842ab8cf1ae2870b0842f6279a Tom Gardiner <tom.gardiner7@gmail.com>: Fix mutating kotlin-bom deprecation warnings
+403b41bc1574809b23800358992d71473e596049 Tom Gardiner <tom.gardiner7@gmail.com>: Move versionining of dependencies use for constraints into toml file so versions can be bumped more easily
+e86c25e969e2dbee069d5b1c408a6ecd2be3eaa2 Tom Gardiner <tom.gardiner7@gmail.com>: Fix gradle test runner printing incorrect test name
+21e7c351f6a43e833bcf1be2fdf96036dc9323d6 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unused folder which no longer contains anything
+2414cee79f7e5cd2495bf33bc48f11add4980574 Tom Gardiner <tom.gardiner7@gmail.com>: Add in test for pinning kotlin transitive dependency versions
+4fe3eb154ffbff836e392c73dd3b53bc819dcb43 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary dependency when building meta-plugin. Previously was also triggering standalone-plugin-one, when meta-plugin-one was building its own dependencies
+a339a13f9abda715fbd2a1647f4d3395e19b9fee Tom Gardiner <tom.gardiner7@gmail.com>: Remove custom application tasks that were causing build to run unnecessary tasks for meta plugins and change application one to included build
+0ce94b03642dd34a42e39f3714f48b09c0d98e8c Tom Gardiner <tom.gardiner7@gmail.com>: Add in pinning of kotlin version dependencies plugin which handles standardising dependencies used by org.jetbrains
+e6292582ac03bc9539fcde0a365fd807d5ef4431 Tom Gardiner <tom.gardiner7@gmail.com>: Move standalone-plugin-one to its own build
+2fd27166acb2ca52b8664bb51f74465e8227060b Tom Gardiner <tom.gardiner7@gmail.com>: Move platforms to their own builds
+c11229ad9178e830beac8a413f735dad1bc30a3f Tom Gardiner <tom.gardiner7@gmail.com>: Include meta-plugins meta-plugin-one a single time at root project
+c17d470356ed403880fbbce84001290d8fb5a81d Tom Gardiner <tom.gardiner7@gmail.com>: Add test suite type to functional tests to fix test report aggregation not properly outputting functional test results
+3e359f7a9925c92e052f622bec06cd243460fc24 Tom Gardiner <tom.gardiner7@gmail.com>: Make tests non-parallel for WAY faster speed
+f72e41c889b783417fbe886e50a401b98b076cbb Tom Gardiner <tom.gardiner7@gmail.com>: Test speed improvements
+33db268f0f87ade7dd52a9d9907dbe8a573a5b67 Tom Gardiner <tom.gardiner7@gmail.com>: Clean up and standardize the logging back to the original purpose of making it easy to read things
+cdf8506e65e181a380bdf4336ea72e01ca8bf86a Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary gradle files
+c6fd5612645ac88d5561633acb016da6fd74a6e8 Tom Gardiner <tom.gardiner7@gmail.com>: Fixing some coroutine misunderstandings where it was doubly blocking thread when it didnt need to
+cf56e968a3d95f9f279db051e75760fea671bba7 Tom Gardiner <tom.gardiner7@gmail.com>: Remove all of the logging noise
+fc15a81a484a404f4d3982650af955163c0aea3f Tom Gardiner <tom.gardiner7@gmail.com>: Add back in some of the new structure for project, and add test aggregation tasks
+a13167f7216d2d1b71db0f519052cf3ba20864ea Tom Gardiner <tom.gardiner7@gmail.com>: Add in global coroutine for tests
+bd6367fc846d3680de55414e5dc19784856aaafc Tom Gardiner <tom.gardiner7@gmail.com>: Configure logging to show in an expected way, where the output is represenatative of the order in which tests actually ran
+ae68cc81ecb6d90f77bcaf69e12d02d6f427a983 Tom Gardiner <tom.gardiner7@gmail.com>: Start to improve some logging
+12e8aebe454a36c296d8ef956e61f70c1ebb7d42 Tom Gardiner <tom.gardiner7@gmail.com>: Create example where it only initializes the test suite once across full parallelised/concurrent threads
+309136d2bea8997e85e8fb9f90cdb408906d5b0c Tom Gardiner <tom.gardiner7@gmail.com>: Exclude standalone plugin from application one which causes more tasks to be run than needed
+1cb18fe40b29c3bc88bbed6d57eddd70eef75cdf Tom Gardiner <tom.gardiner7@gmail.com>: Highlight that test suites are being run multiple times due to dependency inclusions
+6043332074bdd4efd96e88b1e188e4c0fc8ef288 Tom Gardiner <tom.gardiner7@gmail.com>: Implement single gradle runner initialization, to reduce test start up times
+018aa1d07140ebae1b6f62a3978fa570461160c9 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup/optimize imports for whole project
+8bdc61126723d74aaf09804cd0fa14d1a8f1c891 Tom Gardiner <tom.gardiner7@gmail.com>: Remove runBlocking calls
+bfd3bdfbaae9a8b20d0cc47b090d1131a7f29c09 Tom Gardiner <tom.gardiner7@gmail.com>: Remove shared test extension, and test invocation listener until we are fully async
+370835b91409d598d1c5b358dd1173be76a0149a Tom Gardiner <tom.gardiner7@gmail.com>: Add in parallel forks which has identified that the cause of slowness is a blocking call somewhere in meta plugins functional tests
+c670f9e4ab1eefd2fb79337a36f8a7faf4bd47de Tom Gardiner <tom.gardiner7@gmail.com>: Add in meta plugins, which include build service fix
+49dc33ebee7ef653a9c47611452302bed23b7432 Tom Gardiner <tom.gardiner7@gmail.com>: Add gradle to each included build, fix gradle properties not being applied correctly, and lay down foundation for future configurations/sharing between applications and plugins
+1815ba2b0d1e4d2aa6578bfb5404f3a8b6e1b13a Tom Gardiner <tom.gardiner7@gmail.com>: Fix configuration cache warnings, in preparation for move to configuration cache turned on
+8dc05d4d435223787d0f8e8963d787dbe19b0d14 Tom Gardiner <tom.gardiner7@gmail.com>: Consolidate tests and further increase speed
+c2a669b5d7bf9571464fe75ace996520a343132f Tom Gardiner <tom.gardiner7@gmail.com>: Move application plugin to use dependency constraints through the generalised platform
+8ea55231aca8096d74a4c1d47a2af1c7806ca416 Tom Gardiner <tom.gardiner7@gmail.com>: Fix incorrect build applicatons task
+94f386ae8c453b1b62aaeedc763ea47ff171fb73 Tom Gardiner <tom.gardiner7@gmail.com>: Add task inputs and outputs for buildAllComposite and create an example plugin to consolidate understanding/learnings
+6977c1867d16e9ae8054e6a63a695ee5e4f443a0 Tom Gardiner <tom.gardiner7@gmail.com>: Fix app not having the correct things applied to it to be able to run
+0239cd1fe577447598a39ba3e56c820a97bcd795 Tom Gardiner <tom.gardiner7@gmail.com>: Add in helper function for comparsion of test build file output
+3904d1c1631fb73c48dc18c88bd96fdf1e57972e Tom Gardiner <tom.gardiner7@gmail.com>: Slightly improve the functional test APIs for running tasks
+3ed1789c54a35c37a3d9e3d4083ef889ac34932e Tom Gardiner <tom.gardiner7@gmail.com>: Add functional tests to ensure that dependencies dont break when refactoring kotlin application plugin
+231e8023567f159e15f56e3ac2051c4565e1a7df Tom Gardiner <tom.gardiner7@gmail.com>: Stabilize the dependency tree. application-one and standalone-plugin-one now have no dependency conflicts
+4e737c7f2a17b6f2f801ebc3c452a3e130adfc8e Tom Gardiner <tom.gardiner7@gmail.com>: Fix test gradle runner not applying plugins correctly when two tests in parallel run from the same class
+90bd97e2691932bda83d6e3dcdd8971d460d72cc Tom Gardiner <tom.gardiner7@gmail.com>: Add test logger which fixes gradle hiding/obscuring logs
+322cb7571c6a2dd30d3a48ed09ea9cebe533e47f Tom Gardiner <tom.gardiner7@gmail.com>: Clean kotlin application plugin in preparation for test logging
+e873b93b8e640886e598b70b73f635020c7e5da1 Tom Gardiner <tom.gardiner7@gmail.com>: Add basic method on test class to create plugins by id easily
+7a420255e5f149db9557d0416af7e90430fe78f7 Tom Gardiner <tom.gardiner7@gmail.com>: Add junit enhancements to due be to nicely create gradle test runner tests
+1622256e87631194c2304588e8685ee416dba540 Tom Gardiner <tom.gardiner7@gmail.com>: Add layout that supports endgoal of binary plugin layout. This allows for much better performance
+67b4a181dc2bfbc90e96958686b099c3a13f7cfb Tom Gardiner <tom.gardiner7@gmail.com>: Update wording slightly for clarity on buildAllTask description
+c0df51d102fa6213b8a72373b319a9c77d20c412 Tom Gardiner <tom.gardiner7@gmail.com>: Fix incorrect string for project dependencies potentially causing cache invalidation
+32c5dc07ae7ed6762e796286ec299e398f9a5234 Tom Gardiner <tom.gardiner7@gmail.com>: Fix plugins not building correctly
+890063899c0ca234ca7af31a0d5e400fdd799fd0 Tom Gardiner <tom.gardiner7@gmail.com>: Add in dependencies on outputs from standalone plugins
+d0521f7d090b53db9a7a0ffe681258365cbdc596 Tom Gardiner <tom.gardiner7@gmail.com>: Restructure project for simplification
+9f8d86fb5fbd9160e6b2b58c48979a31e401109d Tom Gardiner <tom.gardiner7@gmail.com>: Dont run unnecessary java tasks such as processResources/processTestResources/compileJava/compileTestJava/compileFunctionalTestJava
+b44c01c4adfe6da19f8351ef7251a7f1cce7c59f Tom Gardiner <tom.gardiner7@gmail.com>: Move dependency inclusion of platforms to standalone plugin
+211866748ca120917d4e2350dd502c4494eccc6a Tom Gardiner <tom.gardiner7@gmail.com>: Update wrapper for debugging and move default java tasks disabling to plugin
+4075c00dfa9e922ca630fd028c82402609d2a1f5 Tom Gardiner <tom.gardiner7@gmail.com>: Add java plugin if it isnt already applied when applying kotlin plugin
+9fc2079d9be6b5a581033d11b83d037fb9e1fb0d Tom Gardiner <tom.gardiner7@gmail.com>: Add dependency on plugins, rather than a recommendation of running afterwards
+ea33eb8c8cbb646335a656ecd9c24d71d904aaed Tom Gardiner <tom.gardiner7@gmail.com>: Convert junit properties to UTF-8
+db3170af740b21cf316e147989ff05da702346b2 Tom Gardiner <tom.gardiner7@gmail.com>: Remove configuration cache for clarity and easier troubleshooting
+5ec3fb08d84162b87d2d312d030e5bfbd3c33dd5 Tom Gardiner <tom.gardiner7@gmail.com>: Update gradle wrapper to 8.7
+907220b96f5d5780bac90142aab27c853ac4c7af Tom Gardiner <tom.gardiner7@gmail.com>: Fix incorrect jar dependency causing unnecessary tasks to run
+ec24b54a556f7c5cee5b7f63b17ed1a30dd481d2 Tom Gardiner <tom.gardiner7@gmail.com>: Double check and ensure that the check tasks properly trigger assemble, check and build stages for use in projects that need it
+0184cad49f8bb66cba4557f668a5f8c0761cde9d Tom Gardiner <tom.gardiner7@gmail.com>: Add back in configuration cache task
+15a9d2bd47fc7fefb808f8d00f212765ce297ad4 Tom Gardiner <tom.gardiner7@gmail.com>: Add back in root settings gradle scan and plugins
+777ee5323da4fe4fc08625681924259b81d6eb03 Tom Gardiner <tom.gardiner7@gmail.com>: Add proper dependencies on plugin, and fix build service warning
+a81bac652b03723f0dc6bd84563ecbc03c5aa921 Tom Gardiner <tom.gardiner7@gmail.com>: Restructure to allow clear separation between modules and standalone plugins, so that we dont need to publish every time we make changes
+9775cdc38d5d10a32574728d8884483db5532576 Tom Gardiner <tom.gardiner7@gmail.com>: Ensure everything written now in kotlin, and publishing is happening only when checks are passing
+fd3857186b9c7667bf08b305ac3477d19087ed69 Tom Gardiner <tom.gardiner7@gmail.com>: Move everything into the modules folder including the standalone plugins with testing setup. Still to convert java to kotlin
+7f244fcbb64413705aca8dc10a6074397e7d002c Tom Gardiner <tom.gardiner7@gmail.com>: Move platforms to be more specific so we can start teasing them apart as separate platforms
+549d52ab13589f2027620bcc5e1dae3458e6aff6 Tom Gardiner <tom.gardiner7@gmail.com>: Split accelerated test runner into its own project
+1c227fb6ede2a205ab60296e4e6e9a63b7ed0472 Tom Gardiner <tom.gardiner7@gmail.com>: Fix dependency issue of jupiter after having migrated to new APIs
+9c1fdee650c3211d3e49cc414f714fb20ae87bda Tom Gardiner <tom.gardiner7@gmail.com>: Move standalone plugins to modules, which is planned to represent the application that runs faster tests after we move it away from app
+5c4083b33cd97f642c07af63f756ffaf32a2213f Tom Gardiner <tom.gardiner7@gmail.com>: Remove now unnecessary build services workaround. Add project safe accessors, and move some of the newly added deps to the toml file
+e234324bc132124b7ea174cdc145f1f35d29d11c Tom Gardiner <tom.gardiner7@gmail.com>: Add in gradle tooling API to confirm test speed increases in the dirtiest way possible for MVP
+45b74933dde649fa7de99b3ce780003730cd6f90 Tom Gardiner <tom.gardiner7@gmail.com>: Fix currentConfigurationCacheValueTask not working if value is null. Tidied up unnecessary plugins-new build script files
+0a53d4c3300000cabad81250441553ed51c6ab61 Tom Gardiner <tom.gardiner7@gmail.com>: Bump gradle wrapper to absolute latest version
+36be1962d45e0367ecd2b988e69235dfe5387d4b Tom Gardiner <tom.gardiner7@gmail.com>: Add build niceties to ensure UTF-8, output configuration cache warnings, and add standalone plugins project
+5520be88b86665208cf76a1d7d656192aafaf412 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup unused files from WIP - Configuration Avoidance Discovery
+98cef7e4164e48d71afad036705163e11eaab2f2 Tom Gardiner <tom.gardiner7@gmail.com>: Apply most recent changes on top of previous local branch (reverting a revert), to get master back into a normalised state without git force pushing.
+3cf9a66158b271c69121bf82ac1d2f0087e9efd7 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Add back in platform
+71fc84a75dd3bfad9b7d58d1592ad4dd63b7d156 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Remove tested-plugins which are caused unnecessary tasks
+99cddb421ba5622c8f9f12c440ef2f3ec853f4c8 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Commons plugins update
+dddb4894eb894633076dc9c2894822314a853b1c Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Add back in tested plugins
+1eed5eacc500ada2d51cfbd0f75dfa292c52f85a Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Add up to date checks for checkKotlinGradlePluginConfigurationErrors
+1256d8f1dd24f346ffbda025c2e137892848c954 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Remove transitive deps from all internal libs/apps
+473792f6a190d8872cb8ff6644035e446a359cdf Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Add aliasing to every module for plugins
+a0985aeba71970a5a65f5b31a543aa48b292372d Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Change workaround for checkKotlinGradlePluginConfigurationErrors to debug
+f6e1d9afc1f3aaaac49a66ff8f658dd3210c278d Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Reduce number of tasks from 173->172
+3afe61b476d8ec215794b9605db64909f8286952 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Reduce total tasks from 194->173
+01499fae87deb514b4ead3da71d4f947e2e8570f Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Remove plugin management from platform creating unnecessary tasks
+ec1eb88be0361109c2d8d2d680c31721517f8f64 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Remove plugin management from root
+d8a62274c7f50fa10d383ce6a593748e0866fc9a Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Fix deprecation warnings
+a95ce813d22bfcca353fd88f07b3a381d7e5280f Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Add in testAll which executes all sub projects tests
+30e4852f3009c7e637067851dfb75c3b9271dd19 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Reduce created during configuration from 7->6 for gradlew test
+be7d57c88cd746b6067459c63d9e40c255571862 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Reduce created during configuration from 12->7 for gradlew test
+396880c39f7cdfc842ada4f5a50d460194189d99 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Reduce created during configuration from 20->12, reduce created during task execution from 3->0 for gradlew test
+17bfc928c1a63ed29c298551e39dffa07db06322 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Reduce created during configuration from 28->20 for gradlew test
+d30439bd30bc6a6b866d15b6254beaedd44a253d Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Fix significant amount of tasks being unnecessarily created, and reduce created during configuration from 33->28 for gradlew test
+e1946017f186ab49917b0d2e69074a0298a3f6ba Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Separate library and application plugins from junit completely
+5832cc677f000308c932a6bb0fa4d50a913d287b Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Remove unnecessary test tasks
+2658a23db9f74d25a34a90eed1f107a657a436c9 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Reduce created during configuration tasks from 53->33 for gradlew test task
+42ff4172b621d52711df28c76ed8db9aaa6ed463 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Set configuration cache to false so that we dont get inconsistent results from intellij test runners
+760e10ce9af2b4d1c8f88bd1986d78f5e102c529 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Add output for checkKotlinGradlePluginConfigurationErrors task so that we can determine whether or not the task is skippable
+d613b13ffcf73ffd90cb9057ed4be0e5a45a20d4 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Fix java sources appearing as no source in build scan. It now skips this due to no java source files
+0f2cad7ba1097df11276f50e4af19a818be2ccea Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Fix some of the my kotlin plugin tasks not using lazily evaluated things properly
+eab7adc6b56fd88dfffddf379479da2dbdeb915f Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Add in found jvm args intellij looks to be instantiating
+ca695cee2acb423c413b23b61870ea62b89ff5ee Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - found underlying code the intellij gradle process plugs into
+504a67a2832c817e3753b10e782844fc45604b89 Tom Gardiner <tom.gardiner7@gmail.com>: WIP - Configuration Avoidance Discovery - Maybe have now traced what is causing the difference. Are they just re-mapping it to buildSrc?
+250537fa47f8fb9d71bba795894d3603a619884a Tom Gardiner <tom.gardiner7@gmail.com>: Troubleshooting v2, Now at a stable, reproducable minimal time when running tests. Have identified that the command intellij runs is MUCH faster - but unsure how to do this atm
+5754aba294cbfe0ffc36d830b579e06bebd92911 Tom Gardiner <tom.gardiner7@gmail.com>: TROUBLESHOOTING WIP
+40238f924cfa6770088b422a264d0f7d66a47102 Tom Gardiner <tom.gardiner7@gmail.com>: Enable configuration cache now that everything is working
+93a5c017216196cfb1203474e12dd1e1f99a3aea Tom Gardiner <tom.gardiner7@gmail.com>: Add both libraries with bare minimum requirements
+fb2d9247f9a1a0a1ab7fcc4aa8a387217ae1960f Tom Gardiner <tom.gardiner7@gmail.com>: Make application compile and run test task as lean as possible with effectively all cached tasks. checkKotlinGradlePluginConfigurationErrors cant be cached as it would obscure the build results/debugging
+1cbed7b0de607698027aacdfdaaf9cf5f0358b1c Tom Gardiner <tom.gardiner7@gmail.com>: Revert "Cache junitPropertiesCreationTask so that it doesnt need to run if properties are already built and correct"
+701b6f9f8de860afe161ecede7282b831adf762c Tom Gardiner <tom.gardiner7@gmail.com>: Revert "Finalize what the core jvm project is currently about"
+96fcb6289ce5f83feab39ab8b4676cd5970d121d Tom Gardiner <tom.gardiner7@gmail.com>: Finalize what the core jvm project is currently about
+dae9b573b24a2dee7630eb51ed1d4573b633fce7 Tom Gardiner <tom.gardiner7@gmail.com>: Cache junitPropertiesCreationTask so that it doesnt need to run if properties are already built and correct
+e059fb7f51553adaf79b104b29bd3b964e2863f7 Tom Gardiner <tom.gardiner7@gmail.com>: Add in remaining lib versions to toml, and remove now unnecessary dependencies on platform which was previously providing this version
+06098edcf1a33b893b3c9e7428a4325f99c2663a Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary gradle enterprise config through main settings plugin
+802409d39b54825430b76d638b54b606b384588f Tom Gardiner <tom.gardiner7@gmail.com>: Add in toml file for version catalogue
+1b057ef9d4e3ff3b5d4433cb18f71a57cfa6bd04 Tom Gardiner <tom.gardiner7@gmail.com>: Update capability conflict plugin to use my own implementation
+13168e8fe637c6e36d5d57edeee40fa5708e3467 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup declaration of includeBuild which should be delcared outside of the dependency management block or inside the plugin management block. Anywhere else, and it defaults to the equivalent of calling it at the top level anyway
+f4406ac4cec4393d63d16d2099d0dedf793199e6 Tom Gardiner <tom.gardiner7@gmail.com>: Move root settings logic to convention plugin
+16b20a7795a4bf420eaba25071090ee2f1f51b10 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary repositories which may contriubte to dependency resolution slowness
+dc741a1836c7d3ca9911c998cbac52fd931ff6f7 Tom Gardiner <tom.gardiner7@gmail.com>: Fix TaskExecutionListener deprecation warning by replacing it with task graph
+b83441f8976eac93493cc8af69a89acb6a02b6d4 Tom Gardiner <tom.gardiner7@gmail.com>: Add junit task which adds a junit-platform.properties file that configures settings for parallelism to each sub project that uses junit
+b45ed9d24e93e3b6fb776b46261ab4a17b98fda9 Tom Gardiner <tom.gardiner7@gmail.com>: Ensure CreateMD5 is also defined as running as a cacheable task
+ef1a18d2b6cdc4efad38aa23825829cb02455a44 Tom Gardiner <tom.gardiner7@gmail.com>: Make printRuntimeClasspath task avoidable, by ensuring that it has inputs/outputs
+4d94443eda69ab133bb2e8adc1be42cb002a028c Tom Gardiner <tom.gardiner7@gmail.com>: Add in the cacheable task for the MD5 task
+0f1161a82bf25b1c00b06a445a3ac1aa5d461107 Tom Gardiner <tom.gardiner7@gmail.com>: Add caching for MD5 tasks to reduce build times
+e63fe72c73b9ca8205aeb713a77847ac442ae65c Tom Gardiner <tom.gardiner7@gmail.com>: Allow long-terem capturing of historical reports, so that we can keep them to analyse builds
+a36f5595e8fe63c428330c3cb067c7a7fa36271f Tom Gardiner <tom.gardiner7@gmail.com>: Add in unique build id to be able to differentiate builds for the perf metrics
+3b488b7344ec3d623876418644e7342baa0db5a0 Tom Gardiner <tom.gardiner7@gmail.com>: Fix bug with clean/run all tasks that was causing clean to not happen at the first task
+873fa1642a0f775fb1016609a14b1f48c627ed2a Tom Gardiner <tom.gardiner7@gmail.com>: Add performance metrics plugin which will enable us to replace most of the logger, thus enabling move towards configuration cache and full parallelism
+00e7cee94b6aaa23301cff6b4493b51383ab07a0 Tom Gardiner <tom.gardiner7@gmail.com>: Fix bug causing runAllMainBuildTasks to not have a build folder for each sub project that contains BOTH the build and the sourceFileHashingPluginTask files after running
+571865a7048eb06e1c47702c1af31bc224c463a9 Tom Gardiner <tom.gardiner7@gmail.com>: Remove last created immediately task
+892d02e32a1f0a1b8040e65a0506f9ecd60e4df6 Tom Gardiner <tom.gardiner7@gmail.com>: Register commons tested plugin task lazily instead of eagerly
+d051c21fa31bfa93ade485e79a5960d76eac2c92 Tom Gardiner <tom.gardiner7@gmail.com>: Convert .set to new way forward for kotlin gradle 8.6
+53b84480e30126ad43b62a49ced1d9e0c60f8f1c Tom Gardiner <tom.gardiner7@gmail.com>: Fix some slightly incorrect plugin dependencies, create runAllMainBuildTasks for ease of use for build scans, update readme with latest short/medium term roadmap
+415da784e71723d73610ffe2962ff10b5a3af0d6 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary platform dependencies from plugins
+4478b0a5b596634f7786d7fc6e5a7db1636c8a47 Tom Gardiner <tom.gardiner7@gmail.com>: Move junit dependencies to junit plugin for clarity
+5cd74542399311fc2287943b446a225e505c5e2c Tom Gardiner <tom.gardiner7@gmail.com>: Fix remaining dependencies not coming through, and add back all tasks that may have been lost in the transition
+c2ebfc4fca10bca6ce569dc01ecb115587ea174d Tom Gardiner <tom.gardiner7@gmail.com>: Replace plugins with more composable ones, and fix dependency analysis project containing multiple versions of different dependencies
+36b29e1650d2482e2763077ccdd4e0e669588522 Tom Gardiner <tom.gardiner7@gmail.com>: Fix running project failure due to thinking that platform file with versions was incorrect
+deb64747c1b568da8d743359791b4ed5af08e53b Tom Gardiner <tom.gardiner7@gmail.com>: Remove gradle property causing issues locally
+28bb63cbd96c0e52f000c07393336b56ae1d5ea6 Tom Gardiner <tom.gardiner7@gmail.com>: Add example of fully parallel tasks
+055000b496e5b848c732c3aed6c2f6c2ca82bfac Tom Gardiner <tom.gardiner7@gmail.com>: Fix sdk8 (kotlin) not applying, and hence not working after having changed gradle properties
+5761b5ba660315bd4e8bdcf56cd132f45e18ff65 Tom Gardiner <tom.gardiner7@gmail.com>: Ensure gradle is using config that it should
+e0a80b18c32ab62be53a0608b9e93944ebdffdaa Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup after increasing of perf
+cb35c33937f11b5ccb80c1b3d7251c0ed8f9b53d Tom Gardiner <tom.gardiner7@gmail.com>: Fix deprecated warnings, and cleanup the remaining code
+1429b17eeb36836b95880ca81650dad34353148f Tom Gardiner <tom.gardiner7@gmail.com>: Group gradle.properties settings by observed performance impact
+7e9e11c3f4de33acc141c2cff2e64a7c3a1715d3 Tom Gardiner <tom.gardiner7@gmail.com>: Increase performance of gradle build significantly (need to clear cache to trigger this)
+95c4ef01d7baf622c935f587d7303042df33a750 Tom Gardiner <tom.gardiner7@gmail.com>: Significantly improve dependency resolution and dependency tree by not applying platform dependencies
+708f2b028867779dc554032db1e935d896427263 Tom Gardiner <tom.gardiner7@gmail.com>: Remove included build from being in the repositories block which may have caused issues
+22470a488949ac029fb0b7f673b2c03be64fdf6e Tom Gardiner <tom.gardiner7@gmail.com>: Add exclusive content repository to try and reduce count of repositories being checked
+d9d908e0b34f73f2424e67ec2599ca4ffc15fb94 Tom Gardiner <tom.gardiner7@gmail.com>: Fix failOnVersionConflict not working as intended
+48e11f98432a86ecfca94a686462686d384b0ba6 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup dependency constraints and bump gradle wrapper version
+e8f58b5a90dc327185ff3994337ef277fe676337 Tom Gardiner <tom.gardiner7@gmail.com>: Add capabiliy conflict avoidance plugin
+b0edf4529710367ed20471f4240a104f3d4a598c Tom Gardiner <tom.gardiner7@gmail.com>: Stabilize dependencies and fix plugins not applying some constraints correctly
+0f96d10ca8b61a5d5f3653cfb34cc1999d170c38 Tom Gardiner <tom.gardiner7@gmail.com>: Add more standardized logging for build
+7041eb785b7fdbe0de8016c87c5e0d8a0de64732 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup unused dependencies
+ae63dcd023692f42797c8d7d5328b17b0d50ab6a Tom Gardiner <tom.gardiner7@gmail.com>: Modify greeting plugin to be tested-plugins, which will house the new plugins which are fully tested
+f5d8ab371547849a93d0018bb0382b8e9151ef2b Tom Gardiner <tom.gardiner7@gmail.com>: Ensure incremental compilation is in fact turned on
+9412fa12964827c98394c229214cb9d42c169aeb Tom Gardiner <tom.gardiner7@gmail.com>: Fix broken project format checks
+28d412a214e5834fa09b416fe138a62f7b10b43a Tom Gardiner <tom.gardiner7@gmail.com>: Change name of plugin to greeting plugin
+07566d95a972b7a7839feb5749d0dc6e7957a72d Tom Gardiner <tom.gardiner7@gmail.com>: Simplify toolchain code to declare it in a single place
+dad006775c1ba19c4257c9c17d848b627a44eda1 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary dependencies from the greeting plugin
+2e4f8cd359cdfcba3d70e936aba7faddc50e5d0f Tom Gardiner <tom.gardiner7@gmail.com>: Fix application not including kotlin jvm
+aac32b6cf4ccc720c6aa2a053e47b8be723f3361 Tom Gardiner <tom.gardiner7@gmail.com>: Fix kotlin jvm dependency being included multiple times when it shouldnt
+30c216696d5ff6f5b0dd73b9b184dd8f0dc5f2a2 Tom Gardiner <tom.gardiner7@gmail.com>: Move the greeting task that is being tested to the plugins directory
+c288a79aac5b422a1ed63c9a8b4574a3edf0b8d4 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary jvm target compatibility check, and add in comments for how to enable k2 compiler
+17760b08c266f556390c5b3151f2871062659e01 Tom Gardiner <tom.gardiner7@gmail.com>: Add in task and resolution strategy to help figure out or mitigate local dependency issues
+9903bdb920d618a08c19599f2132444a0a157f75 Tom Gardiner <tom.gardiner7@gmail.com>: Add in basic plugin that can now be tested
+31588620f118dc7a9b71407b197d65839fae68cf Tom Gardiner <tom.gardiner7@gmail.com>: Add logging for before and after each test task
+c055112b44ea873e15cc985e122c3f8885eae3f0 Tom Gardiner <tom.gardiner7@gmail.com>: Remove dependency scope checks as they were causing too many issues currently
+6877da7884f6d74115b313e7d54c3676cabc0f7e Tom Gardiner <tom.gardiner7@gmail.com>: Fix unnecessary directories being included for applications and libraries
+14ae8afc8f417fedf44c3ae7af99f1365ef8f1fe Tom Gardiner <tom.gardiner7@gmail.com>: Force the upload of build scan immediately so we can realise any problems now
+cac484429f64d94883ec3a7f97f1059c58d757ab Tom Gardiner <tom.gardiner7@gmail.com>: Add gradle to all projects, further cleanup
+d331955d5ee02ee5f3fe6dd9012e486809ddf94c Tom Gardiner <tom.gardiner7@gmail.com>: Remove all of the print statements
+9052054aa6ad6398f07a685ec60307a4d9827f8e Tom Gardiner <tom.gardiner7@gmail.com>: Add slight enhancements for basic build scans
+163f90699524842242d82106623ace2e55a41107 Tom Gardiner <tom.gardiner7@gmail.com>: Add huge discovery for slowness around build configuration stage may be taking a long time
+9354f5cc2e8e95c35982df55fd1bcfec9f7745c3 Tom Gardiner <tom.gardiner7@gmail.com>: Add potential findings or ways of tracking build performance correctly
+e12318112d0ed9332b82974c41b0e8efe1ac52fe Tom Gardiner <tom.gardiner7@gmail.com>: Fix incorrect reporting of configuration/execution phase being completed
+214badb1cae9ccd3900ea643f3c7b1f63a52913f Tom Gardiner <tom.gardiner7@gmail.com>: Fix some eagerly applied things inside of commons plugin
+b2b5603114213f34214705b5f7e8be9486247500 Tom Gardiner <tom.gardiner7@gmail.com>: Migrate dependency analysis projecti/platform to new provider apis for checkDependencyTask
+dad292b3ffb9c68b5b8365130a5ce5a228600cbc Tom Gardiner <tom.gardiner7@gmail.com>: Update readme to reflect where the project is now at
+91e1a52e3dee9ad641e99cec048ba51933400594 Tom Gardiner <tom.gardiner7@gmail.com>: Enable stable configuration cache for root jvm project and platform
+ce24414fca64e6ed9a18308d7e60cd615380cdb1 Tom Gardiner <tom.gardiner7@gmail.com>: Fix undeclared build service usage when using stable configuration cache
+eada20fc202197f70a04b7bc63a4e883e61c47c0 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary dependency
+a0051166f30a5e284576a7497a2cd9df27634511 Tom Gardiner <tom.gardiner7@gmail.com>: Slightly alter tasks being registered and fix typo
+1c945dd76815cd58ad00f2eee76e548f4bb50bbf Tom Gardiner <tom.gardiner7@gmail.com>: Make tests run in parallel
+391ac23773bfe5901df03b672dc18be0c11240f3 Tom Gardiner <tom.gardiner7@gmail.com>: Fix deprecation warning for test suites
+4da675f8233443ed4fb7fa5738114dedb71c58ad Tom Gardiner <tom.gardiner7@gmail.com>: Add logging to showcase ordering in which platform, plugins and jvm dependency/plugin managements are being applied
+3e9ba7d66410cb187739f7e1f66ccdf82a8f2e49 Tom Gardiner <tom.gardiner7@gmail.com>: Add explicit plugin/dep management for platform, plugins and jvm root settings files
+f1a4184d8b017c8657d16248cf62bc9dc020e489 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup after previous refactor of plugins
+8f7044291e33cc559bb35b6f28e5fef315b57a5e Tom Gardiner <tom.gardiner7@gmail.com>: Add in remote caching instructions for readme
+fe9d00d7fca88000c2bfc58f082b497b23c36465 Tom Gardiner <tom.gardiner7@gmail.com>: Add forking of gradle compilation and update readme with latest plans
+5966d0fb236e38eda3426eda7fee30d61d466ffa Tom Gardiner <tom.gardiner7@gmail.com>: Add back in parallel work and fix configuration cache issue
+48fe3ffb8a757e8125bb455fc540260fbc170e85 Tom Gardiner <tom.gardiner7@gmail.com>: Cleanup remaining leftovers from analysis fix
+d899d1dfb7a2e38df7c437a2c44f901b58c7c4ea Tom Gardiner <tom.gardiner7@gmail.com>: Add in platform analysis plugin
+4da2f86469647ceb2bd6fad7c52ec43ddae0155b Tom Gardiner <tom.gardiner7@gmail.com>: Add dependency checker project plugin
+ffaa864da841ec6c84568331a9524e86c6385183 Tom Gardiner <tom.gardiner7@gmail.com>: Rename to dependency analysis
+546ca7c0127c6b65aae8df6924318a2b94c3eccf Tom Gardiner <tom.gardiner7@gmail.com>: Added analysis project, TODO to add it to kotlin plugin
+a3818d46d2468aad75ca8e146691a0fa9434cbfb Tom Gardiner <tom.gardiner7@gmail.com>: Re-jigging analysis plugins, still broken
+7e44addb470de46f3ef21bbb5fb42afd9adffff9 Tom Gardiner <tom.gardiner7@gmail.com>: Further tidy up
+3a95af809e8d0ce83fe35cd980e74de381c81617 Tom Gardiner <tom.gardiner7@gmail.com>: Remove whole settings folder
+be202c916951cd76a712ae117d11f730bb98c7a9 Tom Gardiner <tom.gardiner7@gmail.com>: Remove root settings plugin
+afa972265ab5a465894fcda0990dbcf8e37cfe05 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary plugin/dep management for platform and root jvm
+a9f8a77868861ad3cf31416945e2bb12555265b7 Tom Gardiner <tom.gardiner7@gmail.com>: Remove settings reliance on root
+0eb59c60a40e15be2127d1c1cec7cb954b958a8f Tom Gardiner <tom.gardiner7@gmail.com>: Remove settings files
+2541796bb3e10255eae0378a001fd8dec8adf745 Tom Gardiner <tom.gardiner7@gmail.com>: Change settings root to call repositories instead
+2c36008a9ad874a40bb945e884c4c42331dc3152 Tom Gardiner <tom.gardiner7@gmail.com>: Move foojay and gradle enterprise to settings root
+03e95ebae058360e9bf8f41104a33e4ccb35e05b Tom Gardiner <tom.gardiner7@gmail.com>: Add groups to all
+d33168015424aaad01e9c98d45336217a5af07ec Tom Gardiner <tom.gardiner7@gmail.com>: Move plugins to root repositories
+6c2691bbd2dedfcebf2afaaccb5740a94c37431e Tom Gardiner <tom.gardiner7@gmail.com>: Move project structure to root settings file
+67516785e8f29c1081dce5f1821148355c32bed9 Tom Gardiner <tom.gardiner7@gmail.com>: Move platform away from settings
+a6bbb8baf0d2999505f284f6a0efad590b2a2b3a Tom Gardiner <tom.gardiner7@gmail.com>: Add reproducible archives
+3f25abf5c1ad9fd1a593a58514f6166d6550a663 Tom Gardiner <tom.gardiner7@gmail.com>: Update readme with more relevant info to where we are at now
+6faa9bf29f6c35fb5fc3ab8796b42d2446bc552b Tom Gardiner <tom.gardiner7@gmail.com>: Fail on projects that declare repositories
+e1d8801906bd30662c104255dd808ce02160d6e1 Tom Gardiner <tom.gardiner7@gmail.com>: Add in check to ensure java version being used is correct
+9f2ed7b0510ee6e46a0a347e8eb51faddcce44f5 Tom Gardiner <tom.gardiner7@gmail.com>: Add task to ensure jar is included properly if someone overrides destination folder
+fcf9ea5208d873d36caf37e838bfc6faebe924c6 Tom Gardiner <tom.gardiner7@gmail.com>: Add use parallel gc option for java versions above 9 to increase performance
+f7df5174a09cea900393caac60f20a1c3fb3d051 Tom Gardiner <tom.gardiner7@gmail.com>: Add basic dependency analysis checks for platform and project levels
+d09f043b0bdfbaad2909eb4d2922590e447b05e6 Tom Gardiner <tom.gardiner7@gmail.com>: Add release flag to ensure language level used regardless of compiler
+038f0a8ca56a8ad93b40b985280c540e6911eb87 Tom Gardiner <tom.gardiner7@gmail.com>: Renamed platforms to platform
+b170dd73edaad0e113482a66be4c4511216ca0ff Tom Gardiner <tom.gardiner7@gmail.com>: Move plugin-platforms to just standalone platforms
+7b43cd333d0bc87673542d6b0a6171753431d23b Tom Gardiner <tom.gardiner7@gmail.com>: Remove test specific platform
+6ded8d6f23104ec86021d3060e767d8f8929fc3f Tom Gardiner <tom.gardiner7@gmail.com>: Tidy up some formatting
+821f058a86868d54a7e0e79374b50cedd67d03a4 Tom Gardiner <tom.gardiner7@gmail.com>: Add in output showcasing check now depends on new analysis plugins for each project
+8a307a280f7a9a69de67eee573db5deb5e7be491 Tom Gardiner <tom.gardiner7@gmail.com>: Provide some examples of where checkDependencyFormatting can be used
+5bc7fb828546cc6b83ba02f888e896fc1dd019a5 Tom Gardiner <tom.gardiner7@gmail.com>: Rename some of the root settings files to make more sense
+db9a1bebc5bd9a5a47e2732e300775002afc42bc Tom Gardiner <tom.gardiner7@gmail.com>: Add in analysis plugins
+736932faca7969eda6055cbe536fc90dfba4d060 Tom Gardiner <tom.gardiner7@gmail.com>: Fix issue which caused root settings file being included multiple times rather than the root applying it only
+410907a34008c27754515a2a185679f7b466468a Tom Gardiner <tom.gardiner7@gmail.com>: Add short term roadmap to try and allow more focused path of achieving short-term goals
+7c21a98fbfd26482143602114866e4783429a2e3 Tom Gardiner <tom.gardiner7@gmail.com>: Fix broken configuration cache warning
+5039254f00260bc1eca39509f60e3bcf7d6a614a Tom Gardiner <tom.gardiner7@gmail.com>: Add back in build scan obfuscation of PID
+5773aea4e94f0d9a4b00fcde6f05d80d39b554fe Tom Gardiner <tom.gardiner7@gmail.com>: Fix application main class not being set to cause run issues
+28a66caf09d6f611ff2c115e28b91d6d97158229 Tom Gardiner <tom.gardiner7@gmail.com>: Add in instructions to convert youtube to mp3 for spotify usage
+ab9ccefa6a89124839898257eb04209aa8ded7b5 Tom Gardiner <tom.gardiner7@gmail.com>: Adding logging of gc to figure out where rough application gc thresholds are so we can configure this correctly
+4565136688f23917bed5d1b92e372597290d5929 Tom Gardiner <tom.gardiner7@gmail.com>: Fix rename of directories failing when dest directories dont exist
+f1fecbd2dbbe71d50870937d776b5196871e6cd4 Tom Gardiner <tom.gardiner7@gmail.com>: Fix incorrect file recursion
+ab6c85da8b73f749c6349d9253ed7d4f74f4011f Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary gradle properties file at top root level of monorepo
+08e26fda3751aa7f101fdb0af208f80475dc6fd5 Tom Gardiner <tom.gardiner7@gmail.com>: Add test all task
+29784ec4a34da351bd8c0a41622ce97bd62955ac Tom Gardiner <tom.gardiner7@gmail.com>: Fix plugins and make kotlin ones much clearer. Remove stdlib from dependencies
+c4ac479155b0a8a99e14d80f2ec179e9ade23466 Tom Gardiner <tom.gardiner7@gmail.com>: WIP
+e3ae6e0d9028ee57586aa06eaf28656f32d09ff1 Tom Gardiner <tom.gardiner7@gmail.com>: Add in explicit pluginmanagement/depResolutionManagement for clarity
+ec8db11eeb8de34358081f09b22c615584fe090d Tom Gardiner <tom.gardiner7@gmail.com>: Modify settings file for clarity
+9bb3ddb319e70560b439e648740e3109c9272b83 Tom Gardiner <tom.gardiner7@gmail.com>: Re-enable cache
+6a5078fa085c5782d6870a1c9e8ef8fc2ecfe877 Tom Gardiner <tom.gardiner7@gmail.com>: Update readme with recent findings around repositories being included
+db668a3db898a78e9d6277b25e98ae3604d9e338 Tom Gardiner <tom.gardiner7@gmail.com>: Move project structure to plugin
+8f98b71953727aacd38906e671555375336a0ecd Tom Gardiner <tom.gardiner7@gmail.com>: Correctly wire ups plugin/dep management
+733b1d83fe1ed22e3cca897ed163abacf8443115 Tom Gardiner <tom.gardiner7@gmail.com>: Restructure to get settings files to apply properly
+04e6ed6645c5353d66ef2bec295228161bae4c7d Tom Gardiner <tom.gardiner7@gmail.com>: Add recursive function for file walking
+1319857e299ee30521e2daface921f7fadf42102 Tom Gardiner <tom.gardiner7@gmail.com>: Remove java-library plugin
+247b44b6377f8abcdf7df58ee76bd4beaef132e6 Tom Gardiner <tom.gardiner7@gmail.com>: Remove platforms plugin
+0774b083fcd964065642df9b48401c29b7b241f1 Tom Gardiner <tom.gardiner7@gmail.com>: Revert "Add capability conflict avoidance plugin"
+bffab3ac31cf423888f3c57b060c387c148c9341 Tom Gardiner <tom.gardiner7@gmail.com>: Add capability conflict avoidance plugin
+a330d6757a8a487e7fabdb86bef8e818660f6499 Tom Gardiner <tom.gardiner7@gmail.com>: Update plugin to fail build if any dep issues found
+f8a5df320965fdb6344c84152858170ff408d66d Tom Gardiner <tom.gardiner7@gmail.com>: Follow dependency analysis advice and remove/explicitly declare deps
+78ef34e494ad3a28acbbd623622b54d1bb054f5e Tom Gardiner <tom.gardiner7@gmail.com>: Remove base platform
+932022c4c1542ea9ccec9d0c269ae9537741aedc Tom Gardiner <tom.gardiner7@gmail.com>: Upgrade to full way forward
+5977d313f37426edfa033e0afda16f2fde53c5cc Tom Gardiner <tom.gardiner7@gmail.com>: Move commons to base
+ef877b39932e9a4c7fdbdc4c4a5610ff6bb1d2d4 Tom Gardiner <tom.gardiner7@gmail.com>: Remove more repos
+d0a5c5bdba9d4885d782b4f9c3d5423d443562f5 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unnecessary repos for settings
+bd6b6e4c84532db9919e50825594ae5d96e76c4a Tom Gardiner <tom.gardiner7@gmail.com>: More cleanup
+3dfea111a3d70cc6386f3c9a454c4e2fb4cb0be4 Tom Gardiner <tom.gardiner7@gmail.com>: More cleanup
+5abfff9f45a22786e0fe24b7264232a71476e40d Tom Gardiner <tom.gardiner7@gmail.com>: Further re-jigging
+de3ebc914b83b9dc829f8eb5d4daa9f4831d6655 Tom Gardiner <tom.gardiner7@gmail.com>: Remove unneeded plugin dep
+0ca185c01ceffa62af9cbda9dbad8e02aeb0054f Tom Gardiner <tom.gardiner7@gmail.com>: Further cleanup
+9f9d2ad0a3a0074e52ed7e8d25d98d29c58d7ece Tom Gardiner <tom.gardiner7@gmail.com>: Remove snapshots and bring in last dependencies
+fa21c9fe19e89a1e57608cb430dd4161d0c82051 Tom Gardiner <tom.gardiner7@gmail.com>: Add major plugins
+17de5e7b35ec926c487cb13e69f264f2b209d7ff Tom Gardiner <tom.gardiner7@gmail.com>: Add in kotlin bom
+98a184065665e09c0612bd76b0019e13856fc6e7 Tom Gardiner <tom.gardiner7@gmail.com>: Add in reasoning for sorting task outputs
+b364a3669d19cbd4f699c9e41fb7907349c0b28f Tom Gardiner <tom.gardiner7@gmail.com>: Add in platforms and get rid of toml
+469fb8491bc83c4d6f3654cbcf17ea3342aa8fee Tom Gardiner <tom.gardiner7@gmail.com>: Add in basic task snapshot
+c02eee97649702fc9d13a5bea7b7c915a2b84684 Tom Gardiner <tom.gardiner7@gmail.com>: Add in dynamic inclusion of modules directories
+1b409149a368e9921f3cce6f8d696faefdf97617 Tom Gardiner <tom.gardiner7@gmail.com>: Remove old package structure from conversion
+6e27e6f12164297d5616a0c9ab07fbaf18e665d1 Tom Gardiner <tom.gardiner7@gmail.com>: Rename references to plugins and settings convention plugins
+d5d42692b168e386dad3833b4773ed0389dc900c Tom Gardiner <tom.gardiner7@gmail.com>: Replace old jvm folder
+7df87bc4c92f4231f8c62e6988d7151298eff745 Tom Gardiner <tom.gardiner7@gmail.com>: Add in proper full end game structure beside the existing one for reference
+a2c5e7fcf1c2ec507d583ba3d1feb0d4353304dc Tom Gardiner <tom.gardiner7@gmail.com>: Revert "Add shared build cache directory extension property for build-cache re-use"
+5105d4c2bf3e0b7f1c028a7e22cabd2c7fb59490 Tom Gardiner <tom.gardiner7@gmail.com>: Fix intellij issue with lombok value
+d6c3192cbba12f5a51a2404d27f0e603f14f4dad Tom Gardiner <tom.gardiner7@gmail.com>: Add shared build cache directory extension property for build-cache re-use
+a7311552b7535daef7b3520457fbebcfcc75ed70 Tom Gardiner <tom.gardiner7@gmail.com>: Add gradle config options for build cache and further speed improvements
+c325aac30d9edf0188225b104844eb63217b8f51 Tom Gardiner <tom.gardiner7@gmail.com>: Fix aotRuntimeClasspath being included twice
+0e091b9702d292244ada9eb36e2aad885eb37418 Tom Gardiner <tom.gardiner7@gmail.com>: Add in gradlew scripts
+f295eb8db9484c9fa6922535b90d73c2040b91c6 Tom Gardiner <tom.gardiner7@gmail.com>: Fix build issues with having moved to module structure
+356229b5ebe8f6ef0071cb197782d4d1ad62e72f Tom Gardiner <tom.gardiner7@gmail.com>: Fix formatting of readme
+e2ce0df204dcd4d636566a8264f1d3ae0f0421b2 Tom Gardiner <tom.gardiner7@gmail.com>:  Update project to mono repo and update main readme
+9bbe01b56c97e45be2631cdb507a19d4b7dfdc2f Tom Gardiner <tom.gardiner7@gmail.com>: Add the end game layout weve been working towards
+b32cb8925ceb1e9f358dc74932dfe7bfdaf7e995 Tom Gardiner <tom.gardiner7@gmail.com>: Start tracking task trees to mitigate regressions
+b12d3a01ab1da13aabea988a0b876f5a8c260b55 Tom Gardiner <tom.gardiner7@gmail.com>: Remove gradle profiler
+9d3e726f22281e9b4e2920abea852bda935290f3 Tom Gardiner <tom.gardiner7@gmail.com>: Add build scan plugin
+7af86946eee0f940cedc731d4eaed7b94c980937 Tom Gardiner <tom.gardiner7@gmail.com>: Add kotlin plugin which builds on top of java plugin
+6387cde45a23d6aebaa340736b3c1c5f52ebb013 Tom Gardiner <tom.gardiner7@gmail.com>: Separate platforms to more logical names and create distinction between packages
+24cf88265c4b85c5b71306bb16a1236cbddc9703 Tom Gardiner <tom.gardiner7@gmail.com>: Create platforms for dependency version management
+221f59dfdacc39a0c1375978bcd1722f54c73f9d Tom Gardiner <tom.gardiner7@gmail.com>: Move root settings to plugin
+5adac38b3e5598a08f864213da6078ae1196e26f Tom Gardiner <tom.gardiner7@gmail.com>: Add capability conflict avoidance plugin to prevent further dependency conflicts
+85083c2c71092efd89eede977b83d03fb3b420aa Tom Gardiner <tom.gardiner7@gmail.com>: Shorten the dependency declaration of analysis plugin
+d63ad5c0abb567934b2cca56c6d04ed02804ce91 Tom Gardiner <tom.gardiner7@gmail.com>: Move tasks to family of local instead of custom
+d0b1023c40b8f54b77032396a1d3f445747fc7ec Tom Gardiner <tom.gardiner7@gmail.com>: Move root build logic to plugins and simply logic significantly
+ae7c4f704d9c118f972f9d6d9fa40e355ed4b7e6 Tom Gardiner <tom.gardiner7@gmail.com>: Revert "Move dependency analysis to plugin"
+4a9e883b3683bc52356247f7b7e83aa8217c6b52 Tom Gardiner <tom.gardiner7@gmail.com>: Modify plugin structure to be more intuitive. This may have introduced regression and needs investigating
+8f560f2b0b96d8ddc6e099c5d81e4939134217ba Tom Gardiner <tom.gardiner7@gmail.com>: Move dependency analysis to plugin
+1d18607cce1f246d25dcf03d0ba7b34a914a1cd0 Tom Gardiner <tom.gardiner7@gmail.com>: Sepearate plugins for clarity and re-usability
+11b9978fac4373271cdeb4e115334eaa0305fef2 Tom Gardiner <tom.gardiner7@gmail.com>: Update readme with compilation improvements for future
+db1e6727aee115504d9a09e2b493ffb36a6af2b1 Tom Gardiner <tom.gardiner7@gmail.com>: Update readme to come back and check/fix cleanAll command not wiping depenendency analysis build folder
+2d07659421701f4adbb22082280820d19b0acd2e Tom Gardiner <tom.gardiner7@gmail.com>: Add in command failure when running buildHealth gradle command
+49e56a68f0a7261f2ce86c293566112c73ebed31 Tom Gardiner <tom.gardiner7@gmail.com>: Add dependency analysis to detect and suggest dependency issues
+600f2b34d1a10d95fa8192c6ba1bd9287ae9733b Tom Gardiner <tom.gardiner7@gmail.com>: Add in gradle.properties, cleanup settings.gradle.kts for easier re-use
+d97f13b3f3dd526f88c5f4a0bb545182ddc8ac75 Tom Gardiner <tom.gardiner7@gmail.com>: Update readme of new structure to allow path of migrating old structure to new
+c683633714bd9442e28f4d2150a9cabfcf39537a Tom Gardiner <tom.gardiner7@gmail.com>: Add 100 iterations for benchmarking to ensure consistent calculations
+ab2184e6f3eb0089b036f26da4f0fedf36f91b27 Tom Gardiner <tom.gardiner7@gmail.com>: Add gradle profiler to be able to start tracking gradle task performance
+f16b78c01f301eaabb367f944356006d0a65b07b Tom Gardiner <tom.gardiner7@gmail.com>: Ensure composite builds are included when running the taskAll tasks
+c50878993580824e038ef7f85b6ab7f6ceaac16c Tom Gardiner <tom.gardiner7@gmail.com>: Fail the build if any sub project in modules tries to declare repositories
+59a873590401a323a6d283717583e97059bab5c6 Tom Gardiner <tom.gardiner7@gmail.com>: Add in bastic structure and handle doing tasks all at once properly
+abfa05876479a96204a4f1d024d645c93c7fdf07 Tom Gardiner <tom.gardiner7@gmail.com>: Fix broken dependency chain
+22e544cfbc84c75b5ac5fd9a9528cdcfdd5814ce Tom Gardiner <tom.gardiner7@gmail.com>: Add plugin to capture metrics
+1a55bbd222829d3abb88c211855f349f4342deae Tom Gardiner <tom.gardiner7@gmail.com>: WIP
+b7318860d8ff0b3b312549640bec432b3123e533 Tom Gardiner <tom.gardiner7@gmail.com>: Standardize kotlin dsl plugin version
+071991dd9b495e4a9054c55228c4b81ab8ea2d6e Tom Gardiner <tom.gardiner7@gmail.com>: Update readme to track things being done, and give overview of what the project aims to achieve
+d9b492231ab05783e9b0373ec6ce9eb3f28a98cc Tom Gardiner <tom.gardiner7@gmail.com>: Condense re-usable logic into build logic/platforms
+c6a1fb27b00796514bd7a1705f22daf9d5e6fbcd Tom Gardiner <tom.gardiner7@gmail.com>: Add acceptance of build scan service agreement, and obfuscate all user information which is avaialble for obfuscation currently
+125bc809cf6c4d66e021591bcb2dd01af669b2c4 Tom Gardiner <tom.gardiner7@gmail.com>: Update brief readme
+285b90b6334971b2978ed0954c0220f0914ca917 Tom Gardiner <tom.gardiner7@gmail.com>: Create package structure that feels easier to move around in
+6d4ee0cfc1cbf57987e4916b690553d2a637dc05 Tom Gardiner <tom.gardiner7@gmail.com>: iCleanup of gradle files between sub modules to ensure IDE settings are correctly configured before starting using project, remove custom test output
+7218b7208adf750df1f96f7360d4c827892e0d9e Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Revert "Remove test output summary, introduce standard out/err to gradle output for clarity"
+6b1af8511bc003196f75c467a5bf49936714b288 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Remove test output summary, introduce standard out/err to gradle output for clarity
+b96c93ea7c9d4544f48d824bb70fd38fdaadfedf Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Utilize gradle cache by moving builds to central folder for all modules
+e6e0c0b7705c9d1e7d96a743a95de1ba23bb3801 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Add further coroutine findings/clearer ideas on how specific coroutines are behaving
+86461dedbe5d0f84e427e2846eeeb558a6839894 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Add coroutines learnings for how complex a beast they actually are
+41103a580d34898f86befa530a5f0047c61750f5 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Update aggregator
+c79036abec9eda80bbe6962eda14867b2b04b4dc Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Clean up code with merge which applies the sum type
+3f49763d0e33686d0197c8a39d575d98765d2aa6 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: WIP Cleanup duplicate condition checking
+df673570615c1913a25ee21404e6f941169353fd Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Add example of utilizing arrow for handling validation strategy
+803c24323f2366479663eadb80d2782af1721289 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Cleanup custom test output
+93a6c7c9b362daf279f9829f825416c7d25519d5 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Add custom test summary to logs
+bc72a9529560f5f3d5e18dc5da3e18cd3d379ac4 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Remove extensive logging for clarity
+c1c7a8e2c1d8ef11004b0eff7c0662fe42e7bec1 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Remove a whole bunch of boiler plate logging and ensure parallelelisation is working
+cb64f48b08334dc2ff981a529f17214b8c34d690 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Configure tests to run in parallel
+3f1c80335c8a453224c44d61fc7ce60d82880426 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Remove unnecessary application.properties for integra library
+48da46bcc1af983e23273db08edf3aee6adaae20 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Add basic shared app extension
+9741441748819904b10523f292ca0c5f2923c8d8 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Cleanup packages to com.integraboost
+86d043639fad7b5a86e6c7cbeaa480d3a312f24e Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Separate dep versions for clarity
+dac6f784cbfb61cf710832ca851012d84976f3b9 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Add basic spring controller to service
+df9ecee3bd5cca4415e2c1c6cfc6dc77aa231f88 Tom Gardiner <tom.gardiner@insigniafinancial.com.au>: Initial commit
