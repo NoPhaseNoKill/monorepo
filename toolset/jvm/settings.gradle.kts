@@ -156,6 +156,6 @@ fun includeProject(projectName: String, type: ProjectType) {
     """.trimIndent()
     )
 
-    include(":${projectNamePrefix}:$projectName")
-    project(":${projectNamePrefix}:$projectName").projectDir = file(File("${type.path}/${projectName}"))
+    include(":$projectName")
+    project(":$projectName").projectDir = file(File("${type.path}/${projectName}"))
 }
