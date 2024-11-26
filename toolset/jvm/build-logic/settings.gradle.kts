@@ -1,5 +1,4 @@
-
-rootProject.name = "root-one"
+rootProject.name = "build-logic"
 
 /*
     When leveraging exclusive content filtering in the pluginManagement section
@@ -126,4 +125,4 @@ develocity {
     }
 }
 
-include("root-one-sub-project-one")
+include("build-logic-module-one")

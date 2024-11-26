@@ -14,6 +14,7 @@ pluginManagement {
 
     plugins {
         id("com.gradle.develocity") version "3.18.1"
+        id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
     }
 
     repositories {
@@ -53,7 +54,7 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
 
     repositories {
         /*
@@ -64,6 +65,7 @@ dependencyResolutionManagement {
             go straight to the gradlePluginPortal() instead.
          */
         mavenCentral()
+
 
         exclusiveContent {
             forRepository {
@@ -81,15 +83,26 @@ dependencyResolutionManagement {
     Applies to the root settings
  */
 plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention")
     id("com.gradle.develocity")
 }
 
-/*
-    Applies to each sub project which does NOT include included builds
- */
 
+
+/*
+    Applies to each sub project.
+
+    **** BEWARE **** THIS DOES NOT INCLUDE THIS FOR INCLUDED BUILDS **** BEWARE ****
+ */
 gradle.lifecycle.beforeProject {
     project.plugins.apply("base")
+
+    tasks.register("buildAll") {
+        gradle.includedBuilds.map { dependsOn(it.task(":buildAll"))}
+        subprojects.forEach {
+            dependsOn(it.tasks.named("buildAll"))
+        }
+    }
 }
 
 develocity {
@@ -115,5 +128,34 @@ develocity {
     }
 }
 
-includeBuild("root-one")
-includeBuild("root-two")
+includeProject("root-one-sub-project-one", ProjectType.ROOT_ONE)
+includeProject("root-two-sub-project-one", ProjectType.ROOT_TWO)
+includeProject("build-logic-module-one", ProjectType.BUILD_LOGIC)
+
+enum class ProjectType(val path: String) {
+    BUILD_LOGIC("build-logic"),
+    ROOT_ONE("root-one"),
+    ROOT_TWO("root-two"),
+}
+
+fun includeProject(projectName: String, type: ProjectType) {
+    val projectNamePrefix = type.path.replace("${File.separatorChar}", ":")
+    logger.debug("")
+    val boldedDetailsHeading = "\u001B[1mTroubleshooting details\u001B[0m"
+    logger.debug(
+        """
+        *** Including project final result: ':${projectNamePrefix}:$projectName' ***
+        
+            ${boldedDetailsHeading}
+                [project-name-original]     '${projectName}'
+                [project-type]              '${type.path}'
+                [project-name-prefix]       '${projectNamePrefix}'
+                [project-path]              '${type.path}/${projectName}'
+                [included-name-aka-final]   ':${projectNamePrefix}:$projectName'
+                    
+    """.trimIndent()
+    )
+
+    include(":${projectNamePrefix}:$projectName")
+    project(":${projectNamePrefix}:$projectName").projectDir = file(File("${type.path}/${projectName}"))
+}

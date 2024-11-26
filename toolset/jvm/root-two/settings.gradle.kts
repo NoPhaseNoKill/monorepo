@@ -1,6 +1,5 @@
 rootProject.name = "root-two"
 
-
 /*
     When leveraging exclusive content filtering in the pluginManagement section
     specifically in the settings.gradle.kts file, "...it becomes illegal to add more
@@ -15,6 +14,7 @@ pluginManagement {
 
     plugins {
         id("com.gradle.develocity") version "3.18.1"
+        id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
     }
 
     repositories {
@@ -54,7 +54,7 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
 
     repositories {
         /*
@@ -65,6 +65,7 @@ dependencyResolutionManagement {
             go straight to the gradlePluginPortal() instead.
          */
         mavenCentral()
+
 
         exclusiveContent {
             forRepository {
@@ -82,6 +83,7 @@ dependencyResolutionManagement {
     Applies to the root settings
  */
 plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention")
     id("com.gradle.develocity")
 }
 
@@ -91,6 +93,13 @@ plugins {
 
 gradle.lifecycle.beforeProject {
     project.plugins.apply("base")
+
+    tasks.register("buildAll") {
+        gradle.includedBuilds.map { dependsOn(it.task(":buildAll"))}
+        subprojects.forEach {
+            dependsOn(it.tasks.named("buildAll"))
+        }
+    }
 }
 
 develocity {

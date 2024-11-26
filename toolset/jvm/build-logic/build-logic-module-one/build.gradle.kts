@@ -23,7 +23,7 @@ kotlin {
 }
 
 val printRelativeProjectDirPath = tasks.register("printRelativeProjectDirPath") {
-    val settingsFilePathOne =project.rootProject.projectDir.absolutePath
+    val settingsFilePathOne = project.rootProject.projectDir.absolutePath
     val rootPathOne = Paths.get(settingsFilePathOne)
     val projectPathOne = Paths.get(project.projectDir.absolutePath)
     val relativeProjectPathOne = rootPathOne.relativize(projectPathOne)
