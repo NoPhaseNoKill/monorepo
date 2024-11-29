@@ -23,13 +23,13 @@ kotlin {
 }
 
 val printRelativeProjectDirPath = tasks.register("printRelativeProjectDirPath") {
-    val settingsFilePathOne = project.rootProject.projectDir.absolutePath
-    val rootPathOne = Paths.get(settingsFilePathOne)
-    val projectPathOne = Paths.get(project.projectDir.absolutePath)
-    val relativeProjectPathOne = rootPathOne.relativize(projectPathOne)
+    val settingsFilePathOne =project.rootProject.projectDir.absolutePath
+    val rootPath = Paths.get(settingsFilePathOne)
+    val projectPath = Paths.get(project.projectDir.absolutePath)
+    val relativeProjectPath = rootPath.relativize(projectPath)
 
     // Ensure the parent directory exists (the first task in the whole tree after a clean will need this)
-    val parentDirectory = projectPathOne.resolve("build/custom-task/print-relative-project-dir-path").toFile()
+    val parentDirectory = projectPath.resolve("build/custom-task/print-relative-project-dir-path").toFile()
     parentDirectory.mkdirs()
 
     val outputFile = parentDirectory.resolve("output-file.txt")
@@ -38,7 +38,7 @@ val printRelativeProjectDirPath = tasks.register("printRelativeProjectDirPath") 
         outputFile.createNewFile()
     }
 
-    outputFile.writeText(relativeProjectPathOne.pathString)
+    outputFile.writeText(relativeProjectPath.pathString)
 }
 
 tasks.test {

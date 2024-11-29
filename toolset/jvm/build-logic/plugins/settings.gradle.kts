@@ -1,5 +1,4 @@
-
-rootProject.name = "root-one"
+rootProject.name = "plugins"
 
 /*
     When leveraging exclusive content filtering in the pluginManagement section
@@ -88,10 +87,13 @@ plugins {
     id("com.gradle.develocity")
 }
 
-/*
-    Applies to each sub project which does NOT include included builds
- */
 
+
+/*
+    Applies to each sub project.
+
+    **** BEWARE **** THIS DOES NOT INCLUDE THIS FOR INCLUDED BUILDS **** BEWARE ****
+ */
 gradle.lifecycle.beforeProject {
     project.plugins.apply("base")
 
@@ -125,5 +127,33 @@ develocity {
         }
     }
 }
+//
+// includeProject("convention-plugin-one", ProjectType.CONVENTION_PLUGINS)
+//
+// enum class ProjectType(val path: String) {
+//     CONVENTION_PLUGINS("convention-plugins"),
+// }
+//
+// fun includeProject(projectName: String, type: ProjectType) {
+//     val projectNamePrefix = type.path.replace("${File.separatorChar}", ":")
+//     logger.quiet("")
+//     val boldedDetailsHeading = "\u001B[1mTroubleshooting details\u001B[0m"
+//     logger.quiet(
+//         """
+//         *** Including project final result: ':${projectNamePrefix}:$projectName' ***
+//
+//             ${boldedDetailsHeading}
+//                 [project-name-original]     '${projectName}'
+//                 [project-type]              '${type.path}'
+//                 [project-name-prefix]       '${projectNamePrefix}'
+//                 [project-path]              '${type.path}/${projectName}'
+//                 [included-name-aka-final]   ':${projectNamePrefix}:$projectName'
+//
+//     """.trimIndent()
+//     )
+//
+//     include(":$projectName")
+//     project(":$projectName").projectDir = file(File("${type.path}/${projectName}"))
+// }
 
-include("root-one-sub-project-one")
+includeBuild("convention-plugins")
