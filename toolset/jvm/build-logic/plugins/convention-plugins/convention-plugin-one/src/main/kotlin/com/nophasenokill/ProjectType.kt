@@ -1,6 +1,10 @@
 package com.nophasenokill
 
-interface ProjectType {
-    val path: String
-}
 
+enum class ProjectType(
+    val pathFromRoot: String
+) {
+    BUILD_LOGIC("build-logic"),
+    ROOT_ONE("root-one"),
+    ROOT_TWO("root-two");
+}

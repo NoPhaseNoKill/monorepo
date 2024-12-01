@@ -1,4 +1,4 @@
-import com.nophasenokill.DefaultProjectType
+import com.nophasenokill.ProjectType
 import com.nophasenokill.mySettings
 
 
@@ -19,7 +19,6 @@ plugins {
 mySettings {
     applyCustomLogic.set(true)
 
-    includeCustomProject("root-one-sub-project-one", DefaultProjectType.RootOne)
-    includeCustomProject("root-two-sub-project-one", DefaultProjectType.RootTwo)
-    includeCustomProject("build-logic-module-one", DefaultProjectType.BuildLogic)
+    includeCustomProject("root-one-sub-project-one", ProjectType.ROOT_ONE, "root-one")
+    includeCustomProject("root-two-sub-project-one", ProjectType.ROOT_TWO, "root-two")
 }
