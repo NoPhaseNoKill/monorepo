@@ -1,4 +1,4 @@
-import com.nophasenokill.MySettingsPlugin
+import com.nophasenokill.SafeGradlePlugin
 
 gradle.settingsEvaluated {
     /*
@@ -88,7 +88,7 @@ gradle.settingsEvaluated {
         id("com.gradle.develocity")
     }
 
-    plugins.apply(MySettingsPlugin::class.java)
+    plugins.apply(SafeGradlePlugin::class.java)
 
     /*
         Applies to each sub project.

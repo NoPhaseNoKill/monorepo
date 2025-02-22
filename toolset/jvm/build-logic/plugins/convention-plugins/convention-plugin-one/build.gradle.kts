@@ -107,7 +107,7 @@ gradlePlugin {
                 implementationClass = "${project.group}.${name}"
             }
      */
-    plugins.create("MySettingsPlugin") {
+    plugins.create("SafeGradlePlugin") {
         id = "${project.group}.build-logic.build-logic-convention-plugins-settings-binary-plugin-one.settings"
         implementationClass = "${project.group}.${name}"
     }

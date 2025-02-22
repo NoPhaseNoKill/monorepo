@@ -9,7 +9,7 @@ import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.create
 import java.io.File
 
-abstract class MySettingsExtension(private val settings: Settings) {
+abstract class SafeGradleExtension(private val settings: Settings) {
     abstract val applyCustomLogic: Property<Boolean>
     val LOGGER = Logging.getLogger(Settings::class.java)
 
@@ -39,9 +39,9 @@ abstract class MySettingsExtension(private val settings: Settings) {
 }
 
 
-abstract class MySettingsPlugin : Plugin<Settings> {
+abstract class SafeGradlePlugin : Plugin<Settings> {
     override fun apply(settings: Settings) {
-        val extension = settings.extensions.create<MySettingsExtension>("mySettings", settings).apply {
+        val extension = settings.extensions.create<SafeGradleExtension>("safeGradleExtension", settings).apply {
             applyCustomLogic.convention(false)
         }
 
@@ -57,6 +57,6 @@ abstract class MySettingsPlugin : Plugin<Settings> {
 
 
 
-fun Settings.mySettings(action: Action<MySettingsExtension>) {
-    (this as ExtensionAware).extensions.configure("mySettings", action)
+fun Settings.safeGradleExtension(action: Action<SafeGradleExtension>) {
+    (this as ExtensionAware).extensions.configure("safeGradleExtension", action)
 }

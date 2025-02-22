@@ -11,7 +11,7 @@ plugins {
     id("com.nophasenokill.build-logic.build-logic-convention-plugins-settings-binary-plugin-one.settings")
 }
 
-mySettings {
+safeGradleExtension {
     applyCustomLogic.set(true)
 
     includeCustomProject("build-logic-module-one", ProjectType.BUILD_LOGIC, "")
