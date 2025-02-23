@@ -23,7 +23,7 @@ kotlin {
 }
 
 val printRelativeProjectDirPath = tasks.register("printRelativeProjectDirPath") {
-    val settingsFilePathOne =project.rootProject.projectDir.absolutePath
+    val settingsFilePathOne = project.rootProject.projectDir.absolutePath
     val rootPath = Paths.get(settingsFilePathOne)
     val projectPath = Paths.get(project.projectDir.absolutePath)
     val relativeProjectPath = rootPath.relativize(projectPath)
@@ -37,6 +37,8 @@ val printRelativeProjectDirPath = tasks.register("printRelativeProjectDirPath") 
     if (!outputFile.exists()) {
         outputFile.createNewFile()
     }
+
+    println("printRelativeProjectDirPath task for project: $project to: $outputFile")
 
     outputFile.writeText(relativeProjectPath.pathString)
 }
