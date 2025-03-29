@@ -1,9 +1,9 @@
 plugins {
-    kotlin("jvm") version "2.1.0"
+    kotlin("jvm") version "2.0.21"
+    id("com.nophasenokill.exposed.java-version-checker-plugin")
+    id("com.nophasenokill.exposed.plugin-base")
+    id("com.nophasenokill.exposed.group-and-version-details-plugin")
 }
-
-group = "com.nophasenokill"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
