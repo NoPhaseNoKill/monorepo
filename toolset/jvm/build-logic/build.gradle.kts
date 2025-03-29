@@ -34,10 +34,8 @@ plugins {
     // Notice that these are NOT the exposed plugins, aka these are the internal ones being used
     id("com.nophasenokill.java-version-checker-plugin")
     id("com.nophasenokill.plugin-base")
+    id("com.nophasenokill.group-and-version-details-plugin")
 }
-
-group = "com.nophasenokill.$name"
-version = "0.1.local-dev"
 
 gradlePlugin {
     plugins {
