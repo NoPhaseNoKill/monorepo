@@ -35,6 +35,7 @@ plugins {
     id("com.nophasenokill.java-version-checker-plugin")
     id("com.nophasenokill.plugin-base")
     id("com.nophasenokill.group-and-version-details-plugin")
+    id("com.nophasenokill.repositories-plugin")
 }
 
 gradlePlugin {
@@ -51,7 +52,12 @@ gradlePlugin {
 
         create("groupAndVersionDetailsPlugin") {
             id = "com.nophasenokill.exposed.group-and-version-details-plugin"
-            implementationClass = "com.nophasenokill.PluginBase"
+            implementationClass = "com.nophasenokill.GroupAndVersionDetailsPlugin"
+        }
+
+        create("repositoriesPlugin") {
+            id = "com.nophasenokill.exposed.repositories-plugin"
+            implementationClass = "com.nophasenokill.RepositoriesPlugin"
         }
     }
 }
