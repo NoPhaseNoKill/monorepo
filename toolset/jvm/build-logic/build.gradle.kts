@@ -59,6 +59,26 @@ gradlePlugin {
             id = "com.nophasenokill.exposed.repositories-plugin"
             implementationClass = "com.nophasenokill.RepositoriesPlugin"
         }
+
+        create("kotlinBasePlugin") {
+            id = "com.nophasenokill.exposed.kotlin-base-plugin"
+            implementationClass = "com.nophasenokill.KotlinBasePlugin"
+        }
+
+        create("kotlinApplicationPlugin") {
+            id = "com.nophasenokill.exposed.kotlin-application-plugin"
+            implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
+        }
+
+        create("kotlinLibraryPlugin") {
+            id = "com.nophasenokill.exposed.kotlin-library-plugin"
+            implementationClass = "com.nophasenokill.KotlinLibraryPlugin"
+        }
+
+        create("ideaSourcesDownloadPlugin") {
+            id = "com.nophasenokill.exposed.idea-sources-download-plugin"
+            implementationClass = "com.nophasenokill.IdeaSourcesDownloadPlugin"
+        }
     }
 }
 

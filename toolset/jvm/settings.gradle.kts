@@ -20,3 +20,5 @@ standaloneProjectDirs.forEach { standaloneProjectDir ->
             project(":${dir.name}").projectDir = dir
         }
 }
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
