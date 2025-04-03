@@ -4,6 +4,7 @@ import com.nophasenokill.extensions.findCatalogVersion
 plugins {
     kotlin("jvm")
     id("com.nophasenokill.idea-sources-download-plugin")
+    id("com.nophasenokill.java-version-checker-plugin")
 }
 
 val versionCatalog = project.findCatalog()
@@ -26,4 +27,8 @@ tasks.test {
 
 kotlin {
     jvmToolchain(javaVersion.toInt())
+}
+
+tasks.check {
+    dependsOn("checkJavaVersion")
 }
