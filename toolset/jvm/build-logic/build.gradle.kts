@@ -83,5 +83,5 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation("com.nophasenokill.convention-plugins:convention-plugins:0.1.local-dev")
+    implementation("com.nophasenokill.convention-plugins:convention-plugins:${libs.versions.groupVersion.get()}")
 }

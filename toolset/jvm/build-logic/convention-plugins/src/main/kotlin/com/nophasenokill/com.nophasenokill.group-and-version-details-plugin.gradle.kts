@@ -1,3 +1,7 @@
+import com.nophasenokill.extensions.findCatalog
+import com.nophasenokill.extensions.findCatalogVersion
+
+val versionCatalog = project.findCatalog()
 
 group = "com.nophasenokill.$name"
-version = "0.1.local-dev"
+version = versionCatalog.findCatalogVersion("groupVersion")

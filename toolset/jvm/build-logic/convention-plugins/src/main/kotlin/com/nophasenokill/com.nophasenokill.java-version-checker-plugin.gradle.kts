@@ -1,3 +1,5 @@
+import com.nophasenokill.extensions.findCatalog
+import com.nophasenokill.extensions.findCatalogVersion
 
 
 tasks.register("checkJavaVersion") {
@@ -20,6 +22,8 @@ tasks.register("checkJavaVersion") {
 
     val file = layout.buildDirectory.file("java-version.txt")
     val buildDir = layout.buildDirectory.get().asFile
+    val versionCatalog = project.findCatalog()
+    val expectedJavaVersion = versionCatalog.findCatalogVersion("java")
 
     outputs.file(file)
 
@@ -29,7 +33,7 @@ tasks.register("checkJavaVersion") {
             buildDir.mkdirs()
         }
 
-        val expectedVersion = JavaVersion.VERSION_21
+        val expectedVersion = JavaVersion.toVersion(expectedJavaVersion)
         val isCurrent = JavaVersion.current() == expectedVersion
         val meetsRequirements = locationVersionsMatch() && isCurrent
 
