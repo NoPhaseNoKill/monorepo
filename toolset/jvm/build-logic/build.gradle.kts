@@ -70,6 +70,11 @@ gradlePlugin {
             implementationClass = "com.nophasenokill.KotlinApplicationPlugin"
         }
 
+        create("kotlinDesktopApplicationPlugin") {
+            id = "com.nophasenokill.exposed.kotlin-desktop-application-plugin"
+            implementationClass = "com.nophasenokill.KotlinDesktopApplicationPlugin"
+        }
+
         create("kotlinLibraryPlugin") {
             id = "com.nophasenokill.exposed.kotlin-library-plugin"
             implementationClass = "com.nophasenokill.KotlinLibraryPlugin"
@@ -84,4 +89,18 @@ gradlePlugin {
 
 dependencies {
     implementation("com.nophasenokill.convention-plugins:convention-plugins:${libs.versions.groupVersion.get()}")
+
+
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
+    implementation("org.jetbrains.compose:compose-gradle-plugin:${libs.versions.composePlugin.get()}")
+
+    // only exists from v2 onwards
+    if(libs.versions.kotlin.get() >= "2.0.0") {
+        implementation("org.jetbrains.kotlin:compose-compiler-gradle-plugin:${libs.versions.kotlin.get()}")
+    } else {
+        println("""
+            Not including org.jetbrains.kotlin:compose-compiler-gradle-plugin dependency. Found kotlin version needs to be
+            2.0.0 or above for this dependency to make sense
+        """.trimIndent())
+    }
 }
