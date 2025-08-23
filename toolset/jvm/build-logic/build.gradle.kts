@@ -1,3 +1,4 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 /*
     IMPORTANT NOTE: These are the 'internal' plugins that are then re-exposed outside the plugin block.
@@ -84,6 +85,11 @@ gradlePlugin {
             id = "com.nophasenokill.exposed.idea-sources-download-plugin"
             implementationClass = "com.nophasenokill.IdeaSourcesDownloadPlugin"
         }
+
+        create("incrementalTestPlugin") {
+            id = "com.nophasenokill.exposed.incremental-test-plugin"
+            implementationClass = "com.nophasenokill.IncrementalTestPlugin"
+        }
     }
 }
 
@@ -103,4 +109,34 @@ dependencies {
             2.0.0 or above for this dependency to make sense
         """.trimIndent())
     }
+
+    // used for incremental task caching
+    implementation("org.ow2.asm:asm:9.7")
+    implementation("org.ow2.asm:asm-commons:9.7")
+    implementation("org.ow2.asm:asm-util:9.7")
+    implementation("org.benf:cfr:0.152")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
+
+    /*
+        These are required, so we don't implicitly load test framework. https://docs.gradle.org/8.7/userguide/upgrading_version_8.html#test_framework_implementation_dependencies
+     */
+    testImplementation("org.junit.jupiter:junit-jupiter:${libs.versions.junit.get()}")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:${libs.versions.junitPlatform.get()}")
+
+}
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging.events = setOf(
+        TestLogEvent.STANDARD_OUT,
+        TestLogEvent.STARTED,
+        TestLogEvent.PASSED,
+        TestLogEvent.SKIPPED,
+        TestLogEvent.FAILED,
+        TestLogEvent.STANDARD_OUT,
+        TestLogEvent.STANDARD_ERROR,
+    )
+
+    testLogging.minGranularity = 2
 }

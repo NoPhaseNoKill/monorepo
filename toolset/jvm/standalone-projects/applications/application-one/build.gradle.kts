@@ -4,6 +4,7 @@ plugins {
     id("com.nophasenokill.exposed.group-and-version-details-plugin")
     id("com.nophasenokill.exposed.repositories-plugin")
     id("com.nophasenokill.exposed.kotlin-application-plugin")
+    id("com.nophasenokill.exposed.incremental-test-plugin")
 }
 
 dependencies {
