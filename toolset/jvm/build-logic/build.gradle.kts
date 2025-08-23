@@ -37,6 +37,7 @@ plugins {
     id("com.nophasenokill.plugin-base")
     id("com.nophasenokill.group-and-version-details-plugin")
     id("com.nophasenokill.repositories-plugin")
+    id("com.nophasenokill.kotlin-base-plugin")
 }
 
 gradlePlugin {
@@ -115,14 +116,6 @@ dependencies {
     implementation("org.ow2.asm:asm-commons:9.7")
     implementation("org.ow2.asm:asm-util:9.7")
     implementation("org.benf:cfr:0.152")
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${libs.versions.junit.get()}")
-
-    /*
-        These are required, so we don't implicitly load test framework. https://docs.gradle.org/8.7/userguide/upgrading_version_8.html#test_framework_implementation_dependencies
-     */
-    testImplementation("org.junit.jupiter:junit-jupiter:${libs.versions.junit.get()}")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:${libs.versions.junitPlatform.get()}")
 
 }
 

@@ -29,6 +29,17 @@ class IncrementalTestPlugin: Plugin<Project> {
                 }
 
                 val computeClassDigests = tasks.register<ComputeClassDigestTask>("computeClassDigests") {
+
+                    /*
+                        TODO This does not currently cater for dependencies changing (ie a when using project dependencies)
+                            for instance when application-one does:
+                                dependencies {
+                                    implementation(projects.libraryOne)
+                                    testImplementation(projects.testingLibraryOne)
+                                }
+                            It does not cater for changes in libraryOne or testingLibraryOne even though these alter the tests at runtime
+                     */
+
                     classFiles.setFrom(fileTree(layout.buildDirectory.dir("classes")) {
                         include("**/*.class")
                     })
