@@ -5,7 +5,7 @@ import java.io.PrintStream
 
 fun captureTestOutput(block: () -> Unit): String {
     ByteArrayOutputStream().use { stream ->
-        PrintStream(stream) .use { printStream ->
+        PrintStream(stream).use { printStream ->
             System.setOut(printStream)
             try {
                 block()
